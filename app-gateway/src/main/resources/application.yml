@@ -1,0 +1,41 @@
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: http://localhost:3000
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+            allowCredentials: true
+      routes:
+        - id: backend
+          uri: http://localhost:8081
+          predicates:
+            - Path=/
+          filters:
+            - TokenRelay
+
+#debug: true
+logging:
+  level:
+    org:
+      springframework:
+        #security: TRACE
