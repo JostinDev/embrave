@@ -1,14 +1,13 @@
 package com.embrave.appbackend.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Map;
-
 @RestController
+@CrossOrigin(origins = "*")
 public class HomeController {
 
     @GetMapping("/")
@@ -16,14 +15,16 @@ public class HomeController {
         return "SUP justin";
     }
 
-    @GetMapping("/secured")
-    public String secured() {
+    @GetMapping("api")
+    public String test() {
         return "Hello Home";
     }
 
-    @GetMapping("/user")
-    public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
-        return Collections.singletonMap("name", principal.getAttribute("name"));
+    @GetMapping("/api/resource")
+    public String resource(@AuthenticationPrincipal Jwt jwt) {
+        return String.format("Resource accessed by: %s (with subjectId: %s)" ,
+                jwt.getClaims().get("user_name"),
+                jwt.getSubject());
     }
 
 }
