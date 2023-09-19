@@ -1,5 +1,7 @@
 server.port: 8081
 spring:
+  mvc:
+    log-request-details: true
   main:
     allow-bean-definition-overriding: true
   security:
@@ -18,13 +20,9 @@ spring:
       ddl-auto: update
 
 auth0:
-  audience: https://embrave.app
+  audience: https://embrave.eu.auth0.com/api/v2/
 
 debug: true
 logging:
   level:
-    org:
-      springframework:
-        security: DEBUG
-
-
+    root: debug

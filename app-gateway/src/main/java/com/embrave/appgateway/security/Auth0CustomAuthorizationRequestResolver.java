@@ -11,6 +11,7 @@ public class Auth0CustomAuthorizationRequestResolver extends DefaultServerOAuth2
                 customizer -> customizer.additionalParameters (
                         params -> params.put("audience", audience)
                 )
+
         );
     }
 }

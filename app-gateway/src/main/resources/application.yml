@@ -34,18 +34,25 @@ spring:
         - id: backend
           uri: http://localhost:8081
           predicates:
-            - Path=/
+            - Path=/api/**
           filters:
-            - TokenRelay
-            - RemoveRequestHeader=Cookie
+            - StripPrefix=1
+
+        - id: websocket
+          uri: ws://localhost:3000/
+          predicates:
+            - Path=/websocket/**
+
+        - id: frontend
+          uri: http://localhost:3000
+          predicates:
+            - Path=/**
+
 
 auth0:
-  audience: https://embrave.app
+  audience: https://embrave.eu.auth0.com/api/v2/
 
 debug: true
 logging:
   level:
-    org:
-      springframework:
-        security: DEBUG
-        gateway: DEBUG
+    root: debug

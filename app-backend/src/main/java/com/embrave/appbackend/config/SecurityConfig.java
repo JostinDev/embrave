@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -21,7 +22,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(exchanges -> exchanges
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/challenge/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -37,7 +38,7 @@ public class SecurityConfig {
     private String issuer;
 
 
-    @Bean
+    /*@Bean
     JwtDecoder jwtDecoder()  {
         NimbusJwtDecoder jwtDecoder  = JwtDecoders.fromOidcIssuerLocation(issuer);
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(audience);
@@ -46,6 +47,6 @@ public class SecurityConfig {
         jwtDecoder.setJwtValidator(withAudience);
 
         return jwtDecoder;
-    }
+    }*/
 
 }
