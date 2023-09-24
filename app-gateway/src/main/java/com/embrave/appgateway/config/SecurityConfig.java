@@ -1,5 +1,6 @@
 package com.embrave.appgateway.config;
 
+import com.embrave.appgateway.ServerLogoutHandler;
 import com.embrave.appgateway.security.Auth0CustomAuthorizationRequestResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +15,14 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class SecurityConfig {
     private final ReactiveClientRegistrationRepository clientRegistrationRepository;
+    private final ServerLogoutHandler serverLogoutHandler;
 
-    SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
+
+    SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository, ServerLogoutHandler serverLogoutHandler) {
        this.clientRegistrationRepository = clientRegistrationRepository;
-
+       this.serverLogoutHandler = serverLogoutHandler;
     }
+
 
     @Value("${auth0.audience}")
     private String audience;
@@ -26,6 +30,7 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 
         http.oauth2Login().authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository));
+        http.logout(logoutSpec -> logoutSpec.logoutUrl("/logout").logoutHandler(this.serverLogoutHandler).logoutSuccessHandler());
 
         http.authorizeExchange(authorize -> authorize
                         .pathMatchers("/api/**").authenticated()

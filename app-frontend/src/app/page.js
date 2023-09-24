@@ -8,6 +8,14 @@ export default function Home() {
         </div>
       </div>
 
+
+        <div className="container">
+            <form className="form-signin" method="post" action="http://localhost:8080/logout">
+                <h2 className="form-signin-heading">Are you sure you want to log out?</h2>
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
+            </form>
+        </div>
+
     </main>
   )
 }
