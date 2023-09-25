@@ -1,26 +1,33 @@
 package com.embrave.appgateway.config;
 
+import com.embrave.appgateway.LogoutSuccessHandler;
 import com.embrave.appgateway.ServerLogoutHandler;
 import com.embrave.appgateway.security.Auth0CustomAuthorizationRequestResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
+
 
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
     private final ReactiveClientRegistrationRepository clientRegistrationRepository;
     private final ServerLogoutHandler serverLogoutHandler;
+    private final LogoutSuccessHandler logoutSuccessHandler;
 
 
-    SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository, ServerLogoutHandler serverLogoutHandler) {
+
+    SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository, ServerLogoutHandler serverLogoutHandler, LogoutSuccessHandler logoutSuccessHandler) {
        this.clientRegistrationRepository = clientRegistrationRepository;
        this.serverLogoutHandler = serverLogoutHandler;
+       this.logoutSuccessHandler = logoutSuccessHandler;
     }
 
 
@@ -30,7 +37,12 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 
         http.oauth2Login().authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository));
-        http.logout(logoutSpec -> logoutSpec.logoutUrl("/logout").logoutHandler(this.serverLogoutHandler).logoutSuccessHandler());
+
+        http.logout(logoutSpec -> logoutSpec.logoutUrl("/logout")
+                .logoutHandler(this.serverLogoutHandler)
+                .logoutSuccessHandler(logoutSuccessHandler)
+        );
+        http.httpBasic(httpBasicSpec -> httpBasicSpec.authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)));
 
         http.authorizeExchange(authorize -> authorize
                         .pathMatchers("/api/**").authenticated()
