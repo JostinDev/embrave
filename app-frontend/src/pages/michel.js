@@ -6,6 +6,17 @@ export default function Michel() {
 				<h1 className="relative flex place-items-center">
 					COUCOU MICHOU
 				</h1>
+
+				<div className="relative flex place-items-center">
+					<a href={"http://localhost:8080/oauth2/authorization/auth0"} className={"text-4xl"}>Login</a>
+				</div>
+
+				<div className="container">
+					<form className="form-signin" method="post" action="http://localhost:8080/logout">
+						<h2 className="form-signin-heading">Are you sure you want to log out?</h2>
+						<button className="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
+					</form>
+				</div>
 			</div>
 		</main>
 	)
