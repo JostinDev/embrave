@@ -36,7 +36,9 @@ public class SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 
-        http.oauth2Login().authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository));
+        http.oauth2Login(oAuth2LoginSpec -> oAuth2LoginSpec
+                .authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository)));
+
         http.logout(logoutSpec -> logoutSpec.logoutUrl("/logout")
                 .logoutSuccessHandler(logoutSuccessHandlerTest())
         );
@@ -50,7 +52,7 @@ public class SecurityConfig {
                         .pathMatchers("/api/challenge/**").permitAll()
                         .anyExchange().permitAll()
                 )
-                .csrf().disable();
+                .csrf(ServerHttpSecurity.CsrfSpec::disable);
 
         return http.build();
     }

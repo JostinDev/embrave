@@ -16,7 +16,7 @@ spring:
         provider:
           auth0:
             # trailing slash is important!
-            issuer-uri: https://embrave.eu.auth0.com/
+            issuer-uri: ${ISSUER_URI}
 
   cloud:
     gateway:
@@ -50,7 +50,7 @@ spring:
 
 
 auth0:
-  audience: https://embrave.eu.auth0.com/api/v2/
+  audience: ${AUDIENCE}
 
 debug: true
 logging:

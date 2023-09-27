@@ -12,14 +12,14 @@ export default function Index() {
 
 	async function getUser() {
 		try {
-			const response = await axios.get('http://localhost:8080/api/user');
+			const response = await axios.get('/api/user')
 
 			setEmail(response.data.email)
 			setName(response.data.name)
 			setAvatar(response.data.avatar)
 
 		} catch (error) {
-			console.error(error);
+			console.error("User not logged in");
 		}
 	}
 
@@ -40,10 +40,10 @@ export default function Index() {
 
           <div className='flex gap-4 mt-10'>
             <a className='bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md'
-               href={"http://localhost:8080/oauth2/authorization/auth0"}>
+               href={process.env.loginUrl}>
               Login
             </a>
-						<form method="post" action="http://localhost:8080/logout">
+						<form method="post" action={process.env.logoutUrl}>
 							<button className="bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md" type="submit">Log Out</button>
 						</form>
           </div>

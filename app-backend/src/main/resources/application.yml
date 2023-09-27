@@ -8,9 +8,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://embrave.eu.auth0.com/
+          issuer-uri: ${ISSUER_URI}
   datasource :
-    url: jdbc:mysql://localhost:3306/embrave
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -18,9 +18,6 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
-
-auth0:
-  audience: https://embrave.eu.auth0.com/api/v2/
 
 debug: true
 logging:
