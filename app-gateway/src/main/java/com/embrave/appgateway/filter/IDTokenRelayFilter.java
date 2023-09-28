@@ -13,9 +13,16 @@ public class IDTokenRelayFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+
+        // Prevent sending the ID token for non API calls
+        String path = String.valueOf(exchange.getRequest().getPath());
+        boolean isAPICall = path.contains("api");
+        if(!isAPICall) {
+            return chain.filter(exchange);
+        }
+
         return exchange.getPrincipal()
                 .filter(token -> token instanceof OAuth2AuthenticationToken)
-                //Only send the token to backend
                 .cast(OAuth2AuthenticationToken.class)
                 .map(authentication -> authentication.getPrincipal())
                 .filter(principal -> principal instanceof OidcUser)
