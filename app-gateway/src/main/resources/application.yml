@@ -16,7 +16,7 @@ spring:
         provider:
           auth0:
             # trailing slash is important!
-            issuer-uri: ${ISSUER_URI}
+            issuer-uri: ${AUTH0_ISSUER_URI}
 
   cloud:
     gateway:
@@ -50,7 +50,7 @@ spring:
 
 
 auth0:
-  audience: ${AUDIENCE}
+  audience: ${AUTH0_AUDIENCE}
 
 debug: true
 logging:

@@ -8,7 +8,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${ISSUER_URI}
+          issuer-uri: ${AUTH0_ISSUER_URI}
   datasource :
     url: jdbc:mysql://${DB_HOST}/${DB_NAME}
     username: root
