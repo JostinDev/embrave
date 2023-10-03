@@ -1,4 +1,5 @@
 # Modern enterprise web application with identity management
+This template was tested with the Google login over auth0. The User model (Backend) and the database might need adjustments if another social is used.
 
 ## Features
 
@@ -18,7 +19,7 @@ Steps and configurations needed to start the application :
 
 ### Create an Auth0 account
 Create a free [Auth0](https://auth0.com/) account and configure your desired authentication factors.
-You'll need to get the following data : 
+You'll need to get the following data :
 - client-id
 - client-secret
 - audience
@@ -27,7 +28,7 @@ You'll need to get the following data :
 
 ### Gateway
 Configure the following environment variables
-- AUTH0_CLIENT_ID 
+- AUTH0_CLIENT_ID
 - AUTH0_CLIENT_SECRET
 - AUTH0_AUDIENCE - ex : https://your-app.eu.auth0.com/api/v2/
 - AUTH0_ISSUER_URI - ex : https://your-app.eu.auth0.com/
@@ -51,11 +52,21 @@ Configure the following environment variables
 
 
 ### Frontend
-Install the dependencies : 
+Install the dependencies :
 `npm install`
 
-Run the Frontend : 
+Run the Frontend :
 `npm run dev`
+
+
+### Database
+Create a database named the same as the DB_NAME defined in the Backend.
+Create a `user` table with the following rows :
+
+- email - String (PK)
+- name - String
+- avatar - String
+
 
 ### Open the app
 Finally, open [http://localhost:8080](http://localhost:8081) with your browser to see the result.
