@@ -1,7 +1,6 @@
 import '../app/globals.css';
-import axios from "axios";
 import Image from "next/image";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import user from "../../public/user.png"
 
 export default function Index() {
@@ -10,20 +9,27 @@ export default function Index() {
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);
 
-	async function getUser() {
-		try {
-			const response = await axios.get('/api/user')
 
-			setEmail(response.data.email)
-			setName(response.data.name)
-			setAvatar(response.data.avatar)
+	useEffect(() => {
+
+
+		fetchDetails()
+
+	}, []);
+
+	const fetchDetails = async () => {
+		try {
+			const response = (await fetch('/api/user'));
+
+			const user = await response.json();
+			setEmail(user.email)
+			setName(user.name)
+			setAvatar(user.avatar)
 
 		} catch (error) {
 			console.error("User not logged in");
 		}
-	}
-
-	getUser();
+	};
 
 	return (
 			<div className="h-screen bg-blue-500 pt-20">

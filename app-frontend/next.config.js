@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	reactStrictMode: false,
 	env: {
 		loginUrl: 'http://localhost:8080/oauth2/authorization/auth0',
 		logoutUrl: 'http://localhost:8080/logout',
