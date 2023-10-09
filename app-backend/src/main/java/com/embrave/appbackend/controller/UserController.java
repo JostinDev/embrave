@@ -7,7 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.time.LocalDate;
 
 @RestController
 // For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
@@ -18,18 +18,22 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/user")
-    public @ResponseBody Optional<User> getUser(@AuthenticationPrincipal Jwt jwt) {
+    public @ResponseBody User getUser(@AuthenticationPrincipal Jwt jwt) {
 
+        String auth0Id = (String) jwt.getClaims().get("sub");
         String email = (String) jwt.getClaims().get("email");
         String name = (String) jwt.getClaims().get("name");
         String picture = (String) jwt.getClaims().get("picture");
 
-        boolean exists = userRepository.existsById(email);
+        boolean exists = userRepository.existsUserByAuth0Id(auth0Id);
+
+        System.out.println("RESULT : " + exists);
 
         if(!exists) {
-            userRepository.save(new User(email, name, picture));
+            LocalDate localDate = LocalDate.now();
+            userRepository.save(new User(auth0Id,email,name,picture, 0L, localDate));
         }
 
-        return userRepository.findById(email);
+        return userRepository.findByAuth0Id(auth0Id);
     }
 }
