@@ -57,8 +57,8 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 
         http.authorizeExchange(authorize -> authorize
-                        .pathMatchers("/api/**").authenticated()
                         .pathMatchers("/api/challenge/**").permitAll()
+                        .pathMatchers("/api/**").authenticated()
                         .anyExchange().permitAll()
                 )
                 .csrf(ServerHttpSecurity.CsrfSpec::disable);

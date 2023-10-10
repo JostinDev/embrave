@@ -12,8 +12,8 @@ export default function Index() {
 
 	useEffect(() => {
 
-
 		fetchDetails()
+		fetchChallenge()
 
 	}, []);
 
@@ -28,6 +28,18 @@ export default function Index() {
 
 		} catch (error) {
 			console.error("User not logged in");
+		}
+	};
+
+	const fetchChallenge = async () => {
+		try {
+			const response = (await fetch('/api/challenge'));
+
+			const challenge = await response.json();
+			console.log('Challenge : ', challenge);
+
+		} catch (error) {
+			console.error(error);
 		}
 	};
 
