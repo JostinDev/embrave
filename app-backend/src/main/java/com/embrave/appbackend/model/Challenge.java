@@ -18,11 +18,17 @@ public class Challenge {
     private String title;
     private String description;
     private String banner;
-    private int type;
-    private int category;
     private LocalDate joined;
 
-    public Challenge(String title, String description, String banner, int type, int category, LocalDate joined) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "type", referencedColumnName = "id")
+    private ChallengeType type;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category", referencedColumnName = "id")
+    private ChallengeCategory category;
+
+    public Challenge(String title, String description, String banner, ChallengeType type, ChallengeCategory category, LocalDate joined) {
         this.title = title;
         this.description = description;
         this.banner = banner;
