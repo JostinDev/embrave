@@ -8,11 +8,13 @@ import com.embrave.appbackend.repository.ChallengeRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
 import com.embrave.appbackend.repository.UserRoomRepository;
+import com.embrave.appbackend.utils.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -35,10 +37,6 @@ public class RoomController {
         return roomRepository.findAll();
     }
 
-    public void joinRoom(Room room, User user, LocalDate joined) {
-        UserRoom userRoom = new UserRoom(room, user, joined);
-        userRoomRepository.save(userRoom);
-    }
 
     @PostMapping("/room")
     public void createRoom(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
@@ -52,12 +50,19 @@ public class RoomController {
 
         Challenge challenge = challengeRepository.findById(challenge_id).get();
 
-        String code = "code";
-        String link = "link";
+        String code = RandomString.randomString(6);
 
-        Room room = new Room(challenge, code, link, localDate);
+        String link = RandomString.randomString(30);
+
+        Room room = new Room(challenge, code, link, localDate, new Timestamp(System.currentTimeMillis()));
 
         joinRoom(room, user, localDate);
 
     }
+
+    private void joinRoom(Room room, User user, LocalDate joined) {
+        UserRoom userRoom = new UserRoom(room, user, joined);
+        userRoomRepository.save(userRoom);
+    }
+
 }

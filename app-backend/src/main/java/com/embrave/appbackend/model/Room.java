@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -21,11 +22,13 @@ public class Room {
     private String code;
     private String link;
     private LocalDate created;
+    private Timestamp code_created_timestamp;
 
-    public Room(Challenge challenge, String code, String link, LocalDate created) {
+    public Room(Challenge challenge, String code, String link, LocalDate created, Timestamp code_created_timestamp) {
         this.challenge = challenge;
         this.code = code;
         this.link = link;
         this.created = created;
+        this.code_created_timestamp = code_created_timestamp;
     }
 }

@@ -11,7 +11,7 @@ export default function Challenge() {
 	useEffect(() => {
 
 		fetchChallenge()
-
+		fetchRooms()
 	}, []);
 
 
@@ -23,6 +23,19 @@ export default function Challenge() {
 			setChallenge(responseJSON)
 
 			console.log(responseJSON)
+
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const fetchRooms = async () => {
+		try {
+			const response = (await fetch('/api/room'))
+
+			const responseJSON = await response.json();
+
+			console.log('GET ALL ROOMS : ' , responseJSON)
 
 		} catch (error) {
 			console.error(error);
