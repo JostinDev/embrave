@@ -18,7 +18,6 @@ public class Challenge {
     private String title;
     private String description;
     private String banner;
-    private LocalDate joined;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type", referencedColumnName = "id")
@@ -28,13 +27,12 @@ public class Challenge {
     @JoinColumn(name = "category", referencedColumnName = "id")
     private ChallengeCategory category;
 
-    public Challenge(String title, String description, String banner, ChallengeType type, ChallengeCategory category, LocalDate joined) {
+    public Challenge(String title, String description, String banner, ChallengeType type, ChallengeCategory category) {
         this.title = title;
         this.description = description;
         this.banner = banner;
         this.type = type;
         this.category = category;
-        this.joined = joined;
     }
 
 }
