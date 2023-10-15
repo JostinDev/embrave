@@ -106,7 +106,7 @@ export default function Challenge() {
 								<div key={room.id} className='bg-white border border-solid border-b-gray-400 mb-4'>
 									<p>Room ID : {room.id}</p>
 									<p>Room code : {room.code}</p>
-									<p>Room link : {room.link}</p>
+									<a href={"/api/room/join/" + room.link}>Room link : {room.link}</a>
 									<p>Room created : {room.created}</p>
 									<p onClick={() => joinRoom(room.code)} className='text-blue-600 cursor-pointer'>Join the room</p>
 								</div>

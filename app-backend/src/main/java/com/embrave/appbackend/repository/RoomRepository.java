@@ -13,4 +13,8 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     Boolean existsRoomByCode(String code);
 
+    Room findRoomsByLink(String link);
+
+    Boolean existsRoomByLink(String link);
+
 }

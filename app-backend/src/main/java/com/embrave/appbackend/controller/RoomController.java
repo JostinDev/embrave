@@ -8,13 +8,16 @@ import com.embrave.appbackend.repository.ChallengeRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
 import com.embrave.appbackend.repository.UserRoomRepository;
+import com.embrave.appbackend.utils.JSONMessage;
 import com.embrave.appbackend.utils.RandomString;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -62,32 +65,56 @@ public class RoomController {
 
     }
 
-    @PostMapping(value="/room/join", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/room/join")
     @ResponseBody
-    public Map joinRoomWithCode(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
-
-        String message;
+    public Map<String, String> joinRoomWithCode(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
         LocalDate localDate = LocalDate.now();
 
         String code = body.get("code");
-        System.out.println("CODE : " + code);
 
         if(code == null) {
-            return Collections.singletonMap("response","Code is invalid");
+            return JSONMessage.create("error","Code is invalid");
         }
 
         if(roomRepository.existsRoomByCode(code)) {
             Room room = roomRepository.findRoomsByCode(code);
-            System.out.println("ROOM : " + room);
-
             joinRoom(room, user, localDate);
-            return Collections.singletonMap("response","Successfully joined the room");
-
+            return JSONMessage.create("error","Successfully joined the room");
         }
-        return Collections.singletonMap("response","Code is invalid");
+        return JSONMessage.create("error","Code is invalid");
+    }
+
+    @GetMapping("/room/join/{link}")
+    @ResponseBody
+    public void joinRoomWithLink(@PathVariable String link, @AuthenticationPrincipal Jwt jwt, HttpServletResponse response) throws IOException {
+
+        String redirectURL = "http://localhost:8080";
+        String redirectURLSuccess = "http://localhost:8080/challenge";
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+        LocalDate localDate = LocalDate.now();
+
+        if(link == null) {
+            response.sendRedirect(redirectURL);
+            return;
+        }
+
+        if(roomRepository.existsRoomByLink(link)) {
+            Room room = roomRepository.findRoomsByLink(link);
+            try {
+                joinRoom(room, user, localDate);
+            } catch (Exception error) {
+                response.sendRedirect(redirectURL);
+                return;
+            }
+            response.sendRedirect(redirectURLSuccess);
+            return;
+        }
+        response.sendRedirect(redirectURL);
     }
 
     private void joinRoom(Room room, User user, LocalDate joined) {
