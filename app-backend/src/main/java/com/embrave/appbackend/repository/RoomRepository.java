@@ -9,5 +9,8 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     List<Room> findRoomsByCodeIsNotNull();
 
+    Room findRoomsByCode(String code);
+
+    Boolean existsRoomByCode(String code);
 
 }

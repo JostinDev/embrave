@@ -10,12 +10,14 @@ import com.embrave.appbackend.repository.UserRepository;
 import com.embrave.appbackend.repository.UserRoomRepository;
 import com.embrave.appbackend.utils.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -58,6 +60,34 @@ public class RoomController {
 
         joinRoom(room, user, localDate);
 
+    }
+
+    @PostMapping(value="/room/join", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map joinRoomWithCode(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
+
+        String message;
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+        LocalDate localDate = LocalDate.now();
+
+        String code = body.get("code");
+        System.out.println("CODE : " + code);
+
+        if(code == null) {
+            return Collections.singletonMap("response","Code is invalid");
+        }
+
+        if(roomRepository.existsRoomByCode(code)) {
+            Room room = roomRepository.findRoomsByCode(code);
+            System.out.println("ROOM : " + room);
+
+            joinRoom(room, user, localDate);
+            return Collections.singletonMap("response","Successfully joined the room");
+
+        }
+        return Collections.singletonMap("response","Code is invalid");
     }
 
     private void joinRoom(Room room, User user, LocalDate joined) {
