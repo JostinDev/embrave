@@ -59,6 +59,7 @@ public class SecurityConfig {
         http.authorizeExchange(authorize -> authorize
                         .pathMatchers("/api/challenge/**").permitAll()
                         .pathMatchers("/api/**").authenticated()
+                        .pathMatchers("/minio/**").authenticated()
                         .anyExchange().permitAll()
                 )
                 .csrf(ServerHttpSecurity.CsrfSpec::disable);

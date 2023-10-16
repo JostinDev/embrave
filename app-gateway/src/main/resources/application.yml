@@ -38,6 +38,11 @@ spring:
           filters:
             - StripPrefix=1
 
+        - id: minio
+          uri: http://localhost:9000
+          predicates:
+            - Path=/minio/**
+
         - id: websocket
           uri: ws://localhost:3000/
           predicates:
@@ -47,6 +52,7 @@ spring:
           uri: http://localhost:3000
           predicates:
             - Path=/**
+
 
 
 auth0:

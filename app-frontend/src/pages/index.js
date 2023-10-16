@@ -2,6 +2,7 @@ import '../app/globals.css';
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import user from "../../public/user.png"
+import {Minio} from "@/utils/Minio";
 
 export default function Index() {
 
@@ -43,6 +44,14 @@ export default function Index() {
 		}
 	};
 
+
+	function savePhoto(inp) {
+		console.log(inp)
+
+		Minio.upload(inp);
+
+	}
+
 	return (
 			<div className="h-screen bg-blue-500 pt-20">
 				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
@@ -66,6 +75,9 @@ export default function Index() {
 						</form>
           </div>
 
+
+					<h1 className={'text-2xl mt-10'}>upload</h1>
+					<input id="image-file" type="file" multiple onChange={(e) => savePhoto(e.target.files[0])}/>
 				</div>
 			</div>
 	)

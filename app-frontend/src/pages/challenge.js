@@ -1,5 +1,6 @@
 import '../app/globals.css';
 import {useEffect, useState} from "react";
+import {minio} from 'minio'
 
 export default function Challenge() {
 
@@ -10,6 +11,7 @@ export default function Challenge() {
 		fetchChallenge()
 		fetchRooms()
 	}, []);
+
 
 
 	const fetchChallenge = async () => {
