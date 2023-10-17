@@ -41,7 +41,9 @@ spring:
         - id: minio
           uri: http://localhost:9000
           predicates:
-            - Path=/minio/**
+            - Path=/embrave/**
+          filters:
+            - PreserveHostHeader
 
         - id: websocket
           uri: ws://localhost:3000/
@@ -52,8 +54,6 @@ spring:
           uri: http://localhost:3000
           predicates:
             - Path=/**
-
-
 
 auth0:
   audience: ${AUTH0_AUDIENCE}

@@ -46,10 +46,7 @@ export default function Index() {
 
 
 	function savePhoto(inp) {
-		console.log(inp)
-
 		Minio.upload(inp);
-
 	}
 
 	return (
