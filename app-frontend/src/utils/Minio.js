@@ -1,53 +1,76 @@
 import md5 from 'md5';
-
-let minio = require('minio')
-
+const minio = require('minio')
 export class Minio {
+
 
 	static minioClient = new minio.Client({
 		endPoint: 'localhost',
-		port: 8080,
+		port: 9000,
 		useSSL: false,
 		accessKey: 'admin',
 		secretKey: 'adminadmin',
 	})
 
-	static async upload(file, bucketName = 'embrave') {
+	static async upload(files, bucketName = 'embrave') {
 
-		console.log('FILE : ', file);
-		console.log('FILE TYPE : ', file.type);
 
-		if (!(file.type.includes('jpeg') || file.type.includes('png'))) {
+		
 
+		const toBase64 = file => new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = reject;
+		});
+
+
+		console.log('LES FILES : ', files);
+
+		for (const file of Array.from(files)) {
+
+			console.log('READ FILE ====>',await fs.read(file))
+
+
+			console.log("THE FILE", file);
+
+			if (!(file.type.includes('jpeg') || file.type.includes('png'))) {
+				throw new Error("The file is not a picture");
+			}
+
+			let fileData = URL.createObjectURL(file)
+
+			console.log('fileBuffer : ', fileData)
+
+			const timestamp = Date.now().toString();
+			const hashedFileName = md5(timestamp + file.name);
+
+			const image = file.name
+			const extension = image.substring(image.lastIndexOf('.') + 1, image.length) || image;
+
+			const fileName = hashedFileName + '.' + extension;
+
+			console.log('fileName : ', fileName)
+
+			let metaData = {
+				'Content-Type': 'image/png',
+				'Content-Language': 123,
+				'X-Amz-Meta-Testing': 1234,
+				example: 5678,
+			}
+
+			this.minioClient.fPutObject(
+					bucketName,
+					fileName,
+					fileData,
+					metaData,
+					function (err, res) {
+						if (err) {
+							throw (err);
+						}
+						console.log('RES : ', res)
+						return res
+					},
+			);
 		}
-
-		let fileData = URL.createObjectURL(file)
-		console.log('fileBuffer : ', fileData)
-
-		const timestamp = Date.now().toString();
-		const hashedFileName = md5(timestamp);
-
-		const image = file.name
-
-		const extension = image.substring(image.lastIndexOf('.') + 1, image.length) || image;
-
-		console.log('extension  : ', extension)
-
-		// We need to append the extension at the end otherwise Minio will save it as a generic file
-		const fileName = hashedFileName + '.' + extension;
-
-		console.log('fileName : ', fileName)
-
-		this.minioClient.putObject(
-				bucketName,
-				fileName,
-				fileData,
-				function (err, res) {
-					if (err) {
-						console.log(err)
-					}
-					console.log('Success', res)
-				},
-		);
 	}
 }

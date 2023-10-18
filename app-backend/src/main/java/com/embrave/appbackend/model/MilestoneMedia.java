@@ -16,7 +16,6 @@ public class MilestoneMedia {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "milestone_id")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "milestone_id", referencedColumnName = "id")
     private Milestone milestone;

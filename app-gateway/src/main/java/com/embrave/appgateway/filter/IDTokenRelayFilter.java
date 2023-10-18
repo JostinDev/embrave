@@ -18,7 +18,8 @@ public class IDTokenRelayFilter implements WebFilter {
         String path = String.valueOf(exchange.getRequest().getPath());
         System.out.println(path);
         boolean isAPICall = path.contains("/api/");
-        if(!isAPICall) {
+        boolean isMinio = path.contains("/embrave/");
+        if(!isAPICall || isMinio) {
             return chain.filter(exchange);
         }
 

@@ -10,11 +10,11 @@ export default function Index() {
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);
 
-
 	useEffect(() => {
 
 		fetchDetails()
 		fetchChallenge()
+
 
 	}, []);
 
@@ -44,9 +44,15 @@ export default function Index() {
 		}
 	};
 
+	function savePhoto(photo) {
 
-	function savePhoto(inp) {
-		Minio.upload(inp);
+		document.querySelector('#pic').src = URL.createObjectURL(photo[0]);
+
+		Minio.upload(photo).then(r => {
+			console.log(r)
+		}).catch(error => {
+			console.log(error)
+		});
 	}
 
 	return (
@@ -72,9 +78,10 @@ export default function Index() {
 						</form>
           </div>
 
-
 					<h1 className={'text-2xl mt-10'}>upload</h1>
-					<input id="image-file" type="file" multiple onChange={(e) => savePhoto(e.target.files[0])}/>
+					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple onChange={(e) => savePhoto(e.target.files)}/>
+					<img className={'w-40'} id={'pic'} src={''}></img>
+
 				</div>
 			</div>
 	)
