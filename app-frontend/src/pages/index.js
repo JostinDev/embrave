@@ -2,13 +2,15 @@ import '../app/globals.css';
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import user from "../../public/user.png"
-import {Minio} from "@/utils/Minio";
 
 export default function Index() {
 
 	const [email, setEmail] = useState('Log in to see your profile...');
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);
+
+	const [milestonePicture, setMilestonePicture] = useState([]);
+	const [milestoneDescription, setMilestoneDescription] = useState();
 
 	useEffect(() => {
 
@@ -44,15 +46,35 @@ export default function Index() {
 		}
 	};
 
-	function savePhoto(photo) {
+	async function saveMilestone() {
 
-		document.querySelector('#pic').src = URL.createObjectURL(photo[0]);
+		console.log(milestonePicture)
+		console.log(milestoneDescription)
 
-		Minio.upload(photo).then(r => {
-			console.log(r)
-		}).catch(error => {
-			console.log(error)
-		});
+		const formData = new FormData()
+
+		formData.append('room', '552')
+		formData.append('description', milestoneDescription)
+
+		Array.from(milestonePicture).forEach(file => formData.append('file', file) );
+
+		const contentType = milestonePicture ? "multipart/form-data" : "application/json";
+
+		console.log(contentType)
+		console.log(formData.getAll('file'))
+
+		try {
+			const response = await fetch("api/milestone", {
+				method: "POST",
+				body: formData,
+			});
+
+			console.log(await response.json())
+		}
+		catch (error) {
+				console.error(error);
+			}
+
 	}
 
 	return (
@@ -78,10 +100,15 @@ export default function Index() {
 						</form>
           </div>
 
-					<h1 className={'text-2xl mt-10'}>upload</h1>
-					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple onChange={(e) => savePhoto(e.target.files)}/>
+					<h1 className={'text-2xl mt-10'}>Milestone</h1>
+					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple onChange={(e) => setMilestonePicture(e.target.files)}/>
 					<img className={'w-40'} id={'pic'} src={''}></img>
+					<label htmlFor={'milestoneDescription'}>Description</label>
+					<input
+							className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
+							onChange={(e) => setMilestoneDescription(e.target.value)}/>
 
+					<h1 className={'text-xl'} onClick={() => saveMilestone()}>SEND</h1>
 				</div>
 			</div>
 	)

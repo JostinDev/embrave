@@ -42,8 +42,7 @@ spring:
           uri: http://localhost:9000
           predicates:
             - Path=/embrave/**
-          filters:
-            - PreserveHostHeader
+
 
         - id: websocket
           uri: ws://localhost:3000/
