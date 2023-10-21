@@ -46,6 +46,14 @@ export default function Index() {
 		}
 	};
 
+	const uploadWithPresignedUrl = async () => {
+		/*TODO :
+		   generate a presigned url on the backend so the FE can upload to Minio directly.
+		   This prevents the image to go through the gateway and the backend.
+		   The image will go directly to the Minio service
+		 */
+	};
+
 	async function saveMilestone() {
 
 		console.log(milestonePicture)
