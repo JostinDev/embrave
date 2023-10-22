@@ -31,18 +31,13 @@ spring:
               - POST
             allowCredentials: true
       routes:
+
         - id: backend
           uri: http://localhost:8081
           predicates:
             - Path=/api/**
           filters:
             - StripPrefix=1
-
-        - id: minio
-          uri: http://localhost:9000
-          predicates:
-            - Path=/embrave/**
-
 
         - id: websocket
           uri: ws://localhost:3000/

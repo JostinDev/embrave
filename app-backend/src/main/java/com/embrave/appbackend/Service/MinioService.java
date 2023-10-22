@@ -2,7 +2,8 @@ package com.embrave.appbackend.Service;
 
 import com.embrave.appbackend.repository.RoomRepository;
 import io.minio.*;
-import io.minio.errors.MinioException;
+import io.minio.errors.*;
+import io.minio.http.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MinioService {
@@ -29,7 +32,7 @@ public class MinioService {
                     PutObjectArgs.builder()
                             .bucket(BUCKET_NAME)
                             .object(file.getOriginalFilename())
-                            .stream(file.getInputStream(),file.getSize(),-1)
+                            .stream(file.getInputStream(), file.getSize(), -1)
                             .build());
             System.out.println("File successfully created");
         } catch (MinioException e) {
@@ -37,4 +40,15 @@ public class MinioService {
             System.out.println("HTTP trace: " + e.httpTrace());
         }
     }
+
+    public String getPresignedURL(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        return minioClient.getPresignedObjectUrl(
+                GetPresignedObjectUrlArgs.builder()
+                        .method(Method.PUT)
+                        .bucket(BUCKET_NAME)
+                        .object(fileName)
+                        .expiry(1, TimeUnit.HOURS)
+                        .build());
+    }
+
 }

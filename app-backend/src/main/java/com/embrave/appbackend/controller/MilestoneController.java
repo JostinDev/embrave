@@ -8,6 +8,7 @@ import com.embrave.appbackend.repository.MilestoneRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
 import io.minio.MinioClient;
+import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -92,6 +93,13 @@ public class MilestoneController {
 
     }
 
+    @GetMapping("/milestone/presigned/{filename}")
+    public @ResponseBody String getPresignedURL(@PathVariable String filename) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+
+        String url = minioService.getPresignedURL(filename);
+        System.out.println("PRESIGNED URL : " +url);
+        return url;
+    }
 
 
     @GetMapping("/milestone/{room}")

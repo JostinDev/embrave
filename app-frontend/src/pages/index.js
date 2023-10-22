@@ -2,6 +2,7 @@ import '../app/globals.css';
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import user from "../../public/user.png"
+import md5 from 'md5';
 
 export default function Index() {
 
@@ -11,6 +12,8 @@ export default function Index() {
 
 	const [milestonePicture, setMilestonePicture] = useState([]);
 	const [milestoneDescription, setMilestoneDescription] = useState();
+
+	const [uploadedPicture, setUploadedPicture] = useState([]);
 
 	useEffect(() => {
 
@@ -46,43 +49,47 @@ export default function Index() {
 		}
 	};
 
-	const uploadWithPresignedUrl = async () => {
-		/*TODO :
-		   generate a presigned url on the backend so the FE can upload to Minio directly.
-		   This prevents the image to go through the gateway and the backend.
-		   The image will go directly to the Minio service
-		 */
-	};
 
-	async function saveMilestone() {
+	function upload() {
+		// Get selected files from the input element.
+		Array.from(milestonePicture).forEach(file => {
+			const timestamp = Date.now().toString();
+			const hashedFileName = md5(timestamp + file.name);
+			const filename = file.name;
+			const extension = filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
 
-		console.log(milestonePicture)
-		console.log(milestoneDescription)
+			let fileWithUpdatedName = new File([file], hashedFileName + '.' + extension)
 
-		const formData = new FormData()
-
-		formData.append('room', '552')
-		formData.append('description', milestoneDescription)
-
-		Array.from(milestonePicture).forEach(file => formData.append('file', file) );
-
-		const contentType = milestonePicture ? "multipart/form-data" : "application/json";
-
-		console.log(contentType)
-		console.log(formData.getAll('file'))
-
-		try {
-			const response = await fetch("api/milestone", {
-				method: "POST",
-				body: formData,
+			retrieveNewURL(fileWithUpdatedName, (fileWithUpdatedName, url) => {
+				// Upload the file to the server.
+				uploadFile(fileWithUpdatedName, url);
 			});
+		});
+	}
 
-			console.log(await response.json())
+	function retrieveNewURL(file, cb) {
+		fetch(`/api/milestone/presigned/${file.name}`).then((response) => {
+			response.text().then((url) => {
+				cb(file, url);
+			});
+		}).catch((e) => {
+			console.error(e);
+		});
+	}
+
+	function uploadFile(file, url) {
+		try {
+			fetch(url, {
+				method: 'PUT',
+				body: file
+			}).then(() => {
+				setUploadedPicture(uploadedPicture => [...uploadedPicture, file.name])
+			}).catch((e) => {
+				console.error(e);
+			});
+		} catch (e) {
+			console.log(e)
 		}
-		catch (error) {
-				console.error(error);
-			}
-
 	}
 
 	return (
@@ -116,7 +123,12 @@ export default function Index() {
 							className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
 							onChange={(e) => setMilestoneDescription(e.target.value)}/>
 
-					<h1 className={'text-xl'} onClick={() => saveMilestone()}>SEND</h1>
+					<h1 className={'text-xl'} onClick={() => upload()}>SEND</h1>
+
+					{uploadedPicture.map((picture) => {
+						return (
+									<p key={picture}>{picture}</p>
+						)})}
 				</div>
 			</div>
 	)
