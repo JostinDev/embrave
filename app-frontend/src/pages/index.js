@@ -15,6 +15,8 @@ export default function Index() {
 
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
+	let pictureLink = [];
+
 	useEffect(() => {
 
 		fetchDetails()
@@ -50,9 +52,11 @@ export default function Index() {
 	};
 
 
-	function upload() {
+	async function upload() {
+
+		let promiseArray = [];
 		// Get selected files from the input element.
-		Array.from(milestonePicture).forEach(file => {
+		Array.from(milestonePicture).map(async (file) => {
 			const timestamp = Date.now().toString();
 			const hashedFileName = md5(timestamp + file.name);
 			const filename = file.name;
@@ -60,32 +64,52 @@ export default function Index() {
 
 			let fileWithUpdatedName = new File([file], hashedFileName + '.' + extension)
 
-			retrieveNewURL(fileWithUpdatedName, (fileWithUpdatedName, url) => {
-				// Upload the file to the server.
-				uploadFile(fileWithUpdatedName, url);
-			});
+			promiseArray.push(new Promise(async (resolve, reject) => {
+				fetch(`/api/milestone/presigned/${fileWithUpdatedName.name}`)
+						.then((response) => {
+							response.text()
+									.then(async (url) => {
+										fetch(url, {
+											method: 'PUT',
+											body: fileWithUpdatedName
+										}).then(() => {
+											setUploadedPicture(uploadedPicture => [...uploadedPicture, fileWithUpdatedName.name])
+											pictureLink = [...pictureLink, fileWithUpdatedName.name]
+											console.log(fileWithUpdatedName.name)
+											resolve(fileWithUpdatedName.name)
+										}).catch((e) => {
+											console.error(e);
+											reject(e)
+										});
+									});
+						}).catch((e) => {
+							console.error(e);
+						});
+			}));
 		});
+		await Promise.all(promiseArray);
+		await saveMilestone(552)
 	}
 
-	function retrieveNewURL(file, cb) {
-		fetch(`/api/milestone/presigned/${file.name}`).then((response) => {
-			response.text().then((url) => {
-				cb(file, url);
-			});
-		}).catch((e) => {
-			console.error(e);
-		});
-	}
+	async function saveMilestone(milestoneID) {
+		console.log('SAVE MILESTONE')
+		console.log(pictureLink)
 
-	function uploadFile(file, url) {
+		const data = {
+			room: milestoneID,
+			description: milestoneDescription,
+			files: pictureLink
+		};
+
+		console.log(data)
+
 		try {
-			fetch(url, {
-				method: 'PUT',
-				body: file
-			}).then(() => {
-				setUploadedPicture(uploadedPicture => [...uploadedPicture, file.name])
-			}).catch((e) => {
-				console.error(e);
+			await fetch("/api/milestone", {
+				method: 'POST',
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: data
 			});
 		} catch (e) {
 			console.log(e)
@@ -105,18 +129,21 @@ export default function Index() {
 						</div>
 					</div>
 
-          <div className='flex gap-4 mt-10'>
-            <a className='bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md'
-               href={process.env.loginUrl}>
-              Login
-            </a>
+					<div className='flex gap-4 mt-10'>
+						<a className='bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md'
+							 href={process.env.loginUrl}>
+							Login
+						</a>
 						<form method="post" action={process.env.logoutUrl}>
-							<button className="bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md" type="submit">Log Out</button>
+							<button className="bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md"
+											type="submit">Log Out
+							</button>
 						</form>
-          </div>
+					</div>
 
 					<h1 className={'text-2xl mt-10'}>Milestone</h1>
-					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple onChange={(e) => setMilestonePicture(e.target.files)}/>
+					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
+								 onChange={(e) => setMilestonePicture(e.target.files)}/>
 					<img className={'w-40'} id={'pic'} src={''}></img>
 					<label htmlFor={'milestoneDescription'}>Description</label>
 					<input
@@ -127,8 +154,9 @@ export default function Index() {
 
 					{uploadedPicture.map((picture) => {
 						return (
-									<p key={picture}>{picture}</p>
-						)})}
+								<p key={picture}>{picture}</p>
+						)
+					})}
 				</div>
 			</div>
 	)

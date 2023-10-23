@@ -10,6 +10,7 @@ import com.embrave.appbackend.repository.UserRepository;
 import io.minio.MinioClient;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -24,6 +25,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 // For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
@@ -42,54 +45,26 @@ public class MilestoneController {
     @Autowired
     private MinioService minioService;
 
-    @PostMapping(path="/milestone" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public @ResponseBody void saveMilestone(
-            @RequestParam MultipartFile[] file,
-            @RequestParam String description,
-            @RequestParam String room,
-            @AuthenticationPrincipal Jwt jwt) throws IOException, NoSuchAlgorithmException, InvalidKeyException {
+    @PostMapping(path = "/milestone", consumes = APPLICATION_JSON_VALUE)
+    public @ResponseBody void saveMilestone(@RequestBody HttpEntity<String> body, @AuthenticationPrincipal Jwt jwt) {
 
-        System.out.println("TG: " + file.length);
-        System.out.println("DESC: " + description);
-        System.out.println("ROOM: " + room);
+        String json = body.getBody();
 
-        for (MultipartFile wow : file) {
-
-            System.out.println("TG: " + wow.getName());
-            System.out.println("TG: " + wow.getOriginalFilename());
-            System.out.println("TG: " + wow.getSize());
-            System.out.println("TG: " + wow.getResource().getFilename());
-            System.out.println();
-
-            minioService.upload(wow);
-        }
-
+        System.out.println("JSON :  " + json);
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
+        /*String description = body.get("description");
+        Room room = roomRepository.getById((Long.valueOf(body.get("room"))));
+        String files = body.get("files");
+
+        System.out.println("RES FILE NAME : " + files);
+        System.out.println("RES ROOM NAME : " + room);
+        System.out.println("RES USER NAME : " + user);
+        System.out.println("RES DESCRIPTION : " + description);*/
+
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-
-        //List<Object> roomID = formData.get("room");
-       /* String files = body.get("files");
-        String description = body.get("description");*/
-
-        //System.out.println("ROOM : " + roomID);
-        //System.out.println("FILES : " + files);
-        //System.out.println("DESCRIPTION : " + description);
-
-        //Room room = null;
-        
-        /*if(roomRepository.existsById(Long.valueOf(roomID))) {
-            room = roomRepository.getById(Long.valueOf(roomID));
-        }*/
-
-
-        //Milestone milestone = new Milestone(room, user, description, timestamp);
-
-        //return milestoneRepository.save(milestone);
-
 
     }
 
