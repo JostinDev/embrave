@@ -95,21 +95,24 @@ export default function Index() {
 		console.log('SAVE MILESTONE')
 		console.log(pictureLink)
 
+		const formData = new FormData()
+
+		formData.append('description', milestoneDescription)
+		formData.append('room', "552")
+		formData.append('files', pictureLink)
+
 		const data = {
 			room: milestoneID,
 			description: milestoneDescription,
 			files: pictureLink
 		};
 
-		console.log(data)
+		console.log(JSON.stringify(data))
 
 		try {
 			await fetch("/api/milestone", {
 				method: 'POST',
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: data
+				body: formData
 			});
 		} catch (e) {
 			console.log(e)

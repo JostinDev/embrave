@@ -9,6 +9,8 @@ import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
 import io.minio.MinioClient;
 import io.minio.errors.*;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
@@ -22,7 +24,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Array;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,24 +49,25 @@ public class MilestoneController {
     @Autowired
     private MinioService minioService;
 
-    @PostMapping(path = "/milestone", consumes = APPLICATION_JSON_VALUE)
-    public @ResponseBody void saveMilestone(@RequestBody HttpEntity<String> body, @AuthenticationPrincipal Jwt jwt) {
+    @PostMapping(path = "/milestone", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public @ResponseBody void saveMilestone(
+            @RequestParam String[] files,
+            @RequestParam String description,
+            @RequestParam String room,
+            @AuthenticationPrincipal Jwt jwt) {
 
-        String json = body.getBody();
+        System.out.println("JSON :  " + Arrays.toString(files));
 
-        System.out.println("JSON :  " + json);
+        for (String filename: files) {
+            System.out.println("JSON :  " + filename);
+        }
+
+        System.out.println("JSON :  " +  room);
+        System.out.println("JSON :  " +  description);
+
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
-
-        /*String description = body.get("description");
-        Room room = roomRepository.getById((Long.valueOf(body.get("room"))));
-        String files = body.get("files");
-
-        System.out.println("RES FILE NAME : " + files);
-        System.out.println("RES ROOM NAME : " + room);
-        System.out.println("RES USER NAME : " + user);
-        System.out.println("RES DESCRIPTION : " + description);*/
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
