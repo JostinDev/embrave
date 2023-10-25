@@ -71,6 +71,8 @@ public class MilestoneController {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        //TODO Store milestone and image in different tables
+
     }
 
     @GetMapping("/milestone/presigned/{filename}")
