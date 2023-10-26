@@ -53,7 +53,7 @@ public class MilestoneController {
     public @ResponseBody void saveMilestone(
             @RequestParam String[] files,
             @RequestParam String description,
-            @RequestParam String room,
+            @RequestParam String roomID,
             @AuthenticationPrincipal Jwt jwt) {
 
         System.out.println("JSON :  " + Arrays.toString(files));
@@ -62,7 +62,7 @@ public class MilestoneController {
             System.out.println("JSON :  " + filename);
         }
 
-        System.out.println("JSON :  " +  room);
+        System.out.println("JSON :  " +  roomID);
         System.out.println("JSON :  " +  description);
 
 
@@ -71,7 +71,11 @@ public class MilestoneController {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        Room room = roomRepository.getById(Long.valueOf(roomID));
+
         //TODO Store milestone and image in different tables
+
+        milestoneRepository.save(new Milestone(room, user, description, timestamp));
 
     }
 

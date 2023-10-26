@@ -98,7 +98,7 @@ export default function Index() {
 		const formData = new FormData()
 
 		formData.append('description', milestoneDescription)
-		formData.append('room', "552")
+		formData.append('roomID', "552")
 		formData.append('files', pictureLink)
 
 		const data = {
