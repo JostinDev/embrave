@@ -2,8 +2,10 @@ package com.embrave.appbackend.controller;
 
 import com.embrave.appbackend.Service.MinioService;
 import com.embrave.appbackend.model.Milestone;
+import com.embrave.appbackend.model.MilestoneMedia;
 import com.embrave.appbackend.model.Room;
 import com.embrave.appbackend.model.User;
+import com.embrave.appbackend.repository.MilestoneMediaRepository;
 import com.embrave.appbackend.repository.MilestoneRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
@@ -41,6 +43,9 @@ public class MilestoneController {
     private MilestoneRepository milestoneRepository;
 
     @Autowired
+    private MilestoneMediaRepository milestoneMediaRepository;
+
+    @Autowired
     private RoomRepository roomRepository;
 
     @Autowired
@@ -75,7 +80,12 @@ public class MilestoneController {
 
         //TODO Store milestone and image in different tables
 
-        milestoneRepository.save(new Milestone(room, user, description, timestamp));
+        Milestone milestone = milestoneRepository.save(new Milestone(room, user, description, timestamp));
+
+        for (String filename: files) {
+            System.out.println("JSON :  " + filename);
+            milestoneMediaRepository.save(new MilestoneMedia(milestone, filename));
+        }
 
     }
 
