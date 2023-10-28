@@ -9,4 +9,5 @@ import java.util.List;
 public interface MilestoneRepository extends CrudRepository<Milestone, Long> {
 
     List<Milestone> findMilestonesByRoomId(Long room);
+    Milestone getMilestoneById(Long id);
 }

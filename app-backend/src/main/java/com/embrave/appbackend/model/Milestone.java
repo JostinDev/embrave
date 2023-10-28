@@ -1,11 +1,15 @@
 package com.embrave.appbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "milestone")
@@ -27,6 +31,11 @@ public class Milestone {
 
     private String description;
     private Timestamp timestamp;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="milestone_id")
+    @JsonManagedReference
+    private Set<MilestoneMedia> milestoneMedia;
 
     public Milestone(Room room, User user, String description, Timestamp timestamp) {
         this.room = room;

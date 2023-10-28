@@ -31,6 +31,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -100,6 +101,9 @@ public class MilestoneController {
 
     @GetMapping("/milestone/{room}")
     public @ResponseBody List<Milestone> getMilestone(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt, Long id) {
+
+        Milestone milestone = milestoneRepository.getMilestoneById(2L);
+
         return milestoneRepository.findMilestonesByRoomId(room);
     }
 }

@@ -21,6 +21,7 @@ export default function Index() {
 
 		fetchDetails()
 		fetchChallenge()
+		fetchMilestone()
 
 
 	}, []);
@@ -118,6 +119,21 @@ export default function Index() {
 			console.log(e)
 		}
 	}
+
+
+	const fetchMilestone = async () => {
+		try {
+			const response = (await fetch('/api/milestone/552'))
+
+			const responseJSON = await response.json();
+			console.log(responseJSON)
+
+			console.log('GET ALL MILESTONES : ' , responseJSON)
+
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 			<div className="h-screen bg-blue-500 pt-20">

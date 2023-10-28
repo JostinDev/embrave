@@ -1,5 +1,6 @@
 package com.embrave.appbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class MilestoneMedia {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "milestone_id", referencedColumnName = "id")
+    @JsonBackReference
     private Milestone milestone;
 
     private String link;
