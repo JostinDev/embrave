@@ -15,6 +15,9 @@ export default function Index() {
 
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
+	const [milestoneList, setMilestoneList] = useState([]);
+	const [milestoneMedia, setMilestoneMedia] = useState([]);
+
 	let pictureLink = [];
 
 	useEffect(() => {
@@ -128,6 +131,9 @@ export default function Index() {
 			const responseJSON = await response.json();
 			console.log(responseJSON)
 
+			setMilestoneList(responseJSON)
+
+
 			console.log('GET ALL MILESTONES : ' , responseJSON)
 
 		} catch (error) {
@@ -176,6 +182,27 @@ export default function Index() {
 								<p key={picture}>{picture}</p>
 						)
 					})}
+
+
+					<div className={'mt-16'}>
+						<h1 className={'text-2xl mt-10'}>Milestone List</h1>
+
+						{milestoneList.map((milestone) => {
+							return (
+									<div>
+										<p>{milestone.description}</p>
+
+										{milestone.milestoneMedia.map((media) => {
+											return (
+													<img src={`http://localhost:9000/embrave/${media.link}`}></img>
+											)
+										})}
+									</div>
+							)
+						})}
+
+
+					</div>
 				</div>
 			</div>
 	)
