@@ -38,8 +38,10 @@ public class RoomController {
     private UserRoomRepository userRoomRepository;
 
     @GetMapping("/room")
-    public @ResponseBody Iterable<Room> getRoom() {
-        return roomRepository.findAll();
+    public @ResponseBody Iterable<UserRoom> getRoom(@AuthenticationPrincipal Jwt jwt) {
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+        return userRoomRepository.findAllByUser(user);
     }
 
 
