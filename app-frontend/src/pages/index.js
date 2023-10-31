@@ -16,7 +16,6 @@ export default function Index() {
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
 	const [milestoneList, setMilestoneList] = useState([]);
-	const [milestoneMedia, setMilestoneMedia] = useState([]);
 
 	let pictureLink = [];
 
@@ -128,13 +127,15 @@ export default function Index() {
 		try {
 			const response = (await fetch('/api/milestone/552'))
 
-			const responseJSON = await response.json();
-			console.log(responseJSON)
+			await response.json().then((response) => {
+				console.log(response)
 
-			setMilestoneList(responseJSON)
+				setMilestoneList(response)
 
+				console.log('GET ALL MILESTONES : ' , response)
+					}
+			);
 
-			console.log('GET ALL MILESTONES : ' , responseJSON)
 
 		} catch (error) {
 			console.error(error);
@@ -200,8 +201,6 @@ export default function Index() {
 									</div>
 							)
 						})}
-
-
 					</div>
 				</div>
 			</div>
