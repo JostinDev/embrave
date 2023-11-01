@@ -1,6 +1,7 @@
 import '../app/globals.css';
 import {useEffect, useState} from "react";
 import {minio} from 'minio'
+import Link from "next/link";
 
 export default function Challenge() {
 
@@ -105,12 +106,12 @@ export default function Challenge() {
 
 					{room.map((room) => {
 						return (
-								<div key={room.id} className='bg-white border border-solid border-b-gray-400 mb-4'>
-									<p>Room ID : {room.id}</p>
-									<p>Room code : {room.code}</p>
-									<a href={"/api/room/join/" + room.link}>Room link : {room.link}</a>
-									<p>Room created : {room.created}</p>
-									<p onClick={() => joinRoom(room.code)} className='text-blue-600 cursor-pointer'>Join the room</p>
+								<div key={room.room.id} className='bg-white border border-solid border-b-gray-400 mb-4'>
+									<Link href={`/room/${room.room.id}`}>Room ID : {room.room.id}</Link>
+									<p>Room code : {room.room.code}</p>
+									<a href={"/api/room/join/" + room.link}>Room link : {room.room.link}</a>
+									<p>Room created : {room.room.created}</p>
+									<p onClick={() => joinRoom(room.room.code)} className='text-blue-600 cursor-pointer'>Join the room</p>
 								</div>
 						)})}
 				</div>

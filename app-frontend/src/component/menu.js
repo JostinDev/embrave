@@ -8,7 +8,7 @@ export default function Menu() {
 			<div className="w-full h-24 bg-white">
 				<Link href="/">Home</Link>
 				<Link href="/challenge">Challenge</Link>
-				<Link href="/room">Room</Link>
+				<Link href="/room/room">Room</Link>
 			</div>
 	)
 }
