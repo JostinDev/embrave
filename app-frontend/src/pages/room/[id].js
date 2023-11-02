@@ -146,11 +146,18 @@ export default function Challenge() {
 						)
 					})}
 					<div className={'mt-16'}>
-						<h1 className={'text-2xl mt-10'}>Milestone List</h1>
+						<h1 className={'text-2xl my-10'}>Milestone List</h1>
 
 						{milestoneList.map((milestone) => {
 							return (
-									<div>
+									<div className={'mb-10'}>
+										<div className={'flex items-center mb-4'}>
+											<img className={'rounded-full'} src={milestone.user.avatar} />
+											<div className={'ml-4'}>
+												<p>{milestone.user.name}</p>
+												<p>{milestone.timestamp}</p>
+											</div>
+										</div>
 										<p>{milestone.description}</p>
 										<div className={'flex flex-row w-full'}>
 											{milestone.milestoneMedia.map((media) => {
