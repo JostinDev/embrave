@@ -12,7 +12,6 @@ import com.embrave.appbackend.utils.JSONMessage;
 import com.embrave.appbackend.utils.RandomString;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -36,6 +34,12 @@ public class RoomController {
     private UserRepository userRepository;
     @Autowired
     private UserRoomRepository userRoomRepository;
+
+    private UserController userController;
+
+    public RoomController(UserController userController) {
+        this.userController = userController;
+    }
 
     @GetMapping("/room")
     public @ResponseBody Iterable<UserRoom> getRoom(@AuthenticationPrincipal Jwt jwt) {
@@ -122,6 +126,7 @@ public class RoomController {
     private void joinRoom(Room room, User user, LocalDate joined) {
         UserRoom userRoom = new UserRoom(room, user, joined);
         userRoomRepository.save(userRoom);
+        userController.addPoints(user,10L);
     }
 
 }

@@ -2,6 +2,7 @@ package com.embrave.appbackend.controller;
 
 import com.embrave.appbackend.model.User;
 import com.embrave.appbackend.repository.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -35,5 +36,12 @@ public class UserController {
         }
 
         return userRepository.findByAuth0Id(auth0Id);
+    }
+
+    public void addPoints(@NotNull User user, Long points) {
+
+        user.setPoints(user.getPoints() + points);
+
+        userRepository.save(user);
     }
 }

@@ -9,6 +9,7 @@ export default function Index() {
 	const [email, setEmail] = useState('Log in to see your profile...');
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);
+	const [points, setPoints] = useState(0);
 
 
 	const [milestoneList, setMilestoneList] = useState([]);
@@ -19,8 +20,6 @@ export default function Index() {
 
 		fetchDetails()
 		fetchChallenge()
-		//fetchMilestone()
-
 
 	}, []);
 
@@ -32,6 +31,7 @@ export default function Index() {
 			setEmail(user.email)
 			setName(user.name)
 			setAvatar(user.avatar)
+			setPoints(user.points)
 
 		} catch (error) {
 			console.error("User not logged in");
@@ -63,6 +63,7 @@ export default function Index() {
 						<div>
 							<p className='text-xl'>{name}</p>
 							<p className='text-lg'>{email}</p>
+							<p className='text-lg'>{points}</p>
 						</div>
 					</div>
 
