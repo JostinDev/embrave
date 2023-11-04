@@ -25,6 +25,7 @@ export default function Challenge() {
 			const { id } = router.query;
 			if (!id) return null;
 			fetchMilestone()
+			fetchMilestoneTime()
 		}
 		console.log(id)
 		console.log(router.query)
@@ -42,6 +43,23 @@ export default function Challenge() {
 						setMilestoneList(response)
 
 						console.log('GET ALL MILESTONES : ' , response)
+					}
+			);
+
+
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const fetchMilestoneTime = async () => {
+		try {
+			const response = (await fetch(`/api/milestone/time/${id}`))
+
+			await response.json().then((response) => {
+						console.log(response)
+
+						console.log('GET ALL TIME : ' , response)
 					}
 			);
 

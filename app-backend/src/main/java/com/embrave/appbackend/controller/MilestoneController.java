@@ -102,8 +102,15 @@ public class MilestoneController {
     @GetMapping("/milestone/{room}")
     public @ResponseBody List<Milestone> getMilestone(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt, Long id) {
 
-        Milestone milestone = milestoneRepository.getMilestoneById(2L);
-
         return milestoneRepository.findMilestonesByRoomId(room);
+    }
+
+    @GetMapping("/milestone/time/{room}")
+    public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt, Long id) {
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        return milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId());
     }
 }

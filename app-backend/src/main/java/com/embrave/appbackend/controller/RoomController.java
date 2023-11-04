@@ -10,6 +10,7 @@ import com.embrave.appbackend.repository.UserRepository;
 import com.embrave.appbackend.repository.UserRoomRepository;
 import com.embrave.appbackend.utils.JSONMessage;
 import com.embrave.appbackend.utils.RandomString;
+import com.embrave.appbackend.values.PointsValues;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -126,7 +127,7 @@ public class RoomController {
     private void joinRoom(Room room, User user, LocalDate joined) {
         UserRoom userRoom = new UserRoom(room, user, joined);
         userRoomRepository.save(userRoom);
-        userController.addPoints(user,10L);
+        userController.addPoints(user, PointsValues.JOIN_CHALLENGE);
     }
 
 }
