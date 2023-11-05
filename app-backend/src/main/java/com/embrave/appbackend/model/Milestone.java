@@ -31,6 +31,7 @@ public class Milestone {
 
     private String description;
     private Timestamp timestamp;
+    private Boolean ticked;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="milestone_id")

@@ -14,12 +14,16 @@ export default function Challenge() {
 
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
+	const [weekday, setWeekday] = useState([]);
+
 	const router = useRouter()
 	const { id } = router.query
 
 	let pictureLink = [];
 
 	useEffect(() => {
+
+		datePicker()
 
 		if(router.isReady){
 			const { id } = router.query;
@@ -31,6 +35,52 @@ export default function Challenge() {
 		console.log(router.query)
 
 	}, [router.isReady]);
+
+
+	const datePicker = () => {
+
+		const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+		const now = new Date();
+		const day = now.getDay();
+		console.log(day)
+
+		let today = weekday[day];
+		console.log(today)
+
+		const reorderArr = (i, arr) => {
+			return [...arr.slice(i), ...arr.slice(0,i)];
+		}
+
+		const reorderedArr = reorderArr(0, weekday);
+		console.log(reorderedArr)
+
+		setWeekday(reorderedArr);
+
+
+		let yourDate = new Date()
+		const offset = yourDate.getTimezoneOffset()
+		yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+
+		console.log(yourDate.toISOString().split('T')[0])
+		let test = yourDate.toISOString().split('T')[0]
+
+		let weekDate = []
+		for (let i = 0; i < 7; i++) {
+			weekDate[i] = new Date(yourDate.getTime() - (offset*60*1000) - ((1000*60*60*24) * i)).toISOString().split('T')[0];
+			console.log("GET DAY NAME : ",getDayName(new Date(weekDate[i])));
+		}
+
+		console.log("WEEKDATE : ", weekDate)
+
+		setWeekday(weekDate);
+
+	}
+
+
+	function getDayName(date = new Date(), locale = 'en-US') {
+		return date.toLocaleDateString(locale, {weekday: 'long'});
+	}
 
 
 	const fetchMilestone = async () => {
@@ -117,7 +167,6 @@ export default function Challenge() {
 		const formData = new FormData()
 
 
-
 		formData.append('description', milestoneDescription)
 		formData.append('roomID', id)
 		formData.append('files', pictureLink)
@@ -141,11 +190,18 @@ export default function Challenge() {
 	}
 
 
-
 	return (
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
+
+					<div className='flex flex-row-reverse gap-2'>
+						{weekday.map((day) => {
+							return (
+										<p className={'cursor-pointer text-white bg-blue-500 rounded-full p-2'}>{getDayName(new Date(day))}</p>
+							)
+						})}
+					</div>
 
 					<h1 className={'text-2xl mt-10'}>Milestone</h1>
 					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
