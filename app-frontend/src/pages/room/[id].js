@@ -16,6 +16,9 @@ export default function Challenge() {
 
 	const [weekday, setWeekday] = useState([]);
 
+
+	const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
+
 	const router = useRouter()
 	const { id } = router.query
 
@@ -54,9 +57,6 @@ export default function Challenge() {
 
 		const reorderedArr = reorderArr(0, weekday);
 		console.log(reorderedArr)
-
-		setWeekday(reorderedArr);
-
 
 		let yourDate = new Date()
 		const offset = yourDate.getTimezoneOffset()
@@ -107,11 +107,16 @@ export default function Challenge() {
 			const response = (await fetch(`/api/milestone/time/${id}`))
 
 			await response.json().then((response) => {
-						console.log(response)
 
-						console.log('GET ALL TIME : ' , response)
-					}
-			);
+
+				response.forEach((date, i) => {
+					response[i] = new Date(response[i]).toISOString().split('T')[0]
+				});
+
+				console.log('THE RESPONSE :', response);
+				setMilestoneDoneAt(response)
+
+			});
 
 
 		} catch (error) {
@@ -198,7 +203,7 @@ export default function Challenge() {
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
 							return (
-										<p className={'cursor-pointer text-white bg-blue-500 rounded-full p-2'}>{getDayName(new Date(day))}</p>
+										<p className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day)? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
 							)
 						})}
 					</div>
