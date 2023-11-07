@@ -62,16 +62,11 @@ export default function Challenge() {
 		const offset = yourDate.getTimezoneOffset()
 		yourDate = new Date(yourDate.getTime() - (offset*60*1000))
 
-		console.log(yourDate.toISOString().split('T')[0])
-		let test = yourDate.toISOString().split('T')[0]
 
 		let weekDate = []
 		for (let i = 0; i < 7; i++) {
 			weekDate[i] = new Date(yourDate.getTime() - (offset*60*1000) - ((1000*60*60*24) * i)).toISOString().split('T')[0];
-			console.log("GET DAY NAME : ",getDayName(new Date(weekDate[i])));
 		}
-
-		console.log("WEEKDATE : ", weekDate)
 
 		setWeekday(weekDate);
 
@@ -105,17 +100,23 @@ export default function Challenge() {
 	const fetchMilestoneTime = async () => {
 		try {
 			const response = (await fetch(`/api/milestone/time/${id}`))
-
 			await response.json().then((response) => {
 
+				console.log('THE RESPONSE :', response);
+
+				let yourDate = new Date()
+				const offset = yourDate.getTimezoneOffset()
+				yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+				console.log(yourDate.getTime())
 
 				response.forEach((date, i) => {
-					response[i] = new Date(response[i]).toISOString().split('T')[0]
+					let test = new Date(response[i]);
+					let newDate =  new Date(test.getTime() - (offset*60*1000))
+					response[i] = newDate.toISOString().split('T')[0]
 				});
 
-				console.log('THE RESPONSE :', response);
 				setMilestoneDoneAt(response)
-
+				console.log('THE RESPONSE :', response);
 			});
 
 
@@ -195,6 +196,24 @@ export default function Challenge() {
 	}
 
 
+	async function saveTickedMilestone(isTicked, day) {
+
+		const data = { milestone_ticked: isTicked, milestone_doneAt: day};
+
+			await fetch(`/api/milestone/ticked/${id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			}).then((response) => {
+				console.log("Success:", response);
+			}).catch((e) => {
+				console.log("Error:", e);
+			});
+	}
+
+
 	return (
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
@@ -203,7 +222,7 @@ export default function Challenge() {
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
 							return (
-										<p className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day)? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
+										<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)} className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day)? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
 							)
 						})}
 					</div>

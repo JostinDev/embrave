@@ -9,6 +9,7 @@ import com.embrave.appbackend.repository.MilestoneMediaRepository;
 import com.embrave.appbackend.repository.MilestoneRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
+import com.embrave.appbackend.utils.JSONMessage;
 import io.minio.MinioClient;
 import io.minio.errors.*;
 import net.minidev.json.JSONArray;
@@ -28,10 +29,9 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Array;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -111,6 +111,46 @@ public class MilestoneController {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
+        System.out.println("LES MILESTONES TIME  : " + milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId()));
+
         return milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId());
+    }
+
+    @PostMapping("/milestone/ticked/{roomID}")
+    @ResponseBody
+    public Map<String, String> joinRoomWithCode(@PathVariable Long roomID ,@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        boolean isMilestoneTicked = Boolean.parseBoolean(body.get("milestone_ticked"));
+        String milestone_doneAt = body.get("milestone_doneAt");
+        System.out.println("milestone_doneAt" + milestone_doneAt);
+
+        Room room = roomRepository.getById(roomID);
+        Timestamp timestamp = null;
+
+
+
+        if(!isMilestoneTicked) {
+
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(milestone_doneAt);
+                timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                Milestone milestone = new Milestone(room, user, "", timestamp);
+                milestone.setTicked(true);
+                milestoneRepository.save(milestone);
+                return JSONMessage.create("success","Ticked milestone created");
+
+
+            } catch(Exception e) { //this generic but you can control another types of exception
+                System.out.println("Error is here : " + e );
+            }
+
+       }
+
+        return JSONMessage.create("error","oops");
     }
 }
