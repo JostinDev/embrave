@@ -17,4 +17,10 @@ public interface MilestoneRepository extends CrudRepository<Milestone, Long> {
 
     @Query(value = "SELECT MIN(timestamp) AS time FROM milestone WHERE user_id = :user_id AND room_id = :room_id GROUP BY room_id, user_id, DATE(timestamp) ORDER BY time DESC", nativeQuery = true)
     List<Timestamp> getMilestoneTimestampByRoomUser( @Param("room_id") Long room_id, @Param("user_id") Long user_id);
+
+    @Query(value = "SELECT COUNT(*) FROM milestone WHERE user_id = :user_id AND room_id = :room_id AND DATE(timestamp) = DATE(:timestamp)", nativeQuery = true)
+    int getMilestoneDoneByDate( @Param("room_id") Long room_id, @Param("user_id") Long user_id, @Param("timestamp") Timestamp timestamp);
+
+    @Query(value = "SELECT COUNT(*) FROM milestone WHERE user_id = :user_id AND room_id = :room_id AND DATE(timestamp) = DATE(:timestamp) AND ticked = :ticked", nativeQuery = true)
+    int getMilestoneDoneByDateAndTicked( @Param("room_id") Long room_id, @Param("user_id") Long user_id, @Param("timestamp") Timestamp timestamp,@Param("timestamp") Boolean ticked );
 }

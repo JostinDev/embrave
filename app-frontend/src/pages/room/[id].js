@@ -112,6 +112,7 @@ export default function Challenge() {
 				response.forEach((date, i) => {
 					let test = new Date(response[i]);
 					let newDate =  new Date(test.getTime() - (offset*60*1000))
+					console.log(newDate)
 					response[i] = newDate.toISOString().split('T')[0]
 				});
 

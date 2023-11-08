@@ -128,28 +128,39 @@ public class MilestoneController {
         System.out.println("milestone_doneAt" + milestone_doneAt);
 
         Room room = roomRepository.getById(roomID);
-        Timestamp timestamp = null;
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(milestone_doneAt);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
 
-
-        if(!isMilestoneTicked) {
-
-            try {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date parsedDate = dateFormat.parse(milestone_doneAt);
-                timestamp = new java.sql.Timestamp(parsedDate.getTime());
-
+            // Check if a milestone at the given timestamp already exists
+            if(milestoneRepository.getMilestoneDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
                 Milestone milestone = new Milestone(room, user, "", timestamp);
                 milestone.setTicked(true);
                 milestoneRepository.save(milestone);
                 return JSONMessage.create("success","Ticked milestone created");
+            } else {
+                // If a milestone already exists at the given timestamp
+                // Check if a milestone with description
+                if(milestoneRepository.getMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
+                    // If no milestone with description exists, it means only a ticked milestone exists
 
-
-            } catch(Exception e) { //this generic but you can control another types of exception
-                System.out.println("Error is here : " + e );
+                    // TODO Remove the ticked milestone for this milestone
+                }
             }
 
-       }
+        } catch(Exception e) { //this generic but you can control another types of exception
+            System.out.println("Error is here : " + e );
+        }
+
+
+
+
+
+
+
 
         return JSONMessage.create("error","oops");
     }
