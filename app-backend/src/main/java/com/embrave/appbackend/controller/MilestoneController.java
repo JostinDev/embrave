@@ -136,7 +136,8 @@ public class MilestoneController {
 
 
             // Check if a milestone at the given timestamp already exists
-            if(milestoneRepository.getMilestoneDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
+            if(milestoneRepository.getMilestoneNumberDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
+                System.out.println("TICKED : Milestone created");
                 Milestone milestone = new Milestone(room, user, "", timestamp);
                 milestone.setTicked(true);
                 milestoneRepository.save(milestone);
@@ -144,23 +145,24 @@ public class MilestoneController {
             } else {
                 // If a milestone already exists at the given timestamp
                 // Check if a milestone with description
-                if(milestoneRepository.getMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
+                System.out.println("TICKED : Already exists at the timestamp");
+
+                if(milestoneRepository.getMilestoneNumberDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
                     // If no milestone with description exists, it means only a ticked milestone exists
+                    System.out.println("TICKED : No standard milestone exists, deleting...");
+
+                    System.out.println("TICKED :" + roomID);
+                    System.out.println("TICKED :" + user.getId());
+                    System.out.println("TICKED :" + timestamp);
 
                     // TODO Remove the ticked milestone for this milestone
+                    milestoneRepository.deleteMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp);
                 }
             }
 
         } catch(Exception e) { //this generic but you can control another types of exception
             System.out.println("Error is here : " + e );
         }
-
-
-
-
-
-
-
 
         return JSONMessage.create("error","oops");
     }
