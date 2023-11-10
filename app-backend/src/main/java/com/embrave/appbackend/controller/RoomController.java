@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -128,6 +129,14 @@ public class RoomController {
         UserRoom userRoom = new UserRoom(room, user, joined);
         userRoomRepository.save(userRoom);
         userController.addPoints(user, PointsValues.JOIN_CHALLENGE);
+    }
+
+    @GetMapping("/room/streak/{roomID}")
+    public @ResponseBody Iterable<Date> getRoomStreak(@AuthenticationPrincipal Jwt jwt, @PathVariable Long roomID) {
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        return roomRepository.getAllActiveDate(user.getId(), roomID);
     }
 
 }
