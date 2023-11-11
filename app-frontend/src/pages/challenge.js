@@ -34,7 +34,17 @@ export default function Challenge() {
 			const response = (await fetch('/api/room'))
 
 			const responseJSON = await response.json();
+
+			for (const room of responseJSON) {
+				console.log(room.room.id)
+				const streak = (await fetch(`/api/room/streak/${room.room.id}`))
+				const streakResponse = await streak.json();
+				room.streak = streakResponse;
+			}
+
+
 			setRoom(responseJSON)
+
 
 			console.log('GET ALL ROOMS : ' , responseJSON)
 
@@ -108,6 +118,7 @@ export default function Challenge() {
 						return (
 								<div key={room.room.id} className='bg-white border border-solid border-b-gray-400 mb-4'>
 									<Link href={`/room/${room.room.id}`}>Room ID : {room.room.id}</Link>
+									<p>Streak : {room.streak}</p>
 									<p>Room code : {room.room.code}</p>
 									<a href={"/api/room/join/" + room.link}>Room link : {room.room.link}</a>
 									<p>Room created : {room.room.created}</p>

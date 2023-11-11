@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -132,11 +136,44 @@ public class RoomController {
     }
 
     @GetMapping("/room/streak/{roomID}")
-    public @ResponseBody Iterable<Date> getRoomStreak(@AuthenticationPrincipal Jwt jwt, @PathVariable Long roomID) {
+    public @ResponseBody int getRoomStreak(@AuthenticationPrincipal Jwt jwt, @PathVariable Long roomID) throws ParseException {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-        return roomRepository.getAllActiveDate(user.getId(), roomID);
+
+
+        List<String> dates = roomRepository.getAllActiveDate(user.getId(), roomID);
+
+        System.out.println("All dates : " + dates);
+        System.out.println("All dates : " +  dates.size());
+
+        LocalDate streakProtection = LocalDate.now().minusDays(7);
+        int streak = 0;
+
+        for (int i = 0; i < dates.size() - 1; i++) {
+
+            LocalDate date = LocalDate.parse(dates.get(i));
+            System.out.println("Date : " + date);
+
+            if(date.isAfter(streakProtection)) {
+                System.out.println("Date : " + date + " is after streak protection : " + streakProtection);
+                if(date.minusDays(1).equals(LocalDate.parse(dates.get(i + 1)))) {
+                    streak++;
+                } else {
+                    streak = 0;
+                }
+            } else {
+                System.out.println("Date : " + date + " is before streak protection : " + streakProtection);
+                if(date.minusDays(1).equals(LocalDate.parse(dates.get(i + 1)))) {
+                    streak++;
+                } else {
+                    return streak;
+                }
+            }
+        }
+
+        System.out.println("STREAK : " + streak);
+        return streak;
     }
 
 }
