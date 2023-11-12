@@ -20,7 +20,7 @@ export default function Challenge() {
 	const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
 
 	const router = useRouter()
-	const { id } = router.query
+	const {id} = router.query
 
 	let pictureLink = [];
 
@@ -28,8 +28,8 @@ export default function Challenge() {
 
 		datePicker()
 
-		if(router.isReady){
-			const { id } = router.query;
+		if (router.isReady) {
+			const {id} = router.query;
 			if (!id) return null;
 			fetchMilestone()
 			fetchMilestoneTime()
@@ -42,7 +42,7 @@ export default function Challenge() {
 
 	const datePicker = () => {
 
-		const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 		const now = new Date();
 		const day = now.getDay();
@@ -52,7 +52,7 @@ export default function Challenge() {
 		console.log(today)
 
 		const reorderArr = (i, arr) => {
-			return [...arr.slice(i), ...arr.slice(0,i)];
+			return [...arr.slice(i), ...arr.slice(0, i)];
 		}
 
 		const reorderedArr = reorderArr(0, weekday);
@@ -60,12 +60,12 @@ export default function Challenge() {
 
 		let yourDate = new Date()
 		const offset = yourDate.getTimezoneOffset()
-		yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+		yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
 
 
 		let weekDate = []
 		for (let i = 0; i < 7; i++) {
-			weekDate[i] = new Date(yourDate.getTime() - (offset*60*1000) - ((1000*60*60*24) * i)).toISOString().split('T')[0];
+			weekDate[i] = new Date(yourDate.getTime() - (offset * 60 * 1000) - ((1000 * 60 * 60 * 24) * i)).toISOString().split('T')[0];
 		}
 
 		setWeekday(weekDate);
@@ -87,7 +87,7 @@ export default function Challenge() {
 
 						setMilestoneList(response)
 
-						console.log('GET ALL MILESTONES : ' , response)
+						console.log('GET ALL MILESTONES : ', response)
 					}
 			);
 
@@ -106,12 +106,12 @@ export default function Challenge() {
 
 				let yourDate = new Date()
 				const offset = yourDate.getTimezoneOffset()
-				yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+				yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
 				console.log(yourDate.getTime())
 
 				response.forEach((date, i) => {
 					let test = new Date(response[i]);
-					let newDate =  new Date(test.getTime() - (offset*60*1000))
+					let newDate = new Date(test.getTime() - (offset * 60 * 1000))
 					console.log(newDate)
 					response[i] = newDate.toISOString().split('T')[0]
 				});
@@ -199,19 +199,19 @@ export default function Challenge() {
 
 	async function saveTickedMilestone(isTicked, day) {
 
-		const data = { milestone_ticked: isTicked, milestone_doneAt: day};
+		const data = {milestone_ticked: isTicked, milestone_doneAt: day};
 
-			await fetch(`/api/milestone/ticked/${id}`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			}).then((response) => {
-				console.log("Success:", response);
-			}).catch((e) => {
-				console.log("Error:", e);
-			});
+		await fetch(`/api/milestone/ticked/${id}`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		}).then((response) => {
+			console.log("Success:", response);
+		}).catch((e) => {
+			console.log("Error:", e);
+		});
 	}
 
 
@@ -223,12 +223,15 @@ export default function Challenge() {
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
 							return (
-										<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)} className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day)? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
+									<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
+										 className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day) ? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
 							)
 						})}
 					</div>
 
 					<h1 className={'text-2xl mt-10'}>Milestone</h1>
+
+					{/* TODO only allow 4 pictures to be uploaded */}
 					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
 								 onChange={(e) => setMilestonePicture(e.target.files)}/>
 					<img className={'w-40'} id={'pic'} src={''}></img>
@@ -251,7 +254,7 @@ export default function Challenge() {
 							return (
 									<div className={'mb-10'}>
 										<div className={'flex items-center mb-4'}>
-											<img className={'rounded-full'} src={milestone.user.avatar} />
+											<img className={'rounded-full'} src={milestone.user.avatar}/>
 											<div className={'ml-4'}>
 												<p>{milestone.user.name}</p>
 												<p>{milestone.timestamp}</p>
@@ -261,7 +264,7 @@ export default function Challenge() {
 										<div className={'flex flex-row w-full'}>
 											{milestone.milestoneMedia.map((media) => {
 												return (
-															<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
+														<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
 
 												)
 											})}

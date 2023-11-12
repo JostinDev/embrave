@@ -140,8 +140,6 @@ public class RoomController {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-
-
         List<String> dates = roomRepository.getAllActiveDate(user.getId(), roomID);
 
         System.out.println("All dates : " + dates);
