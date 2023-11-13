@@ -11,4 +11,6 @@ public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
 
     List<UserRoom> findAllByUser(User user);
 
+    Boolean existsUserRoomByRoomIdAndUserId(Long room, Long user);
+
 }

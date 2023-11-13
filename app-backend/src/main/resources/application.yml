@@ -26,3 +26,7 @@ debug: true
 logging:
   level:
     root: debug
+
+server:
+  error:
+    include-message: always

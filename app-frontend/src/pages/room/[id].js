@@ -10,7 +10,7 @@ export default function Challenge() {
 	const [milestoneList, setMilestoneList] = useState([]);
 
 	const [milestonePicture, setMilestonePicture] = useState([]);
-	const [milestoneDescription, setMilestoneDescription] = useState();
+	const [milestoneDescription, setMilestoneDescription] = useState("");
 
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
@@ -166,7 +166,7 @@ export default function Challenge() {
 		await saveMilestone(id)
 	}
 
-	async function saveMilestone(milestoneID) {
+	async function saveMilestone() {
 		console.log('SAVE MILESTONE')
 		console.log(pictureLink)
 		console.log('FOR MILESTONE : ', id)
@@ -178,22 +178,15 @@ export default function Challenge() {
 		formData.append('roomID', id)
 		formData.append('files', pictureLink)
 
-		const data = {
-			room: milestoneID,
-			description: milestoneDescription,
-			files: pictureLink
-		};
+		const response = await fetch("/api/milestone", {
+			method: 'POST',
+			body: formData
+		});
 
-		console.log(JSON.stringify(data))
-
-		try {
-			await fetch("/api/milestone", {
-				method: 'POST',
-				body: formData
-			});
-		} catch (e) {
-			console.log(e)
-		}
+		await response.json().then((response) => {
+					console.log(response)
+				}
+		);
 	}
 
 
@@ -201,17 +194,13 @@ export default function Challenge() {
 
 		const data = {milestone_ticked: isTicked, milestone_doneAt: day};
 
-		await fetch(`/api/milestone/ticked/${id}`, {
+	await fetch(`/api/milestone/ticked/${id}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
-		}).then((response) => {
-			console.log("Success:", response);
-		}).catch((e) => {
-			console.log("Error:", e);
-		});
+		})
 	}
 
 

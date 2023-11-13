@@ -5,35 +5,23 @@ import com.embrave.appbackend.model.Milestone;
 import com.embrave.appbackend.model.MilestoneMedia;
 import com.embrave.appbackend.model.Room;
 import com.embrave.appbackend.model.User;
-import com.embrave.appbackend.repository.MilestoneMediaRepository;
-import com.embrave.appbackend.repository.MilestoneRepository;
-import com.embrave.appbackend.repository.RoomRepository;
-import com.embrave.appbackend.repository.UserRepository;
+import com.embrave.appbackend.repository.*;
 import com.embrave.appbackend.utils.JSONMessage;
-import io.minio.MinioClient;
 import io.minio.errors.*;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
 // For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
@@ -53,41 +41,42 @@ public class MilestoneController {
     private UserRepository userRepository;
 
     @Autowired
+    private UserRoomRepository userRoomRepository;
+
+    @Autowired
     private MinioService minioService;
 
     @PostMapping(path = "/milestone", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public @ResponseBody void saveMilestone(
+    public @ResponseBody Map<String, String> saveMilestone(
             @RequestParam String[] files,
             @RequestParam String description,
             @RequestParam String roomID,
             @AuthenticationPrincipal Jwt jwt) {
 
-        System.out.println("JSON :  " + Arrays.toString(files));
-
-        for (String filename: files) {
-            System.out.println("JSON :  " + filename);
+        if(Objects.equals(description, "" ) || description == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description can't be empty.");
         }
-
-        System.out.println("JSON :  " +  roomID);
-        System.out.println("JSON :  " +  description);
-
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        Room room = roomRepository.getById(Long.valueOf(roomID));
+        Optional<Room> room = roomRepository.findById(Long.valueOf(roomID));
 
-        //TODO Store milestone and image in different tables
-
-        Milestone milestone = milestoneRepository.save(new Milestone(room, user, description, timestamp));
-
-        for (String filename: files) {
-            System.out.println("JSON :  " + filename);
-            milestoneMediaRepository.save(new MilestoneMedia(milestone, filename));
+        if (room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
+                Milestone milestone = milestoneRepository.save(new Milestone(room.get(), user, description, timestamp));
+                for (String filename: files) {
+                    milestoneMediaRepository.save(new MilestoneMedia(milestone, filename));
+                }
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User isn't allowed to edit this milestone");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room doesn't exist");
         }
-
+        return JSONMessage.create("success","Milestone had been created");
     }
 
     @GetMapping("/milestone/presigned/{filename}")
@@ -155,12 +144,11 @@ public class MilestoneController {
                     System.out.println("TICKED :" + user.getId());
                     System.out.println("TICKED :" + timestamp);
 
-                    // TODO Remove the ticked milestone for this milestone
                     milestoneRepository.deleteMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp);
                 }
             }
 
-        } catch(Exception e) { //this generic but you can control another types of exception
+        } catch(Exception e) {
             System.out.println("Error is here : " + e );
         }
 
