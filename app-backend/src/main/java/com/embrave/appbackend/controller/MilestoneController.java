@@ -70,32 +70,42 @@ public class MilestoneController {
                 for (String filename: files) {
                     milestoneMediaRepository.save(new MilestoneMedia(milestone, filename));
                 }
-            } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User isn't allowed to edit this milestone");
+                return JSONMessage.create("success","Milestone had been created");
             }
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Room doesn't exist");
         }
-        return JSONMessage.create("success","Milestone had been created");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't save milestone");
     }
 
     @GetMapping("/milestone/presigned/{filename}")
     public @ResponseBody String getPresignedURL(@PathVariable String filename) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
-        String url = minioService.getPresignedURL(filename);
-        System.out.println("PRESIGNED URL : " +url);
-        return url;
+        if(!Objects.equals(filename, "")) {
+            return minioService.getPresignedURL(filename);
+        }
+
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Filename can't be empty");
     }
 
 
-    @GetMapping("/milestone/{room}")
-    public @ResponseBody List<Milestone> getMilestone(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt, Long id) {
+    @GetMapping("/milestone/{roomID}")
+    public @ResponseBody List<Milestone> getMilestone(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
 
-        return milestoneRepository.findMilestonesByRoomId(room);
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        if (room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
+                return milestoneRepository.findMilestonesByRoomId(roomID);
+            }
+        }
+
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't get milestones");
     }
 
     @GetMapping("/milestone/time/{room}")
-    public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt, Long id) {
+    public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));

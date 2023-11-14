@@ -167,7 +167,6 @@ export default function Challenge() {
 	}
 
 	async function saveMilestone() {
-		console.log('SAVE MILESTONE')
 		console.log(pictureLink)
 		console.log('FOR MILESTONE : ', id)
 
