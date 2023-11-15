@@ -110,8 +110,6 @@ public class MilestoneController {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-        System.out.println("LES MILESTONES TIME  : " + milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId()));
-
         return milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId());
     }
 
@@ -122,17 +120,13 @@ public class MilestoneController {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-        boolean isMilestoneTicked = Boolean.parseBoolean(body.get("milestone_ticked"));
         String milestone_doneAt = body.get("milestone_doneAt");
-        System.out.println("milestone_doneAt" + milestone_doneAt);
-
         Room room = roomRepository.getById(roomID);
 
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(milestone_doneAt);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-
 
             // Check if a milestone at the given timestamp already exists
             if(milestoneRepository.getMilestoneNumberDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
