@@ -107,6 +107,8 @@ public class MilestoneController {
     @GetMapping("/milestone/time/{room}")
     public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt) {
 
+        // TODO make sure the user is allowed to retrieve the timestamps
+        // TODO make sure the room exists
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
@@ -116,6 +118,8 @@ public class MilestoneController {
     @PostMapping("/milestone/ticked/{roomID}")
     @ResponseBody
     public Map<String, String> joinRoomWithCode(@PathVariable Long roomID ,@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
+
+        // TODO Secure this function
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
@@ -139,19 +143,11 @@ public class MilestoneController {
                 // If a milestone already exists at the given timestamp
                 // Check if a milestone with description
                 System.out.println("TICKED : Already exists at the timestamp");
-
                 if(milestoneRepository.getMilestoneNumberDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
                     // If no milestone with description exists, it means only a ticked milestone exists
-                    System.out.println("TICKED : No standard milestone exists, deleting...");
-
-                    System.out.println("TICKED :" + roomID);
-                    System.out.println("TICKED :" + user.getId());
-                    System.out.println("TICKED :" + timestamp);
-
                     milestoneRepository.deleteMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp);
                 }
             }
-
         } catch(Exception e) {
             System.out.println("Error is here : " + e );
         }
