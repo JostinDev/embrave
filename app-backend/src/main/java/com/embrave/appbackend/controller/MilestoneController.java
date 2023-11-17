@@ -104,15 +104,20 @@ public class MilestoneController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't get milestones");
     }
 
-    @GetMapping("/milestone/time/{room}")
-    public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long room, @AuthenticationPrincipal Jwt jwt) {
+    @GetMapping("/milestone/time/{roomID}")
+    public @ResponseBody List<Timestamp> getMilestoneTime(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
 
-        // TODO make sure the user is allowed to retrieve the timestamps
-        // TODO make sure the room exists
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-        return milestoneRepository.getMilestoneTimestampByRoomUser(room, user.getId());
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        if (room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
+                return milestoneRepository.getMilestoneTimestampByRoomUser(room.get().getId(), user.getId());
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't get timestamps");
     }
 
     @PostMapping("/milestone/ticked/{roomID}")

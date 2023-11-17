@@ -137,6 +137,7 @@ public class RoomController {
 
     @GetMapping("/room/streak/{roomID}")
     public @ResponseBody int getRoomStreak(@AuthenticationPrincipal Jwt jwt, @PathVariable Long roomID) throws ParseException {
+        // TODO control function. I suspect the "grace" time to be 8 days
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
