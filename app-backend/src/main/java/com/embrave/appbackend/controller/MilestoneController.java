@@ -122,41 +122,41 @@ public class MilestoneController {
 
     @PostMapping("/milestone/ticked/{roomID}")
     @ResponseBody
-    public Map<String, String> joinRoomWithCode(@PathVariable Long roomID ,@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
-
-        // TODO Secure this function
+    public Map<String, String> setTickedMilestone(@PathVariable Long roomID ,@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
-
         String milestone_doneAt = body.get("milestone_doneAt");
-        Room room = roomRepository.getById(roomID);
+        Optional<Room> room = roomRepository.findById(roomID);
 
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsedDate = dateFormat.parse(milestone_doneAt);
-            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+        if (room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate = dateFormat.parse(milestone_doneAt);
+                    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-            // Check if a milestone at the given timestamp already exists
-            if(milestoneRepository.getMilestoneNumberDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
-                System.out.println("TICKED : Milestone created");
-                Milestone milestone = new Milestone(room, user, "", timestamp);
-                milestone.setTicked(true);
-                milestoneRepository.save(milestone);
-                return JSONMessage.create("success","Ticked milestone created");
-            } else {
-                // If a milestone already exists at the given timestamp
-                // Check if a milestone with description
-                System.out.println("TICKED : Already exists at the timestamp");
-                if(milestoneRepository.getMilestoneNumberDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
-                    // If no milestone with description exists, it means only a ticked milestone exists
-                    milestoneRepository.deleteMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp);
+                    // Check if a milestone at the given timestamp already exists
+                    // If not, create an empty ticked milestone
+                    if(milestoneRepository.getMilestoneNumberDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
+                        Milestone milestone = new Milestone(room.get(), user, "", timestamp);
+                        milestone.setTicked(true);
+                        milestoneRepository.save(milestone);
+                        return JSONMessage.create("success","Ticked milestone created");
+                    } else {
+                        // If a milestone already exists at the given timestamp
+                        // Check if a milestone with description
+                        if(milestoneRepository.getMilestoneNumberDoneByDateAndTicked(roomID, user.getId(), timestamp, false) == 0) {
+                            // If no milestone with description exists, it means only a ticked milestone exists. Delete it
+                            milestoneRepository.deleteMilestoneDoneByDateAndTicked(roomID, user.getId(), timestamp);
+                            return JSONMessage.create("success","Ticked milestone deleted");
+                        }
+                    }
+                } catch(Exception e) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't set milestone");
                 }
             }
-        } catch(Exception e) {
-            System.out.println("Error is here : " + e );
         }
-
-        return JSONMessage.create("error","oops");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't set milestone");
     }
 }
