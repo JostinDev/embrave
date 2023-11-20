@@ -38,12 +38,19 @@ public class UserController {
         return userRepository.findByAuth0Id(auth0Id);
     }
 
+    @PostMapping("/user")
+    public @ResponseBody User postUser(@AuthenticationPrincipal Jwt jwt) {
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        return userRepository.save(user);
+    }
+
     public void addPoints(@NotNull User user, Long points) {
 
         user.setPoints(user.getPoints() + points);
 
         userRepository.save(user);
     }
-
-    //TODO update user data
 }
