@@ -2,6 +2,7 @@ package com.embrave.appbackend.controller;
 
 import com.embrave.appbackend.model.User;
 import com.embrave.appbackend.repository.UserRepository;
+import com.embrave.appbackend.utils.JSONMessage;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @RestController
 // For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
@@ -39,18 +41,22 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public @ResponseBody User postUser(@AuthenticationPrincipal Jwt jwt) {
+    public @ResponseBody Map<String, String> saveUser(@AuthenticationPrincipal Jwt jwt, @RequestBody Map<String, String> body) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-        return userRepository.save(user);
+        String username = body.get("username");
+
+        user.setName(username);
+        userRepository.save(user);
+
+        return JSONMessage.create("success","User saved");
     }
 
     public void addPoints(@NotNull User user, Long points) {
 
         user.setPoints(user.getPoints() + points);
-
         userRepository.save(user);
     }
 }

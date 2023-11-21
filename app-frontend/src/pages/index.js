@@ -12,7 +12,6 @@ export default function Index() {
 	const [points, setPoints] = useState(0);
 
 
-	const [milestoneList, setMilestoneList] = useState([]);
 
 
 
@@ -50,6 +49,24 @@ export default function Index() {
 		}
 	};
 
+	async function saveUser() {
+
+		const data = { username: name};
+
+		const response = await fetch("/api/user", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+
+		await response.json().then((response) => {
+					console.log(response)
+				}
+		);
+	}
+
 
 
 
@@ -62,10 +79,12 @@ export default function Index() {
 						<Image className='rounded-full' width={100} height={100} alt={''} src={avatar}/>
 						<div>
 							<p className='text-xl'>{name}</p>
+							<input onChange={(event) => setName(event.target.value)} className={'border-2 border-blue-500 '} value={name}/>
 							<p className='text-lg'>{email}</p>
 							<p className='text-lg'>{points}</p>
 						</div>
 					</div>
+					<p onClick={() => saveUser()} className={'cursor-pointer'}>Save new username</p>
 
 					<div className='flex gap-4 mt-10'>
 						<a className='bg-blue-500 hover:bg-blue-700 px-8 py-2 text-xl text-white rounded-md'
