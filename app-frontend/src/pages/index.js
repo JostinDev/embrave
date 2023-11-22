@@ -11,6 +11,10 @@ export default function Index() {
 	const [avatar, setAvatar] = useState(user);
 	const [points, setPoints] = useState(0);
 
+	const [countChallenge, setCountChallenge] = useState(0);
+	const [countMilestone, setCountMilestone] = useState(0);
+	const [countUser, setCountUser] = useState(0);
+	const [countRoom, setCountRoom] = useState(0);
 
 
 
@@ -19,6 +23,7 @@ export default function Index() {
 
 		fetchDetails()
 		fetchChallenge()
+		getStats()
 
 	}, []);
 
@@ -65,8 +70,27 @@ export default function Index() {
 					console.log(response)
 				}
 		);
+
 	}
 
+	async function getStats() {
+
+		(await fetch('/api/challenge/count')).json().then(response => {
+			setCountChallenge(response)
+		});
+
+		(await fetch('/api/room/count')).json().then(response => {
+			setCountRoom(response)
+		});
+
+		(await fetch('/api/user/count')).json().then(response => {
+			setCountUser(response)
+		});
+
+		(await fetch('/api/milestone/count')).json().then(response => {
+			setCountMilestone(response)
+		});
+	}
 
 
 
@@ -74,6 +98,14 @@ export default function Index() {
 			<div className="h-screen bg-blue-500 pt-20">
 				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<p className='text-3xl mb-10'>Enterprise Spring boot Gateway App</p>
+
+					<div className={'my-4'}>
+						<p className='text-2xl mb-4'>Some stats : </p>
+						<p className='text-xl'>Challenge count : {countChallenge}</p>
+						<p className='text-xl'>Room count : {countRoom}</p>
+						<p className='text-xl'>User count : {countUser}</p>
+						<p className='text-xl'>Milestone count : {countMilestone}</p>
+					</div>
 
 					<div className='flex gap-4 items-center'>
 						<Image className='rounded-full' width={100} height={100} alt={''} src={avatar}/>
@@ -104,3 +136,4 @@ export default function Index() {
 			</div>
 	)
 }
+

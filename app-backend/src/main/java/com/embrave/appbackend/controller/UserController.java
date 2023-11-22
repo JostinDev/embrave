@@ -54,6 +54,12 @@ public class UserController {
         return JSONMessage.create("success","User saved");
     }
 
+
+    @GetMapping("/user/count")
+    public @ResponseBody Long countUser() {
+        return userRepository.count();
+    }
+
     public void addPoints(@NotNull User user, Long points) {
 
         user.setPoints(user.getPoints() + points);

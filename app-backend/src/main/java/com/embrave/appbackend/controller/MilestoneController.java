@@ -159,4 +159,9 @@ public class MilestoneController {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't set milestone");
     }
+
+    @GetMapping("/milestone/count")
+    public @ResponseBody Long countMilestone() {
+        return milestoneRepository.count();
+    }
 }

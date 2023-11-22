@@ -175,4 +175,9 @@ public class RoomController {
         return streak;
     }
 
+    @GetMapping("/room/count")
+    public @ResponseBody Long countRoom() {
+        return roomRepository.count();
+    }
+
 }

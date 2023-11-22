@@ -24,4 +24,9 @@ public class ChallengeController {
     public @ResponseBody Optional<Challenge> getChallenge(@PathVariable("id") Long id) {
         return challengeRepository.findById(id);
     }
+
+    @GetMapping("/challenge/count")
+    public @ResponseBody Long countChallenge() {
+        return challengeRepository.count();
+    }
 }
