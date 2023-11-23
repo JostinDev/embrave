@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +53,7 @@ public class RoomController {
 
 
     @PostMapping("/room")
-    public void createRoom(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
+    public Map<String, String> createRoom(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
@@ -73,7 +70,10 @@ public class RoomController {
 
         Room room = new Room(challenge, code, link, localDate, new Timestamp(System.currentTimeMillis()));
 
-        joinRoom(room, user, localDate);
+        joinRoom(room, user, localDate, true);
+
+        return JSONMessage.create("Success","Successfully created the new room!");
+
 
     }
 
@@ -93,7 +93,7 @@ public class RoomController {
 
         if(roomRepository.existsRoomByCode(code)) {
             Room room = roomRepository.findRoomsByCode(code);
-            joinRoom(room, user, localDate);
+            joinRoom(room, user, localDate, false);
             return JSONMessage.create("error","Successfully joined the room");
         }
         return JSONMessage.create("error","Code is invalid");
@@ -118,7 +118,7 @@ public class RoomController {
         if(roomRepository.existsRoomByLink(link)) {
             Room room = roomRepository.findRoomsByLink(link);
             try {
-                joinRoom(room, user, localDate);
+                joinRoom(room, user, localDate, false);
             } catch (Exception error) {
                 response.sendRedirect(redirectURL);
                 return;
@@ -129,8 +129,8 @@ public class RoomController {
         response.sendRedirect(redirectURL);
     }
 
-    private void joinRoom(Room room, User user, LocalDate joined) {
-        UserRoom userRoom = new UserRoom(room, user, joined);
+    private void joinRoom(Room room, User user, LocalDate joined, boolean isAdmin) {
+        UserRoom userRoom = new UserRoom(room, user, joined, isAdmin);
         userRoomRepository.save(userRoom);
         userController.addPoints(user, PointsValues.JOIN_CHALLENGE);
     }

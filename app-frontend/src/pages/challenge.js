@@ -57,7 +57,6 @@ export default function Challenge() {
 
 		const data = { challenge_id: id};
 
-		try {
 			const response = await fetch("api/room", {
 				method: "POST",
 				headers: {
@@ -66,11 +65,13 @@ export default function Challenge() {
 				body: JSON.stringify(data),
 			});
 
-			const result = await response.json();
-			console.log("Success:", result);
-		} catch (error) {
-			console.error("Error:", error);
-		}
+			await response.json().then(response => {
+				console.log("Success:", response);
+			}).catch(e => {
+				console.log("Error:", e);
+			});
+
+
 	}
 
 	async function joinRoom(code) {

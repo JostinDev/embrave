@@ -26,9 +26,12 @@ public class UserRoom {
 
     private LocalDate joined;
 
-    public UserRoom(Room room, User user, LocalDate joined) {
+    private boolean isAdmin;
+
+    public UserRoom(Room room, User user, LocalDate joined, boolean isAdmin) {
       this.room = room;
       this.user = user;
       this.joined = joined;
+      this.isAdmin = isAdmin;
     }
 }
