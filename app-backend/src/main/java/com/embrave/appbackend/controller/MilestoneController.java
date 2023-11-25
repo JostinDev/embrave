@@ -122,7 +122,7 @@ public class MilestoneController {
 
     @PostMapping("/milestone/ticked/{roomID}")
     @ResponseBody
-    public Map<String, String> setTickedMilestone(@PathVariable Long roomID ,@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
+    public Map<String, String> setTickedMilestone(@PathVariable Long roomID, @RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
@@ -163,5 +163,22 @@ public class MilestoneController {
     @GetMapping("/milestone/count")
     public @ResponseBody Long countMilestone() {
         return milestoneRepository.count();
+    }
+
+    @DeleteMapping("/milestone/{milestoneID}")
+    public @ResponseBody Map<String, String> deleteMilestone(@PathVariable Long milestoneID, @AuthenticationPrincipal Jwt jwt) {
+
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        Optional<Milestone> milestone = milestoneRepository.findById(milestoneID);
+
+        if(milestone.isPresent()) {
+            if(milestone.get().getUser().equals(user)) {
+                milestoneRepository.delete(milestone.get());
+                return JSONMessage.create("success","Milestone deleted");
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete milestone");
     }
 }

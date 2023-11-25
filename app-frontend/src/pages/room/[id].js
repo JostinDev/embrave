@@ -79,22 +79,26 @@ export default function Challenge() {
 
 
 	const fetchMilestone = async () => {
-		try {
-			const response = (await fetch(`/api/milestone/${id}`))
 
-			await response.json().then((response) => {
-						console.log(response)
+		const response = (await fetch(`/api/milestone/${id}`))
 
-						setMilestoneList(response)
+		await response.json().then((response) => {
+			console.log(response)
+			// TODO get user details and check if milestone can be deleted
+			setMilestoneList(response)
+			console.log('GET ALL MILESTONES : ', response)
+		});
+	};
 
-						console.log('GET ALL MILESTONES : ', response)
-					}
-			);
+	const getUser = async () => {
+
+			const response = (await fetch('/api/user'));
+
+			await response.json().then(response => {
+				console.log(response)
+			}).catch(e => {console.log(e)});
 
 
-		} catch (error) {
-			console.error(error);
-		}
 	};
 
 	const fetchMilestoneTime = async () => {
@@ -193,13 +197,20 @@ export default function Challenge() {
 
 		const data = {milestone_ticked: isTicked, milestone_doneAt: day};
 
-	await fetch(`/api/milestone/ticked/${id}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		})
+		await fetch(`/api/milestone/ticked/${id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+	}
+
+	async function deleteMilestone(milestoneID) {
+		await fetch(`/api/milestone/${milestoneID}`, {
+			method: "DELETE"
+		}).then(response => {console.log(response)})
+				.catch(e => {console.log(e)})
 	}
 
 
@@ -251,6 +262,7 @@ export default function Challenge() {
 											<div className={'ml-4'}>
 												<p>{milestone.user.name}</p>
 												<p>{milestone.timestamp}</p>
+												<p onClick={()=> deleteMilestone(milestone.id)} className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
 											</div>
 										</div>
 										<p>{milestone.description}</p>
@@ -258,7 +270,6 @@ export default function Challenge() {
 											{milestone.milestoneMedia.map((media) => {
 												return (
 														<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
-
 												)
 											})}
 										</div>
