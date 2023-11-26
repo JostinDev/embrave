@@ -18,6 +18,7 @@ export default function Challenge() {
 
 
 	const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
+	const [user, setUser] = useState("");
 
 	const router = useRouter()
 	const {id} = router.query
@@ -33,6 +34,7 @@ export default function Challenge() {
 			if (!id) return null;
 			fetchMilestone()
 			fetchMilestoneTime()
+			getUser()
 		}
 		console.log(id)
 		console.log(router.query)
@@ -95,10 +97,10 @@ export default function Challenge() {
 			const response = (await fetch('/api/user'));
 
 			await response.json().then(response => {
-				console.log(response)
-			}).catch(e => {console.log(e)});
-
-
+				console.log('CONNECTED USER : ', response)
+				setUser(response)
+			return response;
+			}).catch(e => {return e});
 	};
 
 	const fetchMilestoneTime = async () => {
@@ -262,7 +264,10 @@ export default function Challenge() {
 											<div className={'ml-4'}>
 												<p>{milestone.user.name}</p>
 												<p>{milestone.timestamp}</p>
-												<p onClick={()=> deleteMilestone(milestone.id)} className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
+												{user.id === milestone.user.id ?
+														<p onClick={()=> deleteMilestone(milestone.id)} className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
+														: ""}
+
 											</div>
 										</div>
 										<p>{milestone.description}</p>
