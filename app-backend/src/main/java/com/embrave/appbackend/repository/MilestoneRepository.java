@@ -31,4 +31,6 @@ public interface MilestoneRepository extends CrudRepository<Milestone, Long> {
     @Query(value = "DELETE FROM milestone WHERE user_id = :user_id AND room_id = :room_id AND DATE(timestamp) = DATE(:timestamp) AND ticked = true", nativeQuery = true)
     void deleteMilestoneDoneByDateAndTicked(@Param("room_id") Long room_id, @Param("user_id") Long user_id, @Param("timestamp") Timestamp timestamp);
 
+    @Transactional
+    void deleteMilestoneById(Long id);
 }

@@ -166,7 +166,8 @@ public class MilestoneController {
     }
 
     @DeleteMapping("/milestone/{milestoneID}")
-    public @ResponseBody Map<String, String> deleteMilestone(@PathVariable Long milestoneID, @AuthenticationPrincipal Jwt jwt) {
+    @ResponseBody
+    public Map<String, String> deleteMilestone(@PathVariable Long milestoneID, @AuthenticationPrincipal Jwt jwt) {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
@@ -175,7 +176,8 @@ public class MilestoneController {
 
         if(milestone.isPresent()) {
             if(milestone.get().getUser().equals(user)) {
-                milestoneRepository.delete(milestone.get());
+                // TODO also remove the images on the bucket
+                milestoneRepository.deleteMilestoneById(milestone.get().getId());
                 return JSONMessage.create("success","Milestone deleted");
             }
         }
