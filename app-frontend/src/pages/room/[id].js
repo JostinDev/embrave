@@ -219,7 +219,6 @@ export default function Challenge() {
 	return (
 			// TODO display the link, allow the admin to generate a new one
 			// TODO Let admins promote other users to admin
-			// TODO remove my milestones
 			// TODO Quit a room
 			// TODO Mark a challenge as done
 			<div className="min-h-screen bg-blue-500 pt-20">

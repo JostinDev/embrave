@@ -51,4 +51,6 @@ public class MinioService {
                         .build());
     }
 
+    // TODO create a function to delete an image
+
 }
