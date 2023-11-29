@@ -13,4 +13,8 @@ public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
 
     Boolean existsUserRoomByRoomIdAndUserId(Long room, Long user);
 
+    Boolean existsUserRoomByRoomId(Long room);
+
+    void deleteUserRoomByByRoomIdAndUserId(Long room, Long user);
+
 }

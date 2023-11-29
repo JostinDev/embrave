@@ -1,9 +1,6 @@
 package com.embrave.appbackend.controller;
 
-import com.embrave.appbackend.model.Challenge;
-import com.embrave.appbackend.model.Room;
-import com.embrave.appbackend.model.User;
-import com.embrave.appbackend.model.UserRoom;
+import com.embrave.appbackend.model.*;
 import com.embrave.appbackend.repository.ChallengeRepository;
 import com.embrave.appbackend.repository.RoomRepository;
 import com.embrave.appbackend.repository.UserRepository;
@@ -13,9 +10,11 @@ import com.embrave.appbackend.utils.RandomString;
 import com.embrave.appbackend.values.PointsValues;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -23,6 +22,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 // For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
@@ -173,6 +173,30 @@ public class RoomController {
 
         System.out.println("STREAK : " + streak);
         return streak;
+    }
+
+    @DeleteMapping("/room/{roomID}")
+    @ResponseBody
+    public Map<String, String> deleteMilestone(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+        // TODO test this function
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        if(room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
+                // Remove the user room link
+                userRoomRepository.deleteUserRoomByByRoomIdAndUserId(room.get().getId(), user.getId());
+
+                // If the room has no more users, delete the room
+                if(!userRoomRepository.existsUserRoomByRoomId(room.get().getId())) {
+                    roomRepository.delete(room.get());
+                }
+                return JSONMessage.create("success","Room has been left");
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete milestone");
     }
 
     @GetMapping("/room/count")
