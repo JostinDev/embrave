@@ -16,7 +16,7 @@ public class Room {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "challenge_id", referencedColumnName = "id")
     private Challenge challenge;
     private String code;

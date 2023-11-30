@@ -42,9 +42,7 @@ export default function Challenge() {
 				room.streak = streakResponse;
 			}
 
-
 			setRoom(responseJSON)
-
 
 			console.log('GET ALL ROOMS : ' , responseJSON)
 
@@ -121,7 +119,7 @@ export default function Challenge() {
 									<Link href={`/room/${room.room.id}`}>Room ID : {room.room.id}</Link>
 									<p>Streak : {room.streak}</p>
 									<p>Room code : {room.room.code}</p>
-									<a href={"/api/room/join/" + room.link}>Room link : {room.room.link}</a>
+									<a href={"/api/room/join/" + room.room.link}>Room link : {room.room.link}</a>
 									<p>Room created : {room.room.created}</p>
 									<p onClick={() => joinRoom(room.room.code)} className='text-blue-600 cursor-pointer'>Join the room</p>
 								</div>

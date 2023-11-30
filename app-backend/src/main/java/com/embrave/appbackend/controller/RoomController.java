@@ -187,7 +187,7 @@ public class RoomController {
         if(room.isPresent()) {
             if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
                 // Remove the user room link
-                userRoomRepository.deleteUserRoomByByRoomIdAndUserId(room.get().getId(), user.getId());
+                userRoomRepository.deleteUserRoomByRoomIdAndUserId(room.get().getId(), user.getId());
 
                 // If the room has no more users, delete the room
                 if(!userRoomRepository.existsUserRoomByRoomId(room.get().getId())) {

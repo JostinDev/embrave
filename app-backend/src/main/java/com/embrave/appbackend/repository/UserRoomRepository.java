@@ -4,6 +4,7 @@ import com.embrave.appbackend.model.Room;
 import com.embrave.appbackend.model.User;
 import com.embrave.appbackend.model.UserRoom;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
 
     Boolean existsUserRoomByRoomId(Long room);
 
-    void deleteUserRoomByByRoomIdAndUserId(Long room, Long user);
+    @Transactional
+    void deleteUserRoomByRoomIdAndUserId(Long room, Long user);
 
 }

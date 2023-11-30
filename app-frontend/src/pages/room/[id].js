@@ -215,6 +215,13 @@ export default function Challenge() {
 				.catch(e => {console.log(e)})
 	}
 
+	async function leaveRoom() {
+		await fetch(`/api/room/${id}`, {
+			method: "DELETE"
+		}).then(response => {console.log(response)})
+				.catch(e => {console.log(e)})
+	}
+
 
 	return (
 			// TODO display the link, allow the admin to generate a new one
@@ -252,6 +259,8 @@ export default function Challenge() {
 								<p key={picture}>{picture}</p>
 						)
 					})}
+					<h1 onClick={() => leaveRoom()} className='mb-10 text-2xl font-bold text-red-700 cursor-pointer'>Quit the room</h1>
+
 					<div className={'mt-16'}>
 						<h1 className={'text-2xl my-10'}>Milestone List</h1>
 
