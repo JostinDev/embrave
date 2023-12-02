@@ -231,6 +231,7 @@ export default function Challenge() {
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
+					<h1 className='mb-10 text-2xl'>Generate new link</h1>
 
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
