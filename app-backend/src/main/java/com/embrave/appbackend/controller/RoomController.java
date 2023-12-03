@@ -51,6 +51,22 @@ public class RoomController {
         return userRoomRepository.findAllByUser(user);
     }
 
+    @GetMapping("/room/{roomID}")
+    @ResponseBody
+    public Room getRoomByID(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+
+        Optional<Room> room = roomRepository.findById(roomID);
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        if(room.isPresent()) {
+            if(userRoomRepository.existsUserRoomByRoomIdAndUserId(roomID, user.getId())) {
+                return room.get();
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't get room");
+    }
+
 
     @PostMapping("/room")
     public Map<String, String> createRoom(@RequestBody Map<String, String> body, @AuthenticationPrincipal Jwt jwt) {

@@ -19,8 +19,6 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     Boolean existsRoomByLink(String link);
 
-    Room getById(Long id);
-
     @Query(value = "SELECT MIN(DATE_FORMAT(timestamp, '%Y-%m-%d')) AS time FROM milestone WHERE user_id = :user_id AND room_id = :room_id GROUP BY room_id, user_id, DATE(timestamp) ORDER BY time DESC;", nativeQuery = true)
     List<String> getAllActiveDate(Long user_id, Long room_id);
 
