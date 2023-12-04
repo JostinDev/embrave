@@ -16,6 +16,8 @@ public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
 
     Boolean existsUserRoomByRoomId(Long room);
 
+    List<UserRoom> findUserRoomsByRoomId(Long room);
+
     @Transactional
     void deleteUserRoomByRoomIdAndUserId(Long room, Long user);
 

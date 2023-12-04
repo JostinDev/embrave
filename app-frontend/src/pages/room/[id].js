@@ -20,6 +20,8 @@ export default function Challenge() {
 	const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
 	const [user, setUser] = useState("");
 
+	const [users, setUsers] = useState("");
+
 	const router = useRouter()
 	const {id} = router.query
 
@@ -35,6 +37,7 @@ export default function Challenge() {
 			fetchMilestone()
 			fetchMilestoneTime()
 			getUser()
+			getUsers()
 			getRoom()
 		}
 		console.log(id)
@@ -111,6 +114,16 @@ export default function Challenge() {
 				setUser(response)
 			return response;
 			}).catch(e => {return e});
+	};
+
+	const getUsers = async () => {
+
+		const response = (await fetch(`/api/user/room/${id}`));
+
+		await response.json().then(response => {
+			console.log('List of users : ', response)
+			setUsers(response)
+		}).catch(e => {return e});
 	};
 
 	const fetchMilestoneTime = async () => {
@@ -242,7 +255,7 @@ export default function Challenge() {
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
 					<h1 className='mb-10 text-2xl'>Generate new link</h1>
-					<a href={"http://localhost:8080/api/room/join/" + room.link}>Room link : http://localhost:8080/api/room/join/{room.link}</a>
+					<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link : http://localhost:8080/api/room/join/{room.link}</a>
 
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
