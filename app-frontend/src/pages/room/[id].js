@@ -20,7 +20,7 @@ export default function Challenge() {
 	const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
 	const [user, setUser] = useState("");
 
-	const [users, setUsers] = useState("");
+	const [users, setUsers] = useState([]);
 
 	const router = useRouter()
 	const {id} = router.query
@@ -256,6 +256,20 @@ export default function Challenge() {
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
 					<h1 className='mb-10 text-2xl'>Generate new link</h1>
 					<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link : http://localhost:8080/api/room/join/{room.link}</a>
+
+					<div>
+						<h1 className='mb-10 text-2xl'>Users in room : </h1>
+
+						{users.map((userRoom) => {
+							return (
+									<div className={'mb-6'}>
+										<img src={userRoom.user.avatar}/>
+										<p>{userRoom.user.name}</p>
+										<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin' }</p>
+									</div>
+							)
+						})}
+					</div>
 
 					<div className='flex flex-row-reverse gap-2'>
 						{weekday.map((day) => {
