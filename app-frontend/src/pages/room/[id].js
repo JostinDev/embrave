@@ -246,6 +246,17 @@ export default function Challenge() {
 	}
 
 
+	async function promoteToAdmin(userID) {
+		const response = await fetch(`/api/room/${id}/admin/${userID}`, {
+			method: "PUT"
+		})
+
+		await response.json().then((response) => {
+					console.log(response)
+				}
+		).catch(e => console.log(e));
+	}
+
 	return (
 			// TODO display the link, allow the admin to generate a new one
 			// TODO Let admins promote other users to admin
@@ -266,6 +277,7 @@ export default function Challenge() {
 										<img src={userRoom.user.avatar}/>
 										<p>{userRoom.user.name}</p>
 										<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin' }</p>
+										<p onClick={() => promoteToAdmin(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
 									</div>
 							)
 						})}

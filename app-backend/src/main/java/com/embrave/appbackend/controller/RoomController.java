@@ -215,6 +215,42 @@ public class RoomController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete milestone");
     }
 
+
+    @PutMapping("/room/{roomID}/admin/{userID}")
+    @ResponseBody
+    public Map<String, String> deleteMilestone(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+        // TODO happy case is working. Need to test :
+        // User as the rights to promote
+        // User both belong to the room
+        // Can't promote users outside of the room
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User authUser = userRepository.findByAuth0Id((auth0Id));
+
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        Optional<User> user = userRepository.findById(userID);
+
+        // If room and user exist
+        if (room.isPresent() && user.isPresent()) {
+            // If the connected user belongs to the room
+            if (userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), authUser.getId())) {
+                // If targeted user belongs to the room
+                if (userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.get().getId())) {
+                    // If the connected user is an admin
+                    UserRoom userRoom = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, authUser.getId());
+                    if (userRoom.isAdmin()) {
+                        // Promote the targeted user as an admin
+                        UserRoom targetUser = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, user.get().getId());
+                        targetUser.setAdmin(true);
+                        userRoomRepository.save(targetUser);
+                        return JSONMessage.create("success", "User has been promoted to admin");
+                    }
+                }
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't promote user to admin");
+    }
+
     @GetMapping("/room/count")
     public @ResponseBody Long countRoom() {
         return roomRepository.count();

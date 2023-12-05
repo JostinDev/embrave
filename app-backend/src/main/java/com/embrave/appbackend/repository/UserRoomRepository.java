@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
 
@@ -17,6 +18,8 @@ public interface UserRoomRepository extends CrudRepository<UserRoom, Long> {
     Boolean existsUserRoomByRoomId(Long room);
 
     List<UserRoom> findUserRoomsByRoomId(Long room);
+
+    UserRoom findUserRoomByRoomIdAndUserId(Long room, Long user);
 
     @Transactional
     void deleteUserRoomByRoomIdAndUserId(Long room, Long user);
