@@ -89,8 +89,25 @@ public class RoomController {
         joinRoom(room, user, localDate, true);
 
         return JSONMessage.create("Success","Successfully created the new room!");
+    }
 
+    @PutMapping("/room/{roomID}/updateLink")
+    public Map<String, String> updateRoom(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
 
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        if (room.isPresent() && userRoomRepository.existsUserRoomByRoomIdAndUserId(roomID, user.getId())) {
+            UserRoom userRoom = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, user.getId());
+            if(userRoom.isAdmin()) {
+                room.get().setLink(RandomString.randomString(30));
+                roomRepository.save(room.get());
+                return JSONMessage.create("Success","Successfully updated the link!");
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't update the link");
     }
 
     @PostMapping("/room/join")
@@ -219,10 +236,6 @@ public class RoomController {
     @PutMapping("/room/{roomID}/admin/{userID}")
     @ResponseBody
     public Map<String, String> deleteMilestone(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
-        // TODO happy case is working. Need to test :
-        // User as the rights to promote
-        // User both belong to the room
-        // Can't promote users outside of the room
         String auth0Id = (String) jwt.getClaims().get("sub");
         User authUser = userRepository.findByAuth0Id((auth0Id));
 

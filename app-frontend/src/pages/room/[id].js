@@ -257,6 +257,17 @@ export default function Challenge() {
 		).catch(e => console.log(e));
 	}
 
+	async function updateRoomLink() {
+		const response = await fetch(`/api/room/${id}/updateLink`, {
+			method: "PUT"
+		})
+
+		await response.json().then((response) => {
+					console.log(response)
+				}
+		).catch(e => console.log(e));
+	}
+
 	return (
 			// TODO display the link, allow the admin to generate a new one
 			// TODO Let admins promote other users to admin
@@ -265,7 +276,7 @@ export default function Challenge() {
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
-					<h1 className='mb-10 text-2xl'>Generate new link</h1>
+					<h1 onClick={() => updateRoomLink()} className='cursor-pointer mb-10 text-2xl'>Generate new link</h1>
 					<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link : http://localhost:8080/api/room/join/{room.link}</a>
 
 					<div>
