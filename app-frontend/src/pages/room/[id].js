@@ -273,6 +273,7 @@ export default function Challenge() {
 			// TODO Let admins promote other users to admin
 			// TODO Mark a challenge as done
 			// TODO show image to be uploaded
+			// TODO kick someone from the room
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<h1 className='mb-10 text-2xl'>Post milestone</h1>
