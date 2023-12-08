@@ -264,6 +264,38 @@ public class RoomController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't promote user to admin");
     }
 
+
+    @DeleteMapping("/room/{roomID}/admin/{userID}")
+    @ResponseBody
+    public Map<String, String> kickUserFromRoom(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+        // TODO test this function
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User authUser = userRepository.findByAuth0Id((auth0Id));
+
+        Optional<Room> room = roomRepository.findById(roomID);
+
+        Optional<User> user = userRepository.findById(userID);
+
+        // If room and user exist
+        if (room.isPresent() && user.isPresent()) {
+            // If the connected user belongs to the room
+            if (userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), authUser.getId())) {
+                // If targeted user belongs to the room
+                if (userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.get().getId())) {
+                    // If the connected user is an admin
+                    UserRoom userRoom = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, authUser.getId());
+                    if (userRoom.isAdmin()) {
+                        // Promote the targeted user as an admin
+                        UserRoom targetUser = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, user.get().getId());
+                        userRoomRepository.delete(targetUser);
+                        return JSONMessage.create("success", "User has been removed from the room");
+                    }
+                }
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't remove User from the room");
+    }
+
     @GetMapping("/room/count")
     public @ResponseBody Long countRoom() {
         return roomRepository.count();

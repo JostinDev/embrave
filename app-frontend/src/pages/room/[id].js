@@ -257,6 +257,16 @@ export default function Challenge() {
 		).catch(e => console.log(e));
 	}
 
+	async function kickFromRoom(userID) {
+		const response = await fetch(`/api/room/${id}/kick/${userID}`, {
+			method: "DELETE"
+		})
+		await response.json().then((response) => {
+					console.log(response)
+				}
+		).catch(e => console.log(e));
+	}
+
 	async function updateRoomLink() {
 		const response = await fetch(`/api/room/${id}/updateLink`, {
 			method: "PUT"
@@ -290,6 +300,7 @@ export default function Challenge() {
 										<p>{userRoom.user.name}</p>
 										<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin' }</p>
 										<p onClick={() => promoteToAdmin(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
+										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
 									</div>
 							)
 						})}
