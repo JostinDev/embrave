@@ -280,7 +280,6 @@ export default function Challenge() {
 
 	return (
 			// TODO display the link, allow the admin to generate a new one
-			// TODO Let admins promote other users to admin
 			// TODO Mark a challenge as done
 			// TODO show image to be uploaded
 			// TODO TEST kick someone one of a room
