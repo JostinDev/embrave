@@ -258,7 +258,7 @@ export default function Challenge() {
 	}
 
 	async function kickFromRoom(userID) {
-		const response = await fetch(`/api/room/${id}/kick/${userID}`, {
+		const response = await fetch(`/api/room/1002/kick/1`, {
 			method: "DELETE"
 		})
 		await response.json().then((response) => {
@@ -299,7 +299,8 @@ export default function Challenge() {
 										<p>{userRoom.user.name}</p>
 										<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin' }</p>
 										<p onClick={() => promoteToAdmin(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
-										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
+										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Kick from the room' : ''}</p>
+										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>Kick from the room</p>
 									</div>
 							)
 						})}

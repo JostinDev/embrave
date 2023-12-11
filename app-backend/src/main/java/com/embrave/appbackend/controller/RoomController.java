@@ -29,6 +29,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class RoomController {
 
+    // TODO think about admin rights and what an admin can do to an admin
+
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -265,10 +267,10 @@ public class RoomController {
     }
 
 
-    @DeleteMapping("/room/{roomID}/admin/{userID}")
+    @DeleteMapping("/room/{roomID}/kick/{userID}")
     @ResponseBody
     public Map<String, String> kickUserFromRoom(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
-        // TODO test this function
+
         String auth0Id = (String) jwt.getClaims().get("sub");
         User authUser = userRepository.findByAuth0Id((auth0Id));
 
@@ -285,7 +287,7 @@ public class RoomController {
                     // If the connected user is an admin
                     UserRoom userRoom = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, authUser.getId());
                     if (userRoom.isAdmin()) {
-                        // Promote the targeted user as an admin
+                        // Remove the user from the room
                         UserRoom targetUser = userRoomRepository.findUserRoomByRoomIdAndUserId(roomID, user.get().getId());
                         userRoomRepository.delete(targetUser);
                         return JSONMessage.create("success", "User has been removed from the room");
