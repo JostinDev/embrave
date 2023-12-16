@@ -230,6 +230,15 @@ export default function Challenge() {
 				body: JSON.stringify(data),
 			})
 	}
+	async function manageSelectedPictures(files) {
+		console.log(files)
+		if(files.length > 4) {
+			console.log("Cannot upload more than 4 images per milestones")
+			setMilestonePicture(Array.from(files).slice(0, 4));
+		} else {
+			setMilestonePicture(files)
+		}
+	}
 
 	async function deleteMilestone(milestoneID) {
 		await fetch(`/api/milestone/${milestoneID}`, {
@@ -279,10 +288,8 @@ export default function Challenge() {
 	}
 
 	return (
-			// TODO display the link, allow the admin to generate a new one
 			// TODO Mark a challenge as done
 			// TODO show image to be uploaded
-			// TODO TEST kick someone one of a room
 			// TODO prevent more than 4 images
 			<div className="min-h-screen bg-blue-500 pt-20">
 				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
@@ -320,7 +327,7 @@ export default function Challenge() {
 
 					{/* TODO only allow 4 pictures to be uploaded */}
 					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
-								 onChange={(e) => setMilestonePicture(e.target.files)}/>
+								 onChange={(e) => manageSelectedPictures(e.target.files)}/>
 					<img className={'w-40'} id={'pic'} src={''}></img>
 					<label htmlFor={'milestoneDescription'}>Description</label>
 					<input
