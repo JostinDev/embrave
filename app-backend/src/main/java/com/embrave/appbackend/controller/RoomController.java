@@ -1,10 +1,8 @@
 package com.embrave.appbackend.controller;
 
+import com.embrave.appbackend.Service.MinioService;
 import com.embrave.appbackend.model.*;
-import com.embrave.appbackend.repository.ChallengeRepository;
-import com.embrave.appbackend.repository.RoomRepository;
-import com.embrave.appbackend.repository.UserRepository;
-import com.embrave.appbackend.repository.UserRoomRepository;
+import com.embrave.appbackend.repository.*;
 import com.embrave.appbackend.utils.JSONMessage;
 import com.embrave.appbackend.utils.RandomString;
 import com.embrave.appbackend.values.PointsValues;
@@ -39,6 +37,12 @@ public class RoomController {
     private UserRepository userRepository;
     @Autowired
     private UserRoomRepository userRoomRepository;
+    @Autowired
+    private MilestoneRepository milestoneRepository;
+    @Autowired
+    private MilestoneMediaRepository milestoneMediaRepository;
+    @Autowired
+    private MinioService minioService;
 
     private UserController userController;
 
@@ -212,7 +216,7 @@ public class RoomController {
 
     @DeleteMapping("/room/{roomID}")
     @ResponseBody
-    public Map<String, String> deleteMilestone(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+    public Map<String, String> deleteRoom(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
@@ -225,18 +229,34 @@ public class RoomController {
 
                 // If the room has no more users, delete the room
                 if(!userRoomRepository.existsUserRoomByRoomId(room.get().getId())) {
+                    List<Milestone> milestones = milestoneRepository.findMilestonesByRoomId(roomID);
+                    if(!milestones.isEmpty()) {
+                        milestones.forEach((milestone) -> {
+                            List<MilestoneMedia> milestoneMedia = milestoneMediaRepository.findAllByMilestone_Id(milestone.getId());
+                            if(!milestoneMedia.isEmpty()) {
+                                milestoneMedia.forEach((element) -> {
+                                    try {
+                                        minioService.deleteMedia(element.getLink());
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            }
+                            milestoneRepository.deleteMilestoneById(milestone.getId());
+                        });
+                    }
                     roomRepository.delete(room.get());
                 }
                 return JSONMessage.create("success","Room has been left");
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete milestone");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't delete room");
     }
 
 
     @PutMapping("/room/{roomID}/admin/{userID}")
     @ResponseBody
-    public Map<String, String> deleteMilestone(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
+    public Map<String, String> promoteToAdmin(@PathVariable Long userID, @PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User authUser = userRepository.findByAuth0Id((auth0Id));
 

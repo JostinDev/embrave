@@ -180,12 +180,9 @@ public class MilestoneController {
                 List<MilestoneMedia> milestoneMedia = milestoneMediaRepository.findAllByMilestone_Id(milestone.get().getId());
 
                 if(!milestoneMedia.isEmpty()) {
-                    System.out.println("Deleting :");
                     milestoneMedia.forEach((element) -> {
-                        System.out.println("Deleting :" + element.getLink());
                         try {
                             minioService.deleteMedia(element.getLink());
-                            System.out.println("Deleted :" + element.getLink());
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
