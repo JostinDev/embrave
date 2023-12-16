@@ -51,6 +51,9 @@ public class MinioService {
                         .build());
     }
 
-    // TODO create a function to delete an image
+    public void deleteMedia(String fileName) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        minioClient.removeObject(
+                RemoveObjectArgs.builder().bucket(BUCKET_NAME).object(fileName).build());
+    }
 
 }

@@ -213,7 +213,6 @@ public class RoomController {
     @DeleteMapping("/room/{roomID}")
     @ResponseBody
     public Map<String, String> deleteMilestone(@PathVariable Long roomID, @AuthenticationPrincipal Jwt jwt) {
-        // TODO test this function
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 

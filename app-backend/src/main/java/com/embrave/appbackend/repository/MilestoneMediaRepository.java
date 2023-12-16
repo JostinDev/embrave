@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface MilestoneMediaRepository extends CrudRepository<MilestoneMedia, Long> {
 
+    List<MilestoneMedia> findAllByMilestone_Id(Long milestone);
 
 }
