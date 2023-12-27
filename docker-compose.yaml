@@ -26,3 +26,17 @@ services:
     volumes:
       - .:/app-frontend
       - /app-frontend/node_modules
+
+  db:
+    image: mysql:8.0
+    command: --init-file /data/application/embrave.sql
+    restart: always
+    volumes:
+      - ./db/embrave.sql:/data/application/embrave.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Embrave
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3333:3306"
