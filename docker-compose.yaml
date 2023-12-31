@@ -2,6 +2,7 @@ version: '4'
 
 services:
   minio:
+    container_name: app-minio
     image: quay.io/minio/minio:latest
     command: server /data --console-address ":9090"
     expose:
@@ -28,6 +29,7 @@ services:
       - /app-frontend/node_modules
 
   db:
+    container_name: app-db
     image: mysql:8.0
     command: --init-file /data/application/embrave.sql
     restart: always
@@ -40,3 +42,26 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "3333:3306"
+
+  app-gateway:
+    build:
+      context: app-gateway
+      dockerfile: Dockerfile
+    container_name: app-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - minio
+
+
+  app-backend:
+    build:
+      context: app-backend
+      dockerfile: Dockerfile
+    container_name: app-backend
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+      - minio

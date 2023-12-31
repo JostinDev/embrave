@@ -48,6 +48,16 @@ CREATE TABLE `challenge` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `challenge`
+--
+
+LOCK TABLES `challenge` WRITE;
+/*!40000 ALTER TABLE `challenge` DISABLE KEYS */;
+INSERT INTO `challenge` VALUES (2,'Cold shower','Take a cold shower everyday','picture',2,1,NULL,NULL),(3,'Climb the everest','Are you ready to start the biggest challenge of your life ?','picture everest',2,1,NULL,NULL);
+/*!40000 ALTER TABLE `challenge` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `challenge_category`
 --
 
@@ -62,6 +72,16 @@ CREATE TABLE `challenge_category` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `challenge_category`
+--
+
+LOCK TABLES `challenge_category` WRITE;
+/*!40000 ALTER TABLE `challenge_category` DISABLE KEYS */;
+INSERT INTO `challenge_category` VALUES (1,'Sport'),(2,'Social');
+/*!40000 ALTER TABLE `challenge_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `challenge_category_seq`
 --
 
@@ -74,6 +94,16 @@ CREATE TABLE `challenge_category_seq` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `challenge_category_seq`
+--
+
+LOCK TABLES `challenge_category_seq` WRITE;
+/*!40000 ALTER TABLE `challenge_category_seq` DISABLE KEYS */;
+INSERT INTO `challenge_category_seq` VALUES (1);
+/*!40000 ALTER TABLE `challenge_category_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `challenge_seq`
 --
 
@@ -84,6 +114,16 @@ CREATE TABLE `challenge_seq` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `challenge_seq`
+--
+
+LOCK TABLES `challenge_seq` WRITE;
+/*!40000 ALTER TABLE `challenge_seq` DISABLE KEYS */;
+INSERT INTO `challenge_seq` VALUES (1);
+/*!40000 ALTER TABLE `challenge_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `challenge_type`
@@ -100,6 +140,16 @@ CREATE TABLE `challenge_type` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `challenge_type`
+--
+
+LOCK TABLES `challenge_type` WRITE;
+/*!40000 ALTER TABLE `challenge_type` DISABLE KEYS */;
+INSERT INTO `challenge_type` VALUES (1,'habit'),(2,'goal');
+/*!40000 ALTER TABLE `challenge_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `challenge_type_seq`
 --
 
@@ -110,6 +160,16 @@ CREATE TABLE `challenge_type_seq` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `challenge_type_seq`
+--
+
+LOCK TABLES `challenge_type_seq` WRITE;
+/*!40000 ALTER TABLE `challenge_type_seq` DISABLE KEYS */;
+INSERT INTO `challenge_type_seq` VALUES (1);
+/*!40000 ALTER TABLE `challenge_type_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `milestone`
@@ -134,6 +194,16 @@ CREATE TABLE `milestone` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `milestone`
+--
+
+LOCK TABLES `milestone` WRITE;
+/*!40000 ALTER TABLE `milestone` DISABLE KEYS */;
+INSERT INTO `milestone` VALUES (1002,602,1,'2023-11-27 00:00:00.000000','',1),(1158,803,2,'2023-12-16 16:20:03.728000','le milestone',NULL),(1159,803,2,'2023-12-16 16:23:05.308000','descritpion',NULL);
+/*!40000 ALTER TABLE `milestone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `milestone_media`
 --
 
@@ -152,6 +222,16 @@ CREATE TABLE `milestone_media` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `milestone_media`
+--
+
+LOCK TABLES `milestone_media` WRITE;
+/*!40000 ALTER TABLE `milestone_media` DISABLE KEYS */;
+INSERT INTO `milestone_media` VALUES (357,1158,'c9098935d7ef7c3aea49cf96a549ebbf.png',NULL),(358,1159,'c0d2964f9a0b13cda2cd7f39923a3e05.png',NULL),(359,1159,'ba87de59c071176058eff5bb7149ac63.png',NULL),(360,1159,'5ca2ad34592fe38e1c8a564f5740c9f5.png',NULL),(361,1159,'ce2d252b44cde92107caf52378faaff5.png',NULL);
+/*!40000 ALTER TABLE `milestone_media` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `milestone_media_seq`
 --
 
@@ -164,6 +244,16 @@ CREATE TABLE `milestone_media_seq` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `milestone_media_seq`
+--
+
+LOCK TABLES `milestone_media_seq` WRITE;
+/*!40000 ALTER TABLE `milestone_media_seq` DISABLE KEYS */;
+INSERT INTO `milestone_media_seq` VALUES (451);
+/*!40000 ALTER TABLE `milestone_media_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `milestone_seq`
 --
 
@@ -174,6 +264,16 @@ CREATE TABLE `milestone_seq` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `milestone_seq`
+--
+
+LOCK TABLES `milestone_seq` WRITE;
+/*!40000 ALTER TABLE `milestone_seq` DISABLE KEYS */;
+INSERT INTO `milestone_seq` VALUES (1251);
+/*!40000 ALTER TABLE `milestone_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `room`
@@ -196,6 +296,16 @@ CREATE TABLE `room` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (602,3,NULL,'9OCJTp5cy10GPbIwJyUJWqRDQzbwEv','2023-10-28','2023-10-28 14:19:46.060000'),(652,3,NULL,'V1ivSGdOmuBypB4tafrTvGo6XPyZlM','2023-11-01','2023-11-01 17:11:11.059000'),(803,3,NULL,'PwzTsZSh7a1NbSX1qBmRbi6yw3CXrm','2023-11-23','2023-11-23 17:22:11.180000'),(804,3,NULL,'LsRtmeYLM3y63DfkJhBkrTEQrBENjr','2023-11-23','2023-11-23 17:23:38.682000'),(852,3,NULL,'YbWOzJcKyUUDXqlVRUdzhbUiKJVNFB','2023-11-23','2023-11-23 17:25:16.049000'),(902,3,NULL,'prTgqjka9SanMvuPF98HHXoO9wsNAi','2023-11-30','2023-11-30 15:29:41.317000'),(1002,2,NULL,'s4B0vCisVOCLHjlF9bPREma2ZnMOmv','2023-12-04','2023-12-04 19:33:08.674000');
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `room_seq`
 --
 
@@ -206,6 +316,16 @@ CREATE TABLE `room_seq` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room_seq`
+--
+
+LOCK TABLES `room_seq` WRITE;
+/*!40000 ALTER TABLE `room_seq` DISABLE KEYS */;
+INSERT INTO `room_seq` VALUES (1101);
+/*!40000 ALTER TABLE `room_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -250,6 +370,16 @@ CREATE TABLE `user_room` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `user_room`
+--
+
+LOCK TABLES `user_room` WRITE;
+/*!40000 ALTER TABLE `user_room` DISABLE KEYS */;
+INSERT INTO `user_room` VALUES (1203,803,2,'2023-11-23',_binary ''),(1204,804,2,'2023-11-23',_binary ''),(1252,852,2,'2023-11-23',_binary ''),(1403,652,1,'2023-12-04',_binary '\0'),(1453,1002,2,'2023-12-04',_binary '');
+/*!40000 ALTER TABLE `user_room` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_room_seq`
 --
 
@@ -262,6 +392,16 @@ CREATE TABLE `user_room_seq` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `user_room_seq`
+--
+
+LOCK TABLES `user_room_seq` WRITE;
+/*!40000 ALTER TABLE `user_room_seq` DISABLE KEYS */;
+INSERT INTO `user_room_seq` VALUES (1551);
+/*!40000 ALTER TABLE `user_room_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_seq`
 --
 
@@ -272,6 +412,16 @@ CREATE TABLE `user_seq` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_seq`
+--
+
+LOCK TABLES `user_seq` WRITE;
+/*!40000 ALTER TABLE `user_seq` DISABLE KEYS */;
+INSERT INTO `user_seq` VALUES (51);
+/*!40000 ALTER TABLE `user_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -282,4 +432,4 @@ CREATE TABLE `user_seq` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-27 15:21:16
+-- Dump completed on 2023-12-28 16:37:11
