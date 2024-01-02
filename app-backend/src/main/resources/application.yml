@@ -14,8 +14,8 @@ spring:
           issuer-uri: https://embrave.eu.auth0.com/
   datasource :
     url: jdbc:mysql://app-db:3306/Embrave
-    username: root
-    password: root
+    username: admin
+    password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     generate-ddl: true
