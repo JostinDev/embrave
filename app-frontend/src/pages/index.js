@@ -93,11 +93,10 @@ export default function Index() {
 	}
 
 
-
 	return (
 			<div className="h-screen bg-blue-500 pt-20">
 				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
-					<p className='text-3xl mb-10'>Enterprise Spring boot Gateway App</p>
+					<p className='text-3xl mb-10'>Embrave</p>
 
 					<div className={'my-4'}>
 						<p className='text-2xl mb-4'>Some stats : </p>

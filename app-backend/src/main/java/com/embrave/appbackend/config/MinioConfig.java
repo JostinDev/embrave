@@ -14,7 +14,8 @@ public class MinioConfig {
             MinioClient minioClient =
                     MinioClient.builder()
                             //TODO Needs to be changed with host ip
-                            .endpoint("192.168.1.55", 9000, false)
+                            //.endpoint("192.168.1.55", 9000, false)
+                            .endpoint("localhost", 9000, false)
                             .credentials("admin", "adminadmin")
                             .build();
 

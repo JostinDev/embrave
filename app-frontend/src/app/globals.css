@@ -1,3 +1,119 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'nexa-thin';
+    src: url('../font/nexa/NexaThin.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-light';
+    src: url('../font/nexa/NexaLight.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-book';
+    src: url('../font/nexa/NexaBook.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-regular';
+    src: url('../font/nexa/NexaRegular.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-bold';
+    src: url('../font/nexa/NexaBold.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-x-bold';
+    src: url('../font/nexa/NexaXBold.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-heavy';
+    src: url('../font/nexa/NexaHeavy.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'nexa-black';
+    src: url('../font/nexa/NexaBlack.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*ITALIC*/
+
+@font-face {
+    font-family: 'nexa-thin-i';
+    src: url('../font/nexa/NexaThinItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-light-i';
+    src: url('../font/nexa/NexaLightItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-book-i';
+    src: url('../font/nexa/NexaBookItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-regular-i';
+    src: url('../font/nexa/NexaRegularItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+
+@font-face {
+    font-family: 'nexa-bold-i';
+    src: url('../font/nexa/NexaBoldItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-x-bold-i';
+    src: url('../font/nexa/NexaXBoldItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-heavy-i';
+    src: url('../font/nexa/NexaHeavyItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'nexa-black-i';
+    src: url('../font/nexa/NexaBlackItalic.otf');
+    font-weight: normal;
+    font-style: italic;
+}

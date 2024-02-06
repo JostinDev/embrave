@@ -13,8 +13,9 @@ spring:
         jwt:
           issuer-uri: https://embrave.eu.auth0.com/
   datasource :
-    url: jdbc:mysql://app-db:3306/Embrave
-    username: admin
+    url: jdbc:mysql://localhost:3306/Embrave
+    #url: jdbc:mysql://app-db:3306/Embrave
+    username: user
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
