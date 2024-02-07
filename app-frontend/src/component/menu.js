@@ -79,7 +79,7 @@ export default function Menu() {
 	}
 
 	return (
-			<div className="absolute left-8 p-4 lg:p-5 top-4 border border-white rounded-[14px] bottom-4 flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-gradient-to-br from-white/80 to-[#F9F9F8]/50">
+			<div className="transition-[width] absolute left-8 p-4 lg:p-5 top-4 border border-white rounded-[14px] bottom-4 flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-gradient-to-br from-white/80 to-[#F9F9F8]/50">
 
 				<div className="flex gap-2 items-center">
 					<Image src={logo} alt={''}></Image>
@@ -88,7 +88,7 @@ export default function Menu() {
 
 				<div id="backdropContainer" className="items-center lg:items-start relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
 
-					<div id="backdrop" className="absolute backdrop-blur w-[44px] lg:w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
+					<div id="backdrop" className="transition-all absolute backdrop-blur w-[44px] lg:w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
 
 					<Link id="linkHome" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 						<Image className='pointer-events-none' src={home} alt={''}></Image>
