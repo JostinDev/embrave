@@ -88,7 +88,7 @@ export default function Menu() {
 
 				<div id="backdropContainer" className="items-center lg:items-start relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
 
-					<div id="backdrop" className="transition-all absolute backdrop-blur w-[44px] lg:w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
+					<div id="backdrop" className="transition-all shadow-[0_0_9px_3px_rgba(165,165,165,0.3)] absolute w-[44px] lg:w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
 
 					<Link id="linkHome" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 						<Image className='pointer-events-none' src={home} alt={''}></Image>
