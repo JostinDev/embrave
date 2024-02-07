@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-
   theme: {
     fontFamily: {
       'nexa-thin': ['nexa-thin', 'sans-serif'],
@@ -26,5 +25,9 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/component/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+    // ...
   ],
 }

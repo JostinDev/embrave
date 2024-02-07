@@ -4,7 +4,7 @@ import hero from "../../public/hero.png"
 
 export default function App({ Component, pageProps }) {
 	return(
-			<div>
+			<div className='@container'>
 				<Menu />
 				<div className='w-full min-h-[200px] bg-cover'
 						 style={{backgroundImage: `url(${hero.src})`}}>

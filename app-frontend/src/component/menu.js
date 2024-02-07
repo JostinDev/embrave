@@ -59,58 +59,56 @@ export default function Menu() {
 		});
 	}
 
-
-
 	function placeBackdrop(item) {
 		const backdrop = document.querySelector('#backdrop')
 		const backdropContainer = document.querySelector('#backdropContainer')
 
 		let rect = item.getBoundingClientRect();
 		let rectContainer = backdropContainer.getBoundingClientRect();
+		let rectBackdrop = backdrop.getBoundingClientRect();
 		console.log("element :",rect.top, rect.right, rect.bottom, rect.left);
 		console.log("Container :",rectContainer.top, rectContainer.right, rectContainer.bottom, rectContainer.left);
 
 		let topValue = rect.top - rectContainer.top
-		let heightBackdrop = rect.bottom - rect.top
+		let heightBackdrop = rectBackdrop.bottom - rectBackdrop.top
 
 		console.log("Top Value :", topValue)
 		console.log("Height backdrop value :", heightBackdrop)
 
-		backdrop.style.top = rect.top - rectContainer.top - heightBackdrop +'px';
-
+		backdrop.style.top = topValue - heightBackdrop / 6 +'px';
 	}
 
 	return (
-			<div className="absolute left-8 p-5 top-4 border border-white rounded-[14px] bottom-4 flex flex-col gap-8 backdrop-blur-lg w-[255px] bg-gradient-to-br from-white to-[#F9F9F8]/50">
+			<div className="absolute left-8 p-4 lg:p-5 top-4 border border-white rounded-[14px] bottom-4 flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-gradient-to-br from-white/80 to-[#F9F9F8]/50">
 
 				<div className="flex gap-2 items-center">
 					<Image src={logo} alt={''}></Image>
-					<h1 className="font-nexa-book text-2xl">Embrave</h1>
+					<h1 className="hidden lg:block font-nexa-book text-2xl">Embrave</h1>
 				</div>
 
-				<div id="backdropContainer" className="relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
+				<div id="backdropContainer" className="items-center lg:items-start relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
 
-					<div id="backdrop" className="absolute w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
+					<div id="backdrop" className="absolute backdrop-blur w-[44px] lg:w-[215px] h-[44px] bg-[#F0F0EF]/[.52] rounded-xl border border-[#E9E8E6]"></div>
 
-					<div className="menuItem z-10 flex gap-2 items-end">
-						<Image src={home} alt={''}></Image>
-						<Link id="linkHome" onClick={(e) => placeBackdrop(e.target)} href="/">Home</Link>
-					</div>
+					<Link id="linkHome" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Image className='pointer-events-none' src={home} alt={''}></Image>
+						<span className='hidden lg:flex h-full items-end'>Home</span>
+					</Link>
 
-					<div className="menuItem z-10 flex gap-2 items-end">
+					<Link id="linkChallenge" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/challenge">
 						<Image src={world} alt={''}></Image>
-						<Link id="linkChallenge" onClick={(e) => placeBackdrop(e.target)} href="/challenge">Challenge</Link>
-					</div>
+						<span className='hidden lg:flex h-full items-end'>Challenge</span>
+					</Link>
 
-					<div className="menuItem z-10 flex gap-2 items-end">
+					<Link id="linkExplore" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 						<Image src={world} alt={''}></Image>
-						<Link id="linkExplore" onClick={(e) => placeBackdrop(e.target)} href="/challenge">Explore</Link>
-					</div>
+						<span className='hidden lg:flex h-full items-end'>Explore</span>
+					</Link>
 
-					<div className="menuItem z-10 flex gap-2 items-end">
+					<Link id="linkProfile" className="z-10 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 						<Image src={profile} alt={''}></Image>
-						<Link id="linkProfile" onClick={(e) => placeBackdrop(e.target)} href="/challenge">Profile</Link>
-					</div>
+						<span className='hidden lg:flex h-full items-end'>Profile</span>
+					</Link>
 				</div>
 
 				<FontTest></FontTest>
