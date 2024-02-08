@@ -14,10 +14,25 @@ export default function Menu() {
 
 
 	useEffect( () => {
-
 		initBackdrop()
-
+		//initFocusBehaviour()
 	},[]);
+
+	async function initFocusBehaviour() {
+		await waitForElm('#linkHome').then(el => {
+			el.addEventListener("focus", (event) => {event.target.click()});
+		})
+		await waitForElm('#linkChallenge').then(el => {
+			el.addEventListener("focus", (event) => {event.target.click()});
+		})
+		await waitForElm('#linkExplore').then(el => {
+			el.addEventListener("focus", (event) => {event.target.click()});
+		})
+		await waitForElm('#linkProfile').then(el => {
+			el.addEventListener("focus", (event) => {event.target.click()});
+	})
+	}
+
 
 	async function initBackdrop() {
 		switch (router.pathname) {
