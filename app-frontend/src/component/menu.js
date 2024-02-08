@@ -79,7 +79,7 @@ export default function Menu() {
 	}
 
 	return (
-			<div className="transition-[width] absolute left-8 p-4 lg:p-5 top-4 border border-white rounded-[14px] bottom-4 flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-gradient-to-br from-white/80 to-[#F9F9F8]/50">
+			<div className="transition-[width] fixed left-8 p-4 lg:p-5 top-8 bottom-8 border border-white rounded-[14px] flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-gradient-to-br from-white/80 to-[#F9F9F8]/50">
 
 				<div className="flex gap-2 items-center">
 					<Image src={logo} alt={''}></Image>
