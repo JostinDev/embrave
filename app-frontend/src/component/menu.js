@@ -110,8 +110,6 @@ export default function Menu() {
 						<span className='hidden lg:flex h-full items-end'>Profile</span>
 					</Link>
 				</div>
-
-				<FontTest></FontTest>
 			</div>
 	)
 }
