@@ -1,0 +1,49 @@
+.text-hero {
+    @apply font-nexa-black-i text-90;
+}
+
+.text-large-title {
+    @apply font-nexa-bold text-32;
+}
+
+.text-title1 {
+    @apply font-nexa-book text-2xl;
+}
+
+.text-title2 {
+    @apply font-nexa-bold text-xl;
+}
+
+.text-title3 {
+    @apply font-nexa-light text-xl;
+}
+
+.text-body-l-book {
+    @apply font-inter-book text-base leading-18;
+}
+
+.text-body-l-medium {
+    @apply font-inter-medium text-base leading-5;
+}
+
+.text-body-l-heavy {
+    @apply font-inter-heavy text-base leading-18;
+}
+
+
+.text-body-m-book {
+    @apply font-inter-book text-sm leading-4;
+}
+
+.text-body-m-bold {
+    @apply font-inter-bold text-sm leading-4;
+}
+
+
+.text-body-s-book {
+    @apply font-inter-book text-xs leading-14;
+}
+
+.text-body-s-bold {
+    @apply font-inter-bold text-xs leading-14;
+}

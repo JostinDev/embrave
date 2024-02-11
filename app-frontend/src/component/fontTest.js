@@ -4,23 +4,19 @@ export default function FontTest() {
 
 	return (
 			<div className="flex flex-col">
-				<p className={'font-nexa-thin'}>Nexa Thin</p>
-				<p className={'font-nexa-light'}>Nexa Light</p>
-				<p className={'font-nexa-book'}>Nexa Book</p>
-				<p className={'font-nexa-regular'}>Nexa regular</p>
-				<p className={'font-nexa-bold'}>Nexa bold</p>
-				<p className={'font-nexa-x-bold'}>Nexa x bold</p>
-				<p className={'font-nexa-heavy'}>Nexa heavy</p>
-				<p className={'font-nexa-black'}>Nexa black</p>
+				<p className={'text-hero'}>Text Hero</p>
+				<p className={'text-large-title'}>Text Large Title</p>
+				<p className={'text-title1'}>Text Title 1</p>
+				<p className={'text-title2'}>Text Title 2</p>
+				<p className={'text-title3'}>Text Title 3</p>
 
-				<p className={'font-nexa-thin-i mt-4'}>Nexa Thin Italic</p>
-				<p className={'font-nexa-light-i'}>Nexa Light Italic</p>
-				<p className={'font-nexa-book-i'}>Nexa Book Italic</p>
-				<p className={'font-nexa-regular-i'}>Nexa regular Italic</p>
-				<p className={'font-nexa-bold-i'}>Nexa bold Italic</p>
-				<p className={'font-nexa-x-bold-i'}>Nexa x bold Italic</p>
-				<p className={'font-nexa-heavy-i'}>Nexa heavy Italic</p>
-				<p className={'font-nexa-black-i'}>Nexa black Italic</p>
+				<p className={'text-body-l-book'}>text-body-l-book</p>
+				<p className={'text-body-l-medium'}>text-body-l-medium</p>
+				<p className={'text-body-l-heavy'}>text-body-l-heavy</p>
+				<p className={'text-body-m-book'}>text-body-m-book</p>
+				<p className={'text-body-m-bold'}>text-body-m-bold</p>
+				<p className={'text-body-s-book'}>text-body-s-book</p>
+				<p className={'text-body-s-bold'}>text-body-s-bold</p>
 			</div>
 	)
 }
