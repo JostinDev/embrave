@@ -5,15 +5,12 @@ export default function App({ Component, pageProps }) {
 	return(
 			<div>
 				<Menu />
-				<div className='w-full min-h-[200px] bg-cover'
-						 style={{backgroundImage: `url(${hero.src})`}}>
-
-					<div className='max-w-[1800px] pl-36 lg:pl-80'>
-						<p className='text-white text-4xl'>Justin Nydegger</p>
+				<div className='fixed w-full min-h-[275px] bg-cover flex flex-col' style={{backgroundImage: `url(${hero.src})`}}>
+					<div className='max-w-[1800px] pl-36 lg:pl-80 flex-1 flex'>
+						<p className='text-sand-12 text-hero self-end -mb-6'>HEJ JUSTIN</p>
 					</div>
-
 				</div>
-				<div className='max-w-[1800px] pl-36 lg:pl-80'>
+				<div className='max-w-[1800px] pl-36 lg:pl-80 pt-[275px]'>
 					<Component {...pageProps} />
 				</div>
 			</div>

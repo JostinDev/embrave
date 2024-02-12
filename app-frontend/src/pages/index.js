@@ -98,7 +98,7 @@ export default function Index() {
 				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<p className='text-3xl mb-10'>Embrave</p>
 
-					<div className={'my-4'}>
+					<div className='my-4'>
 						<p className='text-2xl mb-4'>Some stats : </p>
 						<p className='text-xl'>Challenge count : {countChallenge}</p>
 						<p className='text-xl'>Room count : {countRoom}</p>
