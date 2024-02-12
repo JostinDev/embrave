@@ -3,6 +3,7 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 import user from "../../public/user.png"
 import md5 from 'md5';
+import ChallengeCard from "@/component/challengeCard";
 
 export default function Index() {
 
@@ -97,6 +98,11 @@ export default function Index() {
 			<div className="h-screen bg-blue-500 pt-20">
 				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
 					<p className='text-3xl mb-10'>Embrave</p>
+
+					<ChallengeCard
+							challenge={'Very long long challenge name'} type={'Daily Challenge'}
+							streak={'42'} date={'02.02.2024'} >
+					</ChallengeCard>
 
 					<div className='my-4'>
 						<p className='text-2xl mb-4'>Some stats : </p>

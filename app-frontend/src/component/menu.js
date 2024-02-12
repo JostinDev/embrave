@@ -72,7 +72,7 @@ export default function Menu() {
 	}
 
 	return (
-			<div className='fixed z-10 left-8 top-8 bottom-8 flex flex-col'>
+			<div className='fixed z-20 left-8 top-8 bottom-8 flex flex-col'>
 				<div className="flex gap-4 items-center mb-8">
 					<Image src={logo} alt={''}></Image>
 					<h1 className="hidden lg:block text-large-title text-sand-12">Embrave</h1>
@@ -82,22 +82,22 @@ export default function Menu() {
 
 						<div id="backdrop" className="transition-all absolute w-[44px] lg:w-[223px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5"></div>
 
-						<Link id="linkHome" className="z-20 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkHome" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image className='pointer-events-none' src={home} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
 						</Link>
 
-						<Link id="linkChallenge" className="z-20 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/challenge">
+						<Link id="linkChallenge" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/challenge">
 							<Image src={world} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
 						</Link>
 
-						<Link id="linkExplore" className="z-20 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image src={world} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
 						</Link>
 
-						<Link id="linkProfile" className="z-20 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkProfile" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image src={profile} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Profile</span>
 						</Link>
