@@ -40,7 +40,20 @@ module.exports = {
         'orange-9': '#F76B15',
         'orange-10': '#EF5F00',
         'orange-11': '#CC4E00',
-        'orange-12': '#582D1D'
+        'orange-12': '#582D1D',
+
+        'crimson-1': '#FFFCFD',
+        'crimson-2': '#FEF7F9',
+        'crimson-3': '#FFE9F0',
+        'crimson-4': '#FEDCE7',
+        'crimson-5': '#FACEDD',
+        'crimson-6': '#F3BED1',
+        'crimson-7': '#EAACC3',
+        'crimson-8': '#E093B2',
+        'crimson-9': '#E93D82',
+        'crimson-10': '#DF3478',
+        'crimson-11': '#CB1D63',
+        'crimson-12': '#621639'
       },
       fontSize: {
         '90': '5.625rem',

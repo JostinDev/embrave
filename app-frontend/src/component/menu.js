@@ -27,7 +27,7 @@ export default function Menu() {
 				await waitForElm('#linkChallenge').then(el => el.click())
 				break
 			case "/explore" :
-				await waitForElm('#linkChallenge').then(el => el.click())
+				await waitForElm('#explore').then(el => el.click())
 				break
 			case "/profile" :
 				await waitForElm('#linkChallenge').then(el => el.click())
@@ -92,7 +92,7 @@ export default function Menu() {
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
 						</Link>
 
-						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/explore">
 							<Image src={world} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
 						</Link>
