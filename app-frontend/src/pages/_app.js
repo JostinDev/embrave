@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
 						<p className='text-sand-12 text-hero self-end -mb-6 hidden md:block'>HEJ JUSTIN</p>
 					</div>
 				</div>
-				<div className='max-w-[1800px] px-4 md:pl-36 lg:pl-80 pt-[120px] md:pt-[220px]'>
+				<div className='max-w-[1800px] px-4 md:pl-36 lg:pl-80 pt-[120px] md:pt-[220px] relative'>
 					<p className='text-sand-12 text-mobile-hero self-end -mb-6 md:hidden'>HEJ JUSTIN</p>
 					<Component {...pageProps} />
 				</div>

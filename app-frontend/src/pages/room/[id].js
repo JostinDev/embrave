@@ -7,6 +7,7 @@ import md5 from "md5";
 export default function Challenge() {
 
 	const [room, setRoom] = useState([]);
+	const [challenge, setChallenge] = useState([]);
 	const [milestoneList, setMilestoneList] = useState([]);
 
 	const [milestonePicture, setMilestonePicture] = useState([]);
@@ -97,18 +98,16 @@ export default function Challenge() {
 
 	const getRoom = async () => {
 		const response = (await fetch(`/api/room/${id}`))
-
 		await response.json().then((response) => {
-			console.log(response)
 			setRoom(response)
+			setChallenge(response.challenge)
 			console.log('ROOM : ', response)
+			console.log('ROOM CHALLENGE : ', response.challenge)
 		});
 	};
 
 	const getUser = async () => {
-
 			const response = (await fetch('/api/user'));
-
 			await response.json().then(response => {
 				console.log('CONNECTED USER : ', response)
 				setUser(response)
@@ -287,92 +286,129 @@ export default function Challenge() {
 		).catch(e => console.log(e));
 	}
 
+	function timestampToDate(timestamp) {
+		let date = new Date(timestamp);
+		return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+	}
+
 	return (
 			// TODO Mark a challenge as done
 			// TODO show image to be uploaded
 			// TODO prevent more than 4 images
-			<div className="min-h-screen bg-blue-500 pt-20">
-				<div className='mx-auto mt-10 p-10 rounded-md bg-white w-1/2 max-w-2xl'>
-					<h1 className='mb-10 text-2xl'>Post milestone</h1>
-					<h1 onClick={() => updateRoomLink()} className='cursor-pointer mb-10 text-2xl'>Generate new link</h1>
-					<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link : http://localhost:8080/api/room/join/{room.link}</a>
+			<div className="min-h-screen relative">
+				<h1 className='text-large-title text-sand-12 mb-8'>{challenge.title}</h1>
 
-					<div>
-						<h1 className='mb-10 text-2xl'>Users in room : </h1>
-
-						{users.map((userRoom) => {
-							return (
-									<div className={'mb-6'}>
-										<img src={userRoom.user.avatar}/>
-										<p>{userRoom.user.name}</p>
-										<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin' }</p>
-										<p onClick={() => promoteToAdmin(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
-										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Kick from the room' : ''}</p>
-										<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>Kick from the room</p>
-									</div>
-							)
-						})}
-					</div>
-
-					<div className='flex flex-row-reverse gap-2'>
-						{weekday.map((day) => {
-							return (
-									<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
-										 className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day) ? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
-							)
-						})}
-					</div>
-
-					<h1 className={'text-2xl mt-10'}>Milestone</h1>
-
-					{/* TODO only allow 4 pictures to be uploaded */}
-					<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
-								 onChange={(e) => manageSelectedPictures(e.target.files)}/>
-					<img className={'w-40'} id={'pic'} src={''}></img>
-					<label htmlFor={'milestoneDescription'}>Description</label>
-					<input
-							className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
-							onChange={(e) => setMilestoneDescription(e.target.value)}/>
-
-					<h1 className={'text-xl'} onClick={() => upload()}>SEND</h1>
-
-					{uploadedPicture.map((picture) => {
+				<div className={'absolute right-0 top-0 flex gap-6 items-center'}>
+					<button className={'bg-sand-12 text-sand-3 rounded-lg h-fit p-3 text-body-l-book'}>Share</button>
+					<div className={'flex'}>
+					{users.map((userRoom, index) => {
 						return (
-								<p key={picture}>{picture}</p>
+								<img style={{marginLeft: - 24 * index}} title={userRoom.user.name} alt={userRoom.user.name} className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={userRoom.user.avatar}/>
 						)
 					})}
-					<h1 onClick={() => leaveRoom()} className='mb-10 text-2xl font-bold text-red-700 cursor-pointer'>Quit the room</h1>
-
-					<div className={'mt-16'}>
-						<h1 className={'text-2xl my-10'}>Milestone List</h1>
-
-						{milestoneList.map((milestone) => {
-							return (
-									<div className={'mb-10'}>
-										<div className={'flex items-center mb-4'}>
-											<img className={'rounded-full'} src={milestone.user.avatar}/>
-											<div className={'ml-4'}>
-												<p>{milestone.user.name}</p>
-												<p>{milestone.timestamp}</p>
-												{user.id === milestone.user.id ?
-														<p onClick={()=> deleteMilestone(milestone.id)} className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
-														: ""}
-
-											</div>
-										</div>
-										<p>{milestone.description}</p>
-										<div className={'flex flex-row w-full'}>
-											{milestone.milestoneMedia.map((media) => {
-												return (
-														<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
-												)
-											})}
-										</div>
-									</div>
-							)
-						})}
 					</div>
 				</div>
+
+				<div className={'flex gap-8 mb-14'}>
+					<div className={'flex flex-col gap-2'}>
+						<p className={'text-body-m-bold'}>Date started:</p>
+						<p>{room.created}</p>
+					</div>
+					<div className={'flex flex-col gap-2'}>
+						<p className={'text-body-m-bold'}>Type:</p>
+						<p className='text-body-s-book mb-4 p-1.5 rounded-lg bg-sky-3 text-sky-11 w-fit'>Daily Challenge</p>
+					</div>
+				</div>
+
+				<h2 className={'text-title1 mb-4'}>Challenge description</h2>
+				<p className={'text-body-l-book mb-14'}>{challenge.description}</p>
+
+				<div className={'max-w-[550px]'}>
+				<h2 className={'text-title1'}>Your activity</h2>
+
+				{milestoneList.map((milestone) => {
+					return (
+							<div className={'mb-10'}>
+									<div className={'flex justify-between'}>
+										<img title={milestone.user.name} alt={milestone.user.name}
+												 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={milestone.user.avatar}/>
+										<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
+									</div>
+
+									<div className={'ml-4'}>
+
+									{user.id === milestone.user.id ?
+												<p onClick={() => deleteMilestone(milestone.id)}
+													 className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
+												: ""}
+									</div>
+
+								<p>{milestone.description}</p>
+								<div className={'flex flex-row w-full'}>
+									{milestone.milestoneMedia.map((media) => {
+										return (
+												<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
+										)
+									})}
+								</div>
+							</div>
+					)
+				})}
+				</div>
+				<h1 onClick={() => updateRoomLink()} className='cursor-pointer mb-10 text-2xl'>Generate new link</h1>
+				<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link :
+					http://localhost:8080/api/room/join/{room.link}</a>
+
+				<div>
+					<h1 className='mb-10 text-2xl'>Users in room : </h1>
+
+					{users.map((userRoom) => {
+						return (
+								<div className={'mb-6'}>
+									<img src={userRoom.user.avatar}/>
+									<p>{userRoom.user.name}</p>
+									<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin'}</p>
+									<p onClick={() => promoteToAdmin(userRoom.user.id)}
+										 className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Promote to admin' : ''}</p>
+									<p onClick={() => kickFromRoom(userRoom.user.id)}
+										 className={'cursor-pointer text-green-600'}>{userRoom.user.id !== user.id && !userRoom.admin ? 'Kick from the room' : ''}</p>
+									<p onClick={() => kickFromRoom(userRoom.user.id)} className={'cursor-pointer text-green-600'}>Kick
+										from the room</p>
+								</div>
+						)
+					})}
+				</div>
+
+				<div className='flex flex-row-reverse gap-2'>
+					{weekday.map((day) => {
+						return (
+								<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
+									 className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day) ? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
+						)
+					})}
+				</div>
+
+				<h1 className={'text-2xl mt-10'}>Milestone</h1>
+
+				{/* TODO only allow 4 pictures to be uploaded */}
+				<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
+							 onChange={(e) => manageSelectedPictures(e.target.files)}/>
+				<img className={'w-40'} id={'pic'} src={''}></img>
+				<label htmlFor={'milestoneDescription'}>Description</label>
+				<input
+						className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
+						onChange={(e) => setMilestoneDescription(e.target.value)}/>
+
+				<h1 className={'text-xl'} onClick={() => upload()}>SEND</h1>
+
+				{uploadedPicture.map((picture) => {
+					return (
+							<p key={picture}>{picture}</p>
+					)
+				})}
+				<h1 onClick={() => leaveRoom()} className='mb-10 text-2xl font-bold text-red-700 cursor-pointer'>Quit the
+					room</h1>
+
 			</div>
 	)
 }
