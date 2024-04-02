@@ -1,10 +1,9 @@
 import '../app/globals.css';
 import Link from 'next/link';
-import FontTest from "@/component/fontTest";
-import logo from "../../public/logo.svg"
 import world from "../../public/world.svg"
 import profile from "../../public/profile.svg"
 import home from "../../public/home.svg"
+import logout from "../../public/logout.svg"
 import Image from "next/image";
 import {useEffect} from "react";
 import {useRouter} from "next/router";
@@ -30,7 +29,7 @@ export default function Menu() {
 				await waitForElm('#explore').then(el => el.click())
 				break
 			case "/profile" :
-				await waitForElm('#linkChallenge').then(el => el.click())
+				await waitForElm('#linkProfile').then(el => el.click())
 				break
 		}
 	}
@@ -72,38 +71,49 @@ export default function Menu() {
 	}
 
 	return (
-			<div className='fixed z-20 left-8 top-8 bottom-8 flex flex-col'>
-				<div className="flex gap-4 items-center mb-8">
-					<Image src={logo} alt={''}></Image>
-					<h1 className="hidden lg:block text-large-title text-sand-12">Embrave</h1>
-				</div>
-				<div className="transition-[width] flex-1 px-4 pt-6 border border-sand-5 rounded-[26px] flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-white/40">
-					<div id="backdropContainer" className="items-center lg:items-start relative flex flex-col gap-6 font-nexa-book text-base leading-[18px]">
+			<div className='fixed z-40 left-8 hidden top-32 bottom-8 md:flex flex-col'>
+				<div
+						className="transition-[width] flex-1 px-4 pt-6 border border-sand-5 rounded-[26px] flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-white/40">
+					<div id="backdropContainer"
+							 className="items-center lg:items-start relative flex flex-col gap-6 font-nexa-book text-base leading-[18px]">
 
-						<div id="backdrop" className="transition-all absolute w-[44px] lg:w-[223px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5"></div>
+						<div id="backdrop"
+								 className="transition-all absolute w-[44px] lg:w-[223px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5"></div>
 
-						<Link id="linkHome" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkHome" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)}
+									href="/">
 							<Image className='pointer-events-none' src={home} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
 						</Link>
 
-						<Link id="linkChallenge" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/challenge">
+						<Link id="linkChallenge" className="z-30 flex gap-2 items-end lg:pl-2"
+									onClick={(e) => placeBackdrop(e.target)} href="/challenge">
 							<Image src={world} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
 						</Link>
 
-						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/explore">
+						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2"
+									onClick={(e) => placeBackdrop(e.target)} href="/explore">
 							<Image src={world} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
 						</Link>
 
-						<Link id="linkProfile" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)} href="/">
+						<Link id="linkProfile" className="z-30 flex gap-2 items-end lg:pl-2"
+									onClick={(e) => placeBackdrop(e.target)} href="/profile">
 							<Image src={profile} alt={''}></Image>
 							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Profile</span>
 						</Link>
 					</div>
-				</div>
 
+					<div className={'z-30 lg:pl-2 mt-auto mb-8'}>
+						<form className={'flex justify-center lg:justify-start'}  method="post" action={process.env.logoutUrl}>
+							<button className="flex gap-2 h-full items-center text-body-l-book text-sand-12"
+											type="submit"><Image src={logout} alt={''}></Image><span className={'hidden lg:block'}>Log out</span>
+							</button>
+						</form>
+					</div>
+
+				</div>
 			</div>
 	)
 }

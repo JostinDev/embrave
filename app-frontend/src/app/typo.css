@@ -2,6 +2,10 @@
     @apply font-nexa-black-i text-90;
 }
 
+.text-mobile-hero {
+    @apply font-nexa-black-i text-32;
+}
+
 .text-large-title {
     @apply font-nexa-bold text-32;
 }
