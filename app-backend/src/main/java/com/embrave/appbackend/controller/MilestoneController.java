@@ -49,12 +49,16 @@ public class MilestoneController {
     @PostMapping(path = "/milestone", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public @ResponseBody Map<String, String> saveMilestone(
             @RequestParam String[] files,
+            @RequestParam String title,
             @RequestParam String description,
             @RequestParam String roomID,
             @AuthenticationPrincipal Jwt jwt) {
 
         if(Objects.equals(description, "" ) || description == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Description can't be empty.");
+        }
+        if(Objects.equals(title, "" ) || title == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title can't be empty.");
         }
 
         String auth0Id = (String) jwt.getClaims().get("sub");
@@ -66,7 +70,7 @@ public class MilestoneController {
 
         if (room.isPresent()) {
             if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
-                Milestone milestone = milestoneRepository.save(new Milestone(room.get(), user, description, timestamp));
+                Milestone milestone = milestoneRepository.save(new Milestone(room.get(), user, title, description, timestamp));
                 for (String filename: files) {
                     milestoneMediaRepository.save(new MilestoneMedia(milestone, filename));
                 }
@@ -139,7 +143,7 @@ public class MilestoneController {
                     // Check if a milestone at the given timestamp already exists
                     // If not, create an empty ticked milestone
                     if(milestoneRepository.getMilestoneNumberDoneByDate(roomID, user.getId(), timestamp) == 0 ) {
-                        Milestone milestone = new Milestone(room.get(), user, "", timestamp);
+                        Milestone milestone = new Milestone(room.get(), user,"", "", timestamp);
                         milestone.setTicked(true);
                         milestoneRepository.save(milestone);
                         return JSONMessage.create("success","Ticked milestone created");

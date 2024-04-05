@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {minio} from 'minio'
 import {useRouter} from "next/router";
 import md5 from "md5";
+import Label from "@/component/label";
 
 export default function Challenge() {
 
@@ -316,7 +317,7 @@ export default function Challenge() {
 					</div>
 					<div className={'flex flex-col gap-2'}>
 						<p className={'text-body-m-bold'}>Type:</p>
-						<p className='text-body-s-book mb-4 p-1.5 rounded-lg bg-sky-3 text-sky-11 w-fit'>Daily Challenge</p>
+						<Label type={'dailyChallenge'}></Label>
 					</div>
 				</div>
 
@@ -324,32 +325,39 @@ export default function Challenge() {
 				<p className={'text-body-l-book mb-14'}>{challenge.description}</p>
 
 				<div className={'max-w-[550px]'}>
-				<h2 className={'text-title1'}>Your activity</h2>
+				<h2 className={'text-title1 mb-6'}>Your activity</h2>
 
 				{milestoneList.map((milestone) => {
 					return (
-							<div className={'mb-10'}>
-									<div className={'flex justify-between'}>
-										<img title={milestone.user.name} alt={milestone.user.name}
-												 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={milestone.user.avatar}/>
-										<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
-									</div>
+							<div className={'mb-10 flex flex-col'}>
+								<div className={'pl-16 flex justify-between'}>
+									<Label type={milestone.ticked ? 'milestone' : 'update'}></Label>
+									<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
 
-									<div className={'ml-4'}>
+								</div>
+								<div className={'flex items-center gap-4'}>
+									<img title={milestone.user.name} alt={milestone.user.name}
+											 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={milestone.user.avatar}/>
+									<p className={'text-title2'}>{milestone.title ? milestone.title : milestone.user.name + ' has set the challenge as done'}</p>
+								</div>
+								<p className={'text-body-l-book pl-16'}>
+									{milestone.description}
+								</p>
 
-									{user.id === milestone.user.id ?
-												<p onClick={() => deleteMilestone(milestone.id)}
-													 className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
-												: ""}
-									</div>
 
-								<p>{milestone.description}</p>
 								<div className={'flex flex-row w-full'}>
 									{milestone.milestoneMedia.map((media) => {
 										return (
 												<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
 										)
 									})}
+								</div>
+
+								<div className={'ml-4'}>
+									{user.id === milestone.user.id ?
+											<p onClick={() => deleteMilestone(milestone.id)}
+												 className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
+											: ""}
 								</div>
 							</div>
 					)

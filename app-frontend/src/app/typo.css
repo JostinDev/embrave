@@ -1,5 +1,5 @@
 .text-hero {
-    @apply font-nexa-black-i text-90;
+    @apply font-nexa-black-i text-6xl uppercase;
 }
 
 .text-mobile-hero {

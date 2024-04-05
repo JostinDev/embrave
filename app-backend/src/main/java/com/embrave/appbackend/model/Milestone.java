@@ -27,6 +27,7 @@ public class Milestone {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private String title;
     private String description;
     private Timestamp timestamp;
     private Boolean ticked;
@@ -36,9 +37,10 @@ public class Milestone {
     @JsonManagedReference
     private Set<MilestoneMedia> milestoneMedia;
 
-    public Milestone(Room room, User user, String description, Timestamp timestamp) {
+    public Milestone(Room room, User user, String title, String description, Timestamp timestamp) {
         this.room = room;
         this.user = user;
+        this.title = title;
         this.description = description;
         this.timestamp = timestamp;
     }
