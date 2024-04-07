@@ -4,3 +4,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.milestoneItem {
+    position:relative;
+}
+
+.firstMilestone .metadata {
+    @apply bg-white;
+}
+
+.lastMilestone .metabody {
+    @apply bg-white;
+}
+
+
+.milestoneItem:before{
+    content:'';
+    position:absolute;
+    @apply border border-dashed border-sand-5;
+    left:24px;
+    bottom:0;
+    z-index:-1;
+    height:100%
+}
+
+.milestoneItem:last-child :before{
+    content:none;
+}
