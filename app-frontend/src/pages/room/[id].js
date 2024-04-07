@@ -13,6 +13,7 @@ export default function Challenge() {
 
 	const [milestonePicture, setMilestonePicture] = useState([]);
 	const [milestoneDescription, setMilestoneDescription] = useState("");
+	const [milestoneTitle, setMilestoneTitle] = useState("");
 
 	const [uploadedPicture, setUploadedPicture] = useState([]);
 
@@ -201,8 +202,8 @@ export default function Challenge() {
 
 		const formData = new FormData()
 
-
 		formData.append('description', milestoneDescription)
+		formData.append('title', milestoneTitle)
 		formData.append('roomID', id)
 		formData.append('files', pictureLink)
 
@@ -302,11 +303,12 @@ export default function Challenge() {
 				<div className={'absolute right-0 top-0 flex gap-6 items-center'}>
 					<button className={'bg-sand-12 text-sand-3 rounded-lg h-fit p-3 text-body-l-book'}>Share</button>
 					<div className={'flex'}>
-					{users.map((userRoom, index) => {
-						return (
-								<img style={{marginLeft: - 24 * index}} title={userRoom.user.name} alt={userRoom.user.name} className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={userRoom.user.avatar}/>
-						)
-					})}
+						{users.map((userRoom, index) => {
+							return (
+									<img style={{marginLeft: -24 * index}} title={userRoom.user.name} alt={userRoom.user.name}
+											 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={userRoom.user.avatar}/>
+							)
+						})}
 					</div>
 				</div>
 
@@ -325,43 +327,43 @@ export default function Challenge() {
 				<p className={'text-body-l-book mb-14'}>{challenge.description}</p>
 
 				<div className={'max-w-[550px]'}>
-				<h2 className={'text-title1 mb-6'}>Your activity</h2>
+					<h2 className={'text-title1 mb-6'}>Your activity</h2>
 
-				{milestoneList.map((milestone) => {
-					return (
-							<div className={'mb-10 flex flex-col'}>
-								<div className={'pl-16 flex justify-between'}>
-									<Label type={milestone.ticked ? 'milestone' : 'update'}></Label>
-									<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
+					{milestoneList.map((milestone) => {
+						return (
+								<div className={'mb-10 flex flex-col'}>
+									<div className={'pl-16 flex justify-between'}>
+										<Label type={milestone.ticked ? 'milestone' : 'update'}></Label>
+										<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
 
+									</div>
+									<div className={'flex items-center gap-4'}>
+										<img title={milestone.user.name} alt={milestone.user.name}
+												 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={milestone.user.avatar}/>
+										<p className={'text-title2'}>{milestone.title ? milestone.title : milestone.user.name + ' has set the challenge as done'}</p>
+									</div>
+									<p className={'text-body-l-book pl-16'}>
+										{milestone.description}
+									</p>
+
+
+									<div className={'flex flex-row w-full pl-16'}>
+										{milestone.milestoneMedia.map((media) => {
+											return (
+													<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
+											)
+										})}
+									</div>
+
+									<div className={'ml-16'}>
+										{user.id === milestone.user.id ?
+												<p onClick={() => deleteMilestone(milestone.id)}
+													 className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
+												: ""}
+									</div>
 								</div>
-								<div className={'flex items-center gap-4'}>
-									<img title={milestone.user.name} alt={milestone.user.name}
-											 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={milestone.user.avatar}/>
-									<p className={'text-title2'}>{milestone.title ? milestone.title : milestone.user.name + ' has set the challenge as done'}</p>
-								</div>
-								<p className={'text-body-l-book pl-16'}>
-									{milestone.description}
-								</p>
-
-
-								<div className={'flex flex-row w-full'}>
-									{milestone.milestoneMedia.map((media) => {
-										return (
-												<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
-										)
-									})}
-								</div>
-
-								<div className={'ml-4'}>
-									{user.id === milestone.user.id ?
-											<p onClick={() => deleteMilestone(milestone.id)}
-												 className={'font-bold text-red-700 cursor-pointer'}>Delete the milestone</p>
-											: ""}
-								</div>
-							</div>
-					)
-				})}
+						)
+					})}
 				</div>
 				<h1 onClick={() => updateRoomLink()} className='cursor-pointer mb-10 text-2xl'>Generate new link</h1>
 				<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link :
@@ -402,10 +404,19 @@ export default function Challenge() {
 				<input id="image-file" type="file" accept=".png, .jpg, .jpeg" multiple
 							 onChange={(e) => manageSelectedPictures(e.target.files)}/>
 				<img className={'w-40'} id={'pic'} src={''}></img>
-				<label htmlFor={'milestoneDescription'}>Description</label>
-				<input
-						className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
-						onChange={(e) => setMilestoneDescription(e.target.value)}/>
+
+				<div className={'flex flex-col w-fit'}>
+					<label htmlFor={'milestoneTitle'}>Title</label>
+					<input
+							className={'border border-b-gray-400'} id={'milestoneTitle'} type={'text'}
+							onChange={(e) => setMilestoneTitle(e.target.value)}/>
+
+					<label htmlFor={'milestoneDescription'}>Description</label>
+					<input
+							className={'border border-b-gray-400'} id={'milestoneDescription'} type={'text'}
+							onChange={(e) => setMilestoneDescription(e.target.value)}/>
+				</div>
+
 
 				<h1 className={'text-xl'} onClick={() => upload()}>SEND</h1>
 

@@ -7,6 +7,7 @@ import com.embrave.appbackend.model.Room;
 import com.embrave.appbackend.model.User;
 import com.embrave.appbackend.repository.*;
 import com.embrave.appbackend.utils.JSONMessage;
+import com.google.common.collect.Lists;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,7 +102,8 @@ public class MilestoneController {
 
         if (room.isPresent()) {
             if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
-                return milestoneRepository.findMilestonesByRoomId(roomID);
+                List<Milestone> list = milestoneRepository.findMilestonesByRoomId(roomID);
+                return Lists.reverse(list);
             }
         }
 
