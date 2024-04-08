@@ -57,8 +57,8 @@ export default function Challenge() {
 								<Link key={room.room.id} href={`/room/${room.room.id}`}>
 									<ChallengeCard
 											id={room.room.id}
-											challenge={room.room.challenge.title} type={'daily'}
-											streak={room.streak} date={room.room.created} >
+											challenge={room.room.challenge.title} type={room.room.challenge.type.type}
+											streak={room.streak} date={room.room.created}>
 									</ChallengeCard>
 								</Link>
 						)})}

@@ -1,5 +1,7 @@
 import '../app/globals.css';
 import {useEffect, useState} from "react";
+import ChallengeCard from "@/component/challengeCard";
+import Link from "next/link";
 
 export default function Challenge() {
 
@@ -16,18 +18,24 @@ export default function Challenge() {
 			const response = (await fetch('/api/challenge'))
 
 			const responseJSON = await response.json();
-			setChallenge(responseJSON)
+
 
 			console.log(responseJSON)
+
+			const sortedData = sortByCategory(responseJSON);
+			console.log(sortedData);
+
+			setChallenge(sortedData)
+
+			console.log(typeof sortedData)
+
 
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-
 	async function createRoom(id) {
-
 		const data = { challenge_id: id};
 
 			const response = await fetch("api/room", {
@@ -45,22 +53,42 @@ export default function Challenge() {
 			});
 	}
 
+	function sortByCategory(data) {
+		const sortedData = {};
+
+		data.forEach(item => {
+			const category = item.category.category;
+			if (!sortedData[category]) {
+				sortedData[category] = [];
+			}
+			sortedData[category].push(item);
+		});
+
+		return sortedData;
+	}
+
 	return (
-			<div className="min-h-screen bg-blue-500 pt-20">
-				<div className='mx-auto p-10 rounded-md bg-white w-1/2 max-w-2xl'>
+			<div className="min-h-screen relative">
+				<h1 className='text-large-title mb-8'>Challenges</h1>
 
-					<h1 className='mb-10 text-2xl'>Challenges</h1>
+				{Object.keys(challenge).map((category, i) => (
+						<div key={i}>
+							<h2 className={'text-title1 mb-4'}>{category}</h2>
+							<div key={challenge.id} className='flex flex-wrap gap-4 mb-8'>
+							{challenge[category].map((challenge, i) => {
+								return (
+										<div key={i} onClick={() => createRoom(challenge.id)}>
+											<ChallengeCard
+													challenge={challenge.title}
+													description={challenge.description}
+													type={challenge.type.type}>
+											</ChallengeCard>
+										</div>
 
-					{challenge.map((challenge) => {
-						return (
-						<div key={challenge.id} className='bg-white border border-solid border-b-gray-400 mb-4'>
-							<p>{challenge.title}</p>
-							<p>{challenge.description}</p>
-							<p>{challenge.category.category}</p>
-							<p onClick={() => createRoom(challenge.id)} className='text-blue-600 cursor-pointer'>Create the challenge</p>
+								)})}
+							</div>
 						</div>
-						)})}
-				</div>
+				))}
 			</div>
 	)
 }

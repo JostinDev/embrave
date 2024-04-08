@@ -2,6 +2,7 @@ import '../app/globals.css';
 import calendarBlue from "../../public/calendarBlue.svg"
 import calendarPurple from "../../public/calendarPurple.svg"
 import flagGreen from "../../public/flagGreen.svg"
+import globeCrimson from "../../public/globeCrimson.svg"
 import Image from "next/image";
 import {useEffect, useState} from "react";
 
@@ -27,6 +28,11 @@ export default function Label(props) {
 				setStyle('bg-jade-3 text-jade-11')
 				setIcon(flagGreen)
 				setText('Milestone')
+				break
+			case 'goal':
+				setStyle('bg-crimson-3 text-crimson-11')
+				setIcon(globeCrimson)
+				setText('Goal Challenge')
 				break
 		}
 	}, []);
