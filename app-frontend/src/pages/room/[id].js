@@ -327,7 +327,7 @@ export default function Challenge() {
 				<h2 className={'text-title1 mb-4'}>Challenge description</h2>
 				<p className={'text-body-l-book mb-14'}>{challenge.description}</p>
 
-				<div className={'max-w-[550px]'}>
+				<div className={'max-w-[700px]'}>
 					<h2 className={'text-title1 mb-6'}>Your activity</h2>
 					<div className={'relative'} id={'milestoneList'}>
 
@@ -335,7 +335,6 @@ export default function Challenge() {
 							return (
 									<div
 											className={'milestoneItem flex flex-col '+(i + 1 === row.length ? 'lastMilestone mb-10 ' : 'pb-10 ') + (i === 0 ? 'firstMilestone ' : '')}>
-
 										<div className={'metadata pl-16 flex justify-between'}>
 											<Label type={milestone.ticked ? 'milestone' : 'update'}></Label>
 											<p className={'text-body-s-book text-sand-11'}>{timestampToDate(milestone.timestamp)}</p>
@@ -348,14 +347,14 @@ export default function Challenge() {
 														 src={milestone.user.avatar}/>
 												<p className={'text-title2'}>{milestone.title ? milestone.title : milestone.user.name + ' has set the challenge as done'}</p>
 											</div>
-											<p className={'text-body-l-book pl-16'}>
+											<p className={'text-body-l-book pl-16 pb-4'}>
 												{milestone.description}
 											</p>
 
-											<div className={'flex flex-row w-full pl-16'}>
+											<div className={'flex flex-row pl-16 gap-2'}>
 												{milestone.milestoneMedia.map((media) => {
 													return (
-															<img className='w-40 h-auto' src={`http://localhost:9000/embrave/${media.link}`}></img>
+															<img className='flex w-36 h-24 rounded-2xl object-cover drop-shadow' src={`http://localhost:9000/embrave/${media.link}`}></img>
 													)
 												})}
 											</div>
