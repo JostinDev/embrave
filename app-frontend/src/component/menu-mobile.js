@@ -64,33 +64,33 @@ export default function MenuMobile() {
 						<div className={'z-30 flex-col ' + (isMenuOpen ? 'flex' : 'hidden')}>
 
 							<Link id="linkHome"
-										className={'z-30 gap-2 items-end py-3 px-6 ' + (currentIcon === home ? 'hidden' : 'flex')} href="/"
+										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === home ? 'hidden' : 'flex')} href="/"
 										onClick={() => setCurrentIcon(home)}>
-								<Image className='pointer-events-none' src={home} alt={''}></Image>
+								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={home} alt={''}></Image>
 							</Link>
 
 							<Link id="linkChallenge"
-										className={'z-30 flex gap-2 items-end py-3 px-6 ' + (currentIcon === world ? 'hidden' : 'flex')}
+										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === world ? 'hidden' : 'flex')}
 										href="/challenge" onClick={() => setCurrentIcon(world)}>
-								<Image src={world} alt={''}></Image>
+								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={world} alt={''}></Image>
 							</Link>
 
 							<Link id="linkExplore"
-										className={'z-30 flex gap-2 items-end py-3 px-6 ' + (currentIcon === world ? 'hidden' : 'flex')}
+										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === world ? 'hidden' : 'flex')}
 										href="/explore" onClick={() => setCurrentIcon(world)}>
-								<Image src={world} alt={''}></Image>
+								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={world} alt={''}></Image>
 							</Link>
 
 							<Link id="linkProfile"
-										className={'z-30 flex gap-2 items-end py-3 px-6 ' + (currentIcon === profile ? 'hidden' : 'flex')}
+										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === profile ? 'hidden' : 'flex')}
 										href="/" onClick={() => setCurrentIcon(profile)}>
-								<Image src={profile} alt={''}></Image>
+								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={profile} alt={''}></Image>
 							</Link>
 
-							<form className={'flex gap-2 py-3 px-6 items-center justify-center lg:justify-start'} method="post"
+							<form className={'z-30 py-2 px-5 justify-center lg:justify-start'} method="post"
 										action={process.env.logoutUrl}>
-								<button className="flex h-full items-center text-body-l-book text-sand-12" type="submit">
-									<Image src={logout} alt={''}></Image>
+								<button className="flex h-full items-center text-body-l-book text-sand-12 hover:bg-sand-4 transition-all w-10 rounded-[10px] p-2" type="submit">
+									<Image className='' src={logout} alt={''}></Image>
 								</button>
 							</form>
 

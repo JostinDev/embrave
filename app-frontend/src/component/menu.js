@@ -67,7 +67,7 @@ export default function Menu() {
 		let topValue = rect.top - rectContainer.top
 		let heightBackdrop = rectBackdrop.bottom - rectBackdrop.top
 
-		backdrop.style.top = topValue - heightBackdrop / 6 +'px';
+		backdrop.style.top = topValue +'px';
 	}
 
 	return (
@@ -75,33 +75,34 @@ export default function Menu() {
 				<div
 						className="transition-[width] flex-1 px-4 pt-6 border border-sand-5 rounded-[26px] flex flex-col gap-8 backdrop-blur-lg w-[83px] lg:w-[255px] bg-white/40">
 					<div id="backdropContainer"
-							 className="items-center lg:items-start relative flex flex-col gap-6 font-nexa-book text-base leading-[18px]">
+							 className="items-center lg:items-start relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
 
 						<div id="backdrop"
-								 className="transition-all absolute w-[44px] lg:w-[223px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5"></div>
+								 className="pointer-events-none transition-all absolute w-[48px] lg:w-[221px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5">
+						</div>
 
-						<Link id="linkHome" className="z-30 flex gap-2 items-end lg:pl-2" onClick={(e) => placeBackdrop(e.target)}
-									href="/">
+						<Link id="linkHome" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
+									onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image className='pointer-events-none' src={home} alt={''}></Image>
-							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
+							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
 						</Link>
 
-						<Link id="linkChallenge" className="z-30 flex gap-2 items-end lg:pl-2"
+						<Link id="linkChallenge" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/challenge">
-							<Image src={world} alt={''}></Image>
-							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
+							<Image className='pointer-events-none' src={world} alt={''}></Image>
+							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
 						</Link>
 
-						<Link id="linkExplore" className="z-30 flex gap-2 items-end lg:pl-2"
+						<Link id="linkExplore" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/explore">
-							<Image src={world} alt={''}></Image>
-							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
+							<Image className='pointer-events-none' src={world} alt={''}></Image>
+							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
 						</Link>
 
-						<Link id="linkProfile" className="z-30 flex gap-2 items-end lg:pl-2"
+						<Link id="linkProfile" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/profile">
-							<Image src={profile} alt={''}></Image>
-							<span className='hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Profile</span>
+							<Image className='pointer-events-none' src={profile} alt={''}></Image>
+							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Profile</span>
 						</Link>
 					</div>
 
