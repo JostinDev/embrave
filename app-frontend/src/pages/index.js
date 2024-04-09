@@ -75,7 +75,7 @@ export default function Index() {
 					return (
 							<div className={'flex flex-col'}>
 								<p className='text-sand-12 text-title2 mb-2'>You are not logged in</p>
-								<a className='bg-blue-500 hover:bg-blue-700 w-fit px-8 py-2 text-xl text-white rounded-md'
+								<a className={'bg-sand-12 text-sand-3 rounded-lg h-fit p-3 text-body-l-book max-w-fit'}
 									 href={process.env.loginUrl}>
 									Login
 								</a>
