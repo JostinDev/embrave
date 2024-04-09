@@ -7,7 +7,6 @@ import logout from "../../public/logout.svg"
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import {act} from "react-dom/test-utils";
 
 export default function Menu() {
 	const router = useRouter()
@@ -22,9 +21,6 @@ export default function Menu() {
 		switch (router.pathname) {
 			case "/" :
 				await waitForElm('#linkHome').then(el => placeBackdrop(el))
-				break
-			case "/challenge" :
-				await waitForElm('#linkChallenge').then(el => placeBackdrop(el))
 				break
 			case "/explore" :
 				await waitForElm('#linkExplore').then(el => placeBackdrop(el))
@@ -98,12 +94,6 @@ export default function Menu() {
 									onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image className='pointer-events-none' src={home} alt={''}></Image>
 							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
-						</Link>
-
-						<Link id="linkChallenge" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
-									onClick={(e) => placeBackdrop(e.target)} href="/challenge">
-							<Image className='pointer-events-none' src={world} alt={''}></Image>
-							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Challenge</span>
 						</Link>
 
 						<Link id="linkExplore" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"

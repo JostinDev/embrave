@@ -15,9 +15,7 @@ export default function MenuMobile() {
 
 	useEffect( () => {
 		const handleResize = () => {
-			if(window.location.href.includes("challenge")) {
-				setCurrentIcon(world)
-			} else if(window.location.href.includes("explore")) {
+			if(window.location.href.includes("explore")) {
 				setCurrentIcon(world)
 			} else if(window.location.href.includes("profile")) {
 				setCurrentIcon(profile)
@@ -37,9 +35,6 @@ export default function MenuMobile() {
 		switch (router.pathname) {
 			case "/" :
 				setCurrentIcon(home)
-				break
-			case "/challenge" :
-				setCurrentIcon(world)
 				break
 			case "/explore" :
 				setCurrentIcon(world)
@@ -69,12 +64,6 @@ export default function MenuMobile() {
 								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={home} alt={''}></Image>
 							</Link>
 
-							<Link id="linkChallenge"
-										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === world ? 'hidden' : 'flex')}
-										href="/challenge" onClick={() => setCurrentIcon(world)}>
-								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={world} alt={''}></Image>
-							</Link>
-
 							<Link id="linkExplore"
 										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === world ? 'hidden' : 'flex')}
 										href="/explore" onClick={() => setCurrentIcon(world)}>
@@ -83,7 +72,7 @@ export default function MenuMobile() {
 
 							<Link id="linkProfile"
 										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === profile ? 'hidden' : 'flex')}
-										href="/" onClick={() => setCurrentIcon(profile)}>
+										href="/profile" onClick={() => setCurrentIcon(profile)}>
 								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={profile} alt={''}></Image>
 							</Link>
 

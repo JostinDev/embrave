@@ -347,7 +347,7 @@ export default function Challenge() {
 														 src={milestone.user.avatar}/>
 												<p className={'text-title2'}>{milestone.title ? milestone.title : milestone.user.name + ' has set the challenge as done'}</p>
 											</div>
-											<p className={'text-body-l-book pl-16 pb-4'}>
+											<p className={'text-body-l-book pl-16 pb-6'}>
 												{milestone.description}
 											</p>
 
