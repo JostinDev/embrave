@@ -8,11 +8,10 @@ import {useEffect, useState} from "react";
 
 export default function Label(props) {
 	const [style, setStyle] = useState('');
-	const [icon, setIcon] = useState('');
+	const [icon, setIcon] = useState(calendarBlue);
 	const [text, setText] = useState('');
 
 	useEffect(() => {
-		console.log(props.type)
 		switch (props.type) {
 			case 'dailyChallenge':
 				setStyle('bg-sky-3 text-sky-11')

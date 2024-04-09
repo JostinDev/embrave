@@ -12,7 +12,6 @@ export default function App({ Component, pageProps }) {
 	const [name, setName] = useState('');
 
 	useEffect( () => {
-		console.log("ROUTER : " + router.pathname)
 		switch (router.pathname) {
 			case "/room/[id]" :
 				setShowGreetings(false)

@@ -5,12 +5,14 @@ import profile from "../../public/profile.svg"
 import home from "../../public/home.svg"
 import logout from "../../public/logout.svg"
 import Image from "next/image";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {act} from "react-dom/test-utils";
 
 export default function Menu() {
 	const router = useRouter()
 
+	const [previousActive, setPreviousActive] = useState('');
 
 	useEffect( () => {
 		initBackdrop()
@@ -19,23 +21,33 @@ export default function Menu() {
 	async function initBackdrop() {
 		switch (router.pathname) {
 			case "/" :
-				await waitForElm('#linkHome').then(el => el.click())
+				await waitForElm('#linkHome').then(el => placeBackdrop(el))
 				break
 			case "/challenge" :
-				console.log("challenge selected")
-				await waitForElm('#linkChallenge').then(el => el.click())
+				await waitForElm('#linkChallenge').then(el => placeBackdrop(el))
 				break
 			case "/explore" :
-				await waitForElm('#explore').then(el => el.click())
+				await waitForElm('#linkExplore').then(el => placeBackdrop(el))
 				break
 			case "/profile" :
-				await waitForElm('#linkProfile').then(el => el.click())
+				await waitForElm('#linkProfile').then(el => placeBackdrop(el))
 				break
 		}
 	}
 
+	async function hoverState(active, className) {
+		if(active.id !== previousActive) {
+			active.classList.remove(className)
+			if(previousActive) {
+				await waitForElm('#'+previousActive).then(el =>{
+					el.classList.add(className)
+				})
+			}
+			setPreviousActive(active.id);
+		}
+	}
+
 	function waitForElm(selector) {
-		console.log(selector)
 		return new Promise(resolve => {
 			if (document.querySelector(selector)) {
 				return resolve(document.querySelector(selector));
@@ -62,12 +74,13 @@ export default function Menu() {
 
 		let rect = item.getBoundingClientRect();
 		let rectContainer = backdropContainer.getBoundingClientRect();
-		let rectBackdrop = backdrop.getBoundingClientRect();
 
 		let topValue = rect.top - rectContainer.top
-		let heightBackdrop = rectBackdrop.bottom - rectBackdrop.top
 
 		backdrop.style.top = topValue +'px';
+
+		hoverState(item,'hover:bg-sand-4')
+
 	}
 
 	return (
@@ -78,7 +91,7 @@ export default function Menu() {
 							 className="items-center lg:items-start relative flex flex-col gap-4 font-nexa-book text-base leading-[18px]">
 
 						<div id="backdrop"
-								 className="pointer-events-none transition-all absolute w-[48px] lg:w-[221px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5">
+								 className="pointer-events-none z-30 transition-all absolute w-[48px] lg:w-[221px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5">
 						</div>
 
 						<Link id="linkHome" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
