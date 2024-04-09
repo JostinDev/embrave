@@ -61,24 +61,24 @@ export default function MenuMobile() {
 							<Link id="linkHome"
 										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === home ? 'hidden' : 'flex')} href="/"
 										onClick={() => setCurrentIcon(home)}>
-								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={home} alt={''}></Image>
+								<Image className='hover:bg-sand-3 transition-all w-12 rounded-[10px] p-2' src={home} alt={''}></Image>
 							</Link>
 
 							<Link id="linkExplore"
 										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === world ? 'hidden' : 'flex')}
 										href="/explore" onClick={() => setCurrentIcon(world)}>
-								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={world} alt={''}></Image>
+								<Image className='hover:bg-sand-3 transition-all w-12 rounded-[10px] p-2' src={world} alt={''}></Image>
 							</Link>
 
 							<Link id="linkProfile"
 										className={'z-30 py-2 px-5 justify-center ' + (currentIcon === profile ? 'hidden' : 'flex')}
 										href="/profile" onClick={() => setCurrentIcon(profile)}>
-								<Image className='hover:bg-sand-4 transition-all w-12 rounded-[10px] p-2' src={profile} alt={''}></Image>
+								<Image className='hover:bg-sand-3 transition-all w-12 rounded-[10px] p-2' src={profile} alt={''}></Image>
 							</Link>
 
 							<form className={'z-30 py-2 px-5 justify-center lg:justify-start'} method="post"
 										action={process.env.logoutUrl}>
-								<button className="flex h-full items-center text-body-l-book text-sand-12 hover:bg-sand-4 transition-all w-10 rounded-[10px] p-2" type="submit">
+								<button className="flex h-full items-center text-body-l-book text-sand-12 hover:bg-sand-3 transition-all w-10 rounded-[10px] p-2" type="submit">
 									<Image className='' src={logout} alt={''}></Image>
 								</button>
 							</form>

@@ -75,7 +75,7 @@ export default function Menu() {
 
 		backdrop.style.top = topValue +'px';
 
-		hoverState(item,'hover:bg-sand-4')
+		hoverState(item,'hover:bg-sand-3')
 
 	}
 
@@ -90,19 +90,19 @@ export default function Menu() {
 								 className="pointer-events-none z-30 transition-all absolute w-[48px] lg:w-[221px] h-[44px] bg-sand-1 rounded-[10px] border border-sand-5">
 						</div>
 
-						<Link id="linkHome" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
+						<Link id="linkHome" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-3 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/">
 							<Image className='pointer-events-none' src={home} alt={''}></Image>
 							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Home</span>
 						</Link>
 
-						<Link id="linkExplore" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
+						<Link id="linkExplore" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-3 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/explore">
 							<Image className='pointer-events-none' src={world} alt={''}></Image>
 							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Explore</span>
 						</Link>
 
-						<Link id="linkProfile" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-4 py-2"
+						<Link id="linkProfile" className="z-30 justify-center lg:justify-start flex gap-2 items-end lg:pl-2 w-full rounded-[10px] transition-all hover:bg-sand-3 py-2"
 									onClick={(e) => placeBackdrop(e.target)} href="/profile">
 							<Image className='pointer-events-none' src={profile} alt={''}></Image>
 							<span className='pointer-events-none hidden lg:flex h-full items-center text-body-l-book text-sand-12'>Profile</span>
