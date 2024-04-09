@@ -103,10 +103,10 @@ public class MilestoneController {
         if (room.isPresent()) {
             if(userRoomRepository.existsUserRoomByRoomIdAndUserId(room.get().getId(), user.getId())) {
                 List<Milestone> list = milestoneRepository.findMilestonesByRoomId(roomID);
-                return Lists.reverse(list);
+                list.sort((m1, m2) -> m2.getTimestamp().compareTo(m1.getTimestamp()));
+                return list;
             }
         }
-
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't get milestones");
     }
 

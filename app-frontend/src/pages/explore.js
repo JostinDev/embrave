@@ -16,19 +16,9 @@ export default function Challenge() {
 	const fetchChallenge = async () => {
 		try {
 			const response = (await fetch('/api/challenge'))
-
 			const responseJSON = await response.json();
-
-
-			console.log(responseJSON)
-
 			const sortedData = sortByCategory(responseJSON);
-			console.log(sortedData);
-
 			setChallenge(sortedData)
-
-			console.log(typeof sortedData)
-
 
 		} catch (error) {
 			console.error(error);
