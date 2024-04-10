@@ -122,6 +122,7 @@ public class RoomController {
 
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
+
         LocalDate localDate = LocalDate.now();
 
         String code = body.get("code");
@@ -142,11 +143,13 @@ public class RoomController {
     @ResponseBody
     public void joinRoomWithLink(@PathVariable String link, @AuthenticationPrincipal Jwt jwt, HttpServletResponse response) throws IOException {
 
+        String auth0Id = (String) jwt.getClaims().get("sub");
+        User user = userRepository.findByAuth0Id((auth0Id));
+
+
         String redirectURL = "http://localhost:8080";
         String redirectURLSuccess = "http://localhost:8080/challenge";
 
-        String auth0Id = (String) jwt.getClaims().get("sub");
-        User user = userRepository.findByAuth0Id((auth0Id));
         LocalDate localDate = LocalDate.now();
 
         if(link == null) {
@@ -169,6 +172,14 @@ public class RoomController {
     }
 
     private void joinRoom(Room room, User user, LocalDate joined, boolean isAdmin) {
+
+        if(!user.isSubscribed() && user.getCredits() <= 0 ) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No more credits available");
+        } else {
+            user.setCredits(user.getCredits() - 1);
+            userRepository.save(user);
+        }
+
         UserRoom userRoom = new UserRoom(room, user, joined, isAdmin);
         userRoomRepository.save(userRoom);
         userController.addPoints(user, PointsValues.JOIN_CHALLENGE);

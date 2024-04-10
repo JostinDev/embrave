@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @Getter @Setter @NoArgsConstructor
 public class User {
 
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
@@ -25,6 +26,8 @@ public class User {
     private String auth0Id;
     private Long points;
     private LocalDate joined;
+    private int credits;
+    private boolean subscribed;
 
     public User (String auth0Id, String email, String name, String avatar, Long points, LocalDate joined) {
         this.auth0Id = auth0Id;
@@ -33,6 +36,7 @@ public class User {
         this.avatar = avatar;
         this.points = points;
         this.joined = joined;
+        this.credits = 3;
+        this.subscribed = false;
     }
-
 }

@@ -38,7 +38,7 @@ CREATE TABLE `challenge` (
                              KEY `challenge_challenge_category_id_fk` (`category`),
                              CONSTRAINT `challenge_challenge_category_id_fk` FOREIGN KEY (`category`) REFERENCES `challenge_category` (`id`),
                              CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `challenge_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `challenge` (
 
 LOCK TABLES `challenge` WRITE;
 /*!40000 ALTER TABLE `challenge` DISABLE KEYS */;
-INSERT INTO `challenge` VALUES (2,'Cold shower','Take a cold shower everyday','picture',2,1,NULL,NULL),(3,'Climb the everest','Are you ready to start the biggest challenge of your life ?','picture everest',2,1,NULL,NULL);
+INSERT INTO `challenge` VALUES (2,'Cold shower','Take a cold shower everyday','picture',1,1,NULL,NULL),(3,'Climb the everest','Are you ready to start the biggest challenge of your life ?','picture everest',2,1,NULL,NULL),(4,'Invite a stranger for dinner','And kids, that\'s how I met your mother','picture',2,2,NULL,NULL),(5,'Learn Blender','Let\'s create a 3D animation','picture',1,3,NULL,NULL),(6,'Read a book per month','You\'ll get so much knowledge','picture',1,4,NULL,NULL);
 /*!40000 ALTER TABLE `challenge` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -62,7 +62,7 @@ CREATE TABLE `challenge_category` (
                                       `id` int NOT NULL AUTO_INCREMENT,
                                       `category` varchar(255) DEFAULT NULL,
                                       PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `challenge_category` (
 
 LOCK TABLES `challenge_category` WRITE;
 /*!40000 ALTER TABLE `challenge_category` DISABLE KEYS */;
-INSERT INTO `challenge_category` VALUES (1,'Sport'),(2,'Social');
+INSERT INTO `challenge_category` VALUES (1,'Sport'),(2,'Social'),(3,'Work'),(4,'Lifestyle');
 /*!40000 ALTER TABLE `challenge_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +287,7 @@ CREATE TABLE `room` (
                         PRIMARY KEY (`id`),
                         KEY `room_challenge` (`challenge_id`),
                         CONSTRAINT `room_challenge` FOREIGN KEY (`challenge_id`) REFERENCES `challenge` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1056 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +296,7 @@ CREATE TABLE `room` (
 
 LOCK TABLES `room` WRITE;
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` VALUES (602,3,NULL,'9OCJTp5cy10GPbIwJyUJWqRDQzbwEv','2023-10-28','2023-10-28 14:19:46.060000'),(652,3,NULL,'V1ivSGdOmuBypB4tafrTvGo6XPyZlM','2023-11-01','2023-11-01 17:11:11.059000'),(803,3,NULL,'uGEwx7AJEo0DOyhEbfPUqZuvrIIduC','2023-11-23','2023-11-23 17:22:11.180000'),(804,3,NULL,'LsRtmeYLM3y63DfkJhBkrTEQrBENjr','2023-11-23','2023-11-23 17:23:38.682000'),(852,3,NULL,'YbWOzJcKyUUDXqlVRUdzhbUiKJVNFB','2023-11-23','2023-11-23 17:25:16.049000'),(902,3,NULL,'prTgqjka9SanMvuPF98HHXoO9wsNAi','2023-11-30','2023-11-30 15:29:41.317000'),(1002,2,NULL,'s4B0vCisVOCLHjlF9bPREma2ZnMOmv','2023-12-04','2023-12-04 19:33:08.674000');
+INSERT INTO `room` VALUES (602,3,NULL,'9OCJTp5cy10GPbIwJyUJWqRDQzbwEv','2023-10-28','2023-10-28 14:19:46.060000'),(652,3,NULL,'V1ivSGdOmuBypB4tafrTvGo6XPyZlM','2023-11-01','2023-11-01 17:11:11.059000'),(803,3,NULL,'uGEwx7AJEo0DOyhEbfPUqZuvrIIduC','2023-11-23','2023-11-23 17:22:11.180000'),(804,3,NULL,'LsRtmeYLM3y63DfkJhBkrTEQrBENjr','2023-11-23','2023-11-23 17:23:38.682000'),(852,3,NULL,'YbWOzJcKyUUDXqlVRUdzhbUiKJVNFB','2023-11-23','2023-11-23 17:25:16.049000'),(902,3,NULL,'prTgqjka9SanMvuPF98HHXoO9wsNAi','2023-11-30','2023-11-30 15:29:41.317000'),(1002,2,NULL,'s4B0vCisVOCLHjlF9bPREma2ZnMOmv','2023-12-04','2023-12-04 19:33:08.674000'),(1052,3,'7Erc9K','Ond3FUGnZuF8bOgYs36Nl7GLMDCbwO','2024-04-10','2024-04-10 12:07:06.720000'),(1053,3,'Sxe6ZJ','hSsoan63UAmxDG6qX07ZCJ0GFOtRBm','2024-04-10','2024-04-10 12:07:32.548000'),(1054,3,'QICu45','9d4euwh2HUBO7SBMkwk8ZkVIlHmqGu','2024-04-10','2024-04-10 12:07:36.006000'),(1055,3,'OgSzJP','WCA7gNqxDWZNbCiJIApRKJLDyonCzL','2024-04-10','2024-04-10 12:12:37.868000');
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +318,7 @@ CREATE TABLE `room_seq` (
 
 LOCK TABLES `room_seq` WRITE;
 /*!40000 ALTER TABLE `room_seq` DISABLE KEYS */;
-INSERT INTO `room_seq` VALUES (1101);
+INSERT INTO `room_seq` VALUES (1151);
 /*!40000 ALTER TABLE `room_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,6 +338,9 @@ CREATE TABLE `user` (
                         `id` int NOT NULL AUTO_INCREMENT,
                         `joined` date DEFAULT NULL,
                         `points` bigint DEFAULT NULL,
+                        `base_credits` int NOT NULL,
+                        `credits` int NOT NULL,
+                        `subscribed` bit(1) NOT NULL,
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `user_auth0_user` (`auth0id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -349,7 +352,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('justinnydegger@gmail.com','Jostin','https://lh3.googleusercontent.com/a/ACg8ocIKiKV6GIZ1zr0EgCupvVb8WvpiykmXLGxNTdlP1xuTvd1j=s96-c',0,'google-oauth2|114642014965782681499',2,'2024-03-29',0),('le3djostin@gmail.com','Le jostin','https://lh3.googleusercontent.com/a/ACg8ocIEd4-2WnDUICsBCNaLBuseinT5Tb1pAv72P4IzzxsxaQ=s96-c',0,'google-oauth2|100447145579228371306',52,'2024-04-02',10);
+INSERT INTO `user` VALUES ('justinnydegger@gmail.com','Jostin','https://lh3.googleusercontent.com/a/ACg8ocIKiKV6GIZ1zr0EgCupvVb8WvpiykmXLGxNTdlP1xuTvd1j=s96-c',0,'google-oauth2|114642014965782681499',2,'2024-03-29',40,0,0,_binary '\0'),('le3djostin@gmail.com','Le jostin','https://lh3.googleusercontent.com/a/ACg8ocIEd4-2WnDUICsBCNaLBuseinT5Tb1pAv72P4IzzxsxaQ=s96-c',0,'google-oauth2|100447145579228371306',52,'2024-04-02',10,0,3,_binary '\0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -380,7 +383,7 @@ CREATE TABLE `user_room` (
 
 LOCK TABLES `user_room` WRITE;
 /*!40000 ALTER TABLE `user_room` DISABLE KEYS */;
-INSERT INTO `user_room` VALUES (1203,803,2,'2023-11-23',_binary ''),(1204,804,2,'2023-11-23',_binary ''),(1252,852,2,'2023-11-23',_binary ''),(1403,652,1,'2023-12-04',_binary '\0'),(1453,1002,2,'2023-12-04',_binary ''),(1503,803,52,'2024-04-02',_binary '\0');
+INSERT INTO `user_room` VALUES (1203,803,2,'2023-11-23',_binary ''),(1204,804,2,'2023-11-23',_binary ''),(1252,852,2,'2023-11-23',_binary ''),(1403,652,1,'2023-12-04',_binary '\0'),(1453,1002,2,'2023-12-04',_binary ''),(1503,803,52,'2024-04-02',_binary '\0'),(1552,1052,2,'2024-04-10',_binary ''),(1553,1053,2,'2024-04-10',_binary ''),(1554,1054,2,'2024-04-10',_binary ''),(1555,1055,2,'2024-04-10',_binary '');
 /*!40000 ALTER TABLE `user_room` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +405,7 @@ CREATE TABLE `user_room_seq` (
 
 LOCK TABLES `user_room_seq` WRITE;
 /*!40000 ALTER TABLE `user_room_seq` DISABLE KEYS */;
-INSERT INTO `user_room_seq` VALUES (1601);
+INSERT INTO `user_room_seq` VALUES (1651);
 /*!40000 ALTER TABLE `user_room_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-05 18:41:02
+-- Dump completed on 2024-04-10 12:28:35

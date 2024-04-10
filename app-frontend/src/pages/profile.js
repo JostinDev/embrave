@@ -10,6 +10,7 @@ export default function Profile() {
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);
 	const [points, setPoints] = useState(0);
+	const [credits, setCredits] = useState(0);
 
 	const [countChallenge, setCountChallenge] = useState(0);
 	const [countMilestone, setCountMilestone] = useState(0);
@@ -31,6 +32,7 @@ export default function Profile() {
 			setName(user.name)
 			setAvatar(user.avatar)
 			setPoints(user.points)
+			setPoints(user.credits)
 
 		} catch (error) {
 			console.error("User not logged in");
@@ -97,6 +99,7 @@ export default function Profile() {
 					<p className='text-xl'>Room count : {countRoom}</p>
 					<p className='text-xl'>User count : {countUser}</p>
 					<p className='text-xl'>Milestone count : {countMilestone}</p>
+					<p className='text-xl'>Credits left : {credits}</p>
 				</div>
 
 				<div className='flex gap-4 items-center'>
