@@ -32,6 +32,12 @@ spring:
             allowCredentials: true
       routes:
 
+        - id: stripe
+          uri: http://localhost:3000
+          #uri: http://app-frontend:3000
+          predicates:
+            - Path=/api/checkout_sessions
+
         - id: backend
           uri: http://app-backend:8081
           predicates:

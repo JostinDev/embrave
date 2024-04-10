@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import Menu from "@/component/menu";
 import hero from "../../public/hero.png"
 import Image from "next/image";

@@ -32,7 +32,7 @@ export default function Profile() {
 			setName(user.name)
 			setAvatar(user.avatar)
 			setPoints(user.points)
-			setPoints(user.credits)
+			setCredits(user.credits)
 
 		} catch (error) {
 			console.error("User not logged in");
@@ -91,8 +91,7 @@ export default function Profile() {
 
 
 	return (
-			<div className="mt-10">
-				<p className='text-sand-12 text-title2 mb-4'>Currently Active Challenges</p>
+			<div>
 				<div className='my-4'>
 					<p className='text-2xl mb-4'>Some stats : </p>
 					<p className='text-xl'>Challenge count : {countChallenge}</p>

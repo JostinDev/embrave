@@ -36,7 +36,6 @@ export default function Index() {
 			const responseJSON = await response.json();
 
 			for (const room of responseJSON) {
-				console.log(room.room.id)
 				const streak = (await fetch(`/api/room/streak/${room.room.id}`))
 				const streakResponse = await streak.json();
 				room.streak = streakResponse;
