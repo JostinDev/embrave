@@ -1,4 +1,6 @@
-import '../app/globals.css';
+"use client";
+
+import '../globals.css';
 import {useEffect, useState} from "react";
 import ChallengeCard from "@/component/challengeCard";
 import Link from "next/link";
@@ -10,7 +12,6 @@ export default function Challenge() {
 	useEffect(() => {
 		fetchChallenge()
 	}, []);
-
 
 
 	const fetchChallenge = async () => {
@@ -74,7 +75,6 @@ export default function Challenge() {
 													type={challenge.type.type}>
 											</ChallengeCard>
 										</div>
-
 								)})}
 							</div>
 						</div>

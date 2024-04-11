@@ -1,12 +1,11 @@
-import '../../app/globals.css';
+"use client"
+
+import './page.css';
 import {useEffect, useState} from "react";
-import {minio} from 'minio'
-import {useRouter} from "next/router";
 import md5 from "md5";
 import Label from "@/component/label";
-import Image from "next/image";
 
-export default function Challenge() {
+export default function Challenge({params}) {
 
 	const [room, setRoom] = useState([]);
 	const [challenge, setChallenge] = useState([]);
@@ -26,28 +25,23 @@ export default function Challenge() {
 
 	const [users, setUsers] = useState([]);
 
-	const router = useRouter()
-	const {id} = router.query
+
+	let id = params.roomID
 
 	let pictureLink = [];
 
 	useEffect(() => {
 
 		datePicker()
-
-		if (router.isReady) {
-			const {id} = router.query;
-			if (!id) return null;
 			fetchMilestone()
 			fetchMilestoneTime()
 			getUser()
 			getUsers()
 			getRoom()
-		}
-		console.log(id)
-		console.log(router.query)
 
-	}, [router.isReady]);
+		console.log(params.roomID)
+
+	}, []);
 
 
 	const datePicker = () => {
@@ -304,9 +298,9 @@ export default function Challenge() {
 				<div className={'absolute right-0 top-0 flex gap-6 items-center'}>
 					<button className={'bg-sand-12 text-sand-3 rounded-lg h-fit p-3 text-body-l-book'}>Share</button>
 					<div className={'flex'}>
-						{users.map((userRoom, index) => {
+						{users.map((userRoom, i) => {
 							return (
-									<img style={{marginLeft: -24 * index}} title={userRoom.user.name} alt={userRoom.user.name}
+									<img key={i} style={{marginLeft: -24 * i}} title={userRoom.user.name} alt={userRoom.user.name}
 											 className={'rounded-full h-12 w-12 border-2 border-sand-12'} src={userRoom.user.avatar}/>
 							)
 						})}
@@ -333,7 +327,7 @@ export default function Challenge() {
 
 						{milestoneList.map((milestone, i, row) => {
 							return (
-									<div
+									<div key={i}
 											className={'milestoneItem flex flex-col '+(i + 1 === row.length ? 'lastMilestone mb-10 ' : 'pb-10 ') + (i === 0 ? 'firstMilestone ' : '')}>
 										<div className={'metadata pl-16 flex justify-between'}>
 											<Label type={milestone.ticked ? 'milestone' : 'update'}></Label>
@@ -352,9 +346,9 @@ export default function Challenge() {
 											</p>
 
 											<div className={'flex flex-row pl-16 gap-2'}>
-												{milestone.milestoneMedia.map((media) => {
+												{milestone.milestoneMedia.map((media, i) => {
 													return (
-															<img className='flex w-36 h-24 rounded-2xl object-cover drop-shadow' src={`http://localhost:9000/embrave/${media.link}`}></img>
+															<img key={i} className='flex w-36 h-24 rounded-2xl object-cover drop-shadow' src={`http://localhost:9000/embrave/${media.link}`}></img>
 													)
 												})}
 											</div>
@@ -379,9 +373,9 @@ export default function Challenge() {
 				<div>
 					<h1 className='mb-10 text-2xl'>Users in room : </h1>
 
-					{users.map((userRoom) => {
+					{users.map((userRoom, i) => {
 						return (
-								<div className={'mb-6'}>
+								<div key={i} className={'mb-6'}>
 									<img src={userRoom.user.avatar}/>
 									<p>{userRoom.user.name}</p>
 									<p className={'text-green-600'}>{userRoom.admin ? 'Admin' : 'Not admin'}</p>
@@ -397,9 +391,9 @@ export default function Challenge() {
 				</div>
 
 				<div className='flex flex-row-reverse gap-2'>
-					{weekday.map((day) => {
+					{weekday.map((day, i) => {
 						return (
-								<p onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
+								<p key={i} onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
 									 className={`cursor-pointer text-white  rounded-full p-2 ${milestoneDoneAt.includes(day) ? "bg-amber-400" : "bg-blue-500"} `}>{getDayName(new Date(day))}</p>
 						)
 					})}

@@ -5,11 +5,10 @@ import profile from "../../public/profile.svg"
 import home from "../../public/home.svg"
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import logout from "../../public/logout.svg";
+import {Router} from "next/router";
 
 export default function MenuMobile() {
-	const router = useRouter()
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [currentIcon, setCurrentIcon] = useState(home);
 
@@ -32,7 +31,7 @@ export default function MenuMobile() {
 	},[]);
 
 	async function initBackdrop() {
-		switch (router.pathname) {
+		switch (Router.pathname) {
 			case "/" :
 				setCurrentIcon(home)
 				break

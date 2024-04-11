@@ -1,4 +1,6 @@
-import '../app/globals.css';
+"use client"
+
+import '../globals.css';
 import {useEffect, useState} from "react";
 import React, { useCallback } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
@@ -6,7 +8,7 @@ import {EmbeddedCheckoutProvider, EmbeddedCheckout} from '@stripe/react-stripe-j
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function Premium() {
+export default function Page() {
 
 	const fetchClientSecret = useCallback(() => {
 		// Create a Checkout Session

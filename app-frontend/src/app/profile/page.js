@@ -1,11 +1,13 @@
-import '../app/globals.css';
+"use client";
+
+import '../globals.css';
 import {useEffect, useState} from "react";
 import Link from "next/link";
 import ChallengeCard from "@/component/challengeCard";
 import Image from "next/image";
-import user from "../../public/user.png";
+import user from "../../../public/user.png";
 
-export default function Profile() {
+export default function Page() {
 	const [email, setEmail] = useState('Log in to see your profile...');
 	const [name, setName] = useState('John');
 	const [avatar, setAvatar] = useState(user);

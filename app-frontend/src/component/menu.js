@@ -6,10 +6,9 @@ import home from "../../public/home.svg"
 import logout from "../../public/logout.svg"
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
+import {Router} from "next/router";
 
 export default function Menu() {
-	const router = useRouter()
 
 	const [previousActive, setPreviousActive] = useState('');
 
@@ -18,7 +17,7 @@ export default function Menu() {
 	},[]);
 
 	async function initBackdrop() {
-		switch (router.pathname) {
+		switch (Router.pathname) {
 			case "/" :
 				await waitForElm('#linkHome').then(el => placeBackdrop(el))
 				break

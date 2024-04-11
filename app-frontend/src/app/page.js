@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import '../app/globals.css';
 import Image from "next/image";
 import {useEffect, useState} from "react";
