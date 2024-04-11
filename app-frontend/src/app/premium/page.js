@@ -1,7 +1,6 @@
 "use client"
 
 import '../globals.css';
-import {useEffect, useState} from "react";
 import React, { useCallback } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import {EmbeddedCheckoutProvider, EmbeddedCheckout} from '@stripe/react-stripe-js';
@@ -20,29 +19,6 @@ export default function Page() {
 	}, []);
 
 	const options = {fetchClientSecret};
-
-	useEffect(() => {
-
-	}, []);
-
-
-	async function saveUser() {
-		const data = { username: name};
-		const response = await fetch("/api/user", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		});
-
-		await response.json().then((response) => {
-					console.log(response)
-				}
-		);
-
-	}
-
 
 	return (
 			<div className="mt-10">
@@ -63,8 +39,6 @@ export default function Page() {
 						<EmbeddedCheckout/>
 					</EmbeddedCheckoutProvider>
 				</div>
-
-
 			</div>
 	)
 }
