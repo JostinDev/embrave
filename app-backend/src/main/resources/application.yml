@@ -13,10 +13,10 @@ spring:
         jwt:
           issuer-uri: https://embrave.eu.auth0.com/
   datasource :
-    url: jdbc:mysql://localhost:3306/Embrave
+    url: ${DATASOURCE_URL}
     #url: jdbc:mysql://app-db:3306/Embrave
-    username: user
-    password: admin
+    username: ${DATASOURCE_USER}
+    password: ${DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     generate-ddl: true
