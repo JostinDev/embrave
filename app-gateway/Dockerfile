@@ -9,8 +9,8 @@ USER gradle
 COPY --chown=gradle:gradle build.gradle settings.gradle ./
 COPY --chown=gradle:gradle gradle gradle
 COPY --chown=gradle:gradle src src
-# Build the application
-RUN gradle clean build -x test --no-daemon
+# Build the application, disable file system watching
+RUN gradle clean build -x test --no-daemon --no-watch-fs
 
 # Use the official OpenJDK image for running the application
 FROM openjdk:11-jre-slim
