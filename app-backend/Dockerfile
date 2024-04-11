@@ -14,7 +14,6 @@ RUN gradle clean build -x test --no-daemon
 
 # Use the official OpenJDK image for running the application
 FROM openjdk:11-jre-slim
-VOLUME /tmp
 # Copy the Spring Boot application JAR from the builder stage
 COPY --from=builder /app/build/libs/*.jar app.jar
 # Expose the port the app runs on
