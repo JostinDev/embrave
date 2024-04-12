@@ -24,7 +24,7 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins: http://localhost:3000
+            allowedOrigins: ${FRONTEND_URL}
             #allowedOrigins: http://app-frontend:3000
             allowedHeaders: "*"
             allowedMethods:
@@ -40,7 +40,7 @@ spring:
             - Path=/api/checkout_sessions
 
         - id: backend
-          uri: http://localhost:8081
+          uri: ${BACKEND_URL}
           #uri: http://app-backend:8081
           predicates:
             - Path=/api/**
@@ -62,9 +62,9 @@ spring:
 auth0:
   audience: https://embrave.eu.auth0.com/api/v2/
 
-logoutReturnUrl: http://localhost:8080/
+logoutReturnUrl: ${GATEWAY_URL}
 
-debug: true
-logging:
-  level:
-    root: debug
+#debug: true
+#logging:
+#  level:
+#    root: debug

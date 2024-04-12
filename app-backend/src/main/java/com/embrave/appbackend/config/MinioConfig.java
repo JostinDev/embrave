@@ -25,8 +25,6 @@ public class MinioConfig {
     @Bean
     public MinioClient generateMinioClient() {
 
-
-
         try {
             MinioClient minioClient =
                     MinioClient.builder()
