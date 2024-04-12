@@ -94,16 +94,4 @@ public class SecurityConfig {
         handler.setLogoutSuccessUrl(URI.create(logoutUrl));
         return handler;
     }
-
-    @Bean
-    FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilter() {
-
-        final FilterRegistrationBean<ForwardedHeaderFilter> filterRegistrationBean = new FilterRegistrationBean<ForwardedHeaderFilter>();
-
-        filterRegistrationBean.setFilter(new ForwardedHeaderFilter());
-        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-
-        return filterRegistrationBean;
-    }
-
 }

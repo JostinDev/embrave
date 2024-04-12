@@ -1,6 +1,7 @@
 server:
   port: ${PORT:8080}
   address: 0.0.0.0
+  forward-headers-strategy: framework
 
 spring:
   main:
@@ -11,7 +12,6 @@ spring:
       client:
         registration:
           auth0:
-            redirect-uri: "https://{baseHost}{basePort}{basePath}/authorized/{registrationId}"
             client-id: ${AUTH0_CLIENT_ID}
             client-secret: ${AUTH0_CLIENT_SECRET}
             scope:
