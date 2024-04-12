@@ -16,7 +16,8 @@ RUN gradle clean build -x test --no-daemon --no-watch-fs
 FROM openjdk:17-slim
 # Copy the Spring Boot application JAR from the builder stage
 COPY --from=builder /app/build/libs/*.jar app.jar
+ARG PORT
 # Expose the port the app runs on
-EXPOSE 8080
+EXPOSE $PORT
 # Run the application
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

@@ -1,3 +1,4 @@
+server.port: ${PORT}
 spring:
   main:
     web-application-type: reactive
