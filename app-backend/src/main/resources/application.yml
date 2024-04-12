@@ -1,4 +1,9 @@
-server.port: ${PORT}
+server:
+  port: ${PORT:8081}
+  address: 0.0.0.0
+  error:
+    include-message: always
+
 spring:
   servlet:
     multipart:
@@ -36,7 +41,3 @@ debug: true
 logging:
   level:
     root: debug
-
-server:
-  error:
-    include-message: always

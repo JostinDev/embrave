@@ -1,4 +1,7 @@
-server.port: ${PORT}
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+
 spring:
   main:
     web-application-type: reactive
