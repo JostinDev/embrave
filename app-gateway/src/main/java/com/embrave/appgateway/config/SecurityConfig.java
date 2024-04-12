@@ -4,8 +4,10 @@ import com.embrave.appgateway.CustomAccessDeniedHandler;
 import com.embrave.appgateway.CustomAuthenticationEntryPoint;
 import com.embrave.appgateway.security.Auth0CustomAuthorizationRequestResolver;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -15,6 +17,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+import org.springframework.web.filter.ForwardedHeaderFilter;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -90,6 +93,17 @@ public class SecurityConfig {
         RedirectServerLogoutSuccessHandler handler = new RedirectServerLogoutSuccessHandler();
         handler.setLogoutSuccessUrl(URI.create(logoutUrl));
         return handler;
+    }
+
+    @Bean
+    FilterRegistrationBean<ForwardedHeaderFilter> forwardedHeaderFilter() {
+
+        final FilterRegistrationBean<ForwardedHeaderFilter> filterRegistrationBean = new FilterRegistrationBean<ForwardedHeaderFilter>();
+
+        filterRegistrationBean.setFilter(new ForwardedHeaderFilter());
+        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+
+        return filterRegistrationBean;
     }
 
 }
