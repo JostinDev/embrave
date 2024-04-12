@@ -8,6 +8,7 @@ import com.embrave.appbackend.utils.RandomString;
 import com.embrave.appbackend.values.PointsValues;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -45,6 +46,9 @@ public class RoomController {
     private MinioService minioService;
 
     private UserController userController;
+
+    @Value("${gateway.url}")
+    String redirectURL;
 
     public RoomController(UserController userController) {
         this.userController = userController;
@@ -146,9 +150,7 @@ public class RoomController {
         String auth0Id = (String) jwt.getClaims().get("sub");
         User user = userRepository.findByAuth0Id((auth0Id));
 
-
-        String redirectURL = "http://localhost:8080";
-        String redirectURLSuccess = "http://localhost:8080/challenge";
+        String redirectURLSuccess = redirectURL + "/challenge";
 
         LocalDate localDate = LocalDate.now();
 

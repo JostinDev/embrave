@@ -29,6 +29,9 @@ minio:
   user: ${MINIO_USER}
   password: ${MINIO_PASSWORD}
 
+gateway:
+  url: ${GATEWAY_URL}
+
 debug: true
 logging:
   level:

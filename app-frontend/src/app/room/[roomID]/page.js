@@ -348,7 +348,7 @@ export default function Challenge({params}) {
 											<div className={'flex flex-row pl-16 gap-2'}>
 												{milestone.milestoneMedia.map((media, i) => {
 													return (
-															<img key={i} className='flex w-36 h-24 rounded-2xl object-cover drop-shadow' src={`http://localhost:9000/embrave/${media.link}`}></img>
+															<img key={i} className='flex w-36 h-24 rounded-2xl object-cover drop-shadow' src={process.env.NEXT_PUBLIC_MINIO_URL`/embrave/${media.link}`}></img>
 													)
 												})}
 											</div>
@@ -367,7 +367,7 @@ export default function Challenge({params}) {
 
 				</div>
 				<h1 onClick={() => updateRoomLink()} className='cursor-pointer mb-10 text-2xl'>Generate new link</h1>
-				<a className={'block mb-4'} href={"http://localhost:8080/api/room/join/" + room.link}>Room link :
+				<a className={'block mb-4'} href={process.env.NEXT_PUBLIC_GATEWAY_URL+"/api/room/join/" + room.link}>Room link :
 					http://localhost:8080/api/room/join/{room.link}</a>
 
 				<div>

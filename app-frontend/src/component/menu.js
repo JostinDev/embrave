@@ -109,7 +109,7 @@ export default function Menu() {
 					</div>
 
 					<div className={'z-30 lg:pl-2 mt-auto mb-8'}>
-						<form className={'flex justify-center lg:justify-start'}  method="post" action={process.env.logoutUrl}>
+						<form className={'flex justify-center lg:justify-start'}  method="post" action={process.env.NEXT_PUBLIC_LOGOUT_URL}>
 							<button className="flex gap-2 h-full items-center text-body-l-book text-sand-12"
 											type="submit"><Image src={logout} alt={''}></Image><span className={'hidden lg:block'}>Log out</span>
 							</button>
