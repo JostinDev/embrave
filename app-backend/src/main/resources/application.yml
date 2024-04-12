@@ -23,6 +23,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+minio:
+  host: ${MINIO_HOST}
+  port: ${MINIO_PORT}
+  user: ${MINIO_USER}
+  password: ${MINIO_PASSWORD}
+
 debug: true
 logging:
   level:

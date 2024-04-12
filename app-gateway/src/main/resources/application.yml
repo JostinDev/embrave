@@ -1,0 +1,70 @@
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: ${AUTH0_CLIENT_ID}
+            client-secret: ${AUTH0_CLIENT_SECRET}
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            # trailing slash is important!
+            issuer-uri: https://embrave.eu.auth0.com/
+
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: http://localhost:3000
+            #allowedOrigins: http://app-frontend:3000
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+            allowCredentials: true
+      routes:
+
+        - id: stripe
+          uri: ${FRONTEND_URL}
+          #uri: http://app-frontend:3000
+          predicates:
+            - Path=/api/checkout_sessions
+
+        - id: backend
+          uri: http://localhost:8081
+          #uri: http://app-backend:8081
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1
+
+        - id: websocket
+          uri: ws://${FRONTEND_URL}
+          #uri: ws://app-frontend:3000/
+          predicates:
+            - Path=/websocket/**
+
+        - id: frontend
+          uri: ${FRONTEND_URL}
+          #uri: http://app-frontend:3000
+          predicates:
+            - Path=/**
+
+auth0:
+  audience: https://embrave.eu.auth0.com/api/v2/
+
+logoutReturnUrl: http://localhost:8080/
+
+debug: true
+logging:
+  level:
+    root: debug
