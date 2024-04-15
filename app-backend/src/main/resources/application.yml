@@ -1,6 +1,6 @@
 server:
   port: ${PORT:8081}
-  address: "[::1]"
+  address: "::"
   error:
     include-message: always
   ssl:
