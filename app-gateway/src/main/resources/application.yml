@@ -43,12 +43,6 @@ spring:
             allowCredentials: true
       routes:
 
-        - id: stripe
-          uri: ${FRONTEND_URL}
-          #uri: http://app-frontend:3000
-          predicates:
-            - Path=/api/checkout_sessions
-
         - id: backend
           uri: ${BACKEND_URL}
           #uri: http://app-backend:8081
@@ -57,17 +51,6 @@ spring:
           filters:
             - StripPrefix=1
 
-        - id: websocket
-          uri: ws://${FRONTEND_URL}
-          #uri: ws://app-frontend:3000/
-          predicates:
-            - Path=/websocket/**
-
-        - id: frontend
-          uri: ${FRONTEND_URL}
-          #uri: http://app-frontend:3000
-          predicates:
-            - Path=/**
 
 auth0:
   audience: https://embrave.eu.auth0.com/api/v2/
