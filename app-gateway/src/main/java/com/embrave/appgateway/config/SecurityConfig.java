@@ -73,7 +73,6 @@ public class SecurityConfig {
                         .pathMatchers("/embrave/**").authenticated()
                         .anyExchange().permitAll()
                 )
-                .cors(Customizer.withDefaults())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
