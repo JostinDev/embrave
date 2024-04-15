@@ -1,5 +1,4 @@
-
-function client(endpoint, {body, ...customConfig} = {}) {
+export default function client(endpoint, {body, ...customConfig} = {}) {
 	const headers = {'content-type': 'application/json', 'Credentials': 'include'}
 	const config = {
 		method: body ? 'POST' : 'GET',
