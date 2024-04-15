@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import user from "../../public/user.png"
 import Link from "next/link";
 import ChallengeCard from "@/component/challengeCard";
+import client from "../client"
 
 export default function Index() {
 
@@ -29,12 +30,10 @@ export default function Index() {
 
 	const fetchRooms = async () => {
 		try {
-			const response = (await fetch('/api/room'))
-			const responseJSON = await response.json();
+			const responseJSON = await client('api/room');
 
 			for (const room of responseJSON) {
-				const streak = (await fetch(`/api/room/streak/${room.room.id}`))
-				const streakResponse = await streak.json();
+				const streakResponse = (await client(`api/room/streak/${room.room.id}`))
 				room.streak = streakResponse;
 			}
 			setRoom(responseJSON)
