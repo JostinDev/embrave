@@ -4,6 +4,7 @@ import '../globals.css';
 import {useEffect, useState} from "react";
 import ChallengeCard from "@/component/challengeCard";
 import Link from "next/link";
+import client from "@/client";
 
 export default function Challenge() {
 
@@ -16,8 +17,7 @@ export default function Challenge() {
 
 	const fetchChallenge = async () => {
 		try {
-			const response = (await fetch('/api/challenge'))
-			const responseJSON = await response.json();
+			const responseJSON = await client('api/challenge')
 			const sortedData = sortByCategory(responseJSON);
 			setChallenge(sortedData)
 
@@ -28,19 +28,8 @@ export default function Challenge() {
 
 	async function createRoom(id) {
 		const data = { challenge_id: id};
-
-			const response = await fetch("api/room", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			});
-
-			await response.json().then(response => {
-				console.log("Success:", response);
-			}).catch(e => {
-				console.log("Error:", e);
+			await client("api/room", {
+				body: data,
 			});
 	}
 
