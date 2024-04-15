@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-// For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
-
 public class ChallengeController {
 
     @Autowired

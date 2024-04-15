@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-// For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
-@CrossOrigin(origins = "*")
 public class RoomController {
 
     // TODO think about admin rights and what an admin can do to an admin

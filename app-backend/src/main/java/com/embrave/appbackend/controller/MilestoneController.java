@@ -25,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
-// For simplicity of this sample, allow all origins. Real applications should configure CORS for their use case.
-@CrossOrigin(origins = "*")
 public class MilestoneController {
 
     @Autowired
