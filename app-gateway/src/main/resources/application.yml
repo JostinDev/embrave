@@ -69,7 +69,7 @@ auth0:
 
 logoutReturnUrl: ${GATEWAY_URL}
 
-#debug: true
-#logging:
-#  level:
-#    root: debug
+debug: true
+logging:
+  level:
+    root: debug
