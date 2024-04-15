@@ -76,7 +76,7 @@ export default function MenuMobile() {
 							</Link>
 
 							<form className={'z-30 py-2 px-5 justify-center lg:justify-start'} method="post"
-										action={process.env.logoutUrl}>
+										action={`${process.env.NEXT_PUBLIC_GATEWAY_URL}/logout`}>
 								<button className="flex h-full items-center text-body-l-book text-sand-12 hover:bg-sand-3 transition-all w-10 rounded-[10px] p-2" type="submit">
 									<Image className='' src={logout} alt={''}></Image>
 								</button>

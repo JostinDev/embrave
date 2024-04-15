@@ -77,7 +77,7 @@ export default function Index() {
 							<div className={'flex flex-col'}>
 								<p className='text-sand-12 text-title2 mb-2'>You are not logged in</p>
 								<a className={'bg-sand-12 text-sand-3 rounded-lg h-fit p-3 text-body-l-book max-w-fit'}
-									 href={process.env.NEXT_PUBLIC_AUTH_URL}>
+									 href={`${process.env.NEXT_PUBLIC_GATEWAY_URL}/oauth2/authorization/auth0`}>
 									Login
 								</a>
 							</div>
