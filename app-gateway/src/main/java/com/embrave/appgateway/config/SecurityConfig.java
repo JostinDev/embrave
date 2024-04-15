@@ -6,9 +6,12 @@ import com.embrave.appgateway.CustomAuthenticationSuccessHandler;
 import com.embrave.appgateway.security.Auth0CustomAuthorizationRequestResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.gateway.config.GlobalCorsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -19,6 +22,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -77,8 +83,19 @@ public class SecurityConfig {
         return new Auth0CustomAuthorizationRequestResolver(audience, reactiveClientRegistrationRepository);
     }
 
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @RefreshScope
+    public CorsWebFilter corsWebFilter(CorsConfigurationSource corsConfigurationSource) {
+        return new CorsWebFilter(corsConfigurationSource);
+    }
 
-
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(GlobalCorsProperties globalCorsProperties) {
+        var source = new UrlBasedCorsConfigurationSource();
+        globalCorsProperties.getCorsConfigurations().forEach(source::registerCorsConfiguration);
+        return source;
+    }
 
     @Bean
     public ServerLogoutSuccessHandler logoutSuccessHandlerTest() {
