@@ -1,5 +1,4 @@
-# Modern enterprise web application with identity management
-This template was tested with the Google login over auth0. The User model (Backend) and the database might need adjustments if another social is used.
+# Embrave
 
 ## Features
 
