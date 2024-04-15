@@ -19,17 +19,12 @@ export default function Index() {
 	}, []);
 
 	const fetchDetails = async () => {
-		try {
-			const response = (await fetch('/api/user').then((response)=>{
-				if(response.status !== 200) {
-					throw new Error(response.status)
-				}
-			}));
+		return client('api/user').then(() => {
 			setIsLogged(true)
-		} catch (error) {
+		}).catch(() => {
 			console.error("User not logged in");
 			setIsLogged(false)
-		}
+		})
 	};
 
 	const fetchRooms = async () => {
