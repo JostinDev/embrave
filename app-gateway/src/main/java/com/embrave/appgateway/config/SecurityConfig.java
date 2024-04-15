@@ -2,6 +2,7 @@ package com.embrave.appgateway.config;
 
 import com.embrave.appgateway.CustomAccessDeniedHandler;
 import com.embrave.appgateway.CustomAuthenticationEntryPoint;
+import com.embrave.appgateway.CustomAuthenticationSuccessHandler;
 import com.embrave.appgateway.security.Auth0CustomAuthorizationRequestResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -49,7 +50,7 @@ public class SecurityConfig {
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
 
         http.oauth2Login(oAuth2LoginSpec -> oAuth2LoginSpec
-                .authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository)));
+                .authorizationRequestResolver(auth0AuthorizationRequestResolver(clientRegistrationRepository)).authenticationSuccessHandler(new CustomAuthenticationSuccessHandler()));
 
         http.logout(logoutSpec -> logoutSpec.logoutUrl("/logout")
                 .logoutSuccessHandler(logoutSuccessHandlerTest())
@@ -69,7 +70,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     @Bean
     ServerOAuth2AuthorizationRequestResolver auth0AuthorizationRequestResolver(ReactiveClientRegistrationRepository reactiveClientRegistrationRepository) {
