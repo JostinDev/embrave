@@ -40,6 +40,7 @@ spring:
             allowedMethods:
               - GET
               - POST
+              - OPTIONS
             allowCredentials: true
       routes:
 
