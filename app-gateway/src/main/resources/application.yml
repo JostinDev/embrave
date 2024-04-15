@@ -25,6 +25,9 @@ spring:
 
   cloud:
     gateway:
+      httpclient:
+        ssl:
+          use-insecure-trust-manager: true
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
