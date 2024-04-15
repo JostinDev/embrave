@@ -55,7 +55,7 @@ spring:
 auth0:
   audience: https://embrave.eu.auth0.com/api/v2/
 
-logoutReturnUrl: ${GATEWAY_URL}
+logoutReturnUrl: ${FRONTEND_URL}
 
 debug: true
 logging:
