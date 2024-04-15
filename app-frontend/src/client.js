@@ -16,10 +16,10 @@ export default function client(endpoint, {body, ...customConfig} = {}) {
 			.fetch(`${process.env.NEXT_PUBLIC_GATEWAY_URL}/${endpoint}`, config)
 			.then(async response => {
 				if (response.status === 401) {
-					await fetch(`${process.env.NEXT_PUBLIC_GATEWAY_URL}/logout`, {
+					/*await fetch(`${process.env.NEXT_PUBLIC_GATEWAY_URL}/logout`, {
 						method:'POST'
 					})
-					return
+					return*/
 				}
 				if (response.ok) {
 					return await response.json()
