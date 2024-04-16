@@ -1,5 +1,19 @@
 # Embrave
 
+## To Do
+
+- [x] Run `git config --global pull.rebase true`
+- [x] Move `/app-backend/`, `/app-gateway/`, `/db/`, and `/docker-compose.yml` to `/legacy/` directory.
+- [x] Move `/app-frontend/` contents to root directory.
+- [ ] Remove `Dockerfile`
+- [ ] Pin dependencies
+- [ ] Update dependencies
+- [ ] Set up TypeScript
+- [ ] Set up Prettier
+- [ ] Migrate files to TypeScript
+- [ ] Set up Clerk
+- [ ] Set up Drizzle with Vercel Postgres
+
 ## Features
 
 - [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) used to proxy the Frontend and the Backend. Single entry point of the application.
