@@ -5,7 +5,7 @@
 - [x] Run `git config --global pull.rebase true`
 - [x] Move `/app-backend/`, `/app-gateway/`, `/db/`, and `/docker-compose.yml` to `/legacy/` directory.
 - [x] Move `/app-frontend/` contents to root directory.
-- [ ] Remove `Dockerfile`
+- [x] Remove `Dockerfile`
 - [ ] Pin dependencies
 - [ ] Update dependencies
 - [ ] Set up TypeScript
