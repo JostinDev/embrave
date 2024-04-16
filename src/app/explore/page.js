@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import client from '@/client';
-import ChallengeCard from '@/component/challengeCard';
+import ChallengeCard from '@/components/challengeCard';
 
 export default function Challenge() {
   const [challenge, setChallenge] = useState([]);

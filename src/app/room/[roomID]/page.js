@@ -5,7 +5,7 @@ import './page.css';
 import { useEffect, useState } from 'react';
 import md5 from 'md5';
 
-import Label from '@/component/label';
+import Label from '@/components/label';
 
 export default function Challenge({ params }) {
   const [room, setRoom] = useState([]);
