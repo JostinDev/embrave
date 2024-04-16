@@ -1,5 +1,5 @@
-@import "font.css";
-@import "typo.css";
+@import 'font.css';
+@import 'typo.css';
 
 @tailwind base;
 @tailwind components;

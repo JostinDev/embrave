@@ -82,12 +82,12 @@ module.exports = {
         'jade-12': '#1D3B31',
       },
       fontSize: {
-        '90': '5.625rem',
-        '32': '2rem',
+        90: '5.625rem',
+        32: '2rem',
       },
       lineHeight: {
-        '18': '1.125rem',
-        '14': '0.875rem',
+        18: '1.125rem',
+        14: '0.875rem',
       },
     },
     fontFamily: {
@@ -112,4 +112,4 @@ module.exports = {
     require('@tailwindcss/container-queries'),
     // ...
   ],
-}
+};

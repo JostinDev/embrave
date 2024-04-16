@@ -1,18 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	reactStrictMode: false,
-	images: {
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "*.googleusercontent.com",
-				port: "",
-				pathname: "/a/**",
-			}
-		],
-	}
+  reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+        port: '',
+        pathname: '/a/**',
+      },
+    ],
+  },
 };
 
-module.exports = nextConfig
-
-
+module.exports = nextConfig;

@@ -1,6 +1,6 @@
 server:
   port: ${PORT:8081}
-  address: "::"
+  address: '::'
   error:
     include-message: always
   ssl:
@@ -19,7 +19,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://embrave.eu.auth0.com/
-  datasource :
+  datasource:
     url: ${DATASOURCE_URL}
     #url: jdbc:mysql://app-db:3306/Embrave
     username: ${DATASOURCE_USER}

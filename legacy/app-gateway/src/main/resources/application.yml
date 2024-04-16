@@ -1,6 +1,6 @@
 server:
   port: ${PORT:8080}
-  address: "::"
+  address: '::'
   forward-headers-strategy: native
   ssl:
     enabled: false
@@ -40,14 +40,13 @@ spring:
           '[/**]':
             allowedOrigins: ${FRONTEND_URL}
             #allowedOrigins: http://app-frontend:3000
-            allowedHeaders: "*"
+            allowedHeaders: '*'
             allowedMethods:
               - GET
               - POST
               - OPTIONS
             allowCredentials: true
       routes:
-
         - id: backend
           uri: ${BACKEND_URL}
           #uri: http://app-backend:8081
@@ -55,7 +54,6 @@ spring:
             - Path=/api/**
           filters:
             - StripPrefix=1
-
 
 auth0:
   audience: https://embrave.eu.auth0.com/api/v2/

@@ -1,73 +1,73 @@
-"use client";
+'use client';
 
 import '../globals.css';
-import {useEffect, useState} from "react";
-import ChallengeCard from "@/component/challengeCard";
-import Link from "next/link";
-import client from "@/client";
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
+import client from '@/client';
+import ChallengeCard from '@/component/challengeCard';
 
 export default function Challenge() {
+  const [challenge, setChallenge] = useState([]);
 
-	const [challenge, setChallenge] = useState([]);
+  useEffect(() => {
+    fetchChallenge();
+  }, []);
 
-	useEffect(() => {
-		fetchChallenge()
-	}, []);
+  const fetchChallenge = async () => {
+    try {
+      const responseJSON = await client('api/challenge');
+      const sortedData = sortByCategory(responseJSON);
+      setChallenge(sortedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  async function createRoom(id) {
+    const data = { challenge_id: id };
+    await client('api/room', {
+      body: data,
+    });
+  }
 
-	const fetchChallenge = async () => {
-		try {
-			const responseJSON = await client('api/challenge')
-			const sortedData = sortByCategory(responseJSON);
-			setChallenge(sortedData)
+  function sortByCategory(data) {
+    const sortedData = {};
 
-		} catch (error) {
-			console.error(error);
-		}
-	};
+    data.forEach((item) => {
+      const category = item.category.category;
+      if (!sortedData[category]) {
+        sortedData[category] = [];
+      }
+      sortedData[category].push(item);
+    });
 
-	async function createRoom(id) {
-		const data = { challenge_id: id};
-			await client("api/room", {
-				body: data,
-			});
-	}
+    return sortedData;
+  }
 
-	function sortByCategory(data) {
-		const sortedData = {};
+  return (
+    <div className="relative min-h-screen">
+      <h1 className="text-large-title mb-8">Challenges</h1>
 
-		data.forEach(item => {
-			const category = item.category.category;
-			if (!sortedData[category]) {
-				sortedData[category] = [];
-			}
-			sortedData[category].push(item);
-		});
-
-		return sortedData;
-	}
-
-	return (
-			<div className="min-h-screen relative">
-				<h1 className='text-large-title mb-8'>Challenges</h1>
-
-				{Object.keys(challenge).map((category, i) => (
-						<div key={i}>
-							<h2 className={'text-title1 mb-4'}>{category}</h2>
-							<div key={challenge.id} className='flex flex-wrap gap-4 mb-8'>
-							{challenge[category].map((challenge, i) => {
-								return (
-										<div key={i} onClick={() => createRoom(challenge.id)}>
-											<ChallengeCard
-													challenge={challenge.title}
-													description={challenge.description}
-													type={challenge.type.type}>
-											</ChallengeCard>
-										</div>
-								)})}
-							</div>
-						</div>
-				))}
-			</div>
-	)
+      {Object.keys(challenge).map((category, i) => (
+        <div key={i}>
+          <h2 className={'text-title1 mb-4'}>{category}</h2>
+          <div key={challenge.id} className="mb-8 flex flex-wrap gap-4">
+            {challenge[category].map((challenge, i) => {
+              return (
+                <div key={i} onClick={() => createRoom(challenge.id)}>
+                  <ChallengeCard
+                    challenge={challenge.title}
+                    description={challenge.description}
+                    type={challenge.type.type}
+                  ></ChallengeCard>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }

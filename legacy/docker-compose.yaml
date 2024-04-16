@@ -44,7 +44,7 @@ services:
       # Opens port 3306 on the container
       - '3306'
     ports:
-      - "3306:3306"
+      - '3306:3306'
 
   app-gateway:
     build:
@@ -52,11 +52,10 @@ services:
       dockerfile: Dockerfile
     container_name: app-gateway
     ports:
-      - "8080:8080"
+      - '8080:8080'
     depends_on:
       - db
       - minio
-
 
   app-backend:
     build:
@@ -64,7 +63,7 @@ services:
       dockerfile: Dockerfile
     container_name: app-backend
     ports:
-      - "8081:8081"
+      - '8081:8081'
     depends_on:
       - db
       - minio
