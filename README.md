@@ -92,3 +92,26 @@ the following rows :
 ### Open the app
 
 Finally, open [http://localhost:8080](http://localhost:8081) with your browser to see the result.
+
+### Environment Variables
+
+Environment variables are handled by the [Vercel CLI](https://vercel.com/docs/cli/env). Use the
+following commands to manage them:
+
+```sh
+# Download development environment variables for running the app locally
+$ pnpm env:pull
+
+# Add a new environment variable
+$ pnpm env:add
+
+# Remove an environment variable
+$ pnpm env:rm
+```
+
+Check the [Vercel documentation](https://vercel.com/docs/concepts/projects/environment-variables)
+for more information.
+
+You should **never commit environment variables** to the repository. If you need to add a new
+environment variable, add it with the `pnpm env:add` command and then download it with the
+`pnpm env:pull` command.
