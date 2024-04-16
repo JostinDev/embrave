@@ -1,97 +1,99 @@
 # Embrave
 
-## To Do
+## Setup
 
-- [x] Run `git config --global pull.rebase true`
-- [x] Move `/app-backend/`, `/app-gateway/`, `/db/`, and `/docker-compose.yml` to `/legacy/`
-      directory.
-- [x] Move `/app-frontend/` contents to root directory.
-- [x] Remove `Dockerfile`
-- [x] Pin dependencies
-- [x] Update dependencies
-- [x] Set up TypeScript
-- [x] Set up Prettier
-- [ ] Migrate files to TypeScript
-- [x] Set up Clerk
-- [x] Set up Drizzle with Vercel Postgres
+Before being able to run the app for the first time, you need to follow the steps below:
 
-## Features
+### Prerequisites
 
-- [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) used to proxy the Frontend
-  and the Backend. Single entry point of the application.
-- Highly modular [Auth0](https://auth0.com/) authentication system. Login with credentials, socials
-  or password less solutions.
-- Interchangeable Frontend. The template uses [NextJS](https://nextjs.org/), feel free to use your
-  favorite framework. There is no special configuration required.
-- Frontend live reload while being proxied by the Gateway.
-- Frontend ready to be styled with [Tailwind CSS](https://tailwindcss.com/).
-- Interchangeable Backend. The template uses [Spring Boot](https://spring.io/), feel free to use
-  your favorite framework. Some configuration is required.
-- No JWT exchange between the Frontend and the Gateway. The authentication is managed by the
-  Gateway.
-- Interchangeable Database. The template uses [MySQL](https://www.mysql.com/).
-- Login and Logout
-- Create a user in the Database on his first login.
+- [Git](https://git-scm.com/downloads)
+- [Node.js v20](https://nodejs.org/en/download/)
+  - We recommend using [fnm](https://github.com/Schniz/fnm) to manage Node.js versions. After
+    installing it, run `fnm install` in the root directory of the project to install the proper
+    Node.js version.
+- Join the team on Vercel with your GitHub account.
+- 
+### Instructions
 
-## Run the Application
+1. Clone this repository
+2. Install [`pnpm`](https://pnpm.io/) with
+   [Corepack](https://nodejs.org/docs/latest-v20.x/api/corepack.html) by running
+   `corepack enable; corepack prepare`
+3. Install dependencies by running `pnpm install`
+4. Link local repository to its Vercel project by running `pnpm vercel link`
+5. Download environment variables by running `pnpm env:pull`
 
-Steps and configurations needed to start the application :
+## Developing
 
-### Create an Auth0 account
+### Running the App
 
-Create a free [Auth0](https://auth0.com/) account and configure your desired authentication factors.
-You'll need to get the following data :
+#### Development Mode
 
-- client-id
-- client-secret
-- audience
-- issuer-uri
+To start the app in development mode, run the following command:
 
-### Gateway
+```sh
+$ pnpm dev
+```
 
-Configure the following environment variables
+This will start a local server that will automatically rebuild the app and refresh the page when you
+make changes to the code. The app will be available at
+[http://localhost:3000](http://localhost:3000).
 
-- AUTH0_CLIENT_ID
-- AUTH0_CLIENT_SECRET
-- AUTH0_AUDIENCE - ex : https://your-app.eu.auth0.com/api/v2/
-- AUTH0_ISSUER_URI - ex : https://your-app.eu.auth0.com/
+This is how you will run the app most of the time.
 
-**Run the Gateway** :
+#### Debug Mode
 
-- Create a Spring Boot configuration in your favorite IDE
-- Or right click and run AppGatewayApplication
+If you're debugging and want to attach a debugger, you can use the following command to start the
+app in debug mode:
 
-### Backend
+```sh
+$ pnpm dev:debug
+```
 
-Configure the following environment variables
+To learn how to attach a debugger to the app, see
+[this guide](https://nextjs.org/docs/advanced-features/debugging).
 
-- AUTH0_ISSUER_URI : https://your-app.eu.auth0.com/
-- DB_HOST - ex : localhost:3306
-- DB_NAME
+#### Production Mode
 
-**Run the Backend** :
+To run the app in production mode, run the following commands in order:
 
-- Create a Spring Boot configuration in your favorite IDE
-- Or right click and run AppBackendApplication
+```sh
+# Build the app for production usage
+$ pnpm build
 
-### Frontend
+# Start the app in production mode
+$ pnpm start
+```
 
-Install the dependencies : `npm install`
+This can be useful for testing the app in production mode locally.
 
-Run the Frontend : `npm run dev`
+### Code Linting
 
-### Database
+Code linting is handled by [ESLint](https://eslint.org/). You can use the following command for
+linting all project's files:
 
-Create a database named the same as the DB_NAME defined in the Backend. Create a `user` table with
-the following rows :
+```sh
+$ pnpm lint
+```
 
-- email - String (PK)
-- name - String
-- avatar - String
+Staged files are automatically linted before commits. Be sure to **fix all linting errors before
+committing**.
 
-### Open the app
+We recommend using an
+[editor integration for ESLint](https://eslint.org/docs/user-guide/integrations).
 
-Finally, open [http://localhost:8080](http://localhost:8081) with your browser to see the result.
+### Code Formatting
+
+Code formatting is handled by [Prettier](https://prettier.io/). You can use the following command to
+format all project’s files:
+
+```sh
+$ pnpm format
+```
+
+Staged files are automatically formatted when committing.
+
+We recommend using an [editor integration for Prettier](https://prettier.io/docs/en/editors.html).
 
 ### Environment Variables
 
