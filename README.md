@@ -12,7 +12,7 @@ Before being able to run the app for the first time, you need to follow the step
     installing it, run `fnm install` in the root directory of the project to install the proper
     Node.js version.
 - Join the team on Vercel with your GitHub account.
-- 
+
 ### Instructions
 
 1. Clone this repository
@@ -76,9 +76,6 @@ linting all project's files:
 $ pnpm lint
 ```
 
-Staged files are automatically linted before commits. Be sure to **fix all linting errors before
-committing**.
-
 We recommend using an
 [editor integration for ESLint](https://eslint.org/docs/user-guide/integrations).
 
@@ -90,8 +87,6 @@ format all project’s files:
 ```sh
 $ pnpm format
 ```
-
-Staged files are automatically formatted when committing.
 
 We recommend using an [editor integration for Prettier](https://prettier.io/docs/en/editors.html).
 
