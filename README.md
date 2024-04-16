@@ -6,7 +6,7 @@
 - [x] Move `/app-backend/`, `/app-gateway/`, `/db/`, and `/docker-compose.yml` to `/legacy/` directory.
 - [x] Move `/app-frontend/` contents to root directory.
 - [x] Remove `Dockerfile`
-- [ ] Pin dependencies
+- [x] Pin dependencies
 - [ ] Update dependencies
 - [ ] Set up TypeScript
 - [ ] Set up Prettier
