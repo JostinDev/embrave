@@ -3,7 +3,7 @@
 
 ## To Do
 
-- [ ] Run `git config --global pull.rebase true`
+- [x] Run `git config --global pull.rebase true`
 - [ ] Move `/app-backend/`, `/app-gateway/`, `/db/`, and `/docker-compose.yml` to `/legacy/` directory.
 - [ ] Move `/app-frontend/` contents to root directory.
 - [ ] Remove `Dockerfile`
