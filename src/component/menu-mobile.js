@@ -1,3 +1,5 @@
+"use client";
+
 import '../app/globals.css';
 import Link from 'next/link';
 import world from "../../public/world.svg"

@@ -7,8 +7,8 @@
 - [x] Move `/app-frontend/` contents to root directory.
 - [x] Remove `Dockerfile`
 - [x] Pin dependencies
-- [ ] Update dependencies
-- [ ] Set up TypeScript
+- [x] Update dependencies
+- [x] Set up TypeScript
 - [ ] Set up Prettier
 - [ ] Migrate files to TypeScript
 - [ ] Set up Clerk
