@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ClerkLoaded, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
-import ChallengeCard from '@/component/challengeCard';
+import ChallengeCard from '@/components/challengeCard';
 import client from '../client';
 
 type Room = {

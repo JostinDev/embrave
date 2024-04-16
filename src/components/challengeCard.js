@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import Label from '@/component/label';
+import Label from '@/components/label';
 import placeholder from '../../public/challengePlaceholder.png';
 import chevronRight from '../../public/chevron-right.svg';
 import flame from '../../public/flame.svg';

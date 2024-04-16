@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { ClerkProvider } from '@clerk/nextjs';
 
-import Menu from '@/component/menu';
-import MenuMobile from '@/component/menu-mobile';
+import Menu from '@/components/menu';
+import MenuMobile from '@/components/menu-mobile';
 import hero from '../../public/hero.png';
 import logo from '../../public/logo.svg';
 
