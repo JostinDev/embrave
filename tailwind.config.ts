@@ -1,5 +1,9 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import containerQueriesPlugin from '@tailwindcss/container-queries';
+import type { Config } from 'tailwindcss';
+
+export default {
+  content: ['./src/**/*.{js,ts,tsx}'],
+  plugins: [containerQueriesPlugin],
   theme: {
     extend: {
       colors: {
@@ -103,13 +107,4 @@ module.exports = {
       'inter-heavy': ['inter-heavy', 'sans-serif'],
     },
   },
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/component/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  plugins: [
-    require('@tailwindcss/container-queries'),
-    // ...
-  ],
-};
+} satisfies Config;
