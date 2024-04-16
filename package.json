@@ -1,7 +1,8 @@
 {
-  "name": "app-frontend",
-  "version": "0.1.0",
-  "private": true,
+  "name": "embrave",
+  "homepage": "https://embrave.app/",
+  "type": "module",
+  "main": "n/a",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -33,5 +34,6 @@
     "prettier": "3.2.5",
     "prettier-plugin-tailwindcss": "0.5.13",
     "tailwindcss": "3.4.3"
-  }
+  },
+  "private": true
 }
