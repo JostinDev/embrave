@@ -1,12 +1,8 @@
 'use client';
 
-import '../globals.css';
-
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
-import ChallengeCard from '@/component/challengeCard';
 import user from '../../../public/user.png';
 
 export default function Page() {

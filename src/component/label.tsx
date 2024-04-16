@@ -1,5 +1,3 @@
-import '../app/globals.css';
-
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
@@ -8,7 +6,11 @@ import calendarPurple from '../../public/calendarPurple.svg';
 import flagGreen from '../../public/flagGreen.svg';
 import globeCrimson from '../../public/globeCrimson.svg';
 
-export default function Label(props) {
+type LabelProps = {
+  type: 'dailyChallenge' | 'update' | 'milestone' | 'goal';
+};
+
+export default function Label(props: LabelProps) {
   const [style, setStyle] = useState('');
   const [icon, setIcon] = useState(calendarBlue);
   const [text, setText] = useState('');

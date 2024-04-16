@@ -5,6 +5,8 @@ import MenuMobile from '@/component/menu-mobile';
 import hero from '../../public/hero.png';
 import logo from '../../public/logo.svg';
 
+import '@/app/globals.css';
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };

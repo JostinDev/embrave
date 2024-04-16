@@ -10,7 +10,7 @@
 - [x] Pin dependencies
 - [x] Update dependencies
 - [x] Set up TypeScript
-- [ ] Set up Prettier
+- [x] Set up Prettier
 - [ ] Migrate files to TypeScript
 - [ ] Set up Clerk
 - [ ] Set up Drizzle with Vercel Postgres

@@ -1,19 +1,28 @@
 'use client';
 
-// This is a client component 👈🏽
-import '../app/globals.css';
-
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import ChallengeCard from '@/component/challengeCard';
-import user from '../../public/user.png';
 import client from '../client';
 
+type Room = {
+  room: {
+    id: number;
+    challenge: {
+      title: string;
+      type: {
+        type: string;
+      };
+    };
+    created: string;
+  };
+  streak: number;
+};
+
 export default function Index() {
-  const [room, setRoom] = useState([]);
-  const [isLogged, setIsLogged] = useState(null);
+  const [room, setRoom] = useState<Room[]>([]);
+  const [loggedStatus, setLoggedStatus] = useState<'loading' | 'loggedIn' | 'loggedOut'>('loading');
 
   useEffect(() => {
     fetchDetails();
@@ -23,11 +32,11 @@ export default function Index() {
   const fetchDetails = async () => {
     return client('api/user')
       .then(() => {
-        setIsLogged(true);
+        setLoggedStatus('loggedIn');
       })
       .catch(() => {
         console.error('User not logged in');
-        setIsLogged(false);
+        setLoggedStatus('loggedOut');
       });
   };
 
@@ -47,9 +56,9 @@ export default function Index() {
   };
 
   function HomePage() {
-    console.log('isLogged : ', isLogged);
-    if (isLogged !== null) {
-      if (isLogged) {
+    console.log('isLogged : ', loggedStatus);
+    if (loggedStatus !== 'loading') {
+      if (loggedStatus) {
         return (
           <div>
             <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
