@@ -12,7 +12,7 @@
 - [x] Set up TypeScript
 - [x] Set up Prettier
 - [ ] Migrate files to TypeScript
-- [ ] Set up Clerk
+- [x] Set up Clerk
 - [ ] Set up Drizzle with Vercel Postgres
 
 ## Features

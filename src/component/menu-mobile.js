@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Router } from 'next/router';
+import { SignOutButton } from '@clerk/nextjs';
 
 import home from '../../public/home.svg';
 import logout from '../../public/logout.svg';
@@ -111,18 +112,16 @@ export default function MenuMobile() {
               ></Image>
             </Link>
 
-            <form
-              className={'z-30 justify-center px-5 py-2 lg:justify-start'}
-              method="post"
-              action={`${process.env.NEXT_PUBLIC_GATEWAY_URL}/logout`}
-            >
-              <button
-                className="text-body-l-book flex h-full w-10 items-center rounded-[10px] p-2 text-sand-12 transition-all hover:bg-sand-3"
-                type="submit"
-              >
-                <Image className="" src={logout} alt={''}></Image>
-              </button>
-            </form>
+            <div className={'z-30 justify-center px-5 py-2 lg:justify-start'}>
+              <SignOutButton>
+                <button
+                  className="text-body-l-book flex h-full w-10 items-center rounded-[10px] p-2 text-sand-12 transition-all hover:bg-sand-3"
+                  type="submit"
+                >
+                  <Image className="" src={logout} alt={''}></Image>
+                </button>
+              </SignOutButton>
+            </div>
           </div>
         </div>
       </div>

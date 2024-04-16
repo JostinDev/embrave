@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Router } from 'next/router';
+import { SignOutButton } from '@clerk/nextjs';
 
 import home from '../../public/home.svg';
 import logout from '../../public/logout.svg';
@@ -128,19 +129,17 @@ export default function Menu() {
         </div>
 
         <div className={'z-30 mb-8 mt-auto lg:pl-2'}>
-          <form
-            className={'flex justify-center lg:justify-start'}
-            method="post"
-            action={`${process.env.NEXT_PUBLIC_GATEWAY_URL}/logout`}
-          >
-            <button
-              className="text-body-l-book flex h-full items-center gap-2 text-sand-12"
-              type="submit"
-            >
-              <Image src={logout} alt={''}></Image>
-              <span className={'hidden lg:block'}>Log out</span>
-            </button>
-          </form>
+          <div className={'flex justify-center lg:justify-start'}>
+            <SignOutButton>
+              <button
+                className="text-body-l-book flex h-full items-center gap-2 text-sand-12"
+                type="submit"
+              >
+                <Image src={logout} alt={''}></Image>
+                <span className={'hidden lg:block'}>Log out</span>
+              </button>
+            </SignOutButton>
+          </div>
         </div>
       </div>
     </div>

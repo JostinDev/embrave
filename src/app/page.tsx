@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ClerkLoaded, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 
 import ChallengeCard from '@/component/challengeCard';
 import client from '../client';
@@ -22,23 +23,10 @@ type Room = {
 
 export default function Index() {
   const [room, setRoom] = useState<Room[]>([]);
-  const [loggedStatus, setLoggedStatus] = useState<'loading' | 'loggedIn' | 'loggedOut'>('loading');
 
   useEffect(() => {
-    fetchDetails();
     fetchRooms();
   }, []);
-
-  const fetchDetails = async () => {
-    return client('api/user')
-      .then(() => {
-        setLoggedStatus('loggedIn');
-      })
-      .catch(() => {
-        console.error('User not logged in');
-        setLoggedStatus('loggedOut');
-      });
-  };
 
   const fetchRooms = async () => {
     try {
@@ -55,11 +43,10 @@ export default function Index() {
     }
   };
 
-  function HomePage() {
-    console.log('isLogged : ', loggedStatus);
-    if (loggedStatus !== 'loading') {
-      if (loggedStatus) {
-        return (
+  return (
+    <div className="relative min-h-screen">
+      <ClerkLoaded>
+        <SignedIn>
           <div>
             <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
             <div className="flex flex-wrap gap-4">
@@ -78,26 +65,20 @@ export default function Index() {
               })}
             </div>
           </div>
-        );
-      } else {
-        return (
+        </SignedIn>
+        <SignedOut>
           <div className={'flex flex-col'}>
             <p className="text-title2 mb-2 text-sand-12">You are not logged in</p>
-            <a
-              className={'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'}
-              href={`${process.env.NEXT_PUBLIC_GATEWAY_URL}/oauth2/authorization/auth0`}
-            >
-              Login
-            </a>
+            <SignInButton mode="modal">
+              <button
+                className={'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'}
+              >
+                Login
+              </button>
+            </SignInButton>
           </div>
-        );
-      }
-    }
-  }
-
-  return (
-    <div className="relative min-h-screen">
-      <HomePage />
+        </SignedOut>
+      </ClerkLoaded>
     </div>
   );
 }
