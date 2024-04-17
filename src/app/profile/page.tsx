@@ -11,7 +11,6 @@ export default function Page() {
   const [avatar, setAvatar] = useState(user);
   const [points, setPoints] = useState(0);
   const [credits, setCredits] = useState(0);
-
   const [countChallenge, setCountChallenge] = useState(0);
   const [countMilestone, setCountMilestone] = useState(0);
   const [countUser, setCountUser] = useState(0);
@@ -26,7 +25,6 @@ export default function Page() {
   const fetchDetails = async () => {
     try {
       const response = await fetch('/api/user');
-
       const user = await response.json();
       setEmail(user.email);
       setName(user.name);
