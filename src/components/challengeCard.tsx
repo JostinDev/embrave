@@ -6,8 +6,8 @@ import flame from '@/app/images/flame.svg';
 import Label from '@/components/label';
 
 interface ChallengeCardProps {
-  id: number;
-  streak: number;
+  id?: number;
+  streak?: number;
   type: string;
   challenge: string;
   description?: string;
