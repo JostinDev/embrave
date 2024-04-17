@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { ClerkProvider } from '@clerk/nextjs';
 
+import hero from '@/app/images/hero.png';
+import logo from '@/app/images/logo.svg';
 import Menu from '@/components/menu';
 import MenuMobile from '@/components/menu-mobile';
-import hero from '../../public/hero.png';
-import logo from '../../public/logo.svg';
 
 import '@/app/globals.css';
 

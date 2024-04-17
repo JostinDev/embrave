@@ -1,11 +1,20 @@
 import Image from 'next/image';
 
+import placeholder from '@/app/images/challengePlaceholder.png';
+import chevronRight from '@/app/images/chevron-right.svg';
+import flame from '@/app/images/flame.svg';
 import Label from '@/components/label';
-import placeholder from '../../public/challengePlaceholder.png';
-import chevronRight from '../../public/chevron-right.svg';
-import flame from '../../public/flame.svg';
 
-export default function ChallengeCard(props) {
+interface ChallengeCardProps {
+  id: number;
+  streak: number;
+  type: string;
+  challenge: string;
+  description?: string;
+  date?: string;
+}
+
+export default function ChallengeCard(props: ChallengeCardProps) {
   function Streak() {
     let streak = props.streak !== 0 && props.streak;
 
@@ -13,13 +22,19 @@ export default function ChallengeCard(props) {
       <div className="relative">
         {streak ? (
           <div className="absolute left-2 top-2 flex gap-1 rounded-md bg-orange-4 p-1.5 text-orange-10">
-            <Image src={flame} alt={''}></Image>
+            <Image src={flame} alt={''} width={20} height={20} />
             <p className="text-body-s-book">{props.streak}</p>
           </div>
         ) : (
           ''
         )}
-        <Image className="rounded-[10px] pb-3" src={placeholder} alt={''}></Image>
+        <Image
+          className="rounded-[10px] pb-3"
+          src={placeholder}
+          alt={''}
+          width={200}
+          height={200}
+        />
       </div>
     );
   }
@@ -29,9 +44,11 @@ export default function ChallengeCard(props) {
 
     switch (type) {
       case 'goal':
-        return <Label type={'goal'}></Label>;
+        return <Label type={'goal'} />;
       case 'habit':
-        return <Label type={'dailyChallenge'}></Label>;
+        return <Label type={'dailyChallenge'} />;
+      default:
+        return null;
     }
   }
 
@@ -51,7 +68,7 @@ export default function ChallengeCard(props) {
       )}
 
       {props.date ? <p className="text-body-s-book text-sand-11">Created: {props.date}</p> : ''}
-      <Image className="self-end" src={chevronRight} alt={''}></Image>
+      <Image className="self-end" src={chevronRight} alt={''} width={20} height={20} />
     </div>
   );
 }

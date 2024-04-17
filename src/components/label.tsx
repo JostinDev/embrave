@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import calendarBlue from '../../public/calendarBlue.svg';
-import calendarPurple from '../../public/calendarPurple.svg';
-import flagGreen from '../../public/flagGreen.svg';
-import globeCrimson from '../../public/globeCrimson.svg';
+import calendarBlue from '@/app/images/calendarBlue.svg';
+import calendarPurple from '@/app/images/calendarPurple.svg';
+import flagGreen from '@/app/images/flagGreen.svg';
+import globeCrimson from '@/app/images/globeCrimson.svg';
 
 type LabelProps = {
   type: 'dailyChallenge' | 'update' | 'milestone' | 'goal';

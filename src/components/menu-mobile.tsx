@@ -3,17 +3,18 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { SignOutButton } from '@clerk/nextjs';
 
-import home from '../../public/home.svg';
-import logout from '../../public/logout.svg';
-import profile from '../../public/profile.svg';
-import world from '../../public/world.svg';
+import home from '@/app/images/home.svg';
+import logout from '@/app/images/logout.svg';
+import profile from '@/app/images/profile.svg';
+import world from '@/app/images/world.svg';
 
 export default function MenuMobile() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentIcon, setCurrentIcon] = useState(home);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,7 +35,7 @@ export default function MenuMobile() {
   }, []);
 
   async function initBackdrop() {
-    switch (Router.pathname) {
+    switch (pathname) {
       case '/':
         setCurrentIcon(home);
         break;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import user from '../../../public/user.png';
+import user from '@/app/images/user.png';
 
 export default function Page() {
   const [email, setEmail] = useState('Log in to see your profile...');

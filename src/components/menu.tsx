@@ -3,23 +3,24 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Router } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { SignOutButton } from '@clerk/nextjs';
 
-import home from '../../public/home.svg';
-import logout from '../../public/logout.svg';
-import profile from '../../public/profile.svg';
-import world from '../../public/world.svg';
+import home from '@/app/images/home.svg';
+import logout from '@/app/images/logout.svg';
+import profile from '@/app/images/profile.svg';
+import world from '@/app/images/world.svg';
 
 export default function Menu() {
-  const [previousActive, setPreviousActive] = useState('');
+  const [previousActive, setPreviousActive] = useState<string>('');
+  const pathname = usePathname();
 
   useEffect(() => {
     initBackdrop();
   }, []);
 
   async function initBackdrop() {
-    switch (Router.pathname) {
+    switch (pathname) {
       case '/':
         await waitForElm('#linkHome').then((el) => placeBackdrop(el));
         break;
@@ -32,7 +33,7 @@ export default function Menu() {
     }
   }
 
-  async function hoverState(active, className) {
+  async function hoverState(active: HTMLElement, className: string) {
     if (active.id !== previousActive) {
       active.classList.remove(className);
       if (previousActive) {
@@ -44,20 +45,19 @@ export default function Menu() {
     }
   }
 
-  function waitForElm(selector) {
+  function waitForElm(selector: string): Promise<HTMLElement> {
     return new Promise((resolve) => {
       if (document.querySelector(selector)) {
-        return resolve(document.querySelector(selector));
+        return resolve(document.querySelector(selector) as HTMLElement);
       }
 
       const observer = new MutationObserver((mutations) => {
         if (document.querySelector(selector)) {
           observer.disconnect();
-          resolve(document.querySelector(selector));
+          resolve(document.querySelector(selector) as HTMLElement);
         }
       });
 
-      // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
       observer.observe(document.body, {
         childList: true,
         subtree: true,
@@ -65,9 +65,9 @@ export default function Menu() {
     });
   }
 
-  function placeBackdrop(item) {
-    const backdrop = document.querySelector('#backdrop');
-    const backdropContainer = document.querySelector('#backdropContainer');
+  function placeBackdrop(item: HTMLElement) {
+    const backdrop = document.querySelector('#backdrop') as HTMLElement;
+    const backdropContainer = document.querySelector('#backdropContainer') as HTMLElement;
 
     let rect = item.getBoundingClientRect();
     let rectContainer = backdropContainer.getBoundingClientRect();
@@ -94,7 +94,7 @@ export default function Menu() {
           <Link
             id="linkHome"
             className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
-            onClick={(e) => placeBackdrop(e.target)}
+            onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/"
           >
             <Image className="pointer-events-none" src={home} alt={''}></Image>
@@ -106,7 +106,7 @@ export default function Menu() {
           <Link
             id="linkExplore"
             className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
-            onClick={(e) => placeBackdrop(e.target)}
+            onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/explore"
           >
             <Image className="pointer-events-none" src={world} alt={''}></Image>
@@ -118,7 +118,7 @@ export default function Menu() {
           <Link
             id="linkProfile"
             className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
-            onClick={(e) => placeBackdrop(e.target)}
+            onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/profile"
           >
             <Image className="pointer-events-none" src={profile} alt={''}></Image>

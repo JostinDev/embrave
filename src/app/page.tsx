@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ClerkLoaded, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { ClerkLoaded, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 
 import ChallengeCard from '@/components/challengeCard';
 import client from '../client';
