@@ -1,11 +1,8 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
+import { getChallenges } from '@/server/queries';
 
-interface ChallengeData {
+interface Challenge {
   id: number;
   title: string;
   description: string;
@@ -17,22 +14,8 @@ interface ChallengeData {
   };
 }
 
-export default function Challenge() {
-  const [challenge, setChallenge] = useState({});
-
-  useEffect(() => {
-    fetchChallenge();
-  }, []);
-
-  const fetchChallenge = async () => {
-    try {
-      const responseJSON: ChallengeData[] = await client('api/challenge');
-      const sortedData = sortByCategory(responseJSON);
-      setChallenge(sortedData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+export default async function Challenge() {
+  const challengeItems = await getChallenges();
 
   async function createRoom(id: number) {
     const data = { challenge_id: id };
@@ -41,44 +24,30 @@ export default function Challenge() {
     });
   }
 
-  function sortByCategory(data: ChallengeData[]) {
-    const sortedData: { [key: string]: ChallengeData[] } = {};
-
-    data.forEach((item: ChallengeData) => {
-      const category = item.category.category;
-      if (!sortedData[category]) {
-        sortedData[category] = [];
-      }
-      sortedData[category]?.push(item);
-    });
-
-    return sortedData;
-  }
-
   return (
     <div className="relative min-h-screen">
       <h1 className="text-large-title mb-8">Challenges</h1>
-
-      {Object.keys(challenge).map((category, i) => (
-        <div key={i}>
-          <h2 className={'text-title1 mb-4'}>{category}</h2>
-          <div key={category} className="mb-8 flex flex-wrap gap-4">
-            {(challenge as { [key: string]: ChallengeData[] })[category]?.map(
-              (challengeItem: ChallengeData, j: number) => {
+      {Object.entries(challengeItems).map(([category, challenges], i) => {
+        if (!challenges || challenges.length === 0) return;
+        return (
+          <div key={i}>
+            <h2 className={'text-title1 mb-4'}>{category}</h2>
+            <div key={0} className="mb-8 flex flex-wrap gap-4">
+              {challenges.map((challenge, j) => {
                 return (
-                  <div key={j} onClick={() => createRoom(challengeItem.id)}>
+                  <div key={j}>
                     <ChallengeCard
-                      challenge={challengeItem.title}
-                      description={challengeItem.description}
-                      type={challengeItem.type.type}
+                      challenge={challenge.title}
+                      description={challenge.description}
+                      type={''}
                     ></ChallengeCard>
                   </div>
                 );
-              },
-            )}
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

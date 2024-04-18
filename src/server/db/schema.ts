@@ -1,22 +1,27 @@
+import { relations } from 'drizzle-orm';
 import { boolean, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const challenge = pgTable('challenge', {
   id: serial('id').primaryKey(),
-  title: varchar('title', { length: 256 }),
-  description: varchar('description', { length: 256 }),
-  banner: varchar('banner', { length: 256 }),
-  typeID: integer('type_id').references(() => challengeType.id),
-  categoryID: integer('category_id').references(() => challengeCategory.id),
+  title: varchar('title', { length: 256 }).notNull(),
+  description: varchar('description', { length: 256 }).notNull(),
+  banner: varchar('banner', { length: 256 }).notNull(),
+  typeID: integer('type_id')
+    .notNull()
+    .references(() => challengeType.id),
+  categoryID: integer('category_id')
+    .notNull()
+    .references(() => challengeCategory.id, { onDelete: 'restrict' }),
 });
 
 export const challengeCategory = pgTable('challenge_category', {
   id: serial('id').primaryKey(),
-  category: varchar('category', { length: 256 }),
+  category: varchar('category', { length: 256 }).notNull(),
 });
 
 export const challengeType = pgTable('challenge_type', {
   id: serial('id').primaryKey(),
-  type: varchar('type', { length: 256 }),
+  type: varchar('type', { length: 256 }).notNull(),
 });
 
 export const milestone = pgTable('milestone', {
