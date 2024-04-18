@@ -1,6 +1,6 @@
-export default function client(endpoint, { body, ...customConfig } = {}) {
-  const headers = { 'content-type': 'application/json', Credentials: 'include' };
-  const config = {
+export default function client(endpoint: string, { body, ...customConfig }: RequestInit = {}) {
+  const headers: HeadersInit = { 'content-type': 'application/json', Credentials: 'include' };
+  const config: RequestInit = {
     method: body ? 'POST' : 'GET',
     ...customConfig,
     headers: {
