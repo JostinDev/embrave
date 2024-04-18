@@ -37,7 +37,7 @@ export default function Challenge() {
   async function createRoom(id: number) {
     const data = { challenge_id: id };
     await client('api/room', {
-      body: data,
+      body: JSON.stringify(data),
     });
   }
 
