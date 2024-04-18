@@ -2,32 +2,67 @@
 
 import './page.css';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import md5 from 'md5';
 
 import Label from '@/components/label';
 
-export default function Challenge({ params }) {
-  const [room, setRoom] = useState([]);
-  const [challenge, setChallenge] = useState([]);
-  const [milestoneList, setMilestoneList] = useState([]);
+type Challenge = {
+  title: string;
+  description: string;
+};
 
-  const [milestonePicture, setMilestonePicture] = useState([]);
+type User = {
+  id: number;
+  name: string;
+  avatar: string;
+};
+
+type Milestone = {
+  id: number;
+  title: string;
+  user: User;
+  description: string;
+  ticked: boolean;
+  timestamp: string;
+  milestoneMedia: { link: string }[];
+};
+
+type Room = {
+  created: string; // You might want to use Date instead of string
+  link: string;
+};
+
+type UserRoom = {
+  user: User;
+  admin: boolean;
+};
+
+export default function Challenge() {
+  const [room, setRoom] = useState<Room>({ created: '', link: '' });
+  const [challenge, setChallenge] = useState<Challenge>({ title: '', description: '' });
+  const [milestoneList, setMilestoneList] = useState<Milestone[]>([]);
+
+  const [milestonePicture, setMilestonePicture] = useState<File[]>([]);
   const [milestoneDescription, setMilestoneDescription] = useState('');
   const [milestoneTitle, setMilestoneTitle] = useState('');
 
-  const [uploadedPicture, setUploadedPicture] = useState([]);
+  const [uploadedPicture, setUploadedPicture] = useState<string[]>([]);
 
-  const [weekday, setWeekday] = useState([]);
+  const [weekday, setWeekday] = useState<string[]>([]);
 
   const [milestoneDoneAt, setMilestoneDoneAt] = useState([]);
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState<User>({ id: -1, name: '', avatar: '' });
 
   const [users, setUsers] = useState([]);
 
-  let id = params.roomID;
+  const router = useRouter();
+  const { roomID } = router.query;
 
-  let pictureLink = [];
+  let id = roomID ? roomID.toString() : '';
+
+  let pictureLink: string[] = [];
 
   useEffect(() => {
     datePicker();
@@ -36,8 +71,6 @@ export default function Challenge({ params }) {
     getUser();
     getUsers();
     getRoom();
-
-    console.log(params.roomID);
   }, []);
 
   const datePicker = () => {
@@ -50,7 +83,7 @@ export default function Challenge({ params }) {
     let today = weekday[day];
     console.log(today);
 
-    const reorderArr = (i, arr) => {
+    const reorderArr = (i: number, arr: string[]) => {
       return [...arr.slice(i), ...arr.slice(0, i)];
     };
 
@@ -61,11 +94,12 @@ export default function Challenge({ params }) {
     const offset = yourDate.getTimezoneOffset();
     yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
 
-    let weekDate = [];
+    let weekDate: string[] = [];
     for (let i = 0; i < 7; i++) {
-      weekDate[i] = new Date(yourDate.getTime() - offset * 60 * 1000 - 1000 * 60 * 60 * 24 * i)
-        .toISOString()
-        .split('T')[0];
+      const dateString = new Date(
+        yourDate.getTime() - offset * 60 * 1000 - 1000 * 60 * 60 * 24 * i,
+      ).toISOString();
+      weekDate[i] = dateString ? dateString.split('T')[0] || '' : '';
     }
 
     setWeekday(weekDate);
@@ -134,7 +168,7 @@ export default function Challenge({ params }) {
         yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
         console.log(yourDate.getTime());
 
-        response.forEach((date, i) => {
+        response.forEach((i: number) => {
           let test = new Date(response[i]);
           let newDate = new Date(test.getTime() - offset * 60 * 1000);
           console.log(newDate);
@@ -150,7 +184,7 @@ export default function Challenge({ params }) {
   };
 
   async function upload() {
-    let promiseArray = [];
+    let promiseArray: Promise<string>[] = [];
     // Get selected files from the input element.
     Array.from(milestonePicture).map(async (file) => {
       const timestamp = Date.now().toString();
@@ -192,7 +226,7 @@ export default function Challenge({ params }) {
       );
     });
     await Promise.all(promiseArray);
-    await saveMilestone(id);
+    await saveMilestone();
   }
 
   async function saveMilestone() {
@@ -204,7 +238,7 @@ export default function Challenge({ params }) {
     formData.append('description', milestoneDescription);
     formData.append('title', milestoneTitle);
     formData.append('roomID', id);
-    formData.append('files', pictureLink);
+    formData.append('files', pictureLink.join(','));
 
     const response = await fetch('/api/milestone', {
       method: 'POST',
@@ -216,7 +250,7 @@ export default function Challenge({ params }) {
     });
   }
 
-  async function saveTickedMilestone(isTicked, day) {
+  async function saveTickedMilestone(isTicked: boolean, day: string) {
     const data = { milestone_ticked: isTicked, milestone_doneAt: day };
 
     await fetch(`/api/milestone/ticked/${id}`, {
@@ -227,17 +261,19 @@ export default function Challenge({ params }) {
       body: JSON.stringify(data),
     });
   }
-  async function manageSelectedPictures(files) {
+  async function manageSelectedPictures(files: FileList | null) {
     console.log(files);
-    if (files.length > 4) {
-      console.log('Cannot upload more than 4 images per milestones');
-      setMilestonePicture(Array.from(files).slice(0, 4));
-    } else {
-      setMilestonePicture(files);
+    if (files) {
+      if (files.length > 4) {
+        console.log('Cannot upload more than 4 images per milestones');
+        setMilestonePicture(Array.from(files).slice(0, 4));
+      } else {
+        setMilestonePicture(Array.from(files).slice(0, 0));
+      }
     }
   }
 
-  async function deleteMilestone(milestoneID) {
+  async function deleteMilestone(milestoneID: number) {
     await fetch(`/api/milestone/${milestoneID}`, {
       method: 'DELETE',
     })
@@ -261,7 +297,7 @@ export default function Challenge({ params }) {
       });
   }
 
-  async function promoteToAdmin(userID) {
+  async function promoteToAdmin(userID: number) {
     const response = await fetch(`/api/room/${id}/admin/${userID}`, {
       method: 'PUT',
     });
@@ -274,8 +310,8 @@ export default function Challenge({ params }) {
       .catch((e) => console.log(e));
   }
 
-  async function kickFromRoom(userID) {
-    const response = await fetch(`/api/room/1002/kick/1`, {
+  async function kickFromRoom(userID: number) {
+    const response = await fetch(`/api/room/1002/kick/${userID}`, {
       method: 'DELETE',
     });
     await response
@@ -299,7 +335,7 @@ export default function Challenge({ params }) {
       .catch((e) => console.log(e));
   }
 
-  function timestampToDate(timestamp) {
+  function timestampToDate(timestamp: string) {
     let date = new Date(timestamp);
     return date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
   }
@@ -316,7 +352,7 @@ export default function Challenge({ params }) {
           Share
         </button>
         <div className={'flex'}>
-          {users.map((userRoom, i) => {
+          {users.map((userRoom: UserRoom, i: number) => {
             return (
               <img
                 key={i}
@@ -387,7 +423,7 @@ export default function Challenge({ params }) {
                         <img
                           key={i}
                           className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
-                          src={process.env.NEXT_PUBLIC_MINIO_URL`/embrave/${media.link}`}
+                          src={''}
                         ></img>
                       );
                     })}
@@ -424,7 +460,7 @@ export default function Challenge({ params }) {
       <div>
         <h1 className="mb-10 text-2xl">Users in room : </h1>
 
-        {users.map((userRoom, i) => {
+        {users.map((userRoom: UserRoom, i) => {
           return (
             <div key={i} className={'mb-6'}>
               <img src={userRoom.user.avatar} />
@@ -454,12 +490,12 @@ export default function Challenge({ params }) {
       </div>
 
       <div className="flex flex-row-reverse gap-2">
-        {weekday.map((day, i) => {
+        {weekday.map((day: string, i: number) => {
           return (
             <p
               key={i}
-              onClick={() => saveTickedMilestone(milestoneDoneAt.includes(day), day)}
-              className={`cursor-pointer rounded-full  p-2 text-white ${milestoneDoneAt.includes(day) ? 'bg-amber-400' : 'bg-blue-500'} `}
+              onClick={() => saveTickedMilestone((milestoneDoneAt as string[]).includes(day), day)}
+              className={`cursor-pointer rounded-full  p-2 text-white ${(milestoneDoneAt as string[]).includes(day) ? 'bg-amber-400' : 'bg-blue-500'} `}
             >
               {getDayName(new Date(day))}
             </p>
@@ -468,7 +504,6 @@ export default function Challenge({ params }) {
       </div>
 
       <h1 className={'mt-10 text-2xl'}>Milestone</h1>
-
       {/* TODO only allow 4 pictures to be uploaded */}
       <input
         id="image-file"
