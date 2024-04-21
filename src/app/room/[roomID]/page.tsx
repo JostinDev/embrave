@@ -3,7 +3,7 @@
 import './page.css';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import md5 from 'md5';
 
 import Label from '@/components/label';
