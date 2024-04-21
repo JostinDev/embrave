@@ -1,4 +1,3 @@
-import { relations } from 'drizzle-orm';
 import { boolean, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const challenge = pgTable('challenge', {
@@ -8,7 +7,7 @@ export const challenge = pgTable('challenge', {
   banner: varchar('banner', { length: 256 }).notNull(),
   typeID: integer('type_id')
     .notNull()
-    .references(() => challengeType.id),
+    .references(() => challengeType.id, { onDelete: 'restrict' }),
   categoryID: integer('category_id')
     .notNull()
     .references(() => challengeCategory.id, { onDelete: 'restrict' }),

@@ -2,18 +2,6 @@ import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
 import { getChallenges } from '@/server/queries';
 
-interface Challenge {
-  id: number;
-  title: string;
-  description: string;
-  type: {
-    type: string;
-  };
-  category: {
-    category: string;
-  };
-}
-
 export default async function Challenge() {
   const challengeItems = await getChallenges();
 
@@ -39,7 +27,7 @@ export default async function Challenge() {
                     <ChallengeCard
                       challenge={challenge.title}
                       description={challenge.description}
-                      type={''}
+                      type={challenge.type}
                     ></ChallengeCard>
                   </div>
                 );

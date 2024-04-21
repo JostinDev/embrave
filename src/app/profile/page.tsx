@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { UserButton } from '@clerk/nextjs';
 
 import user from '@/app/images/user.png';
 
@@ -91,6 +92,8 @@ export default function Page() {
         <p className="text-xl">Milestone count : {countMilestone}</p>
         <p className="text-xl">Credits left : {credits}</p>
       </div>
+
+      <UserButton />
 
       <div className="flex items-center gap-4">
         <Image className="rounded-full" width={100} height={100} alt={''} src={avatar} />
