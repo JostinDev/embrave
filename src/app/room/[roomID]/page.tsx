@@ -39,7 +39,7 @@ type UserRoom = {
   admin: boolean;
 };
 
-export default function Challenge() {
+export default function Challenge({ params }: { params: { roomID: string } }) {
   const [room, setRoom] = useState<Room>({ created: '', link: '' });
   const [challenge, setChallenge] = useState<Challenge>({ title: '', description: '' });
   const [milestoneList, setMilestoneList] = useState<Milestone[]>([]);
@@ -56,11 +56,6 @@ export default function Challenge() {
   const [user, setUser] = useState<User>({ id: -1, name: '', avatar: '' });
 
   const [users, setUsers] = useState([]);
-
-  const router = useRouter();
-  const { roomID } = router.query;
-
-  let id = roomID ? roomID.toString() : '';
 
   let pictureLink: string[] = [];
 
@@ -110,7 +105,7 @@ export default function Challenge() {
   }
 
   const fetchMilestone = async () => {
-    const response = await fetch(`/api/milestone/${id}`);
+    const response = await fetch(`/api/milestone/${params.roomID}`);
 
     await response.json().then((response) => {
       console.log(response);
@@ -120,7 +115,7 @@ export default function Challenge() {
   };
 
   const getRoom = async () => {
-    const response = await fetch(`/api/room/${id}`);
+    const response = await fetch(`/api/room/${params.roomID}`);
     await response.json().then((response) => {
       setRoom(response);
       setChallenge(response.challenge);
@@ -144,7 +139,7 @@ export default function Challenge() {
   };
 
   const getUsers = async () => {
-    const response = await fetch(`/api/user/room/${id}`);
+    const response = await fetch(`/api/user/room/${params.roomID}`);
 
     await response
       .json()
@@ -159,7 +154,7 @@ export default function Challenge() {
 
   const fetchMilestoneTime = async () => {
     try {
-      const response = await fetch(`/api/milestone/time/${id}`);
+      const response = await fetch(`/api/milestone/time/${params.roomID}`);
       await response.json().then((response) => {
         console.log('THE RESPONSE :', response);
 
@@ -231,13 +226,13 @@ export default function Challenge() {
 
   async function saveMilestone() {
     console.log(pictureLink);
-    console.log('FOR MILESTONE : ', id);
+    console.log('FOR MILESTONE : ', params.roomID);
 
     const formData = new FormData();
 
     formData.append('description', milestoneDescription);
     formData.append('title', milestoneTitle);
-    formData.append('roomID', id);
+    formData.append('roomID', params.roomID);
     formData.append('files', pictureLink.join(','));
 
     const response = await fetch('/api/milestone', {
@@ -253,7 +248,7 @@ export default function Challenge() {
   async function saveTickedMilestone(isTicked: boolean, day: string) {
     const data = { milestone_ticked: isTicked, milestone_doneAt: day };
 
-    await fetch(`/api/milestone/ticked/${id}`, {
+    await fetch(`/api/milestone/ticked/${params.roomID}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -286,7 +281,7 @@ export default function Challenge() {
   }
 
   async function leaveRoom() {
-    await fetch(`/api/room/${id}`, {
+    await fetch(`/api/room/${params.roomID}`, {
       method: 'DELETE',
     })
       .then((response) => {
@@ -298,7 +293,7 @@ export default function Challenge() {
   }
 
   async function promoteToAdmin(userID: number) {
-    const response = await fetch(`/api/room/${id}/admin/${userID}`, {
+    const response = await fetch(`/api/room/${params.roomID}/admin/${userID}`, {
       method: 'PUT',
     });
 
@@ -323,7 +318,7 @@ export default function Challenge() {
   }
 
   async function updateRoomLink() {
-    const response = await fetch(`/api/room/${id}/updateLink`, {
+    const response = await fetch(`/api/room/${params.roomID}/updateLink`, {
       method: 'PUT',
     });
 
