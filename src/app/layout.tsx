@@ -8,6 +8,8 @@ import MenuMobile from '@/components/menu-mobile';
 
 import '@/app/globals.css';
 
+import { Toaster } from 'sonner';
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -51,6 +53,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               {children}
             </div>
           </div>
+          <Toaster />
         </ClerkProvider>
       </body>
     </html>

@@ -1,7 +1,10 @@
+import 'server-only';
+
+import { clerkClient } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
-import { challenge, challengeCategory, challengeType } from '@/server/db/schema';
+import * as schema from '@/server/db/schema';
 
 type Challenge = {
   id: number;
@@ -68,9 +71,57 @@ function groupChallengesByCategory(challenges: ChallengeItem[]) {
 export async function getChallenges() {
   const challenges = await db
     .select()
-    .from(challenge)
-    .innerJoin(challengeCategory, eq(challenge.categoryID, challengeCategory.id))
-    .innerJoin(challengeType, eq(challenge.typeID, challengeType.id))
-    .orderBy(challengeCategory.category);
+    .from(schema.challenge)
+    .innerJoin(
+      schema.challengeCategory,
+      eq(schema.challenge.categoryID, schema.challengeCategory.id),
+    )
+    .innerJoin(schema.challengeType, eq(schema.challenge.typeID, schema.challengeType.id))
+    .orderBy(schema.challengeCategory.category);
   return groupChallengesByCategory(challenges);
+}
+
+// Get the room and its challenge embedded like { id, code, link, created, codeCreatedTimestamp, challenge: { id, title, description, banner, typeID, categoryID, type: { id, type }, category: { id, category } } }
+export async function getRoom(id: number) {
+  const room = await db.query.room.findFirst({
+    where: eq(schema.room.id, id),
+    with: {
+      challenge: true,
+      milestones: {
+        with: {
+          medias: true,
+        },
+      },
+      userRooms: true,
+    },
+  });
+
+  if (!room) return;
+
+  const roomUserIDs = room.userRooms.map((userRoom) => userRoom.userID);
+  const milestoneUserIDs = room.milestones.map((milestone) => milestone.userID);
+  const allUserIDs = [...roomUserIDs, ...milestoneUserIDs];
+  const allUserResponse = await clerkClient.users.getUserList({ userId: allUserIDs });
+
+  return {
+    ...room,
+    userRooms: room.userRooms.map((userRoom) => {
+      const user = allUserResponse.data.find((user) => user.id === userRoom.userID);
+      if (!user) throw new Error('User not found');
+
+      return {
+        ...userRoom,
+        user,
+      };
+    }),
+    milestones: room.milestones.map((milestone) => {
+      const user = allUserResponse.data.find((user) => user.id === milestone.userID);
+      if (!user) throw new Error('Milestone user not found');
+
+      return {
+        ...milestone,
+        user,
+      };
+    }),
+  };
 }
