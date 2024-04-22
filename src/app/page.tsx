@@ -6,6 +6,7 @@ import { ClerkLoaded, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 
 import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
+import MainButton from '@/components/mainButton';
 
 type Room = {
   room: {
@@ -70,11 +71,7 @@ export default function Index() {
           <div className={'flex flex-col'}>
             <p className="text-title2 mb-2 text-sand-12">You are not logged in</p>
             <SignInButton mode="modal">
-              <button
-                className={'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'}
-              >
-                Login
-              </button>
+              <MainButton label={'Login'} />
             </SignInButton>
           </div>
         </SignedOut>

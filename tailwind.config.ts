@@ -87,6 +87,7 @@ export default {
       },
       fontSize: {
         90: '5.625rem',
+        26: '1.625rem',
         32: '2rem',
       },
       lineHeight: {

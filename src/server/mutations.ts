@@ -1,12 +1,44 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
-import { z } from 'zod';
+import { undefined, z } from 'zod';
 
 import { db } from '@/server/db';
-import { milestone } from '@/server/db/schema';
+import { milestone, room, userRoom } from '@/server/db/schema';
+
+export async function createRoom(challengeID: number) {
+  // TODO: protect mutation
+  const { userId } = auth().protect();
+
+  const date = new Date();
+
+  const newRoom = await db
+    .insert(room)
+    .values({
+      challengeID: challengeID,
+      code: '',
+      link: '',
+      created: date,
+      codeCreatedTimestamp: date,
+    })
+    .returning({ insertedID: room.id });
+
+  if (newRoom[0]) {
+    await db.insert(userRoom).values({
+      roomID: newRoom[0].insertedID,
+      userID: userId,
+      joined: date,
+      isAdmin: true,
+    });
+
+    // Navigate to the new post page
+    revalidatePath('/');
+    redirect(`/room/${newRoom[0].insertedID}`);
+  }
+}
 
 export async function createMilestone(prevState: any, formData: FormData) {
   // TODO: protect mutation

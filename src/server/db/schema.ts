@@ -61,7 +61,7 @@ export const room = pgTable('room', {
   code: varchar('code', { length: 256 }),
   link: varchar('link', { length: 256 }),
   created: timestamp('created').notNull().defaultNow(),
-  codeCreatedTimestamp: timestamp('code_created_timestamp'),
+  codeCreatedTimestamp: timestamp('code_created_timestamp').notNull().defaultNow(),
 });
 
 export const roomRelations = relations(room, ({ one, many }) => ({
