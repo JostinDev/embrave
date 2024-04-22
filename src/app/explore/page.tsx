@@ -1,5 +1,6 @@
 import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
+import ChallengeModal from '@/components/challengeModal';
 import { getChallenges } from '@/server/queries';
 
 export default async function Challenge() {
@@ -24,11 +25,7 @@ export default async function Challenge() {
               {challenges.map((challenge, j) => {
                 return (
                   <div key={j}>
-                    <ChallengeCard
-                      challenge={challenge.title}
-                      description={challenge.description}
-                      type={challenge.type}
-                    ></ChallengeCard>
+                    <ChallengeModal challenge={challenge} />
                   </div>
                 );
               })}

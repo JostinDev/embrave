@@ -61,10 +61,10 @@ export default function ChallengeCard(props: ChallengeCardProps) {
         <Tag />
       </span>
 
-      <p className="text-body-l-medium pb-3 text-sand-12">{props.challenge}</p>
+      <p className="text-body-l-medium pb-3 text-start text-sand-12">{props.challenge}</p>
 
       {props.description ? (
-        <p className="text-body-m-book pb-3 text-sand-12">{props.description}</p>
+        <p className="text-body-m-book pb-3 text-start text-sand-12">{props.description}</p>
       ) : (
         ''
       )}
