@@ -4,8 +4,9 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
-import { undefined, z } from 'zod';
+import { z } from 'zod';
 
+import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
 
@@ -15,12 +16,15 @@ export async function createRoom(challengeID: number) {
 
   const date = new Date();
 
+  const randomLink = RandomStringGenerator(32);
+  const randomCode = RandomStringGenerator(6);
+
   const newRoom = await db
     .insert(room)
     .values({
       challengeID: challengeID,
-      code: '',
-      link: '',
+      code: randomCode,
+      link: randomLink,
       created: date,
       codeCreatedTimestamp: date,
     })
