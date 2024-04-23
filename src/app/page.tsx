@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ClerkLoaded, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
+import { Button } from 'react-aria-components';
 
 import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
@@ -71,7 +72,11 @@ export default function Index() {
           <div className={'flex flex-col'}>
             <p className="text-title2 mb-2 text-sand-12">You are not logged in</p>
             <SignInButton mode="modal">
-              <MainButton label={'Login'} />
+              <Button
+                className={'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'}
+              >
+                Login
+              </Button>
             </SignInButton>
           </div>
         </SignedOut>
