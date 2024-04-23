@@ -314,59 +314,70 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       >
         <p className={'text-title1 mb-2 text-sand-12'}>Your activity</p>
         <div className="relative">
-          {room.milestones.map((milestone, i, row) => {
-            return (
-              <div
-                key={i}
-                className={
-                  'milestoneItem flex flex-col ' +
-                  (i + 1 === row.length ? 'lastMilestone mb-10 ' : 'pb-10 ') +
-                  (i === 0 ? 'firstMilestone ' : '')
-                }
-              >
-                <div className="metadata flex justify-between pl-16">
-                  <Badge type={milestone.ticked ? 'milestone' : 'update'}></Badge>
-                  <p className="text-body-s-book text-sand-11">
-                    {milestone.timestamp.toLocaleDateString()}
-                  </p>
-                </div>
+          <div className={'milestoneItem flex gap-4 pb-10'}>
+            <div
+              className={
+                'z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3'
+              }
+            ></div>
+            <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
+          </div>
 
-                <div className="metabody">
-                  <div className="flex items-center gap-4">
-                    <img
-                      title={milestone.user.fullName ?? undefined}
-                      alt={milestone.user.fullName ?? undefined}
-                      className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
-                      src={milestone.user.imageUrl}
-                    />
-                    <p className="text-title2">
-                      {milestone.title
-                        ? milestone.title
-                        : milestone.user.fullName + ' has set the challenge as done'}
+          <div>
+            {room.milestones.map((milestone, i, row) => {
+              return (
+                <div
+                  key={i}
+                  className={
+                    'milestoneItem flex flex-col ' +
+                    (i + 1 === row.length ? 'lastMilestone mb-10 ' : 'pb-10 ') +
+                    (i === 0 ? 'firstMilestone ' : '')
+                  }
+                >
+                  <div className="metadata flex justify-between pl-16">
+                    <Badge type={milestone.ticked ? 'milestone' : 'update'}></Badge>
+                    <p className="text-body-s-book text-sand-11">
+                      {milestone.timestamp.toLocaleDateString()}
                     </p>
                   </div>
-                  <p className="text-body-l-book pb-6 pl-16">{milestone.description}</p>
 
-                  <div className="flex flex-row gap-2 pl-16">
-                    {milestone.medias.map((media) => {
-                      return (
-                        <img
-                          key={media.id}
-                          className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
-                          src={media.link}
-                        />
-                      );
-                    })}
+                  <div className="metabody">
+                    <div className="flex items-center gap-4">
+                      <img
+                        title={milestone.user.fullName ?? undefined}
+                        alt={milestone.user.fullName ?? undefined}
+                        className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
+                        src={milestone.user.imageUrl}
+                      />
+                      <p className="text-title2">
+                        {milestone.title
+                          ? milestone.title
+                          : milestone.user.fullName + ' has set the challenge as done'}
+                      </p>
+                    </div>
+                    <p className="text-body-l-book pb-6 pl-16">{milestone.description}</p>
+
+                    <div className="flex flex-row gap-2 pl-16">
+                      {milestone.medias.map((media) => {
+                        return (
+                          <img
+                            key={media.id}
+                            className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
+                            src={media.link}
+                          />
+                        );
+                      })}
+                    </div>
+                    {currentUserID === milestone.userID && (
+                      <form action={deleteMilestone.bind(null, milestone.id)} className="ml-16">
+                        <button className="font-bold text-red-700">Delete the Milestone</button>
+                      </form>
+                    )}
                   </div>
-                  {currentUserID === milestone.userID && (
-                    <form action={deleteMilestone.bind(null, milestone.id)} className="ml-16">
-                      <button className="font-bold text-red-700">Delete the Milestone</button>
-                    </form>
-                  )}
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -408,12 +419,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           );
         })}
       </div>
-
-      <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
-
-      {/*{uploadedPicture.map((picture) => {*/}
-      {/*  return <p key={picture}>{picture}</p>;*/}
-      {/*})}*/}
 
       <h1
         // onClick={() => leaveRoom()}

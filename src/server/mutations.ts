@@ -81,5 +81,8 @@ export async function deleteMilestone(id: number) {
 
 export async function generateNewRoomLink(roomID: number) {
   // TODO: protect mutation
+  const randomLink = RandomStringGenerator(32);
+
+  await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));
   revalidatePath('/');
 }

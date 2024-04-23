@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
+import { milestone } from '@/server/db/schema';
 
 type Challenge = {
   id: number;
@@ -87,6 +88,7 @@ export async function getRoom(id: number) {
     with: {
       challenge: true,
       milestones: {
+        orderBy: (milestone, { desc }) => [desc(milestone.timestamp)],
         with: {
           medias: true,
         },
