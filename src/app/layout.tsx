@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <body>
         <ClerkProvider>
           <div>
-            <div className="fixed bottom-8 left-8 top-4 z-20 flex flex-col">
+            <div className="fixed left-8 top-4 z-20 flex flex-col md:bottom-8">
               <div className="mb-8 flex items-center gap-4">
                 <Image src={logo} alt={''}></Image>
                 <h1 className="text-large-title hidden text-sand-12 lg:block">Embrave</h1>
