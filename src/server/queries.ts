@@ -65,7 +65,6 @@ function groupChallengesByCategory(challenges: ChallengeItem[]) {
     sortedChallenges[category]?.push(displayChallenge);
   });
 
-  console.log(sortedChallenges);
   return sortedChallenges;
 }
 export async function getChallenges() {

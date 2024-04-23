@@ -9,7 +9,7 @@ import flagGreen from '@/app/images/flagGreen.svg';
 import globeCrimson from '@/app/images/globeCrimson.svg';
 
 type LabelProps = {
-  type: 'dailyChallenge' | 'update' | 'milestone' | 'goal';
+  type: string;
 };
 
 export default function Label(props: LabelProps) {
@@ -28,6 +28,11 @@ export default function Label(props: LabelProps) {
         setStyle('bg-purple-3 text-purple-11');
         setIcon(calendarPurple);
         setText('Update');
+        break;
+      case 'habit':
+        setStyle('bg-sky-3 text-sky-11');
+        setIcon(calendarBlue);
+        setText('Daily Challenge');
         break;
       case 'milestone':
         setStyle('bg-jade-3 text-jade-11');
