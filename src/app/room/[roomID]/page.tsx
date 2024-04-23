@@ -1,11 +1,19 @@
 import './page.css';
 
 import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
+import { Heading } from 'react-aria-components';
 
+import fire from '@/app/images/fire.svg';
+import flame from '@/app/images/flame.svg';
+import plus from '@/app/images/orange-10-plus.svg';
+import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/label';
+import Label from '@/components/label';
 import { milestone } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
 import { getRoom } from '@/server/queries';
@@ -187,42 +195,124 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     // TODO show image to be uploaded
     // TODO prevent more than 4 images
     <div className="relative min-h-screen">
-      <h1 className="text-large-title mb-8 text-sand-12">{room.challenge.title}</h1>
-      <div className="absolute right-0 top-0 flex items-center gap-6">
-        <button className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3">
-          Share
-        </button>
-        <div className="g gap-6">
-          {userRooms.map((userRoom, i) => {
+      <div className={'mb-6 flex justify-between'}>
+        <Link href={'/'} className="text-body-l-medium flex items-center text-sand-12">
+          &lt; Back
+        </Link>
+        <div className="flex items-center gap-6">
+          <button className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3">
+            Share
+          </button>
+          <div className="g gap-6">
+            {userRooms.map((userRoom, i) => {
+              return (
+                <img
+                  key={userRoom.id}
+                  title={userRoom.user.fullName ?? undefined}
+                  alt={userRoom.user.fullName ?? undefined}
+                  className="h-12 w-12 rounded-full border-2 border-sand-12"
+                  src={userRoom.user.imageUrl}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className={'relative mb-8'}>
+        <Image
+          className={'max-h-[400px] w-full rounded-[26px]'}
+          style={{ objectFit: 'cover' }}
+          placeholder={'blur'}
+          src={stairs}
+          alt={''}
+        ></Image>
+        <div
+          className={
+            'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
+          }
+        >
+          <p slot="title" className={'text-large-title mb-4 text-sand-12'}>
+            {room.challenge.title}
+          </p>
+          <div className={'flex gap-8'}>
+            <div>
+              <p className="text-body-m-bold mb-2 text-sand-12">Date started:</p>
+              <p className={'text-body-l-book text-sand-12'}>{room.created.toLocaleDateString()}</p>
+            </div>
+            <div>
+              <p className={'text-body-m-bold mb-2 text-sand-12'}>Type:</p>
+              <Label type={'dailyChallenge'}></Label>
+            </div>
+            <div>
+              <p className={'text-body-m-bold mb-2 text-sand-12'}>Current streak:</p>
+              <div className="flex w-fit items-center gap-1 rounded-lg bg-orange-3 p-2 text-orange-10">
+                <Image src={flame} alt={''} width={16} height={16} />
+                <p className="text-body-l-book">42</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={
+          'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8'
+        }
+      >
+        <p className={'text-title1 mb-2 text-sand-12'}>Challenge description</p>
+        <p className={'text-body-l-book text-sand-12'}>{room.challenge.description}</p>
+      </div>
+
+      <div
+        className={
+          'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 p-8'
+        }
+      >
+        <p className={'text-title1 mb-2 text-orange-10'}>Streak Tracker</p>
+        <p className={'text-body-l-book mb-6 text-orange-10'}>
+          Check each day that you reached your goal to uphold your streak! You can fill out the last
+          5 days.
+        </p>
+        <div className={'flex flex-row-reverse justify-between'}>
+          {weekdays.map((day: string, i: number) => {
+            const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
             return (
-              <img
-                key={userRoom.id}
-                title={userRoom.user.fullName ?? undefined}
-                alt={userRoom.user.fullName ?? undefined}
-                className="h-12 w-12 rounded-full border-2 border-sand-12"
-                src={userRoom.user.imageUrl}
-              />
+              <div
+                key={i}
+                // onClick={() => saveTickedMilestone((milestoneDoneAt as string[]).includes(day), day)}
+                className={'flex cursor-pointer flex-col items-center gap-2 text-orange-10'}
+              >
+                <div
+                  className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-orange-10
+                   ${isMilestoneDone ? 'border-solid bg-orange-9' : 'border-dashed'}
+                   `}
+                >
+                  {isMilestoneDone ? (
+                    <Image alt={''} src={fire}></Image>
+                  ) : (
+                    <Image alt={''} src={plus}></Image>
+                  )}
+                </div>
+                <p
+                  className={`${isMilestoneDone || i === 0 ? 'text-body-m-bold' : 'text-body-m-book'}`}
+                >
+                  {i === 0
+                    ? 'Today'
+                    : new Date(day).toLocaleDateString(undefined, { weekday: 'short' })}
+                </p>
+              </div>
             );
           })}
         </div>
       </div>
 
-      <div className="mb-14 flex gap-8">
-        <div className="flex flex-col gap-2">
-          <p className="text-body-m-bold">Date started:</p>
-          <p>{room.created.toLocaleDateString()}</p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-body-m-bold">Type:</p>
-          <Badge type="dailyChallenge"></Badge>
-        </div>
-      </div>
-
-      <h2 className="text-title1 mb-4">Challenge description</h2>
-      <p className="text-body-l-book mb-14">{room.challenge.description}</p>
-
-      <div className="max-w-[700px]">
-        <h2 className="text-title1 mb-6">Your activity</h2>
+      <div
+        className={
+          'w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8'
+        }
+      >
+        <p className={'text-title1 mb-2 text-sand-12'}>Your activity</p>
         <div className="relative">
           {room.milestones.map((milestone, i, row) => {
             return (
@@ -246,7 +336,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                     <img
                       title={milestone.user.fullName ?? undefined}
                       alt={milestone.user.fullName ?? undefined}
-                      className="profilePicture h-12 w-12 rounded-full border-2 border-sand-12"
+                      className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
                       src={milestone.user.imageUrl}
                     />
                     <p className="text-title2">
@@ -279,6 +369,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           })}
         </div>
       </div>
+
       <form action={generateNewRoomLink.bind(null, room.id)}>
         <button className="mb-10 text-2xl"> Generate new link</button>
       </form>
@@ -314,20 +405,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                 Kick from the room
               </p>
             </div>
-          );
-        })}
-      </div>
-
-      <div className="flex flex-row-reverse gap-2">
-        {weekdays.map((day: string, i: number) => {
-          return (
-            <p
-              key={i}
-              // onClick={() => saveTickedMilestone((milestoneDoneAt as string[]).includes(day), day)}
-              className={`cursor-pointer rounded-full  p-2 text-white ${(milestoneDoneAt as string[]).includes(day) ? 'bg-amber-400' : 'bg-blue-500'}`}
-            >
-              {new Date(day).toLocaleDateString(undefined, { weekday: 'long' })}
-            </p>
           );
         })}
       </div>
