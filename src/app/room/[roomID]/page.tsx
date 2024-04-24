@@ -283,7 +283,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                 className={'flex cursor-pointer flex-col items-center gap-2 text-orange-10'}
               >
                 <div
-                  className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-orange-10
+                  className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-orange-10 transition-all hover:bg-orange-4
                    ${isMilestoneDone ? 'border-solid bg-orange-9' : 'border-dashed'}
                    `}
                 >
