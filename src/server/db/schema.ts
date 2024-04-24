@@ -59,7 +59,7 @@ export const room = pgTable('room', {
   id: serial('id').primaryKey(),
   challengeID: integer('challenge_id').references(() => challenge.id),
   code: varchar('code', { length: 256 }),
-  link: varchar('link', { length: 256 }),
+  link: varchar('link', { length: 256 }).notNull(),
   created: timestamp('created').notNull().defaultNow(),
   codeCreatedTimestamp: timestamp('code_created_timestamp').notNull().defaultNow(),
 });

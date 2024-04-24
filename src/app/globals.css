@@ -5,6 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/*MODAL*/
 
 .react-aria-ModalOverlay {
     position: fixed;
@@ -62,5 +63,147 @@
 
     to {
         transform: scale(1);
+    }
+}
+
+/*POPOVER*/
+
+.react-aria-Popover {
+    @apply border border-sand-5 p-4 rounded-lg bg-sand-1 outline-0;
+    outline: none;
+    box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
+    max-width: 350px;
+    box-sizing: border-box;
+
+    section{
+        outline: none;
+    }
+
+    .react-aria-OverlayArrow svg {
+        @apply stroke-1 block fill-sand-12 stroke-sand-12;
+    }
+
+    &[data-placement=top] {
+        --origin: translateY(8px);
+
+        &:has(.react-aria-OverlayArrow) {
+            margin-bottom: 6px;
+        }
+    }
+
+    &[data-placement=bottom] {
+        --origin: translateY(-8px);
+
+        &:has(.react-aria-OverlayArrow) {
+            margin-top: 6px;
+        }
+
+        .react-aria-OverlayArrow svg {
+            transform: rotate(180deg);
+        }
+    }
+
+    &[data-placement=right] {
+        --origin: translateX(-8px);
+
+        &:has(.react-aria-OverlayArrow) {
+            margin-left: 6px;
+        }
+
+        .react-aria-OverlayArrow svg {
+            transform: rotate(90deg);
+        }
+    }
+
+    &[data-placement=left] {
+        --origin: translateX(8px);
+
+        &:has(.react-aria-OverlayArrow) {
+            margin-right: 6px;
+        }
+
+        .react-aria-OverlayArrow svg {
+            transform: rotate(-90deg);
+        }
+    }
+
+    &[data-entering] {
+        animation: popover-slide 200ms;
+    }
+
+    &[data-exiting] {
+        animation: popover-slide 200ms reverse ease-in;
+    }
+}
+
+@keyframes popover-slide {
+    from {
+        transform: var(--origin);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/*SWITCH*/
+
+.react-aria-Switch {
+    display: flex;
+    align-items: center;
+    gap: 0.571rem;
+    font-size: 1.143rem;
+    forced-color-adjust: none;
+    @apply cursor-pointer;
+
+    .indicator {
+        width: 2rem;
+        height: 1.143rem;
+        @apply border-2 border-sand-5;
+        background: white;
+        border-radius: 1.143rem;
+        transition: all 200ms;
+
+        &:before {
+            content: '';
+            display: block;
+            width: 0.857rem;
+            height: 0.857rem;
+            @apply bg-sand-9;
+            border-radius: 16px;
+            transition: all 200ms;
+        }
+    }
+
+    &[data-pressed] .indicator {
+        @apply border-sand-12;
+
+        &:before {
+            @apply bg-sand-12;
+        }
+    }
+
+    &[data-selected] {
+        .indicator {
+            @apply border-sand-12 bg-sand-1;
+
+            &:before {
+                @apply bg-sand-12;
+                transform: translateX(100%);
+            }
+        }
+
+        &[data-pressed] {
+            .indicator {
+                @apply border-sand-12 bg-sand-1;
+
+            }
+        }
+    }
+
+    &[data-focus-visible] .indicator {
+        @apply outline outline-2 outline-sand-10 outline-offset-2;
     }
 }

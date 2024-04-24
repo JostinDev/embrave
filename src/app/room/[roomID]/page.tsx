@@ -14,6 +14,7 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/label';
 import Label from '@/components/label';
+import SharePopover from '@/components/sharePopover';
 import { milestone } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
 import { getRoom } from '@/server/queries';
@@ -200,9 +201,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
-          <button className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3">
-            Share
-          </button>
+          <SharePopover link={room.link} roomID={room.id} />
           <div className="g gap-6">
             {userRooms.map((userRoom, i) => {
               return (
