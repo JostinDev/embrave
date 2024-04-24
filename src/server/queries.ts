@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { clerkClient } from '@clerk/nextjs/server';
+import { clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
@@ -79,6 +79,29 @@ export async function getChallenges() {
     .innerJoin(schema.challengeType, eq(schema.challenge.typeID, schema.challengeType.id))
     .orderBy(schema.challengeCategory.category);
   return groupChallengesByCategory(challenges);
+}
+
+export async function getUserRoom() {
+  const user = await currentUser();
+  if (!user) return;
+
+  const rooms = await db.query.userRoom.findMany({
+    where: eq(schema.userRoom.userID, user.id),
+    with: {
+      room: {
+        with: {
+          challenge: {
+            with: true,
+          },
+        },
+      },
+    },
+  });
+
+  const room = rooms.map((room) => room.room);
+
+  console.log(room);
+  return room;
 }
 
 // Get the room and its challenge embedded like { id, code, link, created, codeCreatedTimestamp, challenge: { id, title, description, banner, typeID, categoryID, type: { id, type }, category: { id, category } } }

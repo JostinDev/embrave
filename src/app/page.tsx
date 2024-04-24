@@ -1,69 +1,41 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { ClerkLoaded, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import { Button } from 'react-aria-components';
 
 import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
 import MainButton from '@/components/mainButton';
+import { getUserRoom } from '@/server/queries';
 
-type Room = {
-  room: {
-    id: number;
-    challenge: {
-      title: string;
-      type: {
-        type: string;
-      };
-    };
-    created: string;
-  };
-  streak: number;
-};
-
-export default function Index() {
-  const [room, setRoom] = useState<Room[]>([]);
-
-  useEffect(() => {
-    fetchRooms();
-  }, []);
-
-  const fetchRooms = async () => {
-    try {
-      const responseJSON = await client('api/room');
-
-      for (const room of responseJSON) {
-        const streakResponse = await client(`api/room/streak/${room.room.id}`);
-        room.streak = streakResponse;
-      }
-      setRoom(responseJSON);
-      console.log('GET ALL ROOMS : ', responseJSON);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+export default async function Index() {
+  const rooms = await getUserRoom();
+  if (!rooms) {
+    notFound();
+  }
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative">
       <ClerkLoaded>
         <SignedIn>
           <div>
             <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
             <div className="flex flex-wrap gap-4">
-              {room.map((room) => {
-                return (
-                  <Link key={room.room.id} href={`/room/${room.room.id}`}>
-                    <ChallengeCard
-                      id={room.room.id}
-                      challenge={room.room.challenge.title}
-                      type={room.room.challenge.type.type}
-                      streak={room.streak}
-                      date={room.room.created}
-                    ></ChallengeCard>
-                  </Link>
-                );
+              {rooms.map((room) => {
+                if (room && room.challenge) {
+                  return (
+                    <Link key={room.id} href={`/room/${room.id}`}>
+                      <ChallengeCard
+                        id={room.id}
+                        challenge={room.challenge.title}
+                        description={room.challenge.description}
+                        date={room.created.toDateString()}
+                        type={'habit'}
+                        streak={0}
+                      ></ChallengeCard>
+                    </Link>
+                  );
+                }
               })}
             </div>
           </div>
@@ -72,11 +44,11 @@ export default function Index() {
           <div className={'flex flex-col'}>
             <p className="text-title2 mb-2 text-sand-12">You are not logged in</p>
             <SignInButton mode="modal">
-              <Button
+              <button
                 className={'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'}
               >
                 Login
-              </Button>
+              </button>
             </SignInButton>
           </div>
         </SignedOut>
