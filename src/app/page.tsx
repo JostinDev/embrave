@@ -1,18 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClerkLoaded, SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
-import { Button } from 'react-aria-components';
 
-import client from '@/client';
 import ChallengeCard from '@/components/challengeCard';
-import MainButton from '@/components/mainButton';
 import { getUserRoom } from '@/server/queries';
 
 export default async function Index() {
   const rooms = await getUserRoom();
-  if (!rooms) {
-    notFound();
-  }
 
   return (
     <div className="relative">
@@ -21,22 +15,24 @@ export default async function Index() {
           <div>
             <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
             <div className="flex flex-wrap gap-4">
-              {rooms.map((room) => {
-                if (room && room.challenge) {
-                  return (
-                    <Link key={room.id} href={`/room/${room.id}`}>
-                      <ChallengeCard
-                        id={room.id}
-                        challenge={room.challenge.title}
-                        description={room.challenge.description}
-                        date={room.created.toDateString()}
-                        type={'habit'}
-                        streak={0}
-                      ></ChallengeCard>
-                    </Link>
-                  );
-                }
-              })}
+              {rooms
+                ? rooms.map((room) => {
+                    if (room && room.challenge) {
+                      return (
+                        <Link key={room.id} href={`/room/${room.id}`}>
+                          <ChallengeCard
+                            id={room.id}
+                            challenge={room.challenge.title}
+                            description={room.challenge.description}
+                            date={room.created.toDateString()}
+                            type={'habit'}
+                            streak={0}
+                          ></ChallengeCard>
+                        </Link>
+                      );
+                    }
+                  })
+                : ''}
             </div>
           </div>
         </SignedIn>
