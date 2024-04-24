@@ -13,9 +13,9 @@
 }
 
 @font-face {
-  font-family: 'nexa-bold';
+  font-family: 'nexa';
   src: url('../font/nexa/NexaBold.otf');
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
 }
 
