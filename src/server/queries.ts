@@ -100,7 +100,6 @@ export async function getUserRoom() {
 
   const room = rooms.map((room) => room.room);
 
-  console.log(room);
   return room;
 }
 

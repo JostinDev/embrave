@@ -74,10 +74,10 @@ export default function SharePopover(props: SharePopoverProps) {
               <div className="indicator" />
             </Switch>
             <form className={'mt-4'} action={generateNewRoomLink.bind(null, props.roomID)}>
-              <Button className={'text-body-l-medium mt-2 flex gap-2 text-sand-12'}>
+              <button className={'text-body-l-medium mt-2 flex gap-2 text-sand-12'}>
                 <p>Generate new link</p>
                 <Image className={'h-5 w-5'} src={reload} alt={''} />
-              </Button>
+              </button>
             </form>
           </div>
         </Dialog>
