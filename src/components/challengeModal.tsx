@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
+import cross from '@/app/images/cross.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import ChallengeCard from '@/components/challengeCard';
 import Label from '@/components/label';
@@ -45,6 +46,14 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   src={stairs}
                   alt={''}
                 ></Image>
+                <Button
+                  onPress={close}
+                  className={
+                    'bg absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-sand-5 bg-sand-1'
+                  }
+                >
+                  <Image src={cross} alt={''} />
+                </Button>
                 <div
                   className={
                     'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
