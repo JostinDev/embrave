@@ -220,7 +220,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
       <div className={'relative mb-8'}>
         <Image
-          className={'max-h-[400px] w-full rounded-[26px]'}
+          className={'h-[400px] w-full rounded-[26px]'}
           style={{ objectFit: 'cover' }}
           placeholder={'blur'}
           src={stairs}
@@ -234,7 +234,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           <p slot="title" className={'text-large-title mb-4 text-sand-12'}>
             {room.challenge.title}
           </p>
-          <div className={'flex gap-8'}>
+          <div className={'flex flex-wrap gap-6'}>
             <div>
               <p className="text-body-m-bold mb-2 text-sand-12">Date started:</p>
               <p className={'text-body-l-book text-sand-12'}>{room.created.toLocaleDateString()}</p>
