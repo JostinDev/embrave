@@ -40,7 +40,7 @@ export default function SharePopover(props: SharePopoverProps) {
       <Button className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3">
         Share
       </Button>
-      <Popover isNonModal>
+      <Popover>
         <OverlayArrow>
           <svg width={12} height={12} viewBox="0 0 12 12">
             <path d="M0 0 L6 6 L12 0" />
@@ -48,7 +48,11 @@ export default function SharePopover(props: SharePopoverProps) {
         </OverlayArrow>
         <Dialog>
           <div className="fley flex-col">
-            <TextField className={'mb-4'} isReadOnly defaultValue={`Link`}>
+            <TextField
+              className={'mb-4'}
+              isReadOnly
+              defaultValue={`https://embrave.app/join/${props.link}`}
+            >
               <Label className={'text-body-l-medium mb-2 block text-sand-12'}>Room link</Label>
               <div className={'flex'}>
                 <Input
