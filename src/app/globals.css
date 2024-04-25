@@ -12,7 +12,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100svh;
     background: rgba(0 0 0 / .5);
     display: flex;
     align-items: center;
@@ -36,7 +36,7 @@
     outline: none;
     width: 90%;
     max-width: 1100px;
-    @apply top-0 sm:top-auto absolute border border-sand-5 bg-sand-1 p-4;
+    @apply top-4 sm:top-auto absolute border border-sand-5 bg-sand-1 p-4;
 
 
     &[data-entering] {
