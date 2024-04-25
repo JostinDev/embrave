@@ -39,7 +39,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
             <form>
               <div className={'relative mb-4'}>
                 <Image
-                  className={'max-h-[400px] w-full rounded-[26px]'}
+                  className={'h-[400px] w-full rounded-[26px]'}
                   style={{ objectFit: 'cover' }}
                   placeholder={'blur'}
                   src={stairs}

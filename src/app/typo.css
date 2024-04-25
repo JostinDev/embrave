@@ -7,7 +7,7 @@
 }
 
 .text-large-title {
-  @apply font-nexa-bold text-32;
+  @apply font-nexa-bold text-32 leading-none;
 }
 
 .text-title1 {

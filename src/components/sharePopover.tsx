@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import {
   Button,
@@ -14,7 +14,8 @@ import {
   TextField,
 } from 'react-aria-components';
 
-import reload from '@/app/images/reload.png';
+import copy from '@/app/images/clipboard-copy.svg';
+import reload from '@/app/images/reload.svg';
 import { generateNewRoomLink } from '@/server/mutations';
 
 type SharePopoverProps = {
@@ -39,7 +40,7 @@ export default function SharePopover(props: SharePopoverProps) {
       <Button className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3">
         Share
       </Button>
-      <Popover>
+      <Popover isNonModal>
         <OverlayArrow>
           <svg width={12} height={12} viewBox="0 0 12 12">
             <path d="M0 0 L6 6 L12 0" />
@@ -47,25 +48,21 @@ export default function SharePopover(props: SharePopoverProps) {
         </OverlayArrow>
         <Dialog>
           <div className="fley flex-col">
-            <TextField
-              className={'mb-4'}
-              isReadOnly
-              defaultValue={`https://embrave.app/join/${props.link}`}
-            >
+            <TextField className={'mb-4'} isReadOnly defaultValue={`Link`}>
               <Label className={'text-body-l-medium mb-2 block text-sand-12'}>Room link</Label>
               <div className={'flex'}>
                 <Input
                   className={
-                    'text-body-m-book rounded-l-lg border border-sand-5 px-2 text-sand-12 '
+                    'text-body-l-book rounded-l-lg border-b border-l border-t border-sand-5 px-2 text-sand-12 '
                   }
                 />
                 <Button
                   onPress={() => {
                     copyToClipBoard(`https://embrave.app/join/${props.link}`);
                   }}
-                  className="text-body-l-book h-fit rounded-r-lg bg-sand-12 p-3 text-sand-3"
+                  className="text-body-l-book h-fit rounded-r-lg bg-sand-12 px-2 py-3 text-sand-3"
                 >
-                  Copy
+                  <Image src={copy} alt={''} />
                 </Button>
               </div>
             </TextField>
