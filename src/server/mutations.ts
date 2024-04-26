@@ -3,15 +3,15 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { eq } from 'drizzle-orm';
+import { and, count, eq, exists } from 'drizzle-orm';
 import { z } from 'zod';
 
 import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
+import { isRoomAdmin } from './queries';
 
 export async function createRoom(challengeID: number) {
-  // TODO: protect mutation
   const { userId } = auth().protect();
 
   const date = new Date();
@@ -45,7 +45,6 @@ export async function createRoom(challengeID: number) {
 }
 
 export async function createMilestone(prevState: any, formData: FormData) {
-  // TODO: protect mutation
   const { userId } = auth().protect();
 
   const schema = z.object({
@@ -54,9 +53,17 @@ export async function createMilestone(prevState: any, formData: FormData) {
     description: z.string(),
   });
   const result = schema.safeParse(Object.fromEntries(formData.entries()));
+
   if (!result.success) {
     return { errors: result.error.flatten().fieldErrors };
   }
+
+  const dbResult = await db
+    .select()
+    .from(userRoom)
+    .where(and(eq(userRoom.userID, userId), eq(userRoom.roomID, result.data.roomID)));
+
+  if (dbResult.length === 0) return { error: "You're not allowed to create a milestone" };
 
   await db.insert(milestone).values({
     userID: userId,
@@ -70,8 +77,10 @@ export async function createMilestone(prevState: any, formData: FormData) {
 }
 
 export async function deleteMilestone(id: number) {
-  // TODO: protect mutation
-  const { rowCount } = await db.delete(milestone).where(eq(milestone.id, id));
+  const { userId } = auth().protect();
+
+  const { rowCount } = await db.delete(milestone).where(and(eq(milestone.id, id),eq(milestone.userID, userId)));
+
   if (rowCount === 0) {
     return { error: 'Milestone not found' };
   }
@@ -80,7 +89,10 @@ export async function deleteMilestone(id: number) {
 }
 
 export async function generateNewRoomLink(roomID: number) {
-  // TODO: protect mutation
+  const { userId } = auth().protect();
+
+  if(!(await isRoomAdmin(userId, roomID))) return { error: "You're not allowed to generate a new link" };
+
   const randomLink = RandomStringGenerator(32);
 
   await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));

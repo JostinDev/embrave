@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
+import { and, eq } from 'drizzle-orm';
 import { Heading } from 'react-aria-components';
 
 import fire from '@/app/images/fire.svg';
@@ -14,9 +15,10 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import SharePopover from '@/components/sharePopover';
-import { milestone } from '@/server/db/schema';
+import { db } from '@/server/db';
+import { milestone, userRoom } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
-import { getRoom } from '@/server/queries';
+import { getRoom, isRoomAdmin } from '@/server/queries';
 
 function getWeekdays() {
   let yourDate = new Date();
@@ -35,9 +37,20 @@ function getWeekdays() {
 }
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
-  const { userId: currentUserID } = auth();
+
+  const { userId: currentUserID } = auth().protect();
 
   const roomID = Number(params.roomID);
+
+  const dbResult = await db
+    .select()
+    .from(userRoom)
+    .where(and(eq(userRoom.userID, currentUserID), eq(userRoom.roomID, roomID)));
+
+  if (dbResult.length === 0) return <div><p>You're not allowed in this room</p></div>;
+
+  const isAdmin = await isRoomAdmin(currentUserID, roomID);
+
   const room = await getRoom(roomID);
 
   if (!room || !room.challenge) {
@@ -200,7 +213,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
-          <SharePopover link={room.link} roomID={room.id} />
+          {isAdmin && 
+            <SharePopover link={room.link} roomID={room.id} />
+          }
           <div className="g gap-6">
             {userRooms.map((userRoom, i) => {
               return (

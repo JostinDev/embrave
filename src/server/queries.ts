@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { auth, clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
@@ -149,4 +149,12 @@ export async function getRoom(id: number) {
       };
     }),
   };
+}
+
+export async function isRoomAdmin(userID: string, roomID: number) {
+
+  const result = await db.select().from(schema.userRoom).where(and(eq(schema.userRoom.userID, userID), eq(schema.userRoom.isAdmin, true), eq(schema.userRoom.roomID, roomID)));
+
+  return result.length !== 0;
+
 }

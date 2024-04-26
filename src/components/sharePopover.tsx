@@ -51,6 +51,7 @@ export default function SharePopover(props: SharePopoverProps) {
             <TextField
               className={'mb-4'}
               isReadOnly
+              key={props.link}
               defaultValue={`https://embrave.app/join/${props.link}`}
             >
               <Label className={'text-body-l-medium mb-2 block text-sand-12'}>Room link</Label>
@@ -61,6 +62,7 @@ export default function SharePopover(props: SharePopoverProps) {
                   }
                 />
                 <Button
+                  key={props.link}
                   onPress={() => {
                     copyToClipBoard(`https://embrave.app/join/${props.link}`);
                   }}
