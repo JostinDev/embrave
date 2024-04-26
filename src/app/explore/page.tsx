@@ -14,7 +14,7 @@ export default async function Challenge() {
   }
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative">
       <h1 className="text-large-title mb-8">Challenges</h1>
       {Object.entries(challengeItems).map(([category, challenges], i) => {
         if (!challenges || challenges.length === 0) return;
