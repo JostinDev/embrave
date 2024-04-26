@@ -37,7 +37,6 @@ function getWeekdays() {
 }
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
-
   const { userId: currentUserID } = auth().protect();
 
   const roomID = Number(params.roomID);
@@ -47,7 +46,12 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     .from(userRoom)
     .where(and(eq(userRoom.userID, currentUserID), eq(userRoom.roomID, roomID)));
 
-  if (dbResult.length === 0) return <div><p>You're not allowed in this room</p></div>;
+  if (dbResult.length === 0)
+    return (
+      <div>
+        <p>You&apos;re not allowed in this room</p>
+      </div>
+    );
 
   const isAdmin = await isRoomAdmin(currentUserID, roomID);
 
@@ -213,9 +217,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
-          {isAdmin && 
-            <SharePopover link={room.link} roomID={room.id} />
-          }
+          {isAdmin && <SharePopover link={room.link} roomID={room.id} />}
           <div className="g gap-6">
             {userRooms.map((userRoom, i) => {
               return (
