@@ -6,13 +6,17 @@ import Image from 'next/image';
 import calendarBlue from '@/app/images/calendarBlue.svg';
 import calendarPurple from '@/app/images/calendarPurple.svg';
 import flagGreen from '@/app/images/flagGreen.svg';
+import fire from '@/app/images/flame.svg';
 import globeCrimson from '@/app/images/globeCrimson.svg';
 
 type LabelProps = {
   type: string;
+  text?: string;
+  style: 'big' | 'small';
+  streak?: number;
 };
 
-export default function Label(props: LabelProps) {
+export default function Badge(props: LabelProps) {
   const [style, setStyle] = useState('');
   const [icon, setIcon] = useState(calendarBlue);
   const [text, setText] = useState('');
@@ -39,18 +43,32 @@ export default function Label(props: LabelProps) {
         setIcon(flagGreen);
         setText('Milestone');
         break;
+      case 'date':
+        setStyle('bg-jade-3 text-jade-11');
+        setIcon(flagGreen);
+        if (props.text) {
+          setText(props.text);
+        }
+        break;
       case 'goal':
         setStyle('bg-crimson-3 text-crimson-11');
         setIcon(globeCrimson);
         setText('Goal Challenge');
+        break;
+      case 'streak':
+        setStyle('bg-orange-3 text-orange-10');
+        setIcon(fire);
+        if (props.streak) {
+          setText(props.streak.toString());
+        }
         break;
     }
   }, []);
 
   return (
     <div className={'flex h-fit w-fit items-center gap-1 rounded-lg p-1.5 ' + style}>
-      <Image alt="" src={icon} />
-      <p className={'text-body-s-book'}>{text}</p>
+      <Image className={props.style === 'big' ? 'h-4 w-4' : 'h-3 w-3'} alt="" src={icon} />
+      <p className={props.style === 'big' ? 'text-body-l-book' : 'text-body-s-book'}>{text}</p>
     </div>
   );
 }

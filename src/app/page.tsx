@@ -18,13 +18,18 @@ export default async function Index() {
               {rooms
                 ? rooms.map((room) => {
                     if (room && room.challenge) {
+                      let date =
+                        room.created.getDate() +
+                        '.' +
+                        room.created.getMonth() +
+                        '.' +
+                        room.created.getFullYear();
                       return (
                         <Link key={room.id} href={`/room/${room.id}`}>
                           <ChallengeCard
                             id={room.id}
                             challenge={room.challenge.title}
-                            description={room.challenge.description}
-                            date={room.created.toDateString()}
+                            date={date}
                             type={'habit'}
                             streak={0}
                           ></ChallengeCard>

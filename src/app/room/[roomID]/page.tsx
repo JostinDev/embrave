@@ -12,8 +12,7 @@ import flame from '@/app/images/flame.svg';
 import plus from '@/app/images/orange-10-plus.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
-import Badge from '@/components/label';
-import Label from '@/components/label';
+import Badge from '@/components/badge';
 import SharePopover from '@/components/sharePopover';
 import { milestone } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
@@ -237,18 +236,16 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           <div className={'flex flex-wrap gap-6'}>
             <div>
               <p className="text-body-m-bold mb-2 text-sand-12">Date started:</p>
-              <p className={'text-body-l-book text-sand-12'}>{room.created.toLocaleDateString()}</p>
+              <p className={'text-body-l-book text-sand-12'}></p>
+              <Badge style={'big'} text={room.created.toLocaleDateString()} type={'date'}></Badge>
             </div>
             <div>
               <p className={'text-body-m-bold mb-2 text-sand-12'}>Type:</p>
-              <Label type={'dailyChallenge'}></Label>
+              <Badge style={'big'} type={'dailyChallenge'}></Badge>
             </div>
             <div>
               <p className={'text-body-m-bold mb-2 text-sand-12'}>Current streak:</p>
-              <div className="flex w-fit items-center gap-1 rounded-lg bg-orange-3 p-2 text-orange-10">
-                <Image src={flame} alt={''} width={16} height={16} />
-                <p className="text-body-l-book">42</p>
-              </div>
+              <Badge style={'big'} streak={42} type={'streak'}></Badge>
             </div>
           </div>
         </div>
@@ -334,7 +331,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                   }
                 >
                   <div className="metadata flex justify-between pl-16">
-                    <Badge type={milestone.ticked ? 'milestone' : 'update'}></Badge>
+                    <Badge style={'big'} type={milestone.ticked ? 'milestone' : 'update'}></Badge>
                     <p className="text-body-s-book text-sand-11">
                       {milestone.timestamp.toLocaleDateString()}
                     </p>

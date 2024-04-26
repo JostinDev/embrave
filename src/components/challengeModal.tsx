@@ -6,8 +6,9 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 
 import cross from '@/app/images/cross.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
+import Label from '@/components/badge';
+import Badge from '@/components/badge';
 import ChallengeCard from '@/components/challengeCard';
-import Label from '@/components/label';
 import { createRoom } from '@/server/mutations';
 
 type Challenge = {
@@ -28,11 +29,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
   return (
     <DialogTrigger>
       <Button>
-        <ChallengeCard
-          challenge={challenge.title}
-          description={challenge.description}
-          type={challenge.type}
-        ></ChallengeCard>
+        <ChallengeCard challenge={challenge.title} type={challenge.type}></ChallengeCard>
       </Button>
       <Modal isDismissable>
         <Dialog className={'flex flex-col'}>
@@ -64,7 +61,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   </Heading>
                   <div>
                     <p className={'text-body-m-bold mb-2 text-sand-12'}>Type:</p>
-                    <Label type={challenge.type}></Label>
+                    <Badge type={challenge.type} style={'big'}></Badge>
                   </div>
                 </div>
               </div>

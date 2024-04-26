@@ -5,14 +5,14 @@ import Image from 'next/image';
 import placeholder from '@/app/images/challengePlaceholder.png';
 import chevronRight from '@/app/images/chevron-right.svg';
 import flame from '@/app/images/flame.svg';
-import Label from '@/components/label';
+import Label from '@/components/badge';
+import Badge from '@/components/badge';
 
 interface ChallengeCardProps {
   id?: number;
   streak?: number;
   type: string;
   challenge: string;
-  description?: string;
   date?: string;
 }
 
@@ -23,9 +23,8 @@ export default function ChallengeCard(props: ChallengeCardProps) {
     return (
       <div className="relative">
         {streak ? (
-          <div className="absolute left-2 top-2 flex gap-1 rounded-md bg-orange-4 p-1.5 text-orange-10">
-            <Image src={flame} alt={''} width={20} height={20} />
-            <p className="text-body-s-book">{props.streak}</p>
+          <div className="absolute left-2 top-2 flex">
+            <Badge streak={props.streak} type={'streak'} style={'small'} />
           </div>
         ) : (
           ''
@@ -46,9 +45,9 @@ export default function ChallengeCard(props: ChallengeCardProps) {
 
     switch (type) {
       case 'goal':
-        return <Label type={'goal'} />;
+        return <Badge type={'goal'} style={'small'} />;
       case 'habit':
-        return <Label type={'dailyChallenge'} />;
+        return <Badge type={'dailyChallenge'} style={'small'} />;
       default:
         return null;
     }
@@ -60,17 +59,9 @@ export default function ChallengeCard(props: ChallengeCardProps) {
       <span className={'mb-4'}>
         <Tag />
       </span>
-
-      <p className="text-body-l-medium pb-3 text-start text-sand-12">{props.challenge}</p>
-
-      {props.description ? (
-        <p className="text-body-m-book pb-3 text-start text-sand-12">{props.description}</p>
-      ) : (
-        ''
-      )}
-
+      <p className="text-body-l-medium pb-2 text-start text-sand-12">{props.challenge}</p>
       {props.date ? <p className="text-body-s-book text-sand-11">Created: {props.date}</p> : ''}
-      <Image className="self-end" src={chevronRight} alt={''} width={20} height={20} />
+      <Image className="h-7 w-7 self-end" src={chevronRight} alt={''} width={20} height={20} />
     </div>
   );
 }
