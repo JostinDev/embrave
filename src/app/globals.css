@@ -164,22 +164,32 @@
 
     }
 
+    .indicator:before {
+        content: '';
+        width: 14px;
+        height: 14px;
+        margin-top: 3px;
+        margin-left: 3px;
+        @apply rounded-full block bg-sand-1;
+        transition: all 200ms;
+    }
+
     &[data-pressed] .indicator {
         @apply border-sand-12;
+    }
 
-        &:before {
-            @apply bg-sand-1;
-        }
+    &[data-pressed] .indicator:before {
+        @apply bg-sand-1;
     }
 
     &[data-selected] {
         .indicator {
             @apply border-sand-12 bg-sand-12;
+        }
 
-            &:before {
-                @apply bg-sand-1;
-                transform: translateX(120%);
-            }
+        .indicator:before {
+            @apply bg-sand-1;
+            transform: translateX(120%);
         }
 
         &[data-pressed] {
@@ -193,14 +203,4 @@
     &[data-focus-visible] .indicator {
         @apply outline outline-2 outline-sand-10 outline-offset-2;
     }
-}
-
-.react-aria-Switch .indicator:before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    margin-top: 3px;
-    margin-left: 3px;
-    @apply rounded-full block bg-sand-1;
-    transition: all 200ms;
 }
