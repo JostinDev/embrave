@@ -9,7 +9,7 @@ import { z } from 'zod';
 import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
-import { isRoomAdmin } from './queries';
+import { isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
   const { userId } = auth().protect();
@@ -58,12 +58,9 @@ export async function createMilestone(prevState: any, formData: FormData) {
     return { errors: result.error.flatten().fieldErrors };
   }
 
-  const dbResult = await db
-    .select()
-    .from(userRoom)
-    .where(and(eq(userRoom.userID, userId), eq(userRoom.roomID, result.data.roomID)));
-
-  if (dbResult.length === 0) return { error: "You're not allowed to create a milestone" };
+  if (!(await isUserInRoom(userId, result.data.roomID))) {
+    return { error: "You're not allowed to create a milestone" };
+  }
 
   await db.insert(milestone).values({
     userID: userId,
@@ -79,7 +76,9 @@ export async function createMilestone(prevState: any, formData: FormData) {
 export async function deleteMilestone(id: number) {
   const { userId } = auth().protect();
 
-  const { rowCount } = await db.delete(milestone).where(and(eq(milestone.id, id),eq(milestone.userID, userId)));
+  const { rowCount } = await db
+    .delete(milestone)
+    .where(and(eq(milestone.id, id), eq(milestone.userID, userId)));
 
   if (rowCount === 0) {
     return { error: 'Milestone not found' };
@@ -91,7 +90,8 @@ export async function deleteMilestone(id: number) {
 export async function generateNewRoomLink(roomID: number) {
   const { userId } = auth().protect();
 
-  if(!(await isRoomAdmin(userId, roomID))) return { error: "You're not allowed to generate a new link" };
+  if (!(await isRoomAdmin(userId, roomID)))
+    return { error: "You're not allowed to generate a new link" };
 
   const randomLink = RandomStringGenerator(32);
 

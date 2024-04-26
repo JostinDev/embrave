@@ -1,11 +1,11 @@
 import 'server-only';
 
 import { auth, clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
-import { eq, and } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { milestone } from '@/server/db/schema';
+import { milestone, userRoom } from '@/server/db/schema';
 
 type Challenge = {
   id: number;
@@ -107,6 +107,12 @@ export async function getUserRoom() {
 
 // Get the room and its challenge embedded like { id, code, link, created, codeCreatedTimestamp, challenge: { id, title, description, banner, typeID, categoryID, type: { id, type }, category: { id, category } } }
 export async function getRoom(id: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, id))) {
+    return;
+  }
+
   const room = await db.query.room.findFirst({
     where: eq(schema.room.id, id),
     with: {
@@ -152,9 +158,24 @@ export async function getRoom(id: number) {
 }
 
 export async function isRoomAdmin(userID: string, roomID: number) {
-
-  const result = await db.select().from(schema.userRoom).where(and(eq(schema.userRoom.userID, userID), eq(schema.userRoom.isAdmin, true), eq(schema.userRoom.roomID, roomID)));
-
+  const result = await db
+    .select()
+    .from(schema.userRoom)
+    .where(
+      and(
+        eq(schema.userRoom.userID, userID),
+        eq(schema.userRoom.isAdmin, true),
+        eq(schema.userRoom.roomID, roomID),
+      ),
+    );
   return result.length !== 0;
+}
 
+export async function isUserInRoom(userID: string, roomID: number) {
+  const dbResult = await db
+    .select()
+    .from(userRoom)
+    .where(and(eq(userRoom.userID, userID), eq(userRoom.roomID, roomID)));
+
+  return dbResult.length !== 0;
 }

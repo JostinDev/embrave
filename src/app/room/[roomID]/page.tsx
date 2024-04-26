@@ -6,19 +6,17 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
-import { Heading } from 'react-aria-components';
 
 import fire from '@/app/images/fire.svg';
-import flame from '@/app/images/flame.svg';
 import plus from '@/app/images/orange-10-plus.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import SharePopover from '@/components/sharePopover';
 import { db } from '@/server/db';
-import { milestone, userRoom } from '@/server/db/schema';
+import { userRoom } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
-import { getRoom, isRoomAdmin } from '@/server/queries';
+import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
 function getWeekdays() {
   let yourDate = new Date();
@@ -41,15 +39,10 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
   const roomID = Number(params.roomID);
 
-  const dbResult = await db
-    .select()
-    .from(userRoom)
-    .where(and(eq(userRoom.userID, currentUserID), eq(userRoom.roomID, roomID)));
-
-  if (dbResult.length === 0)
+  if (!(await isUserInRoom(currentUserID, roomID)))
     return (
       <div>
-        <p>You&apos;re not allowed in this room</p>
+        <p className={'text-title1 text-sand-12'}>This room doesn&apos;t exist</p>
       </div>
     );
 
@@ -285,7 +278,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <p className={'text-title1 mb-2 text-orange-10'}>Streak Tracker</p>
         <p className={'text-body-l-book mb-6 text-orange-10'}>
           Check each day that you reached your goal to uphold your streak! You can fill out the last
-          5 days.
+          7 days.
         </p>
         <div className={'flex flex-row-reverse justify-between'}>
           {weekdays.map((day: string, i: number) => {
