@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { and, eq } from 'drizzle-orm';
 
 import fire from '@/app/images/fire.svg';
 import plus from '@/app/images/orange-10-plus.svg';
@@ -13,8 +12,6 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import SharePopover from '@/components/sharePopover';
-import { db } from '@/server/db';
-import { userRoom } from '@/server/db/schema';
 import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
@@ -211,14 +208,15 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </Link>
         <div className="flex items-center gap-6">
           {isAdmin && <SharePopover link={room.link} roomID={room.id} />}
-          <div className="g gap-6">
+          <div className="flex">
             {userRooms.map((userRoom, i) => {
               return (
                 <img
                   key={userRoom.id}
                   title={userRoom.user.fullName ?? undefined}
                   alt={userRoom.user.fullName ?? undefined}
-                  className="h-12 w-12 rounded-full border-2 border-sand-12"
+                  className={'h-12 w-12 rounded-full border-2 border-sand-12 '}
+                  style={{ marginLeft: -24 * i }}
                   src={userRoom.user.imageUrl}
                 />
               );
@@ -386,13 +384,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           </div>
         </div>
       </div>
-
-      <form action={generateNewRoomLink.bind(null, room.id)}>
-        <button className="mb-10 text-2xl"> Generate new link</button>
-      </form>
-      <a className="mb-4 block" href={`/room/${roomID}/join`}>
-        Room link : http://localhost:8080/api/room/join/{room.link}
-      </a>
 
       <div>
         <h1 className="mb-10 text-2xl">Users in room : </h1>

@@ -52,7 +52,7 @@ export default function SharePopover(props: SharePopoverProps) {
               className={'mb-4'}
               isReadOnly
               key={props.link}
-              defaultValue={`https://embrave.app/join/${props.link}`}
+              defaultValue={`https://embrave.app/room/join/${props.link}`}
             >
               <Label className={'text-body-l-medium mb-2 block text-sand-12'}>Room link</Label>
               <div className={'flex'}>
@@ -64,7 +64,7 @@ export default function SharePopover(props: SharePopoverProps) {
                 <Button
                   key={props.link}
                   onPress={() => {
-                    copyToClipBoard(`https://embrave.app/join/${props.link}`);
+                    copyToClipBoard(`https://embrave.app/room/join/${props.link}`);
                   }}
                   className="text-body-l-book h-fit rounded-r-lg bg-sand-12 px-2 py-3 text-sand-3"
                 >

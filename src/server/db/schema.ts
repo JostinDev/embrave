@@ -97,11 +97,14 @@ export const userRoom = pgTable(
   'user_room',
   {
     id: serial('id').primaryKey(),
-    roomID: integer('room_id').references(() => room.id),
+    roomID: integer('room_id')
+      .references(() => room.id)
+      .notNull(),
     userID: varchar('user_id', { length: 256 }).notNull(),
     joined: timestamp('joined'),
     isAdmin: boolean('is_admin'),
   },
+  //TODO double check this config
   () => ({
     unique: [
       {

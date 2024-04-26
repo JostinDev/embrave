@@ -9,6 +9,7 @@ import { z } from 'zod';
 import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
+import * as schema from '@/server/db/schema';
 import { isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
@@ -42,6 +43,32 @@ export async function createRoom(challengeID: number) {
     revalidatePath('/');
     redirect(`/room/${newRoom[0].insertedID}`);
   }
+}
+
+export async function joinRoom(link: string) {
+  const { userId } = auth().protect();
+
+  const result: { roomID: number }[] = await db
+    .select({ roomID: room.id })
+    .from(room)
+    .where(eq(room.link, link));
+  const date = new Date();
+
+  if (!result[0]) {
+    return { error: "This room doesn't exist" };
+  }
+
+  if (await isUserInRoom(userId, result[0].roomID)) {
+    redirect(`/room/${result[0].roomID}`);
+  }
+
+  await db.insert(userRoom).values({
+    roomID: result[0].roomID,
+    userID: userId,
+    joined: date,
+    isAdmin: false,
+  });
+  redirect(`/room/${result[0].roomID}`);
 }
 
 export async function createMilestone(prevState: any, formData: FormData) {
