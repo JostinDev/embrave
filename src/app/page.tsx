@@ -30,7 +30,7 @@ export default async function Index() {
                             id={room.id}
                             challenge={room.challenge.title}
                             date={date}
-                            type={'habit'}
+                            type={room.challenge.type.type}
                             streak={0}
                           ></ChallengeCard>
                         </Link>

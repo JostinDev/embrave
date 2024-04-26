@@ -14,15 +14,35 @@ export const challenge = pgTable('challenge', {
     .references(() => challengeCategory.id, { onDelete: 'restrict' }),
 });
 
+export const challengeRelations = relations(challenge, ({ one, many }) => ({
+  category: one(challengeCategory, {
+    fields: [challenge.categoryID],
+    references: [challengeCategory.id],
+  }),
+  type: one(challengeType, {
+    fields: [challenge.typeID],
+    references: [challengeType.id],
+  }),
+  rooms: many(room),
+}));
+
 export const challengeCategory = pgTable('challenge_category', {
   id: serial('id').primaryKey(),
   category: varchar('category', { length: 256 }).notNull(),
 });
 
+export const challengeCategoryRelations = relations(challengeCategory, ({ many }) => ({
+  challenges: many(challenge),
+}));
+
 export const challengeType = pgTable('challenge_type', {
   id: serial('id').primaryKey(),
   type: varchar('type', { length: 256 }).notNull(),
 });
+
+export const challengeTypeRelations = relations(challengeType, ({ many }) => ({
+  challenges: many(challenge),
+}));
 
 export const milestone = pgTable('milestone', {
   id: serial('id').primaryKey(),

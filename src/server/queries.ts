@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
+import { auth, clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
@@ -82,16 +82,18 @@ export async function getChallenges() {
 }
 
 export async function getUserRoom() {
-  const user = await currentUser();
-  if (!user) return;
+  const { userId } = auth().protect();
 
   const rooms = await db.query.userRoom.findMany({
-    where: eq(schema.userRoom.userID, user.id),
+    where: eq(schema.userRoom.userID, userId),
     with: {
       room: {
         with: {
           challenge: {
-            with: true,
+            with: {
+              category: true,
+              type: true,
+            },
           },
         },
       },
