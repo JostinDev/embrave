@@ -16,14 +16,21 @@ import {
 
 import copy from '@/app/images/clipboard-copy.svg';
 import reload from '@/app/images/reload.svg';
-import { generateNewRoomLink } from '@/server/mutations';
+import { generateNewRoomLink, setIsLinkActive } from '@/server/mutations';
 
 type SharePopoverProps = {
   link: string;
   roomID: number;
+  isLinkActive: boolean;
 };
 export default function SharePopover(props: SharePopoverProps) {
-  //TODO refresh component when new link is generated
+  let [selected, setSelected] = React.useState(props.isLinkActive);
+
+  async function setSwitchState(isSelected: boolean) {
+    setSelected(isSelected);
+    await setIsLinkActive(isSelected, props.roomID);
+  }
+
   function copyToClipBoard(text: string) {
     navigator.clipboard.writeText(text).then(
       () => {
@@ -72,7 +79,7 @@ export default function SharePopover(props: SharePopoverProps) {
                 </Button>
               </div>
             </TextField>
-            <Switch>
+            <Switch isSelected={selected} onChange={(isSelected) => setSwitchState(isSelected)}>
               <p className={'text-body-l-medium text-sand-12'}>Activate share link</p>
               <div className="indicator" />
             </Switch>

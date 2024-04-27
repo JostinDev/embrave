@@ -44,7 +44,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     );
 
   const isAdmin = await isRoomAdmin(currentUserID, roomID);
-
   const room = await getRoom(roomID);
 
   if (!room || !room.challenge) {
@@ -207,7 +206,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
-          {isAdmin && <SharePopover link={room.link} roomID={room.id} />}
+          {isAdmin && (
+            <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
+          )}
           <div className="flex">
             {userRooms.map((userRoom, i) => {
               return (

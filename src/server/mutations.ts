@@ -10,7 +10,7 @@ import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
 import * as schema from '@/server/db/schema';
-import { isRoomAdmin, isUserInRoom } from './queries';
+import { isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
   const { userId } = auth().protect();
@@ -56,6 +56,10 @@ export async function joinRoom(link: string) {
 
   if (!result[0]) {
     return { error: "This room doesn't exist" };
+  }
+
+  if (!(await isLinkActive(result[0].roomID))) {
+    return { error: "The link isn't active" };
   }
 
   if (await isUserInRoom(userId, result[0].roomID)) {
@@ -123,5 +127,16 @@ export async function generateNewRoomLink(roomID: number) {
   const randomLink = RandomStringGenerator(32);
 
   await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));
+  revalidatePath('/');
+}
+
+export async function setIsLinkActive(isActive: boolean, roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isRoomAdmin(userId, roomID)))
+    return { error: "You're not allowed to set this property" };
+
+  await db.update(room).set({ isLinkActive: isActive }).where(eq(room.id, roomID));
+
   revalidatePath('/');
 }

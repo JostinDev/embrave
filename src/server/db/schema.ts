@@ -79,7 +79,8 @@ export const room = pgTable('room', {
   id: serial('id').primaryKey(),
   challengeID: integer('challenge_id').references(() => challenge.id),
   code: varchar('code', { length: 256 }),
-  link: varchar('link', { length: 256 }).notNull(),
+  link: varchar('link', { length: 256 }).default('').notNull(),
+  isLinkActive: boolean('is_link_active').default(false).notNull(),
   created: timestamp('created').notNull().defaultNow(),
   codeCreatedTimestamp: timestamp('code_created_timestamp').notNull().defaultNow(),
 });
@@ -97,9 +98,7 @@ export const userRoom = pgTable(
   'user_room',
   {
     id: serial('id').primaryKey(),
-    roomID: integer('room_id')
-      .references(() => room.id)
-      .notNull(),
+    roomID: integer('room_id').references(() => room.id),
     userID: varchar('user_id', { length: 256 }).notNull(),
     joined: timestamp('joined'),
     isAdmin: boolean('is_admin'),
