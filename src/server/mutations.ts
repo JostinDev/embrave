@@ -98,10 +98,59 @@ export async function createMilestone(prevState: any, formData: FormData) {
     roomID: result.data.roomID,
     title: result.data.title,
     description: result.data.description,
+    ticked: false,
     timestamp: new Date(),
   });
 
-  revalidatePath('/');
+  revalidatePath('/room/');
+}
+
+export async function createTickedMilestone(day: Date, roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return { error: "You're not allowed to create a milestone" };
+  }
+
+  const userMilestones = await db
+    .select()
+    .from(milestone)
+    .where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
+
+  if (userMilestones.length !== 0) {
+    for (const element of userMilestones) {
+      if (sameDay(day, element.timestamp)) {
+        console.log('Milestone done the same day', element.id);
+        if (element.ticked) {
+          await db.delete(milestone).where(and(eq(milestone.id, element.id)));
+          revalidatePath('/room/');
+          return;
+        }
+        return {
+          info: "Can't set this day as not done. An existing update exists on the same day.",
+        };
+      }
+    }
+  }
+
+  await db.insert(milestone).values({
+    userID: userId,
+    roomID: roomID,
+    title: '',
+    description: '',
+    ticked: true,
+    timestamp: day,
+  });
+
+  revalidatePath('/room/');
+}
+
+function sameDay(d1: Date, d2: Date) {
+  return (
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+  );
 }
 
 export async function deleteMilestone(id: number) {
@@ -115,7 +164,7 @@ export async function deleteMilestone(id: number) {
     return { error: 'Milestone not found' };
   }
 
-  revalidatePath('/');
+  revalidatePath('/room/');
 }
 
 export async function generateNewRoomLink(roomID: number) {
@@ -127,7 +176,7 @@ export async function generateNewRoomLink(roomID: number) {
   const randomLink = RandomStringGenerator(32);
 
   await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));
-  revalidatePath('/');
+  revalidatePath('/room/');
 }
 
 export async function setIsLinkActive(isActive: boolean, roomID: number) {
@@ -137,6 +186,4 @@ export async function setIsLinkActive(isActive: boolean, roomID: number) {
     return { error: "You're not allowed to set this property" };
 
   await db.update(room).set({ isLinkActive: isActive }).where(eq(room.id, roomID));
-
-  revalidatePath('/');
 }

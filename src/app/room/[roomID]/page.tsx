@@ -11,8 +11,9 @@ import plus from '@/app/images/orange-10-plus.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
+import MilestoneTrackerItem from '@/components/milestoneTrackerItem';
 import SharePopover from '@/components/sharePopover';
-import { deleteMilestone, generateNewRoomLink } from '@/server/mutations';
+import { createTickedMilestone, deleteMilestone, generateNewRoomLink } from '@/server/mutations';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
 function getWeekdays() {
@@ -27,7 +28,6 @@ function getWeekdays() {
     ).toISOString();
     weekdays[i] = dateString ? dateString.split('T')[0] || '' : '';
   }
-
   return weekdays;
 }
 
@@ -136,17 +136,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
   //   });
   // }
 
-  async function saveTickedMilestone(isTicked: boolean, day: string) {
-    const data = { milestone_ticked: isTicked, milestone_doneAt: day };
-
-    await fetch(`/api/milestone/ticked/${params.roomID}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-  }
   // async function manageSelectedPictures(files: FileList | null) {
   //   console.log(files);
   //   if (files) {
@@ -281,31 +270,16 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </p>
         <div className={'flex flex-row-reverse justify-between'}>
           {weekdays.map((day: string, i: number) => {
+            //TODO a streak is not shared between users. It's personal
             const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
             return (
-              <div
-                key={i}
-                // onClick={() => saveTickedMilestone((milestoneDoneAt as string[]).includes(day), day)}
-                className={'flex cursor-pointer flex-col items-center gap-2 text-orange-10'}
-              >
-                <div
-                  className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-orange-10 transition-all hover:bg-orange-4
-                   ${isMilestoneDone ? 'border-solid bg-orange-9' : 'border-dashed'}
-                   `}
-                >
-                  {isMilestoneDone ? (
-                    <Image alt={''} src={fire}></Image>
-                  ) : (
-                    <Image alt={''} src={plus}></Image>
-                  )}
-                </div>
-                <p
-                  className={`${isMilestoneDone || i === 0 ? 'text-body-m-bold' : 'text-body-m-book'}`}
-                >
-                  {i === 0
-                    ? 'Today'
-                    : new Date(day).toLocaleDateString(undefined, { weekday: 'short' })}
-                </p>
+              <div key={i}>
+                <MilestoneTrackerItem
+                  roomID={roomID}
+                  day={day}
+                  index={i}
+                  isMilestoneDone={isMilestoneDone}
+                />
               </div>
             );
           })}
@@ -340,7 +314,11 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                   }
                 >
                   <div className="metadata flex justify-between pl-16">
-                    <Badge style={'big'} type={milestone.ticked ? 'milestone' : 'update'}></Badge>
+                    <Badge
+                      key={milestone.ticked ? 'milestone' : 'update'}
+                      style={'big'}
+                      type={milestone.ticked ? 'milestone' : 'update'}
+                    ></Badge>
                     <p className="text-body-s-book text-sand-11">
                       {milestone.timestamp.toLocaleDateString()}
                     </p>
