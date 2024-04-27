@@ -216,7 +216,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                   title={userRoom.user.fullName ?? undefined}
                   alt={userRoom.user.fullName ?? undefined}
                   className={'h-12 w-12 rounded-full border-2 border-sand-12 '}
-                  style={{ marginLeft: -24 * i }}
+                  style={i !== 0 ? { marginLeft: -24 } : { marginLeft: 0 }}
                   src={userRoom.user.imageUrl}
                 />
               );
