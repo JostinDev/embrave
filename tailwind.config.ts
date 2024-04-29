@@ -84,6 +84,19 @@ export default {
         'jade-10': '#26997B',
         'jade-11': '#208368',
         'jade-12': '#1D3B31',
+
+        'green-1': '#FBFEFC',
+        'green-2': '#F4FBF6',
+        'green-3': '#E6F6EB',
+        'green-4': '#D6F1DF',
+        'green-5': '#C4E8D1',
+        'green-6': '#ADDDC0',
+        'green-7': '#8ECEAA',
+        'green-8': '#5BB98B',
+        'green-9': '#30A46C',
+        'green-10': '#2B9A66',
+        'green-11': '#218358',
+        'green-12': '#193B2D',
       },
       fontSize: {
         90: '5.625rem',
@@ -93,6 +106,15 @@ export default {
       lineHeight: {
         18: '1.125rem',
         14: '0.875rem',
+      },
+      keyframes: {
+        confetti: {
+          '0%, 100%': { transform: 'translateY(-25%)' },
+          '50%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        confetti: 'confetti 2s ease-in-out infinite',
       },
     },
     fontFamily: {

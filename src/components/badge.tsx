@@ -6,6 +6,7 @@ import Image from 'next/image';
 import calendarBlue from '@/app/images/calendarBlue.svg';
 import calendarPurple from '@/app/images/calendarPurple.svg';
 import flagGreen from '@/app/images/flagGreen.svg';
+import flagOrange from '@/app/images/flagOrange.svg';
 import fire from '@/app/images/flame.svg';
 import globeCrimson from '@/app/images/globeCrimson.svg';
 
@@ -39,8 +40,8 @@ export default function Badge(props: LabelProps) {
         setText('Daily Challenge');
         break;
       case 'milestone':
-        setStyle('bg-jade-3 text-jade-11');
-        setIcon(flagGreen);
+        setStyle('bg-orange-3 text-orange-10');
+        setIcon(flagOrange);
         setText('Milestone');
         break;
       case 'date':

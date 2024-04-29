@@ -11,6 +11,8 @@ import plus from '@/app/images/orange-10-plus.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
+import ChallengeCompleteCard from '@/components/challengeCompleteCard';
+import ChallengeCompleteTracker from '@/components/ChallengeCompleteTracker';
 import MilestoneTrackerItem from '@/components/milestoneTrackerItem';
 import SharePopover from '@/components/sharePopover';
 import { createTickedMilestone, deleteMilestone, generateNewRoomLink } from '@/server/mutations';
@@ -285,7 +287,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           })}
         </div>
       </div>
-
+      <ChallengeCompleteCard roomID={roomID} isChallengeDone={false} />
       <div
         className={
           'w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8'

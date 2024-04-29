@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.confetti {
+    background-image: url('images/confetti.svg');
+}
+
 /*MODAL*/
 
 .react-aria-ModalOverlay {
