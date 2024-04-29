@@ -166,10 +166,10 @@
 
     .indicator:before {
         content: '';
-        width: 14px;
-        height: 14px;
-        margin-top: 3px;
-        margin-left: 3px;
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        margin-left: 2px;
         @apply rounded-full block bg-sand-1;
         transition: all 200ms;
     }
@@ -189,7 +189,7 @@
 
         .indicator:before {
             @apply bg-sand-1;
-            transform: translateX(120%);
+            transform: translateX(105%);
         }
 
         &[data-pressed] {
