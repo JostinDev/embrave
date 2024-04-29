@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import calendarBlue from '@/app/images/calendarBlue.svg';
 import calendarPurple from '@/app/images/calendarPurple.svg';
+import checkCircleGreen from '@/app/images/checkCircleGreen.svg';
 import flagGreen from '@/app/images/flagGreen.svg';
 import flagOrange from '@/app/images/flagOrange.svg';
 import fire from '@/app/images/flame.svg';
@@ -55,6 +56,11 @@ export default function Badge(props: LabelProps) {
         setStyle('bg-crimson-3 text-crimson-11');
         setIcon(globeCrimson);
         setText('Goal Challenge');
+        break;
+      case 'challengeCompleted':
+        setStyle('bg-green-3 text-green-11');
+        setIcon(checkCircleGreen);
+        setText('Challenge completed');
         break;
       case 'streak':
         setStyle('bg-orange-3 text-orange-10');

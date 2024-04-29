@@ -3,13 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { and, count, eq, exists } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
-import * as schema from '@/server/db/schema';
 import { isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
@@ -73,6 +72,30 @@ export async function joinRoom(link: string) {
     isAdmin: false,
   });
   redirect(`/room/${result[0].roomID}`);
+}
+
+export async function setChallengeDone(roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isRoomAdmin(userId, roomID)))
+    return { error: "You're not allowed to set this property" };
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return { error: "You're not allowed to set this property" };
+  }
+
+  await db.update(room).set({ isChallengeCompleted: true }).where(eq(room.id, roomID));
+
+  await db.insert(milestone).values({
+    userID: userId,
+    roomID: roomID,
+    title: '',
+    description: '',
+    isLastMilestone: true,
+    ticked: false,
+    timestamp: new Date(),
+  });
+  revalidatePath('/room/');
 }
 
 export async function createMilestone(prevState: any, formData: FormData) {

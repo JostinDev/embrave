@@ -188,3 +188,18 @@ export async function isLinkActive(roomID: number) {
   }
   return false;
 }
+
+export async function isChallengeComplete(roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return;
+  }
+
+  const dbResult = await db.select().from(schema.room).where(eq(schema.room.id, roomID));
+
+  if (dbResult.length !== 0 && dbResult[0]) {
+    return dbResult[0].isChallengeCompleted;
+  }
+  return false;
+}

@@ -1,13 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
 
-import confetti from '@/app/images/confetti.svg';
-import fire from '@/app/images/fire.svg';
-import plus from '@/app/images/orange-10-plus.svg';
 import ChallengeCompleteTracker from '@/components/ChallengeCompleteTracker';
-import { createTickedMilestone } from '@/server/mutations';
+import { setChallengeDone } from '@/server/mutations';
 
 type SharePopoverProps = {
   roomID: number;
@@ -21,7 +17,10 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
   }, [props.isChallengeDone]);
 
   async function setTrackerState() {
-    setIsMilestoneDone(!isChallengeDone);
+    if (!isChallengeDone) {
+      setIsMilestoneDone(true);
+      await setChallengeDone(props.roomID);
+    }
   }
 
   return (

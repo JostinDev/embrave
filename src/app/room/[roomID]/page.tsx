@@ -6,32 +6,14 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
-import fire from '@/app/images/fire.svg';
-import plus from '@/app/images/orange-10-plus.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeCompleteCard';
-import ChallengeCompleteTracker from '@/components/ChallengeCompleteTracker';
-import MilestoneTrackerItem from '@/components/milestoneTrackerItem';
+import MilestoneRow from '@/components/milestoneRow';
 import SharePopover from '@/components/sharePopover';
-import { createTickedMilestone, deleteMilestone, generateNewRoomLink } from '@/server/mutations';
+import StreakTrackerCard from '@/components/streakTrackerCard';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
-
-function getWeekdays() {
-  let yourDate = new Date();
-  const offset = yourDate.getTimezoneOffset();
-  yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
-
-  let weekdays: string[] = [];
-  for (let i = 0; i < 7; i++) {
-    const dateString = new Date(
-      yourDate.getTime() - offset * 60 * 1000 - 1000 * 60 * 60 * 24 * i,
-    ).toISOString();
-    weekdays[i] = dateString ? dateString.split('T')[0] || '' : '';
-  }
-  return weekdays;
-}
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
   const { userId: currentUserID } = auth().protect();
@@ -52,140 +34,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     notFound();
   }
 
-  function formatMilestoneDate(milestoneDate: Date) {
-    const offsetAdjustedDate = new Date(
-      milestoneDate.getTime() - new Date().getTimezoneOffset() * 60000,
-    );
-    return offsetAdjustedDate.toISOString().split('T')[0]!;
-  }
-
-  const milestoneDoneAt = room.milestones.map((milestone) =>
-    formatMilestoneDate(milestone.timestamp),
-  );
   const userRooms = room.userRooms;
-
-  // const [milestonePicture, setMilestonePicture] = useState<File[]>([]);
-  // const [uploadedPicture, setUploadedPicture] = useState<string[]>([]);
-
-  let pictureLink: string[] = [];
-
-  const weekdays = getWeekdays();
-
-  // async function upload() {
-  //   let promiseArray: Promise<string>[] = [];
-  //   // Get selected files from the input element.
-  //   Array.from(milestonePicture).map(async (file) => {
-  //     const timestamp = Date.now().toString();
-  //     const hashedFileName = md5(timestamp + file.name);
-  //     const filename = file.name;
-  //     const extension =
-  //       filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
-  //
-  //     let fileWithUpdatedName = new File([file], hashedFileName + '.' + extension);
-  //
-  //     promiseArray.push(
-  //       new Promise(async (resolve, reject) => {
-  //         fetch(`/api/milestone/presigned/${fileWithUpdatedName.name}`)
-  //           .then((response) => {
-  //             response.text().then(async (url) => {
-  //               fetch(url, {
-  //                 method: 'PUT',
-  //                 body: fileWithUpdatedName,
-  //               })
-  //                 .then(() => {
-  //                   setUploadedPicture((uploadedPicture) => [
-  //                     ...uploadedPicture,
-  //                     fileWithUpdatedName.name,
-  //                   ]);
-  //                   pictureLink = [...pictureLink, fileWithUpdatedName.name];
-  //                   console.log(fileWithUpdatedName.name);
-  //                   resolve(fileWithUpdatedName.name);
-  //                 })
-  //                 .catch((e) => {
-  //                   console.error(e);
-  //                   reject(e);
-  //                 });
-  //             });
-  //           })
-  //           .catch((e) => {
-  //             console.error(e);
-  //           });
-  //       }),
-  //     );
-  //   });
-  //   await Promise.all(promiseArray);
-  //   await saveMilestone();
-  // }
-
-  // async function saveMilestone() {
-  //   console.log(pictureLink);
-  //   console.log('FOR MILESTONE : ', params.roomID);
-  //
-  //   const formData = new FormData();
-  //
-  //   formData.append('description', milestoneDescription);
-  //   formData.append('title', milestoneTitle);
-  //   formData.append('roomID', params.roomID);
-  //   formData.append('files', pictureLink.join(','));
-  //
-  //   const response = await fetch('/api/milestone', {
-  //     method: 'POST',
-  //     body: formData,
-  //   });
-  //
-  //   await response.json().then((response) => {
-  //     console.log(response);
-  //   });
-  // }
-
-  // async function manageSelectedPictures(files: FileList | null) {
-  //   console.log(files);
-  //   if (files) {
-  //     if (files.length > 4) {
-  //       console.log('Cannot upload more than 4 images per milestones');
-  //       setMilestonePicture(Array.from(files).slice(0, 4));
-  //     } else {
-  //       setMilestonePicture(Array.from(files).slice(0, 0));
-  //     }
-  //   }
-  // }
-
-  async function leaveRoom() {
-    await fetch(`/api/room/${params.roomID}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  async function promoteToAdmin(userID: string) {
-    const response = await fetch(`/api/room/${params.roomID}/admin/${userID}`, {
-      method: 'PUT',
-    });
-
-    await response
-      .json()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => console.log(e));
-  }
-
-  async function kickFromRoom(userID: string) {
-    const response = await fetch(`/api/room/1002/kick/${userID}`, {
-      method: 'DELETE',
-    });
-    await response
-      .json()
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => console.log(e));
-  }
 
   return (
     // TODO Mark a challenge as done
@@ -260,34 +109,8 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <p className={'text-body-l-book text-sand-12'}>{room.challenge.description}</p>
       </div>
 
-      <div
-        className={
-          'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 p-8'
-        }
-      >
-        <p className={'text-title1 mb-2 text-orange-10'}>Streak Tracker</p>
-        <p className={'text-body-l-book mb-6 text-orange-10'}>
-          Check each day that you reached your goal to uphold your streak! You can fill out the last
-          7 days.
-        </p>
-        <div className={'flex flex-row-reverse justify-between'}>
-          {weekdays.map((day: string, i: number) => {
-            //TODO a streak is not shared between users. It's personal
-            const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
-            return (
-              <div key={i}>
-                <MilestoneTrackerItem
-                  roomID={roomID}
-                  day={day}
-                  index={i}
-                  isMilestoneDone={isMilestoneDone}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <ChallengeCompleteCard roomID={roomID} isChallengeDone={false} />
+      <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+      <ChallengeCompleteCard roomID={roomID} isChallengeDone={room.isChallengeCompleted} />
       <div
         className={
           'w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8'
@@ -295,71 +118,29 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       >
         <p className={'text-title1 mb-2 text-sand-12'}>Your activity</p>
         <div className="relative">
-          <div className={'milestoneItem flex gap-4 pb-10'}>
-            <div
-              className={
-                'z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3'
-              }
-            ></div>
-            <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
-          </div>
+          {!room.isChallengeCompleted && (
+            <div className={'milestoneItem flex gap-4 pb-10'}>
+              <div
+                className={
+                  'z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3'
+                }
+              ></div>
+              <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
+            </div>
+          )}
 
           <div>
             {room.milestones.map((milestone, i, row) => {
               return (
-                <div
+                <MilestoneRow
                   key={i}
-                  className={
-                    'milestoneItem flex flex-col ' +
-                    (i + 1 === row.length ? 'lastMilestone mb-10 ' : 'pb-10 ') +
-                    (i === 0 ? 'firstMilestone ' : '')
-                  }
-                >
-                  <div className="metadata flex justify-between pl-16">
-                    <Badge
-                      key={milestone.ticked ? 'milestone' : 'update'}
-                      style={'big'}
-                      type={milestone.ticked ? 'milestone' : 'update'}
-                    ></Badge>
-                    <p className="text-body-s-book text-sand-11">
-                      {milestone.timestamp.toLocaleDateString()}
-                    </p>
-                  </div>
-
-                  <div className="metabody">
-                    <div className="flex items-center gap-4">
-                      <img
-                        title={milestone.user.fullName ?? undefined}
-                        alt={milestone.user.fullName ?? undefined}
-                        className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
-                        src={milestone.user.imageUrl}
-                      />
-                      <p className="text-title2">
-                        {milestone.title
-                          ? milestone.title
-                          : milestone.user.fullName + ' has set the challenge as done'}
-                      </p>
-                    </div>
-                    <p className="text-body-l-book pb-6 pl-16">{milestone.description}</p>
-
-                    <div className="flex flex-row gap-2 pl-16">
-                      {milestone.medias.map((media) => {
-                        return (
-                          <img
-                            key={media.id}
-                            className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
-                            src={media.link}
-                          />
-                        );
-                      })}
-                    </div>
-                    {currentUserID === milestone.userID && (
-                      <form action={deleteMilestone.bind(null, milestone.id)} className="ml-16">
-                        <button className="font-bold text-red-700">Delete the Milestone</button>
-                      </form>
-                    )}
-                  </div>
-                </div>
+                  milestone={milestone}
+                  isLastRow={i + 1 === row.length}
+                  isFirstRow={i === 0}
+                  isChallengeDone={room.isChallengeCompleted}
+                  isLastMilestone={milestone.isLastMilestone}
+                  currentUserID={currentUserID}
+                />
               );
             })}
           </div>

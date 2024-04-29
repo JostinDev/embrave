@@ -50,6 +50,7 @@ export const milestone = pgTable('milestone', {
   userID: varchar('user_id', { length: 256 }).notNull(),
   timestamp: timestamp('timestamp').notNull(),
   description: varchar('description', { length: 256 }),
+  isLastMilestone: boolean('is_last_milestone').default(false).notNull(),
   ticked: boolean('ticked'),
   title: varchar('title', { length: 256 }),
 });
@@ -81,6 +82,7 @@ export const room = pgTable('room', {
   code: varchar('code', { length: 256 }),
   link: varchar('link', { length: 256 }).default('').notNull(),
   isLinkActive: boolean('is_link_active').default(false).notNull(),
+  isChallengeCompleted: boolean('is_challenge_completed').default(false).notNull(),
   created: timestamp('created').notNull().defaultNow(),
   codeCreatedTimestamp: timestamp('code_created_timestamp').notNull().defaultNow(),
 });
