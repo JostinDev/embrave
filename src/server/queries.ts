@@ -5,7 +5,7 @@ import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { userRoom } from '@/server/db/schema';
+import { challenge, userRoom } from '@/server/db/schema';
 
 type Challenge = {
   id: number;
@@ -43,6 +43,23 @@ type ChallengeItem = {
 
 type SortedChallenges = {
   [category: string]: DisplayChallenge[];
+};
+
+type room = {
+  id: number;
+  link: string;
+  challengeID: number | null;
+  code: string | null;
+  isLinkActive: boolean;
+  isChallengeCompleted: boolean;
+  created: Date;
+  codeCreatedTimestamp: Date;
+  challenge: {
+    title: string;
+    type: {
+      type: string;
+    };
+  } | null;
 };
 
 function groupChallengesByCategory(challenges: ChallengeItem[]) {
@@ -100,9 +117,22 @@ export async function getUserRoom() {
     },
   });
 
+  const incompleteRooms: room[] = [];
+  const completedRooms: room[] = [];
+
   const room = rooms.map((room) => room.room);
 
-  return room;
+  room.map((challenge) => {
+    if (challenge) {
+      if (challenge.isChallengeCompleted) {
+        completedRooms.push(challenge);
+      } else {
+        incompleteRooms.push(challenge);
+      }
+    }
+  });
+
+  return [completedRooms, incompleteRooms];
 }
 
 // Get the room and its challenge embedded like { id, code, link, created, codeCreatedTimestamp, challenge: { id, title, description, banner, typeID, categoryID, type: { id, type }, category: { id, category } } }

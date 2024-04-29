@@ -76,13 +76,13 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
 
               <div
                 className={
-                  'w-100 mx-auto mb-8 max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-1 p-8'
+                  'w-100 mx-auto mb-8 max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8'
                 }
               >
-                <p className={'text-title1 mb-2 text-sand-12'}>
+                <p className={'text-title1 text-green-11 mb-2'}>
                   Want to challenge yourself? Start now!
                 </p>
-                <p className={'text-body-l-book mb-6 text-sand-12'}>
+                <p className={'text-body-l-book text-green-11 mb-6'}>
                   You can start a new challenge now and then invite friends to join you on your
                   challenge.
                 </p>
@@ -91,10 +91,10 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                     createRoom(challenge.id);
                   }}
                   className={
-                    'text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3'
+                    'text-body-l-book text-green-1 bg-green-11 h-fit max-w-fit rounded-lg p-3'
                   }
                 >
-                  Start challenge
+                  Let’s go!
                 </Button>
               </div>
             </form>

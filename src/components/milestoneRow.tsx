@@ -81,7 +81,10 @@ export default function MilestoneRow(props: MilestoneRowProps) {
           })}
         </div>
         {props.currentUserID === props.milestone.userID && (
-          <form action={deleteMilestone.bind(null, props.milestone.id)} className="ml-16">
+          <form
+            action={deleteMilestone.bind(null, props.milestone.id, props.milestone.roomID)}
+            className="ml-16"
+          >
             <button className="font-bold text-red-700">Delete the Milestone</button>
           </form>
         )}

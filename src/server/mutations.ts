@@ -9,7 +9,7 @@ import { z } from 'zod';
 import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
-import { isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
+import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
   const { userId } = auth().protect();
@@ -55,6 +55,10 @@ export async function joinRoom(link: string) {
 
   if (!result[0]) {
     return { error: "This room doesn't exist" };
+  }
+
+  if (await isChallengeComplete(result[0].roomID)) {
+    return { error: 'This challenge is already done' };
   }
 
   if (!(await isLinkActive(result[0].roomID))) {
@@ -112,6 +116,10 @@ export async function createMilestone(prevState: any, formData: FormData) {
     return { errors: result.error.flatten().fieldErrors };
   }
 
+  if (await isChallengeComplete(result.data.roomID)) {
+    return { error: 'This challenge is already done' };
+  }
+
   if (!(await isUserInRoom(userId, result.data.roomID))) {
     return { error: "You're not allowed to create a milestone" };
   }
@@ -130,6 +138,10 @@ export async function createMilestone(prevState: any, formData: FormData) {
 
 export async function createTickedMilestone(day: Date, roomID: number) {
   const { userId } = auth().protect();
+
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'This challenge is already done' };
+  }
 
   if (!(await isUserInRoom(userId, roomID))) {
     return { error: "You're not allowed to create a milestone" };
@@ -176,8 +188,14 @@ function sameDay(d1: Date, d2: Date) {
   );
 }
 
-export async function deleteMilestone(id: number) {
+export async function deleteMilestone(id: number, roomID: number | null) {
   const { userId } = auth().protect();
+
+  if (!roomID) return { error: 'This challenge is already done' };
+
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'This challenge is already done' };
+  }
 
   const { rowCount } = await db
     .delete(milestone)
@@ -193,6 +211,10 @@ export async function deleteMilestone(id: number) {
 export async function generateNewRoomLink(roomID: number) {
   const { userId } = auth().protect();
 
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'This challenge is already done' };
+  }
+
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to generate a new link" };
 
@@ -204,6 +226,10 @@ export async function generateNewRoomLink(roomID: number) {
 
 export async function setIsLinkActive(isActive: boolean, roomID: number) {
   const { userId } = auth().protect();
+
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'This challenge is already done' };
+  }
 
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to set this property" };

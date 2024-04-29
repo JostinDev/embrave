@@ -11,7 +11,7 @@
 }
 
 .text-title1 {
-  @apply font-nexa-bold text-26;
+  @apply font-nexa-bold text-26 leading-[115%];
 }
 
 .text-title2 {

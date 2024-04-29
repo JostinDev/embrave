@@ -46,7 +46,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
-          {isAdmin && (
+          {isAdmin && !room.isChallengeCompleted && (
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
           )}
           <div className="flex">
@@ -108,8 +108,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <p className={'text-title1 mb-2 text-sand-12'}>Challenge description</p>
         <p className={'text-body-l-book text-sand-12'}>{room.challenge.description}</p>
       </div>
-
-      <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+      {!room.isChallengeCompleted && (
+        <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+      )}
       <ChallengeCompleteCard roomID={roomID} isChallengeDone={room.isChallengeCompleted} />
       <div
         className={
