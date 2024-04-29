@@ -1,12 +1,14 @@
 import React from 'react';
-import type { User } from '@clerk/backend';
 
 import Badge from '@/components/badge';
 import { deleteMilestone } from '@/server/mutations';
 
 type MilestoneRowProps = {
   milestone: {
-    user: User;
+    user: {
+      fullName: string | null;
+      imageUrl: string;
+    };
     id: number;
     title: string | null;
     description: string | null;

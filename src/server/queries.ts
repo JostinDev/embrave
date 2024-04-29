@@ -142,7 +142,11 @@ export async function getRoom(id: number) {
 
       return {
         ...userRoom,
-        user,
+        user: {
+          id: user.id,
+          fullName: user.fullName,
+          imageUrl: user.imageUrl,
+        },
       };
     }),
     milestones: room.milestones.map((milestone) => {
@@ -151,7 +155,11 @@ export async function getRoom(id: number) {
 
       return {
         ...milestone,
-        user,
+        user: {
+          id: user.id,
+          fullName: user.fullName,
+          imageUrl: user.imageUrl,
+        },
       };
     }),
   };

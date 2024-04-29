@@ -1,12 +1,10 @@
 import React from 'react';
-import type { User } from '@clerk/backend';
 
 import MilestoneTrackerItem from '@/components/milestoneTrackerItem';
 
 type StreakTrackerCardProps = {
   roomID: number;
   milestones: {
-    user: User;
     title: string | null;
     roomID: number | null;
     id: number;
