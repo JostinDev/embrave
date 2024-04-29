@@ -4,7 +4,7 @@ import type { User } from '@clerk/backend';
 import Badge from '@/components/badge';
 import { deleteMilestone } from '@/server/mutations';
 
-interface MilestoneRowProps {
+type MilestoneRowProps = {
   milestone: {
     user: User;
     id: number;
@@ -21,7 +21,7 @@ interface MilestoneRowProps {
   isChallengeDone: boolean;
   isLastMilestone: boolean;
   currentUserID: string;
-}
+};
 
 export default function MilestoneRow(props: MilestoneRowProps) {
   return (

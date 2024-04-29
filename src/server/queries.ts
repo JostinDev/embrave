@@ -1,11 +1,11 @@
 import 'server-only';
 
-import { auth, clerkClient, currentUser, getAuth } from '@clerk/nextjs/server';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { milestone, userRoom } from '@/server/db/schema';
+import { userRoom } from '@/server/db/schema';
 
 type Challenge = {
   id: number;
