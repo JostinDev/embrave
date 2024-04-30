@@ -10,7 +10,7 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeComplete/challengeCompleteCard';
-import MilestoneRow from '@/components/milestoneRow';
+import MilestoneRow from '@/components/MilestoneRow';
 import SharePopover from '@/components/sharePopover';
 import StreakTrackerCard from '@/components/streakTrackerCard';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
