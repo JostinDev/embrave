@@ -1,11 +1,19 @@
+import React from 'react';
 import { auth } from '@clerk/nextjs/server';
 
-import { joinRoom } from '@/server/mutations';
+import JoinRoomModal from '@/components/joinRoom/joinRoomModal';
+import { getRoomByLink } from '@/server/queries';
 
 export default async function JoinRoom({ params }: { params: { link: string } }) {
   auth().protect();
-  const result = await joinRoom(params.link);
-  if (result.error) {
-    return <p className={'text-title1 text-sand-12'}>{result.error}</p>;
-  }
+  const challengeName = await getRoomByLink(params.link);
+  return (
+    <div>
+      {challengeName ? (
+        <JoinRoomModal challengeName={challengeName} link={params.link} />
+      ) : (
+        <p className={'text-title1 text-sand-12'}>This room does not exist</p>
+      )}
+    </div>
+  );
 }

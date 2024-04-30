@@ -5,7 +5,7 @@ import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { challenge, userRoom } from '@/server/db/schema';
+import { challenge, room, userRoom } from '@/server/db/schema';
 
 type Challenge = {
   id: number;
@@ -225,6 +225,23 @@ export async function isLinkActive(roomID: number) {
     return dbResult[0].isLinkActive;
   }
   return false;
+}
+
+export async function getRoomByLink(link: string) {
+  auth().protect();
+
+  const room = await db.query.room.findFirst({
+    where: eq(schema.room.link, link),
+    with: {
+      challenge: true,
+    },
+  });
+
+  if (room && room.challenge) {
+    return room.challenge.title;
+  }
+
+  return '';
 }
 
 export async function isChallengeComplete(roomID: number) {

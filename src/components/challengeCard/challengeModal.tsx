@@ -88,8 +88,8 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   challenge.
                 </p>
                 <Button
-                  onPress={() => {
-                    createRoom(challenge.id);
+                  onPress={async () => {
+                    await createRoom(challenge.id);
                   }}
                   className={
                     'text-body-l-book text-green-1 bg-green-11 h-fit max-w-fit rounded-lg p-3'

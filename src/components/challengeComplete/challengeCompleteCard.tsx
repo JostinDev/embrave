@@ -1,16 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Heading,
-  Input,
-  Label,
-  Modal,
-  TextField,
-} from 'react-aria-components';
+import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import ChallengeCompleteTracker from '@/components/challengeComplete/ChallengeCompleteTracker';
 import { setChallengeDone } from '@/server/mutations';
