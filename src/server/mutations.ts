@@ -6,7 +6,7 @@ import { auth } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-import randomStringGenerator from '@/app/utils/randomStringGenerator';
+import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
@@ -16,8 +16,8 @@ export async function createRoom(challengeID: number) {
 
   const date = new Date();
 
-  const randomLink = randomStringGenerator(32);
-  const randomCode = randomStringGenerator(6);
+  const randomLink = RandomStringGenerator(32);
+  const randomCode = RandomStringGenerator(6);
 
   const newRoom = await db
     .insert(room)
@@ -76,6 +76,26 @@ export async function joinRoom(link: string) {
     isAdmin: false,
   });
   redirect(`/room/${result[0].roomID}`);
+}
+
+export async function leaveRoom(roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return { error: "You're not allowed to set this property" };
+  }
+
+  const { rowCount: deletedUserRoom } = await db
+    .delete(userRoom)
+    .where(and(eq(userRoom.roomID, roomID), eq(userRoom.userID, userId)));
+
+  const { rowCount: deletedMilestone } = await db
+    .delete(milestone)
+    .where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
+
+  if (deletedMilestone === 0) {
+    return { error: 'Milestone not found' };
+  }
 }
 
 export async function setChallengeDone(roomID: number) {
@@ -218,7 +238,7 @@ export async function generateNewRoomLink(roomID: number) {
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to generate a new link" };
 
-  const randomLink = randomStringGenerator(32);
+  const randomLink = RandomStringGenerator(32);
 
   await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));
   revalidatePath('/room/');

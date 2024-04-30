@@ -8,6 +8,7 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompleteCard';
+import LeaveRoomModal from '@/components/leaveRoom/LeaveRoomModal';
 import MilestoneRow from '@/components/MilestoneRow';
 import SharePopover from '@/components/sharePopover';
 import StreakTrackerCard from '@/components/streakTrackerCard';
@@ -180,12 +181,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         })}
       </div>
 
-      <h1
-        // onClick={() => leaveRoom()}
-        className="mb-10 cursor-pointer text-2xl font-bold text-red-700"
-      >
-        Quit the room
-      </h1>
+      <div className={'py-4'}>
+        <LeaveRoomModal roomID={roomID} />
+      </div>
     </div>
   );
 }
