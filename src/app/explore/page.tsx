@@ -1,6 +1,5 @@
 import client from '@/client';
-import ChallengeCard from '@/components/challengeCard';
-import ChallengeModal from '@/components/challengeModal';
+import ChallengeModal from '@/components/challengeCard/challengeModal';
 import { getChallenges } from '@/server/queries';
 
 export default async function Challenge() {

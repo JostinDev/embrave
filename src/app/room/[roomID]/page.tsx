@@ -9,7 +9,7 @@ import { auth } from '@clerk/nextjs/server';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
-import ChallengeCompleteCard from '@/components/challengeCompleteCard';
+import ChallengeCompleteCard from '@/components/challengeComplete/challengeCompleteCard';
 import MilestoneRow from '@/components/milestoneRow';
 import SharePopover from '@/components/sharePopover';
 import StreakTrackerCard from '@/components/streakTrackerCard';
@@ -92,10 +92,12 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
               <p className={'text-body-m-bold mb-2 text-sand-12'}>Type:</p>
               <Badge style={'big'} type={'dailyChallenge'}></Badge>
             </div>
-            <div>
-              <p className={'text-body-m-bold mb-2 text-sand-12'}>Current streak:</p>
-              <Badge style={'big'} streak={42} type={'streak'}></Badge>
-            </div>
+            {!room.isChallengeCompleted && (
+              <div>
+                <p className={'text-body-m-bold mb-2 text-sand-12'}>Current streak:</p>
+                <Badge style={'big'} streak={42} type={'streak'}></Badge>
+              </div>
+            )}
           </div>
         </div>
       </div>

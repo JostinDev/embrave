@@ -6,10 +6,11 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 
 import cross from '@/app/images/cross.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
-import Label from '@/components/badge';
 import Badge from '@/components/badge';
-import ChallengeCard from '@/components/challengeCard';
+import ChallengeCard from '@/components/challengeCard/challengeCard';
 import { createRoom } from '@/server/mutations';
+
+import './style.css';
 
 type Challenge = {
   id: number;

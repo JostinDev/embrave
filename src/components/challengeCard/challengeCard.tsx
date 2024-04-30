@@ -4,8 +4,6 @@ import Image from 'next/image';
 
 import placeholder from '@/app/images/challengePlaceholder.png';
 import chevronRight from '@/app/images/chevron-right.svg';
-import flame from '@/app/images/flame.svg';
-import Label from '@/components/badge';
 import Badge from '@/components/badge';
 
 interface ChallengeCardProps {
