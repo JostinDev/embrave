@@ -6,7 +6,7 @@ import { auth } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
+import randomStringGenerator from '@/app/utils/randomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
@@ -16,8 +16,8 @@ export async function createRoom(challengeID: number) {
 
   const date = new Date();
 
-  const randomLink = RandomStringGenerator(32);
-  const randomCode = RandomStringGenerator(6);
+  const randomLink = randomStringGenerator(32);
+  const randomCode = randomStringGenerator(6);
 
   const newRoom = await db
     .insert(room)
@@ -218,7 +218,7 @@ export async function generateNewRoomLink(roomID: number) {
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to generate a new link" };
 
-  const randomLink = RandomStringGenerator(32);
+  const randomLink = randomStringGenerator(32);
 
   await db.update(room).set({ link: randomLink }).where(eq(room.id, roomID));
   revalidatePath('/room/');
