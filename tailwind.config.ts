@@ -1,5 +1,6 @@
 import containerQueriesPlugin from '@tailwindcss/container-queries';
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   content: ['./src/**/*.{js,ts,tsx}'],
@@ -98,6 +99,10 @@ export default {
         'green-11': '#218358',
         'green-12': '#193B2D',
       },
+      fontFamily: {
+        nexa: ['var(--font-nexa)', ...defaultTheme.fontFamily.sans],
+        inter: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
+      },
       fontSize: {
         90: '5.625rem',
         26: '1.625rem',
@@ -116,18 +121,6 @@ export default {
       animation: {
         confetti: 'confetti 2s ease-in-out infinite',
       },
-    },
-    fontFamily: {
-      'nexa-light': ['nexa-light', 'sans-serif'],
-      'nexa-book': ['nexa-book', 'sans-serif'],
-      'nexa-bold': ['nexa-bold', 'sans-serif'],
-
-      'nexa-black-i': ['nexa-black-i', 'sans-serif'],
-
-      'inter-book': ['inter-book', 'sans-serif'],
-      'inter-medium': ['inter-medium', 'sans-serif'],
-      'inter-bold': ['inter-bold', 'sans-serif'],
-      'inter-heavy': ['inter-heavy', 'sans-serif'],
     },
   },
 } satisfies Config;

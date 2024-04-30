@@ -84,7 +84,7 @@ export default function Menu() {
       <div className="flex w-[83px] flex-1 flex-col gap-8 rounded-[26px] border border-sand-5 bg-white/40 px-4 pt-6 backdrop-blur-lg transition-[width] lg:w-[255px]">
         <div
           id="backdropContainer"
-          className="relative flex flex-col items-center gap-4 font-nexa-book text-base leading-[18px] lg:items-start"
+          className="font-nexa relative flex flex-col items-center gap-4 text-base leading-[18px] lg:items-start"
         >
           <div
             id="backdrop"

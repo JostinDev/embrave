@@ -56,7 +56,7 @@ export default function MenuMobile() {
       <div className="flex w-[83px] flex-1 flex-col gap-8 rounded-[26px] border border-sand-5 bg-white/40 pb-3 pt-6 backdrop-blur-lg">
         <div
           id="backdropContainerMobile"
-          className="relative flex flex-col items-center gap-3 font-nexa-book text-base leading-[18px]"
+          className="font-nexa relative flex flex-col items-center gap-3 text-base leading-[18px]"
         >
           <div
             id="backdropMobile"

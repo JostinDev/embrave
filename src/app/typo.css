@@ -1,51 +1,51 @@
 .text-hero {
-  @apply font-nexa-black-i text-6xl uppercase;
+  @apply font-nexa italic font-black text-6xl uppercase;
 }
 
 .text-mobile-hero {
-  @apply font-nexa-black-i text-32;
+  @apply font-nexa italic font-black text-32;
 }
 
 .text-large-title {
-  @apply font-nexa-bold text-32 leading-none;
+  @apply font-nexa font-bold text-32 leading-none;
 }
 
 .text-title1 {
-  @apply font-nexa-bold text-26 leading-[115%];
+  @apply font-nexa font-bold text-26 leading-[115%];
 }
 
 .text-title2 {
-  @apply font-nexa-bold text-xl;
+  @apply font-nexa font-bold text-xl;
 }
 
 .text-title3 {
-  @apply font-nexa-light text-xl;
+  @apply font-nexa font-light text-xl;
 }
 
 .text-body-l-book {
-  @apply font-inter-book text-base leading-18;
+  @apply font-inter text-base leading-18;
 }
 
 .text-body-l-medium {
-  @apply font-inter-medium text-base leading-5;
+  @apply font-inter font-medium text-base leading-5;
 }
 
 .text-body-l-heavy {
-  @apply font-inter-heavy text-base leading-18;
+  @apply font-inter font-black text-base leading-18;
 }
 
 .text-body-m-book {
-  @apply font-inter-book text-sm leading-4;
+  @apply font-inter text-sm leading-4;
 }
 
 .text-body-m-bold {
-  @apply font-inter-bold text-sm leading-4;
+  @apply font-inter font-bold text-sm leading-4;
 }
 
 .text-body-s-book {
-  @apply font-inter-book text-xs leading-14;
+  @apply font-inter text-xs leading-14;
 }
 
 .text-body-s-bold {
-  @apply font-inter-bold text-xs leading-14;
+  @apply font-inter font-bold text-xs leading-14;
 }
