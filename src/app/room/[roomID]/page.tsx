@@ -7,7 +7,7 @@ import { auth } from '@clerk/nextjs/server';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
-import ChallengeCompleteCard from '@/components/challengeComplete/challengeCompleteCard';
+import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompleteCard';
 import MilestoneRow from '@/components/MilestoneRow';
 import SharePopover from '@/components/sharePopover';
 import StreakTrackerCard from '@/components/streakTrackerCard';
