@@ -6,7 +6,7 @@ import { auth } from '@clerk/nextjs/server';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-import RandomStringGenerator from '@/app/utils/RandomStringGenerator';
+import RandomStringGenerator from '@/app/utils/randomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
