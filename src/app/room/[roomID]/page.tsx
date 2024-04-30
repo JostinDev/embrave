@@ -1,5 +1,3 @@
-import './page.css';
-
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -122,7 +120,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <p className={'text-title1 mb-2 text-sand-12'}>Your activity</p>
         <div className="relative">
           {!room.isChallengeCompleted && (
-            <div className={'milestoneItem flex gap-4 pb-10'}>
+            <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]">
               <div
                 className={
                   'z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3'
