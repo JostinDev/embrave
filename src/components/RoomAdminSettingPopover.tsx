@@ -7,7 +7,7 @@ import { Button, Dialog, DialogTrigger, OverlayArrow, Popover } from 'react-aria
 import options from '@/app/images/dotsCircleHorizontal.svg';
 import logoutRed from '@/app/images/logoutRed.svg';
 import user from '@/app/images/userGroup.svg';
-import { setUserRoomRole } from '@/server/mutations';
+import { kickFromRoom, setUserRoomRole } from '@/server/mutations';
 
 type RoomAdminSettingPopoverProps = {
   roomID: number;
@@ -38,7 +38,10 @@ export default function RoomAdminSettingPopover(props: RoomAdminSettingPopoverPr
                 {props.userAdmin ? 'Make participant' : 'Make Admin'}
               </p>
             </Button>
-            <Button className="flex items-center gap-2">
+            <Button
+              onPress={() => kickFromRoom(props.roomID, props.userID)}
+              className="flex items-center gap-2"
+            >
               <Image className="h-6 w-6" src={logoutRed} alt={''} />
               <p className={'text-body-l-medium text-red-11'}>Remove from Challenge</p>
             </Button>

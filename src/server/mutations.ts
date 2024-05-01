@@ -112,6 +112,37 @@ export async function leaveRoom(roomID: number) {
   redirect('/');
 }
 
+export async function kickFromRoom(roomID: number, userIDToKick: string) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return { error: "You're not in the room" };
+  }
+
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'The challenge is already completed' };
+  }
+
+  if (!(await isRoomAdmin(userId, roomID)))
+    return { error: "You're not allowed to set this property" };
+
+  // Delete userRoom relation
+  const { rowCount: deletedUserRoom } = await db
+    .delete(userRoom)
+    .where(and(eq(userRoom.roomID, roomID), eq(userRoom.userID, userIDToKick)));
+
+  if (deletedUserRoom === 0) {
+    return { error: 'Room not found' };
+  }
+
+  // Delete user milestone from the room
+  await db
+    .delete(milestone)
+    .where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userIDToKick)));
+
+  revalidatePath('/room/');
+}
+
 export async function setUserRoomRole(roomID: number, userID: string, isAdmin: boolean) {
   const { userId } = auth().protect();
 
