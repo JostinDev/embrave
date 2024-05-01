@@ -1,7 +1,7 @@
 import React from 'react';
 import { auth } from '@clerk/nextjs/server';
 
-import JoinRoomModal from '@/components/joinRoom/joinRoomModal';
+import JoinRoomModal from '@/components/JoinRoomModal/JoinRoomModal';
 import { getRoomByLink } from '@/server/queries';
 
 export default async function JoinRoom({ params }: { params: { link: string } }) {

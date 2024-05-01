@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import logoutRed from '@/app/images/userGroup.svg';
-import Badge from '@/components/badge';
+import Badge from '@/components/Badge';
 
 type AdminRoomModalProps = {
   roomID: number;
@@ -18,6 +18,7 @@ type AdminRoomModalProps = {
     isAdmin: boolean | null;
   }[];
 };
+
 export default function AdminRoomModal(props: AdminRoomModalProps) {
   return (
     <DialogTrigger>

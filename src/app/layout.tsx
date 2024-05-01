@@ -5,7 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 import hero from '@/app/images/hero.png';
 import logo from '@/app/images/logo.svg';
-import Menu from '@/components/menu';
+import Menu from '@/components/Menu';
 import MenuMobile from '@/components/MenuMobile';
 
 import '@/app/globals.css';

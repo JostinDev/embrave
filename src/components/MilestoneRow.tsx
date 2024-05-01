@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Badge from '@/components/badge';
+import Badge from '@/components/Badge';
 import { deleteMilestone } from '@/server/mutations';
 
 type MilestoneRowProps = {

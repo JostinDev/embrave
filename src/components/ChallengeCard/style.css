@@ -1,0 +1,9 @@
+.react-aria-Modal {
+    box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
+    border-radius: 44px;
+    background: white;
+    outline: none;
+    width: 90%;
+    max-width: 1100px;
+    @apply top-4 sm:top-auto absolute border border-sand-5 bg-sand-1 p-4;
+}

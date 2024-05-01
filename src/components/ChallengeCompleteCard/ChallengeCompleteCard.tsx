@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
-import ChallengeCompleteTracker from '@/components/challengeComplete/ChallengeCompleteTracker';
+import ChallengeCompleteTracker from '@/components/ChallengeCompleteCard/ChallengeCompleteTracker';
 import { setChallengeDone } from '@/server/mutations';
 
 type SharePopoverProps = {
