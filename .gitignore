@@ -16,7 +16,5 @@ next-env.d.ts
 # Local environment variables
 .env*.local
 
-.idea/
-
 # Vercel
 .vercel/
