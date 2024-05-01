@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MilestoneTrackerItem from '@/components/milestoneTrackerItem';
+import MilestoneTrackerItem from '@/components/MilestoneTrackerItem';
 
 type StreakTrackerCardProps = {
   roomID: number;
