@@ -48,7 +48,7 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
         </Button>
         <Modal
           isDismissable
-          className="shadow:[0px_8px_20px_rgba(0,0,0/0.1)] w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6"
+          className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
           isOpen={isOpen}
           onOpenChange={setOpen}
         >
