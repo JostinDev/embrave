@@ -12,7 +12,7 @@ import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompl
 import MilestoneRow from '@/components/MilestoneRow';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/sharePopover';
-import StreakTrackerCard from '@/components/streakTrackerCard';
+import StreakTrackerCard from '@/components/StreakTrackerCard';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
