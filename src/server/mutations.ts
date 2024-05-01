@@ -101,9 +101,10 @@ export async function leaveRoom(roomID: number) {
   // Delete user milestone from the room
   await db.delete(milestone).where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
 
-  // Delete room if no users are in it
+  // Get number of users still in the room
   const result = await db.select().from(userRoom).where(eq(userRoom.roomID, roomID));
 
+  // Delete room if no users are in it
   if (result.length === 0) {
     await db.delete(room).where(and(eq(room.id, roomID)));
   }

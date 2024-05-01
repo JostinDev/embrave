@@ -10,6 +10,7 @@ import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompleteCard';
 import LeaveRoomModal from '@/components/leaveRoom/LeaveRoomModal';
 import MilestoneRow from '@/components/MilestoneRow';
+import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/sharePopover';
 import StreakTrackerCard from '@/components/streakTrackerCard';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
@@ -45,6 +46,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           &lt; Back
         </Link>
         <div className="flex items-center gap-6">
+          <RoomSettingPopover roomID={roomID} />
           {isAdmin && !room.isChallengeCompleted && (
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
           )}

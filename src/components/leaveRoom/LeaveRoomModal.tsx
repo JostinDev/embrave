@@ -4,18 +4,21 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 
 import './style.css';
 
-import React from 'react';
+import React, { useEffect, type Dispatch, type SetStateAction } from 'react';
+import Image from 'next/image';
 
+import logoutRed from '@/app/images/logoutRed.svg';
 import { leaveRoom } from '@/server/mutations';
 
-type JoinRoomModalProps = {
+type LeaveRoomModalProps = {
   roomID: number;
 };
-export default function LeaveRoomModal(props: JoinRoomModalProps) {
+export default function LeaveRoomModal(props: LeaveRoomModalProps) {
   return (
     <DialogTrigger>
-      <Button>
-        <p className={'text-title1 text-red-11'}>Leave the challenge</p>
+      <Button className="flex items-center gap-2">
+        <Image className="h-6 w-6" src={logoutRed} alt={''} />
+        <p className={'text-body-l-medium text-red-11'}>Leave challenge</p>
       </Button>
       <Modal isDismissable>
         <Dialog className={'flex flex-col'}>

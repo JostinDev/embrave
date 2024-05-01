@@ -54,7 +54,7 @@ export default function SharePopover(props: SharePopoverProps) {
           </svg>
         </OverlayArrow>
         <Dialog>
-          <div className="fley flex-col">
+          <div className="flex flex-col">
             <TextField
               className={'mb-4'}
               isReadOnly
