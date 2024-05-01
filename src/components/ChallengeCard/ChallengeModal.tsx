@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import cross from '@/app/images/cross.svg';
@@ -24,9 +23,8 @@ type Challenge = {
 type ChallengeModalProps = {
   challenge: Challenge;
 };
-export default function ChallengeModal({ challenge }: ChallengeModalProps) {
-  const router = useRouter();
 
+export default function ChallengeModal({ challenge }: ChallengeModalProps) {
   return (
     <DialogTrigger>
       <Button>
