@@ -56,15 +56,17 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
           )}
           <div className="flex">
-            {userRooms.map((userRoom, i) => {
+            {userRooms.map(({ user }, i) => {
               return (
-                <img
-                  key={userRoom.id}
-                  title={userRoom.user.fullName ?? undefined}
-                  alt={userRoom.user.fullName ?? undefined}
-                  className="h-12 w-12 rounded-full border-2 border-sand-12"
+                <Image
+                  key={user.id}
+                  alt={user.fullName ? `Profile picture of ${user.fullName}` : 'Profile picture'}
+                  title={user.fullName ?? undefined}
+                  width={48}
+                  height={48}
+                  className="size-12 rounded-full border-2 border-sand-12"
                   style={i !== 0 ? { marginLeft: -24 } : { marginLeft: 0 }}
-                  src={userRoom.user.imageUrl}
+                  src={user.imageUrl}
                 />
               );
             })}
@@ -147,10 +149,20 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <div>
         <h1 className="mb-10 text-2xl">Users in room : </h1>
 
-        {userRooms.map((userRoom, i) => {
+        {userRooms.map((userRoom) => {
           return (
             <div key={userRoom.id} className="mb-6">
-              <img src={userRoom.user.imageUrl} className="size-12" />
+              <Image
+                alt={
+                  userRoom.user.fullName
+                    ? `Profile picture of ${userRoom.user.fullName}`
+                    : 'Profile picture'
+                }
+                width={48}
+                height={48}
+                src={userRoom.user.imageUrl}
+                className="size-12"
+              />
               <p>{userRoom.user.fullName}</p>
               <p className="text-green-600">{userRoom.isAdmin ? 'Admin' : 'Not admin'}</p>
               <p

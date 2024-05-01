@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import Badge from '@/components/Badge';
 import { deleteMilestone } from '@/server/mutations';
@@ -48,9 +49,15 @@ export default function MilestoneRow(props: MilestoneRowProps) {
 
       <div>
         <div className="flex items-center gap-4">
-          <img
+          <Image
             title={props.milestone.user.fullName ?? undefined}
-            alt={props.milestone.user.fullName ?? undefined}
+            alt={
+              props.milestone.user.fullName
+                ? `Profile picture of ${props.milestone.user.fullName}`
+                : 'Profile picture'
+            }
+            width={48}
+            height={48}
             className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
             src={props.milestone.user.imageUrl}
           />
@@ -74,8 +81,9 @@ export default function MilestoneRow(props: MilestoneRowProps) {
         <div className="flex flex-row gap-2 pl-16">
           {props.milestone.medias.map((media) => {
             return (
-              <img
+              <Image
                 key={media.id}
+                alt=""
                 className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
                 src={media.link}
               />
