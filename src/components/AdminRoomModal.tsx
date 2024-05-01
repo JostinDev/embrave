@@ -7,6 +7,7 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 import options from '@/app/images/dotsCircleHorizontal.svg';
 import logoutRed from '@/app/images/userGroup.svg';
 import Badge from '@/components/Badge';
+import RoomAdminSettingPopover from '@/components/RoomAdminSettingPopover';
 
 type AdminRoomModalProps = {
   roomID: number;
@@ -53,7 +54,13 @@ export default function AdminRoomModal(props: AdminRoomModalProps) {
                         type={user.isAdmin ? 'admin' : 'participant'}
                         style="big"
                       />
-                      <Image className="ml-auto" src={options} alt="" />
+                      <div className="ml-auto">
+                        <RoomAdminSettingPopover
+                          roomID={props.roomID}
+                          userID={user.user.id}
+                          currentUserID={props.currentUserID}
+                        />
+                      </div>
                     </div>
 
                     <p className="text-green-600">{user.isAdmin ? 'Admin' : 'Not admin'}</p>
