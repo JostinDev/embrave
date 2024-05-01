@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
+import chevronLeft from '@/app/images/chevronLeft.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
@@ -42,8 +43,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     // TODO prevent more than 4 images
     <div className="relative min-h-screen">
       <div className={'mb-6 flex justify-between'}>
-        <Link href={'/'} className="text-body-l-medium flex items-center text-sand-12">
-          &lt; Back
+        <Link href={'/'} className="flex items-center gap-1">
+          <Image src={chevronLeft} alt={''} />
+          <p className={'text-body-l-mediumtext-sand-12'}>Back</p>
         </Link>
         <div className="flex items-center gap-6">
           <RoomSettingPopover roomID={roomID} />
