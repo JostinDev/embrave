@@ -10,7 +10,7 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
   const [state, formAction] = useFormState(createMilestone, { errors: {} });
 
   return (
-    <Form className={'w-full'} action={formAction} validationErrors={state?.errors}>
+    <Form className="w-full" action={formAction} validationErrors={state?.errors}>
       <input type="hidden" name="roomID" value={roomID} />
       <div className="flex flex-col">
         <TextField className="mb-4 flex flex-col gap-2" name="title" isRequired>
@@ -28,7 +28,7 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
       {/* TODO only allow 4 pictures to be uploaded */}
       {/*
       <input
-        className={'block'}
+        className="block"
         id="image-file"
         type="file"
         accept=".png, .jpg, .jpeg"

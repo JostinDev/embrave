@@ -52,12 +52,12 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
         'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 p-8'
       }
     >
-      <p className={'text-title1 mb-2 text-orange-10'}>Streak Tracker</p>
-      <p className={'text-body-l-book mb-6 text-orange-10'}>
+      <p className="text-title1 mb-2 text-orange-10">Streak Tracker</p>
+      <p className="text-body-l-book mb-6 text-orange-10">
         Check each day that you reached your goal to uphold your streak! You can fill out the last 7
         days.
       </p>
-      <div className={'flex flex-row-reverse justify-between'}>
+      <div className="flex flex-row-reverse justify-between">
         {weekdays.map((day: string, i: number) => {
           //TODO a streak is not shared between users. It's personal
           const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);

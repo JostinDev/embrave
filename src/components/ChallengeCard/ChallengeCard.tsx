@@ -22,18 +22,12 @@ export default function ChallengeCard(props: ChallengeCardProps) {
       <div className="relative">
         {streak ? (
           <div className="absolute left-2 top-2 flex">
-            <Badge streak={props.streak} type={'streak'} style={'small'} />
+            <Badge streak={props.streak} type="streak" style="small" />
           </div>
         ) : (
           ''
         )}
-        <Image
-          className="rounded-[10px] pb-3"
-          src={placeholder}
-          alt={''}
-          width={200}
-          height={200}
-        />
+        <Image className="rounded-[10px] pb-3" src={placeholder} alt="" width={200} height={200} />
       </div>
     );
   }
@@ -43,9 +37,9 @@ export default function ChallengeCard(props: ChallengeCardProps) {
 
     switch (type) {
       case 'goal':
-        return <Badge type={'goal'} style={'small'} />;
+        return <Badge type="goal" style="small" />;
       case 'habit':
-        return <Badge type={'dailyChallenge'} style={'small'} />;
+        return <Badge type="dailyChallenge" style="small" />;
       default:
         return null;
     }
@@ -54,12 +48,12 @@ export default function ChallengeCard(props: ChallengeCardProps) {
   return (
     <div className="flex max-w-[220px] cursor-pointer flex-col rounded-[26px] border border-sand-5 bg-sand-2 p-4">
       <Streak />
-      <span className={'mb-4'}>
+      <span className="mb-4">
         <Tag />
       </span>
       <p className="text-body-l-medium pb-2 text-start text-sand-12">{props.challenge}</p>
       {props.date ? <p className="text-body-s-book text-sand-11">Created: {props.date}</p> : ''}
-      <Image className="h-7 w-7 self-end" src={chevronRight} alt={''} width={20} height={20} />
+      <Image className="h-7 w-7 self-end" src={chevronRight} alt="" width={20} height={20} />
     </div>
   );
 }

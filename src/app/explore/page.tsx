@@ -19,7 +19,7 @@ export default async function Challenge() {
         if (!challenges || challenges.length === 0) return;
         return (
           <div key={i}>
-            <h2 className={'text-title1 mb-4'}>{category}</h2>
+            <h2 className="text-title1 mb-4">{category}</h2>
             <div key={0} className="mb-8 flex flex-wrap gap-4">
               {challenges.map((challenge, j) => {
                 return (

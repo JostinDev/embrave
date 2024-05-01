@@ -28,21 +28,15 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
   }
 
   return (
-    <div
-      className={
-        'w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8'
-      }
-    >
+    <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
       {isChallengeDone && (
-        <div
-          className={'confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x'}
-        />
+        <div className="confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x" />
       )}
       <div>
-        <p className={'text-title1 mb-2 text-green-11'}>
+        <p className="text-title1 mb-2 text-green-11">
           {isChallengeDone ? 'Congrats! You completed the challenge!' : 'Completed the Challenge?'}
         </p>
-        <p className={'text-body-l-book text-green-11'}>
+        <p className="text-body-l-book text-green-11">
           {isChallengeDone
             ? 'You were successful! Good on you for pushing yourself outside your such perfect feat!'
             : 'Mark the challenge as done, once you have completed it.'}
@@ -61,17 +55,17 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
           <Dialog className="outline-none">
             {({ close }) => (
               <form>
-                <Heading className={'text-title1 mb-4 text-sand-12'} slot="title">
+                <Heading className="text-title1 mb-4 text-sand-12" slot="title">
                   Do you want to complete this challenge?
                 </Heading>
-                <p className={'text-body-l-book mb-4 text-sand-12'}>
+                <p className="text-body-l-book mb-4 text-sand-12">
                   By completing the challenge, you will not be able to post any new milestones or
                   delete the existing ones.
                 </p>
-                <p className={'text-body-l-book text-sand-12'}>
+                <p className="text-body-l-book text-sand-12">
                   A completed challenge only allows you to read the posted milestone.
                 </p>
-                <div className={'mt-6 flex justify-between gap-4'}>
+                <div className="mt-6 flex justify-between gap-4">
                   <Button
                     onPress={close}
                     className="text-body-l-book h-fit w-full rounded-lg border border-solid border-sand-12 bg-white p-3 text-sand-12"

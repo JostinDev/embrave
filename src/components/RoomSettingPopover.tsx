@@ -24,7 +24,7 @@ export default function RoomSettingPopover(props: RoomSettingPopoverProps) {
   return (
     <DialogTrigger>
       <Button>
-        <Image src={cog} alt={''} />
+        <Image src={cog} alt="" />
       </Button>
       <Popover>
         <OverlayArrow>

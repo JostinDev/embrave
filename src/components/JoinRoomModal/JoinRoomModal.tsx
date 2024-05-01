@@ -32,18 +32,18 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
     <DialogTrigger>
       <Button></Button>
       <Modal defaultOpen isOpen={true}>
-        <Dialog className={'flex flex-col'}>
+        <Dialog className="flex flex-col">
           <form>
-            <Heading className={'text-title1 mb-4 text-sand-12'} slot="title">
+            <Heading className="text-title1 mb-4 text-sand-12" slot="title">
               Do you want to join this challenge?
             </Heading>
-            <p className={'text-body-l-book mb-2 text-sand-12'}>
+            <p className="text-body-l-book mb-2 text-sand-12">
               You are about to join the challenge:
             </p>
-            <p className={'text-body-l-heavy mb-4 text-sand-12'}>{props.challengeName}</p>
+            <p className="text-body-l-heavy mb-4 text-sand-12">{props.challengeName}</p>
 
-            <p className={'text-body-l-heavy text-red-800'}>{error}</p>
-            <div className={'mt-6 flex justify-between gap-4'}>
+            <p className="text-body-l-heavy text-red-800">{error}</p>
+            <div className="mt-6 flex justify-between gap-4">
               <Button
                 onPress={() => cancelJoinRoom()}
                 className="text-body-l-book h-fit w-full rounded-lg border border-solid border-sand-12 bg-white p-3 text-sand-12"

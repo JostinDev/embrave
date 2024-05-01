@@ -56,7 +56,7 @@ export default function MenuMobile() {
       <div className="flex w-[83px] flex-1 flex-col gap-8 rounded-[26px] border border-sand-5 bg-white/40 pb-3 pt-6 backdrop-blur-lg">
         <div
           id="backdropContainerMobile"
-          className="font-nexa relative flex flex-col items-center gap-3 text-base leading-[18px]"
+          className="relative flex flex-col items-center gap-3 font-nexa text-base leading-[18px]"
         >
           <div
             id="backdropMobile"
@@ -64,7 +64,7 @@ export default function MenuMobile() {
           ></div>
 
           <div id="currentPage" className="z-30 flex items-end gap-2 px-4 ">
-            <Image className="pointer-events-none" src={currentIcon} alt={''}></Image>
+            <Image className="pointer-events-none" src={currentIcon} alt=""></Image>
           </div>
 
           <div className={'z-30 flex-col ' + (isMenuOpen ? 'flex' : 'hidden')}>
@@ -79,7 +79,7 @@ export default function MenuMobile() {
               <Image
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={home}
-                alt={''}
+                alt=""
               ></Image>
             </Link>
 
@@ -94,7 +94,7 @@ export default function MenuMobile() {
               <Image
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={world}
-                alt={''}
+                alt=""
               ></Image>
             </Link>
 
@@ -109,17 +109,17 @@ export default function MenuMobile() {
               <Image
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={profile}
-                alt={''}
+                alt=""
               ></Image>
             </Link>
 
-            <div className={'z-30 justify-center px-5 py-2 lg:justify-start'}>
+            <div className="z-30 justify-center px-5 py-2 lg:justify-start">
               <SignOutButton>
                 <button
                   className="text-body-l-book flex h-full w-10 items-center rounded-[10px] p-2 text-sand-12 transition-all hover:bg-sand-3"
                   type="submit"
                 >
-                  <Image className="" src={logout} alt={''}></Image>
+                  <Image src={logout} alt=""></Image>
                 </button>
               </SignOutButton>
             </div>

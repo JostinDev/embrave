@@ -22,17 +22,13 @@ export default function ChallengeCompleteTracker(props: SharePopoverProps) {
   }
 
   return (
-    <div className={'flex cursor-pointer select-none flex-col items-center gap-2'}>
+    <div className="flex cursor-pointer select-none flex-col items-center gap-2">
       <div
-        className={`text-title2 border-green-11 flex h-12 w-12 justify-center rounded-full border transition-all
-                   ${isChallengeDone ? 'bg-green-11 hover:bg-green-8 border-solid' : 'hover:bg-green-4 border-dashed'}
+        className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-green-11 transition-all
+                   ${isChallengeDone ? 'border-solid bg-green-11 hover:bg-green-8' : 'border-dashed hover:bg-green-4'}
                    `}
       >
-        {isChallengeDone ? (
-          <Image alt={''} src={check}></Image>
-        ) : (
-          <Image alt={''} src={plus}></Image>
-        )}
+        {isChallengeDone ? <Image alt="" src={check}></Image> : <Image alt="" src={plus}></Image>}
       </div>
     </div>
   );

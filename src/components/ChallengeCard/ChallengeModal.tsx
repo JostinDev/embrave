@@ -31,57 +31,43 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
         <ChallengeCard challenge={challenge.title} type={challenge.type}></ChallengeCard>
       </Button>
       <Modal isDismissable>
-        <Dialog className={'flex flex-col'}>
+        <Dialog className="flex flex-col">
           {({ close }) => (
             <form>
-              <div className={'relative mb-4'}>
+              <div className="relative mb-4">
                 <Image
-                  className={'h-[400px] w-full rounded-[26px]'}
+                  className="h-[400px] w-full rounded-[26px]"
                   style={{ objectFit: 'cover' }}
-                  placeholder={'blur'}
+                  placeholder="blur"
                   src={stairs}
-                  alt={''}
+                  alt=""
                 ></Image>
                 <Button
                   onPress={close}
-                  className={
-                    'bg absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-sand-5 bg-sand-1'
-                  }
+                  className="bg absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-sand-5 bg-sand-1"
                 >
-                  <Image src={cross} alt={''} />
+                  <Image src={cross} alt="" />
                 </Button>
-                <div
-                  className={
-                    'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
-                  }
-                >
-                  <Heading slot="title" className={'text-large-title mb-4 text-sand-12'}>
+                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur">
+                  <Heading slot="title" className="text-large-title mb-4 text-sand-12">
                     {challenge.title}
                   </Heading>
                   <div>
-                    <p className={'text-body-m-bold mb-2 text-sand-12'}>Type:</p>
-                    <Badge type={challenge.type} style={'big'}></Badge>
+                    <p className="text-body-m-bold mb-2 text-sand-12">Type:</p>
+                    <Badge type={challenge.type} style="big"></Badge>
                   </div>
                 </div>
               </div>
-              <div
-                className={
-                  'w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8'
-                }
-              >
-                <p className={'text-title1 mb-2 text-sand-12'}>Challenge description</p>
-                <p className={'text-body-l-book text-sand-12'}>{challenge.description}</p>
+              <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
+                <p className="text-title1 mb-2 text-sand-12">Challenge description</p>
+                <p className="text-body-l-book text-sand-12">{challenge.description}</p>
               </div>
 
-              <div
-                className={
-                  'w-100 mx-auto mb-8 max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8'
-                }
-              >
-                <p className={'text-title1 mb-2 text-green-11'}>
+              <div className="w-100 mx-auto mb-8 max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8">
+                <p className="text-title1 mb-2 text-green-11">
                   Want to challenge yourself? Start now!
                 </p>
-                <p className={'text-body-l-book mb-6 text-green-11'}>
+                <p className="text-body-l-book mb-6 text-green-11">
                   You can start a new challenge now and then invite friends to join you on your
                   challenge.
                 </p>
@@ -89,9 +75,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   onPress={async () => {
                     await createRoom(challenge.id);
                   }}
-                  className={
-                    'text-body-l-book h-fit max-w-fit rounded-lg bg-green-11 p-3 text-green-1'
-                  }
+                  className="text-body-l-book h-fit max-w-fit rounded-lg bg-green-11 p-3 text-green-1"
                 >
                   Let’s go!
                 </Button>

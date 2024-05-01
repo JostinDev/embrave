@@ -56,18 +56,14 @@ export default function SharePopover(props: SharePopoverProps) {
         <Dialog>
           <div className="flex flex-col">
             <TextField
-              className={'mb-4'}
+              className="mb-4"
               isReadOnly
               key={props.link}
               defaultValue={`https://embrave.app/room/join/${props.link}`}
             >
-              <Label className={'text-body-l-medium mb-2 block text-sand-12'}>Room link</Label>
-              <div className={'flex'}>
-                <Input
-                  className={
-                    'text-body-l-book rounded-l-lg border-b border-l border-t border-sand-5 px-2 text-sand-12 '
-                  }
-                />
+              <Label className="text-body-l-medium mb-2 block text-sand-12">Room link</Label>
+              <div className="flex">
+                <Input className="text-body-l-book rounded-l-lg border-b border-l border-t border-sand-5 px-2 text-sand-12" />
                 <Button
                   key={props.link}
                   onPress={() => {
@@ -75,18 +71,18 @@ export default function SharePopover(props: SharePopoverProps) {
                   }}
                   className="text-body-l-book h-fit rounded-r-lg bg-sand-12 px-2 py-3 text-sand-3"
                 >
-                  <Image src={copy} alt={''} />
+                  <Image src={copy} alt="" />
                 </Button>
               </div>
             </TextField>
             <Switch isSelected={selected} onChange={(isSelected) => setSwitchState(isSelected)}>
-              <p className={'text-body-l-medium text-sand-12'}>Activate share link</p>
+              <p className="text-body-l-medium text-sand-12">Activate share link</p>
               <div className="indicator" />
             </Switch>
-            <form className={'mt-4'} action={generateNewRoomLink.bind(null, props.roomID)}>
-              <button className={'text-body-l-medium mt-2 flex gap-2 text-sand-12'}>
+            <form className="mt-4" action={generateNewRoomLink.bind(null, props.roomID)}>
+              <button className="text-body-l-medium mt-2 flex gap-2 text-sand-12">
                 <p>Generate new link</p>
-                <Image className={'h-5 w-5'} src={reload} alt={''} />
+                <Image className="h-5 w-5" src={reload} alt="" />
               </button>
             </form>
           </div>

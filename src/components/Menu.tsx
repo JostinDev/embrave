@@ -84,7 +84,7 @@ export default function Menu() {
       <div className="flex w-[83px] flex-1 flex-col gap-8 rounded-[26px] border border-sand-5 bg-white/40 px-4 pt-6 backdrop-blur-lg transition-[width] lg:w-[255px]">
         <div
           id="backdropContainer"
-          className="font-nexa relative flex flex-col items-center gap-4 text-base leading-[18px] lg:items-start"
+          className="relative flex flex-col items-center gap-4 font-nexa text-base leading-[18px] lg:items-start"
         >
           <div
             id="backdrop"
@@ -97,7 +97,7 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/"
           >
-            <Image className="pointer-events-none" src={home} alt={''}></Image>
+            <Image className="pointer-events-none" src={home} alt=""></Image>
             <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
               Home
             </span>
@@ -109,7 +109,7 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/explore"
           >
-            <Image className="pointer-events-none" src={world} alt={''}></Image>
+            <Image className="pointer-events-none" src={world} alt=""></Image>
             <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
               Explore
             </span>
@@ -121,22 +121,22 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/profile"
           >
-            <Image className="pointer-events-none" src={profile} alt={''}></Image>
+            <Image className="pointer-events-none" src={profile} alt=""></Image>
             <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
               Profile
             </span>
           </Link>
         </div>
 
-        <div className={'z-30 mb-8 mt-auto lg:pl-2'}>
-          <div className={'flex justify-center lg:justify-start'}>
+        <div className="z-30 mb-8 mt-auto lg:pl-2">
+          <div className="flex justify-center lg:justify-start">
             <SignOutButton>
               <button
                 className="text-body-l-book flex h-full items-center gap-2 text-sand-12"
                 type="submit"
               >
-                <Image src={logout} alt={''}></Image>
-                <span className={'hidden lg:block'}>Log out</span>
+                <Image src={logout} alt=""></Image>
+                <span className="hidden lg:block">Log out</span>
               </button>
             </SignOutButton>
           </div>

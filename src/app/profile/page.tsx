@@ -96,19 +96,19 @@ export default function Page() {
       <UserButton />
 
       <div className="flex items-center gap-4">
-        <Image className="rounded-full" width={100} height={100} alt={''} src={avatar} />
+        <Image className="rounded-full" width={100} height={100} alt="" src={avatar} />
         <div>
           <p className="text-xl">{name}</p>
           <input
             onChange={(event) => setName(event.target.value)}
-            className={'border-2 border-blue-500 '}
+            className="border-2 border-blue-500"
             value={name}
           />
           <p className="text-lg">{email}</p>
           <p className="text-lg">{points}</p>
         </div>
       </div>
-      <p onClick={() => saveUser()} className={'cursor-pointer'}>
+      <p onClick={() => saveUser()} className="cursor-pointer">
         Save new username
       </p>
     </div>
