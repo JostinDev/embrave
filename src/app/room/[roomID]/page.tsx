@@ -11,7 +11,7 @@ import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompleteCard';
 import MilestoneRow from '@/components/MilestoneRow';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
-import SharePopover from '@/components/sharePopover';
+import SharePopover from '@/components/SharePopover';
 import StreakTrackerCard from '@/components/StreakTrackerCard';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
