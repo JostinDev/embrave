@@ -17,6 +17,19 @@ export default function MenuMobile() {
   const pathname = usePathname();
 
   useEffect(() => {
+    async function initBackdrop() {
+      switch (pathname) {
+        case '/':
+          setCurrentIcon(home);
+          break;
+        case '/explore':
+          setCurrentIcon(world);
+          break;
+        case '/profile':
+          setCurrentIcon(profile);
+          break;
+      }
+    }
     const handleResize = () => {
       if (window.location.href.includes('explore')) {
         setCurrentIcon(world);
@@ -32,21 +45,7 @@ export default function MenuMobile() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-
-  async function initBackdrop() {
-    switch (pathname) {
-      case '/':
-        setCurrentIcon(home);
-        break;
-      case '/explore':
-        setCurrentIcon(world);
-        break;
-      case '/profile':
-        setCurrentIcon(profile);
-        break;
-    }
-  }
+  }, [pathname]);
 
   return (
     <div
