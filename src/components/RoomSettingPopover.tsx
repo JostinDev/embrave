@@ -6,7 +6,7 @@ import { Button, Dialog, DialogTrigger, OverlayArrow, Popover } from 'react-aria
 
 import cog from '@/app/images/cog.svg';
 import AdminRoomModal from '@/components/AdminRoomModal';
-import LeaveRoomModal from '@/components/LeaveRoomModal/LeaveRoomModal';
+import LeaveRoomModal from '@/components/LeaveRoomModal';
 
 type RoomSettingPopoverProps = {
   roomID: number;

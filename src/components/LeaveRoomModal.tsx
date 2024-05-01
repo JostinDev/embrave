@@ -1,11 +1,8 @@
 'use client';
 
-import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
-
-import './style.css';
-
-import React, { useEffect, type Dispatch, type SetStateAction } from 'react';
+import React from 'react';
 import Image from 'next/image';
+import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import logoutRed from '@/app/images/logoutRed.svg';
 import { leaveRoom } from '@/server/mutations';
@@ -20,8 +17,11 @@ export default function LeaveRoomModal(props: LeaveRoomModalProps) {
         <Image className="h-6 w-6" src={logoutRed} alt="" />
         <p className="text-body-l-medium text-red-11">Leave challenge</p>
       </Button>
-      <Modal isDismissable>
-        <Dialog className="flex flex-col">
+      <Modal
+        isDismissable
+        className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
+      >
+        <Dialog className="flex flex-col outline-none">
           {({ close }) => (
             <form>
               <Heading className="text-title1 mb-4 text-sand-12" slot="title">
