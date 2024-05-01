@@ -1,11 +1,8 @@
 'use client';
 
-import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
-
-import './style.css';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import { joinRoom } from '@/server/mutations';
 
@@ -31,8 +28,12 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
   return (
     <DialogTrigger>
       <Button></Button>
-      <Modal defaultOpen isOpen={true}>
-        <Dialog className="flex flex-col">
+      <Modal
+        defaultOpen
+        className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
+        isOpen={true}
+      >
+        <Dialog className="flex flex-col outline-none">
           <form>
             <Heading className="text-title1 mb-4 text-sand-12" slot="title">
               Do you want to join this challenge?
