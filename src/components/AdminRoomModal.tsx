@@ -4,7 +4,6 @@ import React from 'react';
 import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
-import options from '@/app/images/dotsCircleHorizontal.svg';
 import logoutRed from '@/app/images/userGroup.svg';
 import Badge from '@/components/Badge';
 import RoomAdminSettingPopover from '@/components/RoomAdminSettingPopover';
@@ -50,38 +49,22 @@ export default function AdminRoomModal(props: AdminRoomModalProps) {
                       />
                       <p className="text-body-l-medium text-sand-12">{user.user.fullName}</p>
                       <Badge
+                        key={user.isAdmin ? 'admin' : 'participant'}
                         hideIcon={true}
                         type={user.isAdmin ? 'admin' : 'participant'}
                         style="big"
                       />
-                      <div className="ml-auto">
-                        <RoomAdminSettingPopover
-                          roomID={props.roomID}
-                          userID={user.user.id}
-                          currentUserID={props.currentUserID}
-                        />
-                      </div>
+                      {props.currentUserID !== user.user.id && (
+                        <div className="ml-auto">
+                          <RoomAdminSettingPopover
+                            userAdmin={user.isAdmin}
+                            roomID={props.roomID}
+                            userID={user.user.id}
+                            currentUserID={props.currentUserID}
+                          />
+                        </div>
+                      )}
                     </div>
-
-                    <p className="text-green-600">{user.isAdmin ? 'Admin' : 'Not admin'}</p>
-                    <p
-                      // onClick={() => promoteToAdmin(userRoom.user.id)}
-                      className="cursor-pointer text-green-600"
-                    >
-                      {user.user.id !== props.currentUserID && !user.isAdmin && 'Promote to admin'}
-                    </p>
-                    <p
-                      // onClick={() => kickFromRoom(userRoom.user.id)}
-                      className="cursor-pointer text-green-600"
-                    >
-                      {user.userID !== props.currentUserID && !user.isAdmin && 'Kick from the room'}
-                    </p>
-                    <p
-                      // onClick={() => kickFromRoom(userRoom.userID)}
-                      className="cursor-pointer text-green-600"
-                    >
-                      Kick from the room
-                    </p>
                   </div>
                 );
               })}

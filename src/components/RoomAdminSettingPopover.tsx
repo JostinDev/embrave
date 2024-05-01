@@ -7,11 +7,13 @@ import { Button, Dialog, DialogTrigger, OverlayArrow, Popover } from 'react-aria
 import options from '@/app/images/dotsCircleHorizontal.svg';
 import logoutRed from '@/app/images/logoutRed.svg';
 import user from '@/app/images/userGroup.svg';
+import { setUserRoomRole } from '@/server/mutations';
 
 type RoomAdminSettingPopoverProps = {
   roomID: number;
   currentUserID: string;
   userID: string;
+  userAdmin: boolean | null;
 };
 export default function RoomAdminSettingPopover(props: RoomAdminSettingPopoverProps) {
   return (
@@ -27,14 +29,19 @@ export default function RoomAdminSettingPopover(props: RoomAdminSettingPopoverPr
         </OverlayArrow>
         <Dialog>
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2">
+            <Button
+              onPress={() => setUserRoomRole(props.roomID, props.userID, !props.userAdmin)}
+              className="flex items-center gap-2"
+            >
               <Image className="h-6 w-6" src={user} alt="" />
-              <p className={'text-body-l-medium text-sand-12'}>Make Admin</p>
-            </div>
-            <div className="flex items-center gap-2">
+              <p className={'text-body-l-medium text-sand-12'}>
+                {props.userAdmin ? 'Make participant' : 'Make Admin'}
+              </p>
+            </Button>
+            <Button className="flex items-center gap-2">
               <Image className="h-6 w-6" src={logoutRed} alt={''} />
               <p className={'text-body-l-medium text-red-11'}>Remove from Challenge</p>
-            </div>
+            </Button>
           </div>
         </Dialog>
       </Popover>
