@@ -82,20 +82,33 @@ export async function leaveRoom(roomID: number) {
   const { userId } = auth().protect();
 
   if (!(await isUserInRoom(userId, roomID))) {
-    return { error: "You're not allowed to set this property" };
+    return { error: "You're not in the room" };
   }
 
+  if (await isChallengeComplete(roomID)) {
+    return { error: 'The challenge is already completed' };
+  }
+
+  // Delete userRoom relation
   const { rowCount: deletedUserRoom } = await db
     .delete(userRoom)
     .where(and(eq(userRoom.roomID, roomID), eq(userRoom.userID, userId)));
 
-  const { rowCount: deletedMilestone } = await db
-    .delete(milestone)
-    .where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
-
-  if (deletedMilestone === 0) {
-    return { error: 'Milestone not found' };
+  if (deletedUserRoom === 0) {
+    return { error: 'Room not found' };
   }
+
+  // Delete user milestone from the room
+  await db.delete(milestone).where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
+
+  // Delete room if no users are in it
+  const result = await db.select().from(userRoom).where(eq(userRoom.roomID, roomID));
+
+  if (result.length === 0) {
+    await db.delete(room).where(and(eq(room.id, roomID)));
+  }
+
+  redirect('/');
 }
 
 export async function setChallengeDone(roomID: number) {
@@ -175,7 +188,6 @@ export async function createTickedMilestone(day: Date, roomID: number) {
   if (userMilestones.length !== 0) {
     for (const element of userMilestones) {
       if (sameDay(day, element.timestamp)) {
-        console.log('Milestone done the same day', element.id);
         if (element.ticked) {
           await db.delete(milestone).where(and(eq(milestone.id, element.id)));
           revalidatePath('/room/');
