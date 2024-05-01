@@ -9,8 +9,6 @@ import Badge from '@/components/Badge';
 import ChallengeCard from '@/components/ChallengeCard/ChallengeCard';
 import { createRoom } from '@/server/mutations';
 
-import './style.css';
-
 type Challenge = {
   id: number;
   title: string;
@@ -30,8 +28,11 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
       <Button>
         <ChallengeCard challenge={challenge.title} type={challenge.type}></ChallengeCard>
       </Button>
-      <Modal isDismissable>
-        <Dialog className="flex flex-col">
+      <Modal
+        isDismissable
+        className="absolute top-4 w-[90%] max-w-[1100px] rounded-[44px] border border-sand-5 bg-sand-1 p-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
+      >
+        <Dialog className="flex flex-col outline-none">
           {({ close }) => (
             <form>
               <div className="relative mb-4">
