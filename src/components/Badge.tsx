@@ -10,17 +10,24 @@ import flagOrange from '@/app/images/flagOrange.svg';
 import fire from '@/app/images/flame.svg';
 import globeCrimson from '@/app/images/globeCrimson.svg';
 
-type LabelType =
-  | 'dailyChallenge'
-  | 'update'
-  | 'habit'
-  | 'milestone'
-  | 'date'
-  | 'goal'
-  | 'challengeCompleted'
-  | 'streak'
-  | 'admin'
-  | 'participant';
+export function isLabelType(arg: string): arg is LabelType {
+  return labelTypes.includes(arg as LabelType);
+}
+
+const labelTypes = [
+  'dailyChallenge',
+  'update',
+  'habit',
+  'milestone',
+  'date',
+  'goal',
+  'challengeCompleted',
+  'streak',
+  'admin',
+  'participant',
+] as const;
+
+type LabelType = (typeof labelTypes)[number];
 
 const icons: Record<LabelType, any> = {
   dailyChallenge: calendarBlue,
