@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
+import options from '@/app/images/dotsCircleHorizontal.svg';
 import logoutRed from '@/app/images/userGroup.svg';
 import Badge from '@/components/Badge';
 
@@ -17,6 +18,7 @@ type AdminRoomModalProps = {
     joined: Date | null;
     isAdmin: boolean | null;
   }[];
+  currentUserID: string;
 };
 
 export default function AdminRoomModal(props: AdminRoomModalProps) {
@@ -34,7 +36,7 @@ export default function AdminRoomModal(props: AdminRoomModalProps) {
                 User management
               </Heading>
 
-              {props.users.map((user, i) => {
+              {props.users.map((user) => {
                 return (
                   <div key={user.id} className="mb-6">
                     <div className="flex items-center gap-2">
@@ -51,6 +53,7 @@ export default function AdminRoomModal(props: AdminRoomModalProps) {
                         type={user.isAdmin ? 'admin' : 'participant'}
                         style={'big'}
                       />
+                      <Image className="ml-auto" src={options} alt={''} />
                     </div>
 
                     <p className="text-green-600">{user.isAdmin ? 'Admin' : 'Not admin'}</p>
@@ -58,13 +61,13 @@ export default function AdminRoomModal(props: AdminRoomModalProps) {
                       // onClick={() => promoteToAdmin(userRoom.user.id)}
                       className="cursor-pointer text-green-600"
                     >
-                      {user.user.id !== user && !user.isAdmin && 'Promote to admin'}
+                      {user.user.id !== props.currentUserID && !user.isAdmin && 'Promote to admin'}
                     </p>
                     <p
                       // onClick={() => kickFromRoom(userRoom.user.id)}
                       className="cursor-pointer text-green-600"
                     >
-                      {user.userID !== user && !user.isAdmin && 'Kick from the room'}
+                      {user.userID !== props.currentUserID && !user.isAdmin && 'Kick from the room'}
                     </p>
                     <p
                       // onClick={() => kickFromRoom(userRoom.userID)}

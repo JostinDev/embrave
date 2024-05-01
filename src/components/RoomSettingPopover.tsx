@@ -18,6 +18,7 @@ type RoomSettingPopoverProps = {
     joined: Date | null;
     isAdmin: boolean | null;
   }[];
+  currentUserID: string;
 };
 export default function RoomSettingPopover(props: RoomSettingPopoverProps) {
   return (
@@ -33,7 +34,11 @@ export default function RoomSettingPopover(props: RoomSettingPopoverProps) {
         </OverlayArrow>
         <Dialog>
           <div className="flex flex-col gap-4">
-            <AdminRoomModal users={props.users} roomID={props.roomID} />
+            <AdminRoomModal
+              currentUserID={props.currentUserID}
+              users={props.users}
+              roomID={props.roomID}
+            />
             <LeaveRoomModal roomID={props.roomID} />
           </div>
         </Dialog>

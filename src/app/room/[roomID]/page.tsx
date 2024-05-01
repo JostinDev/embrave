@@ -47,7 +47,11 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           <p className={'text-body-l-mediumtext-sand-12'}>Back</p>
         </Link>
         <div className="flex items-center gap-6">
-          <RoomSettingPopover users={room.userRooms} roomID={roomID} />
+          <RoomSettingPopover
+            currentUserID={currentUserID}
+            users={room.userRooms}
+            roomID={roomID}
+          />
           {isAdmin && !room.isChallengeCompleted && (
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
           )}
