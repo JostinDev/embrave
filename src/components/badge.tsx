@@ -16,6 +16,7 @@ type LabelProps = {
   text?: string;
   style: 'big' | 'small';
   streak?: number;
+  hideIcon?: boolean;
 };
 
 export default function Badge(props: LabelProps) {
@@ -69,12 +70,22 @@ export default function Badge(props: LabelProps) {
           setText(props.streak.toString());
         }
         break;
+      case 'admin':
+        setStyle('bg-sky-3 text-sky-11');
+        setText('Admin');
+        break;
+      case 'participant':
+        setStyle('bg-purple-3 text-purple-11');
+        setText('Participant');
+        break;
     }
   }, []);
 
   return (
     <div className={'flex h-fit w-fit items-center gap-1 rounded-lg p-1.5 ' + style}>
-      <Image className={props.style === 'big' ? 'h-4 w-4' : 'h-3 w-3'} alt="" src={icon} />
+      {!props.hideIcon && (
+        <Image className={props.style === 'big' ? 'h-4 w-4' : 'h-3 w-3'} alt="" src={icon} />
+      )}
       <p className={props.style === 'big' ? 'text-body-l-book' : 'text-body-s-book'}>{text}</p>
     </div>
   );

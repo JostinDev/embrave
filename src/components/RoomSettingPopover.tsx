@@ -10,6 +10,14 @@ import LeaveRoomModal from '@/components/leaveRoom/LeaveRoomModal';
 
 type RoomSettingPopoverProps = {
   roomID: number;
+  users: {
+    user: { id: string; fullName: string | null; imageUrl: string };
+    id: number;
+    roomID: number | null;
+    userID: string;
+    joined: Date | null;
+    isAdmin: boolean | null;
+  }[];
 };
 export default function RoomSettingPopover(props: RoomSettingPopoverProps) {
   return (
@@ -25,7 +33,7 @@ export default function RoomSettingPopover(props: RoomSettingPopoverProps) {
         </OverlayArrow>
         <Dialog>
           <div className="flex flex-col gap-4">
-            <AdminRoomModal roomID={props.roomID} />
+            <AdminRoomModal users={props.users} roomID={props.roomID} />
             <LeaveRoomModal roomID={props.roomID} />
           </div>
         </Dialog>

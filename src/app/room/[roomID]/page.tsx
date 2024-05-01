@@ -9,7 +9,6 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/badge';
 import ChallengeCompleteCard from '@/components/challengeComplete/ChallengeCompleteCard';
-import LeaveRoomModal from '@/components/leaveRoom/LeaveRoomModal';
 import MilestoneRow from '@/components/MilestoneRow';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/sharePopover';
@@ -48,7 +47,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           <p className={'text-body-l-mediumtext-sand-12'}>Back</p>
         </Link>
         <div className="flex items-center gap-6">
-          <RoomSettingPopover roomID={roomID} />
+          <RoomSettingPopover users={room.userRooms} roomID={roomID} />
           {isAdmin && !room.isChallengeCompleted && (
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />
           )}
@@ -183,10 +182,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             </div>
           );
         })}
-      </div>
-
-      <div className={'py-4'}>
-        <LeaveRoomModal roomID={roomID} />
       </div>
     </div>
   );
