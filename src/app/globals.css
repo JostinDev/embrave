@@ -8,6 +8,18 @@
     background-image: url('images/confetti.svg');
 }
 
+/*REMOVE SCROLLBAR*/
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 /*MODAL*/
 
 .react-aria-ModalOverlay {

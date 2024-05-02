@@ -60,10 +60,10 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
   return (
     <div
       className={
-        'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 p-8'
+        'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2'
       }
     >
-      <div onClick={() => saveCardState()} className="flex w-fit cursor-pointer gap-2">
+      <div onClick={() => saveCardState()} className="flex w-fit cursor-pointer gap-2 pl-8 pt-8">
         <p className="text-title1 text-orange-10">Streak Tracker</p>
         <Image
           className={`mt-0.5 h-fit w-6 select-none transition ${!isOpen && 'rotate-180'} `}
@@ -73,11 +73,11 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
       </div>
       {isOpen && (
         <div>
-          <p className="text-body-l-book mb-6 mt-2 text-orange-10">
+          <p className="text-body-l-book mb-6 mt-2 px-8 text-orange-10">
             Check each day that you reached your goal to uphold your streak! You can fill out the
             last 7 days.
           </p>
-          <div className="flex flex-row-reverse justify-between">
+          <div className="no-scrollbar mb-6 flex flex-row-reverse justify-between gap-6 overflow-x-scroll rounded-[10px] bg-orange-3 p-6 px-4 sm:overflow-hidden sm:bg-transparent md:px-8">
             {weekdays.map((day: string, i: number) => {
               //TODO a streak is not shared between users. It's personal
               const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
