@@ -9,6 +9,7 @@ import stairs from '@/app/images/stairs_cover.jpg';
 import AddMilestoneForm from '@/app/room/[roomID]/AddMilestoneForm';
 import Badge from '@/components/Badge';
 import ChallengeCompleteCard from '@/components/ChallengeCompleteCard/ChallengeCompleteCard';
+import DescriptionCard from '@/components/DescriptionCard';
 import MilestoneRow from '@/components/MilestoneRow';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/SharePopover';
@@ -112,10 +113,8 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </div>
       </div>
 
-      <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
-        <p className="text-title1 mb-2 text-sand-12">Challenge description</p>
-        <p className="text-body-l-book text-sand-12">{room.challenge.description}</p>
-      </div>
+      <DescriptionCard title="Challenge description" description={room.challenge.description} />
+
       {!room.isChallengeCompleted && (
         <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
       )}
