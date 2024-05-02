@@ -125,9 +125,26 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       </NoSSR>
 
       {!room.isChallengeCompleted && (
-        <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+        <NoSSR
+          fallback={
+            <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 py-8">
+              <p className="text-title1 pl-8 text-orange-10">Loading...</p>
+            </div>
+          }
+        >
+          <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+        </NoSSR>
       )}
-      <ChallengeCompleteCard roomID={roomID} isChallengeDone={room.isChallengeCompleted} />
+
+      <NoSSR
+        fallback={
+          <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
+            <p className="text-title1 text-green-11">Loading...</p>
+          </div>
+        }
+      >
+        <ChallengeCompleteCard roomID={roomID} isChallengeDone={room.isChallengeCompleted} />
+      </NoSSR>
       <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
         <p className="text-title1 mb-2 text-sand-12">Your activity</p>
         <div className="relative">

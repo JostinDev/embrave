@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
+import { useLocalStorage } from 'usehooks-ts';
 
 import chevronDown from '@/app/images/chevronDown.svg';
 import chevronDownGreen from '@/app/images/chevronDownGreen.svg';
@@ -18,7 +19,10 @@ type SharePopoverProps = {
 export default function ChallengeCompleteCard(props: SharePopoverProps) {
   const [isChallengeDone, setIsMilestoneDone] = useState(props.isChallengeDone);
   const [isOpen, setOpen] = React.useState(false);
-  const [isCardOpen, setCardOpen] = React.useState(true);
+  const [isRoomCompleteAccordionOpen, setIsRoomCompleteAccordionOpen] = useLocalStorage(
+    'isRoomCompleteAccordionOpen',
+    true,
+  );
 
   useEffect(() => {
     setIsMilestoneDone(props.isChallengeDone);
@@ -32,30 +36,28 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
     setOpen(false);
   }
 
-  function saveCardState() {
-    LocalStorageManager.set('isRoomDescriptionAccordionOpen', String(!isCardOpen));
-    setCardOpen(!isCardOpen);
-  }
-
   return (
     <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
       {isChallengeDone && (
         <div className="confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x" />
       )}
       <div>
-        <div onClick={() => saveCardState()} className="flex w-fit cursor-pointer gap-2">
+        <div
+          onClick={() => setIsRoomCompleteAccordionOpen(!isRoomCompleteAccordionOpen)}
+          className="flex w-fit cursor-pointer gap-2"
+        >
           <p className="text-title1 text-green-11">
             {isChallengeDone
               ? 'Congrats! You completed the challenge!'
               : 'Completed the Challenge?'}
           </p>
           <Image
-            className={`mt-0.5 h-fit w-6 select-none transition ${!isCardOpen && 'rotate-180'} `}
+            className={`mt-0.5 h-fit w-6 select-none transition ${!isRoomCompleteAccordionOpen && 'rotate-180'} `}
             src={chevronDownGreen}
             alt=""
           />
         </div>
-        {isCardOpen && (
+        {isRoomCompleteAccordionOpen && (
           <p className="text-body-l-book mt-2 text-green-11">
             {isChallengeDone
               ? 'You were successful! Good on you for pushing yourself outside your such perfect feat!'
@@ -63,7 +65,7 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
           </p>
         )}
       </div>
-      {isCardOpen && (
+      {isRoomCompleteAccordionOpen && (
         <DialogTrigger>
           <Button onPress={() => !isChallengeDone && setOpen(true)}>
             <ChallengeCompleteTracker roomID={props.roomID} isChallengeDone={isChallengeDone} />
