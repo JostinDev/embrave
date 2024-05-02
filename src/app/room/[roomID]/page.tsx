@@ -46,7 +46,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <div className="mb-6 flex justify-between">
         <Link href="/" className="flex items-center gap-1">
           <Image src={chevronLeft} alt="" />
-          <p className="text-body-l-mediumtext-sand-12">Back</p>
+          <p className="text-body-l-medium text-sand-12">Back</p>
         </Link>
         <div className="flex items-center gap-6">
           {isAdmin && !room.isChallengeCompleted && (
@@ -171,48 +171,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             })}
           </div>
         </div>
-      </div>
-
-      <div>
-        <h1 className="mb-10 text-2xl">Users in room : </h1>
-
-        {userRooms.map((userRoom) => {
-          return (
-            <div key={userRoom.id} className="mb-6">
-              <Image
-                alt={
-                  userRoom.user.fullName
-                    ? `Profile picture of ${userRoom.user.fullName}`
-                    : 'Profile picture'
-                }
-                width={48}
-                height={48}
-                src={userRoom.user.imageUrl}
-                className="size-12"
-              />
-              <p>{userRoom.user.fullName}</p>
-              <p className="text-green-600">{userRoom.isAdmin ? 'Admin' : 'Not admin'}</p>
-              <p
-                // onClick={() => promoteToAdmin(userRoom.user.id)}
-                className="cursor-pointer text-green-600"
-              >
-                {userRoom.user.id !== currentUserID && !userRoom.isAdmin && 'Promote to admin'}
-              </p>
-              <p
-                // onClick={() => kickFromRoom(userRoom.user.id)}
-                className="cursor-pointer text-green-600"
-              >
-                {userRoom.userID !== currentUserID && !userRoom.isAdmin && 'Kick from the room'}
-              </p>
-              <p
-                // onClick={() => kickFromRoom(userRoom.userID)}
-                className="cursor-pointer text-green-600"
-              >
-                Kick from the room
-              </p>
-            </div>
-          );
-        })}
       </div>
     </div>
   );

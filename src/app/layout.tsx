@@ -80,9 +80,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </div>
             </div>
             <div className="relative max-w-[1800px] px-4 pt-[120px] md:pl-36 md:pt-[220px] lg:pl-80">
-              <p className="text-mobile-hero -mb-6 self-end text-sand-12 md:hidden">
-                HEJ {user.name}
-              </p>
               {children}
             </div>
           </div>
