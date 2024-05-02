@@ -5,129 +5,60 @@ import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { challenge, room, userRoom } from '@/server/db/schema';
-
-type Challenge = {
-  id: number;
-  title: string;
-  description: string;
-  banner: string;
-  typeID: number;
-  categoryID: number;
-};
-
-type ChallengeCategory = {
-  id: number;
-  category: string;
-};
-
-type ChallengeType = {
-  id: number;
-  type: string;
-};
-
-type DisplayChallenge = {
-  id: number;
-  title: string;
-  description: string;
-  banner: string;
-  type: string;
-  category: string;
-};
-
-type ChallengeItem = {
-  challenge: Challenge;
-  challenge_category: ChallengeCategory;
-  challenge_type: ChallengeType;
-};
+import { userRoom, type Challenge, type Room } from '@/server/db/schema';
 
 type SortedChallenges = {
-  [category: string]: DisplayChallenge[];
+  [category: string]: Challenge[];
 };
 
-type room = {
-  id: number;
-  link: string;
-  challengeID: number | null;
-  code: string | null;
-  isLinkActive: boolean;
-  isChallengeCompleted: boolean;
-  created: Date;
-  codeCreatedTimestamp: Date;
-  challenge: {
-    title: string;
-    type: {
-      type: string;
-    };
-  } | null;
-};
-
-function groupChallengesByCategory(challenges: ChallengeItem[]) {
+function groupChallengesByCategory(challenges: Challenge[]) {
   const sortedChallenges: SortedChallenges = {};
 
-  challenges.forEach(({ challenge, challenge_category, challenge_type }) => {
-    const category = challenge_category.category;
+  challenges.forEach((challenge) => {
+    const category = challenge.category;
     if (!sortedChallenges[category]) {
       sortedChallenges[category] = [];
     }
 
-    const displayChallenge: DisplayChallenge = {
-      id: challenge.id,
-      title: challenge.title,
-      description: challenge.description,
-      banner: challenge.banner,
-      type: challenge_type.type,
-      category: challenge_category.category,
-    };
-
-    sortedChallenges[category]?.push(displayChallenge);
+    sortedChallenges[category]?.push(challenge);
   });
 
   return sortedChallenges;
 }
 export async function getChallenges() {
-  const challenges = await db
-    .select()
-    .from(schema.challenge)
-    .innerJoin(
-      schema.challengeCategory,
-      eq(schema.challenge.categoryID, schema.challengeCategory.id),
-    )
-    .innerJoin(schema.challengeType, eq(schema.challenge.typeID, schema.challengeType.id))
-    .orderBy(schema.challengeCategory.category);
+  const challenges = await db.select().from(schema.challenge).orderBy(schema.challenge.category);
   return groupChallengesByCategory(challenges);
 }
 
 export async function getUserRoom() {
   const { userId } = auth().protect();
 
-  const rooms = await db.query.userRoom.findMany({
+  const userRooms = await db.query.userRoom.findMany({
     where: eq(schema.userRoom.userID, userId),
     with: {
       room: {
         with: {
-          challenge: {
-            with: {
-              category: true,
-              type: true,
-            },
-          },
+          challenge: true,
         },
       },
     },
   });
 
-  const incompleteRooms: room[] = [];
-  const completedRooms: room[] = [];
+  type RoomWithChallenge = Room & {
+    challenge: Challenge;
+  };
 
-  const room = rooms.map((room) => room.room);
+  const incompleteRooms: RoomWithChallenge[] = [];
+  const completedRooms: RoomWithChallenge[] = [];
 
-  room.map((challenge) => {
-    if (challenge) {
-      if (challenge.isChallengeCompleted) {
-        completedRooms.push(challenge);
+  const rooms = userRooms.map((userRoom) => userRoom.room);
+
+  rooms.map((room) => {
+    if (room) {
+      if (room.isChallengeCompleted) {
+        completedRooms.push(room);
       } else {
-        incompleteRooms.push(challenge);
+        incompleteRooms.push(room);
       }
     }
   });

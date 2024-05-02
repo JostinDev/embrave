@@ -17,13 +17,11 @@ export async function createRoom(challengeID: number) {
   const date = new Date();
 
   const randomLink = RandomStringGenerator(32);
-  const randomCode = RandomStringGenerator(6);
 
   const newRoom = await db
     .insert(room)
     .values({
       challengeID: challengeID,
-      code: randomCode,
       link: randomLink,
       created: date,
       codeCreatedTimestamp: date,

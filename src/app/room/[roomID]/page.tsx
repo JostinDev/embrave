@@ -11,6 +11,7 @@ import Badge from '@/components/Badge';
 import ChallengeCompleteCard from '@/components/ChallengeCompleteCard/ChallengeCompleteCard';
 import DescriptionCard from '@/components/DescriptionCard';
 import MilestoneRow from '@/components/MilestoneRow';
+import { NoSSR } from '@/components/NoSSR';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/SharePopover';
 import StreakTrackerCard from '@/components/StreakTrackerCard';
@@ -113,7 +114,15 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </div>
       </div>
 
-      <DescriptionCard title="Challenge description" description={room.challenge.description} />
+      <NoSSR
+        fallback={
+          <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
+            <p className="text-title1 text-sand-12">Loading...</p>
+          </div>
+        }
+      >
+        <DescriptionCard title="Challenge description" description={room.challenge.description} />
+      </NoSSR>
 
       {!room.isChallengeCompleted && (
         <StreakTrackerCard roomID={roomID} milestones={room.milestones} />

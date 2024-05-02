@@ -5,18 +5,10 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 
 import cross from '@/app/images/cross.svg';
 import stairs from '@/app/images/stairs_cover.jpg';
-import Badge, { isLabelType } from '@/components/Badge';
+import Badge from '@/components/Badge';
 import ChallengeCard from '@/components/ChallengeCard/ChallengeCard';
+import type { Challenge } from '@/server/db/schema';
 import { createRoom } from '@/server/mutations';
-
-type Challenge = {
-  id: number;
-  title: string;
-  description: string;
-  banner: string;
-  type: string;
-  category: string;
-};
 
 type ChallengeModalProps = {
   challenge: Challenge;
@@ -55,9 +47,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   </Heading>
                   <div>
                     <p className="text-body-m-bold mb-2 text-sand-12">Type:</p>
-                    {isLabelType(challenge.type) && (
-                      <Badge type={challenge.type} style="big"></Badge>
-                    )}
+                    <Badge type={challenge.type} style="big"></Badge>
                   </div>
                 </div>
               </div>

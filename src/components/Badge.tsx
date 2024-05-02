@@ -10,10 +10,6 @@ import flagOrange from '@/app/images/flagOrange.svg';
 import fire from '@/app/images/flame.svg';
 import globeCrimson from '@/app/images/globeCrimson.svg';
 
-export function isLabelType(arg: string): arg is LabelType {
-  return labelTypes.includes(arg as LabelType);
-}
-
 const labelTypes = [
   'dailyChallenge',
   'update',

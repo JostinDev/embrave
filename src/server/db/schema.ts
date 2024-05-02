@@ -1,47 +1,22 @@
 import { relations } from 'drizzle-orm';
-import { boolean, integer, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgEnum, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
+
+export const challengeTypeEnum = pgEnum('challenge_type', ['goal', 'habit']);
+export const challengeCategoryEnum = pgEnum('challenge_category', ['sport', 'social', 'lifestyle']);
 
 export const challenge = pgTable('challenge', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 256 }).notNull(),
   description: varchar('description', { length: 256 }).notNull(),
   banner: varchar('banner', { length: 256 }).notNull(),
-  typeID: integer('type_id')
-    .notNull()
-    .references(() => challengeType.id, { onDelete: 'restrict' }),
-  categoryID: integer('category_id')
-    .notNull()
-    .references(() => challengeCategory.id, { onDelete: 'restrict' }),
+  type: challengeTypeEnum('type').notNull(),
+  category: challengeCategoryEnum('category').notNull(),
 });
+
+export type Challenge = typeof challenge.$inferSelect;
 
 export const challengeRelations = relations(challenge, ({ one, many }) => ({
-  category: one(challengeCategory, {
-    fields: [challenge.categoryID],
-    references: [challengeCategory.id],
-  }),
-  type: one(challengeType, {
-    fields: [challenge.typeID],
-    references: [challengeType.id],
-  }),
   rooms: many(room),
-}));
-
-export const challengeCategory = pgTable('challenge_category', {
-  id: serial('id').primaryKey(),
-  category: varchar('category', { length: 256 }).notNull(),
-});
-
-export const challengeCategoryRelations = relations(challengeCategory, ({ many }) => ({
-  challenges: many(challenge),
-}));
-
-export const challengeType = pgTable('challenge_type', {
-  id: serial('id').primaryKey(),
-  type: varchar('type', { length: 256 }).notNull(),
-});
-
-export const challengeTypeRelations = relations(challengeType, ({ many }) => ({
-  challenges: many(challenge),
 }));
 
 export const milestone = pgTable('milestone', {
@@ -78,14 +53,17 @@ export const milestoneMediaRelations = relations(milestoneMedia, ({ one }) => ({
 
 export const room = pgTable('room', {
   id: serial('id').primaryKey(),
-  challengeID: integer('challenge_id').references(() => challenge.id),
-  code: varchar('code', { length: 256 }),
+  challengeID: integer('challenge_id')
+    .references(() => challenge.id)
+    .notNull(),
   link: varchar('link', { length: 256 }).default('').notNull(),
   isLinkActive: boolean('is_link_active').default(false).notNull(),
   isChallengeCompleted: boolean('is_challenge_completed').default(false).notNull(),
   created: timestamp('created').notNull().defaultNow(),
   codeCreatedTimestamp: timestamp('code_created_timestamp').notNull().defaultNow(),
 });
+
+export type Room = typeof room.$inferSelect;
 
 export const roomRelations = relations(room, ({ one, many }) => ({
   challenge: one(challenge, {
@@ -100,7 +78,9 @@ export const userRoom = pgTable(
   'user_room',
   {
     id: serial('id').primaryKey(),
-    roomID: integer('room_id').references(() => room.id),
+    roomID: integer('room_id')
+      .references(() => room.id)
+      .notNull(),
     userID: varchar('user_id', { length: 256 }).notNull(),
     joined: timestamp('joined'),
     isAdmin: boolean('is_admin'),
@@ -114,6 +94,8 @@ export const userRoom = pgTable(
     ],
   }),
 );
+
+export type UserRoom = typeof userRoom.$inferSelect;
 
 export const userRoomRelations = relations(userRoom, ({ one }) => ({
   room: one(room, {

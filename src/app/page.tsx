@@ -44,7 +44,7 @@ export default async function Index() {
                         id={room.id}
                         challenge={room.challenge.title}
                         date={date}
-                        type={room.challenge.type.type}
+                        type={room.challenge.type}
                         streak={0}
                       ></ChallengeCard>
                     </Link>
@@ -72,7 +72,7 @@ export default async function Index() {
                         id={room.id}
                         challenge={room.challenge.title}
                         date={date}
-                        type={room.challenge.type.type}
+                        type={room.challenge.type}
                         streak={0}
                       ></ChallengeCard>
                     </Link>
