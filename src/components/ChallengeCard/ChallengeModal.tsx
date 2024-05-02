@@ -22,7 +22,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
       </Button>
       <Modal
         isDismissable
-        className="absolute top-4 w-[90%] max-w-[1100px] rounded-[44px] border border-sand-5 bg-sand-1 p-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
+        className="absolute top-4 w-[90%] max-w-[1100px] rounded-[44px] border border-sand-5 bg-sand-1 px-4 pb-6 pt-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
       >
         <Dialog className="flex flex-col outline-none">
           {({ close }) => (
@@ -56,7 +56,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                 <p className="text-body-l-book text-sand-12">{challenge.description}</p>
               </div>
 
-              <div className="w-100 mx-auto mb-8 max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8">
+              <div className="w-100 mx-auto max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8">
                 <p className="text-title1 mb-2 text-green-11">
                   Want to challenge yourself? Start now!
                 </p>
