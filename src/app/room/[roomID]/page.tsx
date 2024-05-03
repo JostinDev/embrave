@@ -15,6 +15,7 @@ import { NoSSR } from '@/components/NoSSR';
 import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/SharePopover';
 import StreakTrackerCard from '@/components/StreakTrackerCard';
+import { milestone, type Milestone } from '@/server/db/schema';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
@@ -37,6 +38,12 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
   }
 
   const userRooms = room.userRooms;
+
+  console.log(room.milestones);
+
+  const connectedUserMilestones: Milestone[] = room.milestones.filter((milestone) => {
+    return milestone && milestone.user.id === currentUserID;
+  });
 
   return (
     // TODO Mark a challenge as done
@@ -132,7 +139,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             </div>
           }
         >
-          <StreakTrackerCard roomID={roomID} milestones={room.milestones} />
+          <StreakTrackerCard roomID={roomID} milestones={connectedUserMilestones} />
         </NoSSR>
       )}
 

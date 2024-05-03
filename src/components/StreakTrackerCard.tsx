@@ -5,22 +5,12 @@ import Image from 'next/image';
 import { useLocalStorage } from 'usehooks-ts';
 
 import chevronDownOrange from '@/app/images/chevronDownOrange.svg';
-import LocalStorageManager from '@/app/utils/LocalStorageManager';
 import MilestoneTrackerItem from '@/components/MilestoneTrackerItem';
+import type { Milestone } from '@/server/db/schema';
 
 type StreakTrackerCardProps = {
   roomID: number;
-  milestones: {
-    title: string | null;
-    roomID: number | null;
-    id: number;
-    description: string | null;
-    userID: string;
-    timestamp: Date;
-    isLastMilestone: boolean;
-    ticked: boolean | null;
-    medias: {}[];
-  }[];
+  milestones: Milestone[];
 };
 
 export default function StreakTrackerCard(props: StreakTrackerCardProps) {

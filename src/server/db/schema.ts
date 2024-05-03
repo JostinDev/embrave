@@ -30,6 +30,8 @@ export const milestone = pgTable('milestone', {
   title: varchar('title', { length: 256 }),
 });
 
+export type Milestone = typeof milestone.$inferSelect;
+
 export const milestoneRelations = relations(milestone, ({ one, many }) => ({
   room: one(room, {
     fields: [milestone.roomID],
