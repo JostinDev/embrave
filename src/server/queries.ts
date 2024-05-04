@@ -126,6 +126,46 @@ export async function getRoom(id: number) {
   };
 }
 
+export async function getRoomStreak(roomID: number) {
+  const { userId } = auth().protect();
+
+  if (!(await isUserInRoom(userId, roomID))) {
+    return;
+  }
+
+  const milestones = await db.query.milestone.findMany({
+    where: and(eq(schema.milestone.roomID, roomID), eq(schema.milestone.userID, userId)),
+    orderBy: (milestone, { desc }) => [desc(milestone.timestamp)],
+  });
+
+  if (!milestones) return;
+
+  let streakCount = 0;
+  let currentDate = new Date().setHours(0, 0, 0, 0); // Current date without time
+
+  for (let i = 0; i < milestones.length; i++) {
+    const milestone = milestones[i];
+    if (milestone) {
+      const milestoneDate = new Date(milestone.timestamp).setHours(0, 0, 0, 0); // Milestone date without time
+      const diffInDays = Math.floor((currentDate - milestoneDate) / (1000 * 60 * 60 * 24));
+
+      if (diffInDays === 0) {
+        // If milestone date is today, increment streak count
+        streakCount++;
+      } else if (diffInDays === 1) {
+        // If milestone date is yesterday, update current date to yesterday
+        currentDate = milestoneDate;
+        streakCount++;
+      } else {
+        // If there's more than 1 day gap, break the loop
+        break;
+      }
+    }
+  }
+
+  return streakCount;
+}
+
 export async function isRoomAdmin(userID: string, roomID: number) {
   const result = await db
     .select()

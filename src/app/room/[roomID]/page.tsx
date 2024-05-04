@@ -16,7 +16,7 @@ import RoomSettingPopover from '@/components/RoomSettingPopover';
 import SharePopover from '@/components/SharePopover';
 import StreakTrackerCard from '@/components/StreakTrackerCard';
 import { milestone, type Milestone } from '@/server/db/schema';
-import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
+import { getRoom, getRoomStreak, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
   const { userId: currentUserID } = auth().protect();
@@ -39,7 +39,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
   const userRooms = room.userRooms;
 
-  console.log(room.milestones);
+  const streak = await getRoomStreak(roomID);
+
+  console.log('Current streak: ', streak);
 
   const connectedUserMilestones: Milestone[] = room.milestones.filter((milestone) => {
     return milestone && milestone.user.id === currentUserID;
@@ -114,7 +116,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             {!room.isChallengeCompleted && (
               <div>
                 <p className="text-body-m-bold mb-2 text-sand-12">Current streak:</p>
-                <Badge style="big" streak={42} type="streak"></Badge>
+                <Badge style="big" streak={streak} type="streak"></Badge>
               </div>
             )}
           </div>
