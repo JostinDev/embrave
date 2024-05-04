@@ -3,7 +3,7 @@ import { SignInButton } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 
 import ChallengeCard from '@/components/ChallengeCard/ChallengeCard';
-import { getUserRoom } from '@/server/queries';
+import { getRoomStreak, getUserRoom } from '@/server/queries';
 
 export default async function Index() {
   const { userId } = auth();
@@ -30,7 +30,7 @@ export default async function Index() {
         <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
         <div className="flex flex-wrap gap-4">
           {incompletedRooms
-            ? incompletedRooms.map((room) => {
+            ? incompletedRooms.map(async (room) => {
                 if (room && room.challenge) {
                   let date =
                     room.created.getDate() +
@@ -38,6 +38,7 @@ export default async function Index() {
                     room.created.getMonth() +
                     '.' +
                     room.created.getFullYear();
+                  const streak = await getRoomStreak(room.id);
                   return (
                     <Link key={room.id} href={`/room/${room.id}`}>
                       <ChallengeCard
@@ -45,7 +46,7 @@ export default async function Index() {
                         challenge={room.challenge.title}
                         date={date}
                         type={room.challenge.type}
-                        streak={0}
+                        streak={streak}
                       ></ChallengeCard>
                     </Link>
                   );

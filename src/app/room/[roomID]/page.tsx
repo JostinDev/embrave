@@ -41,8 +41,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
   const streak = await getRoomStreak(roomID);
 
-  console.log('Current streak: ', streak);
-
   const connectedUserMilestones: Milestone[] = room.milestones.filter((milestone) => {
     return milestone && milestone.user.id === currentUserID;
   });

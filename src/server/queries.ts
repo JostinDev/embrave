@@ -134,6 +134,9 @@ export async function getRoomStreak(roomID: number) {
   }
 
   const milestones = await db.query.milestone.findMany({
+    columns: {
+      timestamp: true,
+    },
     where: and(eq(schema.milestone.roomID, roomID), eq(schema.milestone.userID, userId)),
     orderBy: (milestone, { desc }) => [desc(milestone.timestamp)],
   });
