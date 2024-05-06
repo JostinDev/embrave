@@ -49,3 +49,11 @@
 .text-body-s-bold {
   @apply font-inter font-bold text-xs leading-14;
 }
+
+.text-title-accent-italic {
+  @apply font-sourceSerif4 font-light italic text-90 leading-[120%];
+}
+
+.text-title-accent {
+  @apply font-nexa font-extrabold text-90 leading-[120%];
+}

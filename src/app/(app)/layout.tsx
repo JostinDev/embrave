@@ -1,5 +1,3 @@
-import { Inter } from 'next/font/google';
-import localFont from 'next/font/local';
 import Image from 'next/image';
 import { ClerkProvider } from '@clerk/nextjs';
 

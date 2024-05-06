@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Inter, Source_Serif_4 } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import '@/app/globals.css';
@@ -6,6 +6,12 @@ import '@/app/globals.css';
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+});
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ['latin'],
+  variable: '--font-sourceSerif4',
+  style: 'italic',
 });
 
 const nexa = localFont({
@@ -30,6 +36,11 @@ const nexa = localFont({
       weight: '900',
       style: 'italic',
     },
+    {
+      path: '../fonts/nexa/Nexa-XBold.woff2',
+      weight: '800',
+      style: 'normal',
+    },
   ],
   variable: '--font-nexa',
 });
@@ -40,7 +51,7 @@ type RootLayoutProps = {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${nexa.variable}`}>
+    <html lang="en" className={`${inter.variable} ${nexa.variable} ${sourceSerif4.variable}`}>
       <body>{children}</body>
     </html>
   );

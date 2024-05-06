@@ -115,6 +115,7 @@ export default {
       fontFamily: {
         nexa: ['var(--font-nexa)', ...defaultTheme.fontFamily.sans],
         inter: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
+        sourceSerif4: ['var(--font-sourceSerif4)', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         90: '5.625rem',
