@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .confetti {
-    background-image: url('images/confetti.svg');
+    background-image: url('(app)/images/confetti.svg');
 }
 
 /*REMOVE SCROLLBAR*/
