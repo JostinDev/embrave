@@ -5,13 +5,13 @@ import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
 import Badge from '@/app/(app)/components/Badge';
-import LeaveRoomModal from '@/app/(app)/components/LeaveRoomModal';
 import KickUserFromRoom from '@/app/(app)/components/ManageRoom/KickUserFromRoom';
+import LeaveRoomModal from '@/app/(app)/components/ManageRoom/LeaveRoomModal';
 import SetRoomUserRole from '@/app/(app)/components/ManageRoom/SetRoomUserRole';
 import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
 
-export default async function RoomPage({ params }: { params: { roomID: string } }) {
+export default async function ManageUserRoomPage({ params }: { params: { roomID: string } }) {
   const { userId: currentUserID } = auth().protect();
 
   const roomID = Number(params.roomID);
@@ -50,7 +50,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       {currentUser[0] && (
         <div className="mb-6">
           <p className="text-body-m-bold mb-2 text-sand-9">You</p>
-          <div className="flex max-w-[600px] items-center gap-2 rounded-lg border border-solid border-sand-4 bg-sand-1 p-4">
+          <div className="flex max-w-[600px] flex-wrap items-center justify-between gap-2 rounded-lg border border-solid border-sand-4 bg-sand-1 p-4">
             <div className="flex items-center gap-4">
               <Image
                 alt=""
@@ -69,9 +69,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                 />
               </div>
             </div>
-            <div className="ml-auto">
-              <LeaveRoomModal roomID={roomID} />
-            </div>
+            <LeaveRoomModal roomID={roomID} />
           </div>
         </div>
       )}
@@ -82,7 +80,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           {otherUsers.map((user) => {
             return (
               <div key={user.id} className="mb-6">
-                <div className="flex max-w-[600px] items-center gap-2 rounded-lg border border-solid border-sand-4 bg-sand-1 p-4">
+                <div className="flex max-w-[600px] flex-wrap items-center justify-between gap-2 rounded-lg border border-solid border-sand-4 bg-sand-1 p-4">
                   <div className="flex items-center gap-4">
                     <Image
                       alt=""
@@ -102,7 +100,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
                     </div>
                   </div>
                   {currentUserID !== user.user.id && isAdmin && (
-                    <div className="ml-auto flex flex-col gap-4">
+                    <div className="flex flex-col gap-4">
                       <SetRoomUserRole
                         roomID={roomID}
                         userID={user.user.id}

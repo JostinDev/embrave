@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
-import AdminRoomModal from '@/app/(app)/components/AdminRoomModal';
 import Badge from '@/app/(app)/components/Badge';
 import ChallengeCompleteCard from '@/app/(app)/components/ChallengeCompleteCard/ChallengeCompleteCard';
 import DescriptionCard from '@/app/(app)/components/DescriptionCard';
