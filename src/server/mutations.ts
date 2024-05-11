@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { Blob } from 'next/dist/compiled/@edge-runtime/primitives';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { put, type PutBlobResult } from '@vercel/blob';
@@ -187,12 +188,11 @@ export async function setChallengeDone(roomID: number) {
   revalidatePath('/room/');
 }
 
-export async function createMilestone(prevState: any, formData: FormData, files: File[]) {
+export async function createMilestone(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
 
-  console.log('ENTRIES: ', Object.fromEntries(formData.entries()));
-  console.log('ENTRIES: ', formData.get('images'));
-  console.log('FILES !!!: ', files);
+  const images = formData.getAll('images[]');
+  console.log('Images: ', formData.get('images[]'));
 
   const MAX_FILE_SIZE = 4500000;
   const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
@@ -201,7 +201,7 @@ export async function createMilestone(prevState: any, formData: FormData, files:
     roomID: z.coerce.number(),
     title: z.string().optional(),
     description: z.string(),
-    images: z
+    'images[]': z
       .any()
       .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 4.5MB.`)
       .refine(
@@ -225,14 +225,12 @@ export async function createMilestone(prevState: any, formData: FormData, files:
     return { error: "You're not allowed to create a milestone" };
   }
 
-  console.log('IMG RESULTS: ', result.data.images as FileList);
-
-  for (const file of Array.from(result.data.images) as File[]) {
+  /*for (const file of Array.from(result.data.images) as File[]) {
     const blob = await put(file.name, file, {
       access: 'public',
     });
     console.log('BLOB: ', blob);
-  }
+  }*/
 
   await db.insert(milestone).values({
     userID: userId,
