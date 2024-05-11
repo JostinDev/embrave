@@ -10,10 +10,12 @@ if (!postgresURL) {
 }
 
 export default {
+  dialect: 'postgresql',
   schema: './src/server/db/schema.ts',
   out: './drizzle',
   driver: 'pg',
   dbCredentials: {
     connectionString: postgresURL,
   },
+  url: postgresURL,
 } satisfies Config;

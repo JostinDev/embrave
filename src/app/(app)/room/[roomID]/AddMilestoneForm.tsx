@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, type ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { Button, FieldError, Form, Input, Label, TextArea, TextField } from 'react-aria-components';
 import { useFormState } from 'react-dom';
-import { Stripe } from 'stripe';
 
 import { createMilestone } from '@/server/mutations';
 
@@ -32,8 +31,9 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
             name="images[]"
             type="file"
             accept="image/png, image/gif, image/jpeg"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            onChange={(e) => {
               if (!e.target.files) return; // Check if files property exists
+              if (e.target.files.length > 4) return; //handle here
               setFiles(Array.from(e.target.files));
             }}
           />

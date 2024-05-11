@@ -18,7 +18,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'embrave-blob.public.blob.vercel-storage.com',
+        hostname: 'wzffj7iutu4dfovc.public.blob.vercel-storage.com',
         port: '',
       },
     ],

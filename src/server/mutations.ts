@@ -1,16 +1,15 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { Blob } from 'next/dist/compiled/@edge-runtime/primitives';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { put, type PutBlobResult } from '@vercel/blob';
+import { put } from '@vercel/blob';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 import RandomStringGenerator from '@/app/utils/randomStringGenerator';
 import { db } from '@/server/db';
-import { milestone, room, userRoom } from '@/server/db/schema';
+import { milestone, milestoneMedia, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
 
 export async function createRoom(challengeID: number) {
@@ -191,30 +190,44 @@ export async function setChallengeDone(roomID: number) {
 export async function createMilestone(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
 
-  const images = formData.getAll('images[]');
-  console.log('Images: ', formData.get('images[]'));
-
   const MAX_FILE_SIZE = 4500000;
-  const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+  const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+
+  const formDataImages = Array.from(formData.getAll('images[]'));
+
+  const images = formDataImages
+    .map((entry: FormDataEntryValue) => {
+      if (entry instanceof File) {
+        return entry;
+      }
+      return null; // or throw an error
+    })
+    .filter((file: File | null) => file !== null) as File[];
 
   const schema = z.object({
     roomID: z.coerce.number(),
     title: z.string().optional(),
     description: z.string(),
-    'images[]': z
-      .any()
-      .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 4.5MB.`)
-      .refine(
-        (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
-        'Only .jpg, .jpeg, .png and .webp formats are supported.',
-      ),
   });
+
   const result = schema.safeParse(Object.fromEntries(formData.entries()));
-
-  console.log('RESULT: ', result);
-
   if (!result.success) {
     return { errors: result.error.flatten().fieldErrors };
+  }
+
+  if (images.length > 4) {
+    return { error: 'Too many files' };
+  }
+
+  for (let i = 0; i < images.length; i++) {
+    const image = images[i];
+    if (!image) return;
+    if (image.size > MAX_FILE_SIZE) {
+      return { error: 'The image is too heavy' };
+    }
+    if (!ACCEPTED_IMAGE_TYPES.includes(image.type)) {
+      return { error: 'The image is too heavy' };
+    }
   }
 
   if (await isChallengeComplete(result.data.roomID)) {
@@ -225,22 +238,32 @@ export async function createMilestone(prevState: any, formData: FormData) {
     return { error: "You're not allowed to create a milestone" };
   }
 
-  /*for (const file of Array.from(result.data.images) as File[]) {
-    const blob = await put(file.name, file, {
-      access: 'public',
+  const newMilestone = await db
+    .insert(milestone)
+    .values({
+      userID: userId,
+      roomID: result.data.roomID,
+      title: result.data.title,
+      description: result.data.description,
+      ticked: false,
+      timestamp: new Date(),
+    })
+    .returning({ insertedID: milestone.id });
+
+  const milestoneItem = newMilestone[0];
+
+  if (milestoneItem) {
+    images.map(async (image) => {
+      if (image.size === 0) return;
+      const blob = await put(image.name, image, {
+        access: 'public',
+      });
+      await db.insert(milestoneMedia).values({
+        milestoneID: milestoneItem.insertedID,
+        link: blob.url,
+      });
     });
-    console.log('BLOB: ', blob);
-  }*/
-
-  await db.insert(milestone).values({
-    userID: userId,
-    roomID: result.data.roomID,
-    title: result.data.title,
-    description: result.data.description,
-    ticked: false,
-    timestamp: new Date(),
-  });
-
+  }
   revalidatePath('/room/');
 }
 

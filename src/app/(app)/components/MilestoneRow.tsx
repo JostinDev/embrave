@@ -82,6 +82,8 @@ export default function MilestoneRow(props: MilestoneRowProps) {
           {props.milestone.medias.map((media) => {
             return (
               <Image
+                width={400}
+                height={400}
                 key={media.id}
                 alt=""
                 className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
@@ -93,7 +95,7 @@ export default function MilestoneRow(props: MilestoneRowProps) {
         {props.currentUserID === props.milestone.userID && (
           <form
             action={deleteMilestone.bind(null, props.milestone.id, props.milestone.roomID)}
-            className="ml-16"
+            className="ml-16 mt-2"
           >
             <button className="font-bold text-red-700">Delete the Milestone</button>
           </form>
