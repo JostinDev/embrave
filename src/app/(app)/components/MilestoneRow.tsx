@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import Badge from '@/app/(app)/components/Badge';
+import type { MilestoneMedia } from '@/server/db/schema';
 import { deleteMilestone } from '@/server/mutations';
 
 type MilestoneRowProps = {
@@ -17,7 +18,7 @@ type MilestoneRowProps = {
     userID: string;
     timestamp: Date;
     ticked: boolean | null;
-    medias: { id: number; link: string; milestoneID: number | null }[];
+    medias: MilestoneMedia[];
   };
   isLastRow: boolean;
   isFirstRow: boolean;

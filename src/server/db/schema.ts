@@ -46,6 +46,8 @@ export const milestoneMedia = pgTable('milestone_media', {
   link: varchar('link', { length: 256 }).notNull(),
 });
 
+export type MilestoneMedia = typeof milestoneMedia.$inferSelect;
+
 export const milestoneMediaRelations = relations(milestoneMedia, ({ one }) => ({
   milestone: one(milestone, {
     fields: [milestoneMedia.milestoneID],
