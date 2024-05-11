@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
+import { put, type PutBlobResult } from '@vercel/blob';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -186,15 +187,31 @@ export async function setChallengeDone(roomID: number) {
   revalidatePath('/room/');
 }
 
-export async function createMilestone(prevState: any, formData: FormData) {
+export async function createMilestone(prevState: any, formData: FormData, files: File[]) {
   const { userId } = auth().protect();
+
+  console.log('ENTRIES: ', Object.fromEntries(formData.entries()));
+  console.log('ENTRIES: ', formData.get('images'));
+  console.log('FILES !!!: ', files);
+
+  const MAX_FILE_SIZE = 4500000;
+  const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
   const schema = z.object({
     roomID: z.coerce.number(),
     title: z.string().optional(),
     description: z.string(),
+    images: z
+      .any()
+      .refine((file) => file?.size <= MAX_FILE_SIZE, `Max image size is 4.5MB.`)
+      .refine(
+        (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type),
+        'Only .jpg, .jpeg, .png and .webp formats are supported.',
+      ),
   });
   const result = schema.safeParse(Object.fromEntries(formData.entries()));
+
+  console.log('RESULT: ', result);
 
   if (!result.success) {
     return { errors: result.error.flatten().fieldErrors };
@@ -206,6 +223,15 @@ export async function createMilestone(prevState: any, formData: FormData) {
 
   if (!(await isUserInRoom(userId, result.data.roomID))) {
     return { error: "You're not allowed to create a milestone" };
+  }
+
+  console.log('IMG RESULTS: ', result.data.images as FileList);
+
+  for (const file of Array.from(result.data.images) as File[]) {
+    const blob = await put(file.name, file, {
+      access: 'public',
+    });
+    console.log('BLOB: ', blob);
   }
 
   await db.insert(milestone).values({

@@ -16,6 +16,11 @@ const nextConfig = {
         hostname: 'img.clerk.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'embrave-blob.public.blob.vercel-storage.com',
+        port: '',
+      },
     ],
   },
 };
