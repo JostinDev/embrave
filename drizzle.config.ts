@@ -1,5 +1,5 @@
 import { loadEnvConfig } from '@next/env';
-import { type Config } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit';
 
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
@@ -9,7 +9,7 @@ if (!postgresURL) {
   throw new Error('POSTGRES_URL is not set');
 }
 
-export default {
+export default defineConfig({
   dialect: 'postgresql',
   schema: './src/server/db/schema.ts',
   out: './drizzle',
@@ -18,4 +18,4 @@ export default {
     connectionString: postgresURL,
   },
   url: postgresURL,
-} satisfies Config;
+});
