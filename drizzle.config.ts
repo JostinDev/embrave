@@ -14,7 +14,7 @@ export default {
   schema: './src/server/db/schema.ts',
   out: './drizzle',
   dbCredentials: {
-    connectionString: postgresURL,
+    url: postgresURL,
   },
   url: postgresURL,
 } satisfies Config;
