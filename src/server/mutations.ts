@@ -2,15 +2,19 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { auth } from '@clerk/nextjs/server';
+import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { put } from '@vercel/blob';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
+import { Points } from '@/app/enum/pointsEnum';
 import RandomStringGenerator from '@/app/utils/randomStringGenerator';
 import { db } from '@/server/db';
 import { milestone, milestoneMedia, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
+
+const MAX_FILE_SIZE = 4500000;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 export async function createRoom(challengeID: number) {
   const { userId } = auth().protect();
@@ -36,6 +40,8 @@ export async function createRoom(challengeID: number) {
       joined: date,
       isAdmin: true,
     });
+
+    await addPoints(Points.CreateRoom);
 
     // Navigate to the new post page
     revalidatePath('/');
@@ -74,6 +80,9 @@ export async function joinRoom(link: string) {
     joined: date,
     isAdmin: false,
   });
+
+  await addPoints(Points.JoinRoom);
+
   redirect(`/room/${result[0].roomID}`);
 }
 
@@ -184,14 +193,14 @@ export async function setChallengeDone(roomID: number) {
     ticked: false,
     timestamp: new Date(),
   });
+
+  await addPoints(Points.CompleteChallenge);
+
   revalidatePath('/room/');
 }
 
 export async function createMilestone(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
-
-  const MAX_FILE_SIZE = 4500000;
-  const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
   const formDataImages = Array.from(formData.getAll('images[]'));
 
@@ -203,6 +212,11 @@ export async function createMilestone(prevState: any, formData: FormData) {
       return null; // or throw an error
     })
     .filter((file: File | null) => file !== null) as File[];
+
+  let isImageValid = true;
+  if (images[0]) {
+    isImageValid = images[0].size !== 0;
+  }
 
   const schema = z.object({
     roomID: z.coerce.number(),
@@ -219,14 +233,17 @@ export async function createMilestone(prevState: any, formData: FormData) {
     return { error: 'Too many files' };
   }
 
-  for (let i = 0; i < images.length; i++) {
-    const image = images[i];
-    if (!image) return;
-    if (image.size > MAX_FILE_SIZE) {
-      return { error: 'The image is too heavy' };
-    }
-    if (!ACCEPTED_IMAGE_TYPES.includes(image.type)) {
-      return { error: 'The image is too heavy' };
+  if (isImageValid) {
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      if (!image) return;
+      if (image.size > MAX_FILE_SIZE) {
+        return { error: 'The image is too heavy' };
+      }
+      if (!ACCEPTED_IMAGE_TYPES.includes(image.type)) {
+        return { error: 'The file type is not accepted' };
+      }
+      if (image.size === 0) return { error: 'The image is undefined' };
     }
   }
 
@@ -252,18 +269,22 @@ export async function createMilestone(prevState: any, formData: FormData) {
 
   const milestoneItem = newMilestone[0];
 
-  if (milestoneItem) {
-    images.map(async (image) => {
-      if (image.size === 0) return;
-      const blob = await put(image.name, image, {
-        access: 'public',
-      });
-      await db.insert(milestoneMedia).values({
-        milestoneID: milestoneItem.insertedID,
-        link: blob.url,
-      });
-    });
+  if (milestoneItem && isImageValid) {
+    await Promise.all(
+      images.map(async (image) => {
+        const blob = await put(image.name, image, {
+          access: 'public',
+        });
+        await db.insert(milestoneMedia).values({
+          milestoneID: milestoneItem.insertedID,
+          link: blob.url,
+        });
+      }),
+    );
   }
+
+  await addPoints(Points.UpdateMilestone);
+
   revalidatePath('/room/');
 }
 
@@ -306,6 +327,8 @@ export async function createTickedMilestone(day: Date, roomID: number) {
     ticked: true,
     timestamp: day,
   });
+
+  await addPoints(Points.TickedMilestone);
 
   revalidatePath('/room/');
 }
@@ -365,4 +388,22 @@ export async function setIsLinkActive(isActive: boolean, roomID: number) {
     return { error: "You're not allowed to set this property" };
 
   await db.update(room).set({ isLinkActive: isActive }).where(eq(room.id, roomID));
+}
+
+export async function addPoints(points: number) {
+  const user = await currentUser();
+  if (!user) return { error: 'User not authenticated' };
+
+  let currentPoints = 0;
+  if (user.publicMetadata.points && typeof user.publicMetadata.points === 'number') {
+    currentPoints = user.publicMetadata.points;
+  }
+
+  const updatedPoints = currentPoints + points;
+
+  await clerkClient.users.updateUserMetadata(user?.id, {
+    publicMetadata: {
+      points: updatedPoints,
+    },
+  });
 }

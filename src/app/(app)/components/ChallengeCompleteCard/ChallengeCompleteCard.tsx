@@ -6,9 +6,7 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 import { useLocalStorage } from 'usehooks-ts';
 
 import ChallengeCompleteTracker from '@/app/(app)/components/ChallengeCompleteCard/ChallengeCompleteTracker';
-import chevronDown from '@/app/(app)/images/chevronDown.svg';
 import chevronDownGreen from '@/app/(app)/images/chevronDownGreen.svg';
-import LocalStorageManager from '@/app/utils/LocalStorageManager';
 import { setChallengeDone } from '@/server/mutations';
 
 type SharePopoverProps = {
