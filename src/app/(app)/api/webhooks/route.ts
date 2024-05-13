@@ -1,6 +1,8 @@
 import { headers } from 'next/headers';
-import { clerkClient, currentUser, type WebhookEvent } from '@clerk/nextjs/server';
+import { type WebhookEvent } from '@clerk/nextjs/server';
 import { Webhook } from 'svix';
+
+import { setBaseCredits } from '@/server/mutations';
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -46,6 +48,9 @@ export async function POST(req: Request) {
     });
   }
 
-  console.error('EVENT TYPE: ', evt.type);
-  return new Response(`EVENT TYPE: ${evt.type}`, { status: 200 });
+  if (evt.type === 'user.created') {
+    await setBaseCredits();
+  }
+
+  return new Response('', { status: 200 });
 }
