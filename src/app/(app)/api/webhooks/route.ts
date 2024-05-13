@@ -48,7 +48,10 @@ export async function POST(req: Request) {
 
   if (evt.type === 'user.created') {
     const user = await currentUser();
-    if (!user) return { error: 'User not authenticated' };
+    if (!user)
+      return new Response('Error occured', {
+        status: 400,
+      });
 
     let baseCredits = 3;
 
