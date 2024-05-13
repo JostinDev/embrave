@@ -431,17 +431,12 @@ export async function removeCredit() {
   });
 }
 
-export async function setBaseCredits() {
-  const user = await currentUser();
-  if (!user) return { error: 'User not authenticated' };
-
+export async function setBaseCredits(userID: string) {
   let currentCredits = 3;
 
-  await clerkClient.users.updateUserMetadata(user?.id, {
+  await clerkClient.users.updateUserMetadata(userID, {
     publicMetadata: {
       credits: currentCredits,
     },
   });
-
-  console.log('CURRENT CREDITS: ', user.publicMetadata.credits);
 }

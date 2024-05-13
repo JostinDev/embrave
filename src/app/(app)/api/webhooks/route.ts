@@ -49,7 +49,7 @@ export async function POST(req: Request) {
   }
 
   if (evt.type === 'user.created') {
-    await setBaseCredits();
+    await setBaseCredits(evt.data.id);
   }
 
   return new Response('', { status: 200 });
