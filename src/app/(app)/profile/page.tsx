@@ -11,10 +11,16 @@ export default async function Page() {
     currentPoints = user.publicMetadata.points;
   }
 
+  let currentCredits = 0;
+  if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
+    currentCredits = user.publicMetadata.credits;
+  }
+
   return (
     <div>
       <UserButton />
       <p className="text-body-l-medium text-sand-12">You have {currentPoints} points</p>
+      <p className="text-body-l-medium text-sand-12">You have {currentCredits} credits left</p>
     </div>
   );
 }

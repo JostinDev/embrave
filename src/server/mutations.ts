@@ -19,6 +19,7 @@ const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 export async function createRoom(challengeID: number) {
   const { userId } = auth().protect();
 
+  await removeCredit();
   const date = new Date();
 
   const randomLink = RandomStringGenerator(32);
@@ -51,6 +52,8 @@ export async function createRoom(challengeID: number) {
 
 export async function joinRoom(link: string) {
   const { userId } = auth().protect();
+
+  await removeCredit();
 
   const result: { roomID: number }[] = await db
     .select({ roomID: room.id })
@@ -404,6 +407,26 @@ export async function addPoints(points: number) {
   await clerkClient.users.updateUserMetadata(user?.id, {
     publicMetadata: {
       points: updatedPoints,
+    },
+  });
+}
+
+export async function removeCredit() {
+  const user = await currentUser();
+  if (!user) return { error: 'User not authenticated' };
+
+  let currentCredits = 0;
+  if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
+    currentCredits = user.publicMetadata.credits;
+  }
+
+  if (currentCredits <= 0) redirect(`/subscribe`);
+
+  const updatedCredits = currentCredits - 1;
+
+  await clerkClient.users.updateUserMetadata(user?.id, {
+    publicMetadata: {
+      credits: updatedCredits,
     },
   });
 }
