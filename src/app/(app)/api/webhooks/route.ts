@@ -46,6 +46,8 @@ export async function POST(req: Request) {
     });
   }
 
+  console.log('EVENT TYPE: ', evt.type);
+
   if (evt.type === 'user.created') {
     const user = await currentUser();
     console.log('USER: ', user);
