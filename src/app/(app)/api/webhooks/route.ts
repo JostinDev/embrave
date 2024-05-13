@@ -46,11 +46,11 @@ export async function POST(req: Request) {
     });
   }
 
-  console.log('EVENT TYPE: ', evt.type);
+  console.error('EVENT TYPE: ', evt.type);
 
   if (evt.type === 'user.created') {
     const user = await currentUser();
-    console.log('USER: ', user);
+    console.error('USER: ', user);
     if (!user)
       return new Response('Error occured', {
         status: 400,
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log('CREDITS: ', user.publicMetadata.credits);
+    console.error('CREDITS: ', user.publicMetadata.credits);
   }
 
   return new Response('', { status: 200 });
