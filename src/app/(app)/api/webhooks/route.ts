@@ -48,6 +48,7 @@ export async function POST(req: Request) {
 
   if (evt.type === 'user.created') {
     const user = await currentUser();
+    console.log('USER: ', user);
     if (!user)
       return new Response('Error occured', {
         status: 400,
@@ -60,6 +61,8 @@ export async function POST(req: Request) {
         credits: baseCredits,
       },
     });
+
+    console.log('CREDITS: ', user.publicMetadata.credits);
   }
 
   return new Response('', { status: 200 });
