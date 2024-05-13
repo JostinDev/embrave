@@ -47,25 +47,5 @@ export async function POST(req: Request) {
   }
 
   console.error('EVENT TYPE: ', evt.type);
-
-  if (evt.type === 'user.created') {
-    const user = await currentUser();
-    console.error('USER: ', user);
-    if (!user)
-      return new Response('Error occured', {
-        status: 400,
-      });
-
-    let baseCredits = 3;
-
-    await clerkClient.users.updateUserMetadata(user?.id, {
-      publicMetadata: {
-        credits: baseCredits,
-      },
-    });
-
-    console.error('CREDITS: ', user.publicMetadata.credits);
-  }
-
-  return new Response('', { status: 200 });
+  return new Response(`EVENT TYPE: ${evt.type}`, { status: 200 });
 }
