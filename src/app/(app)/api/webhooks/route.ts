@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import { type WebhookEvent } from '@clerk/nextjs/server';
+import { WebhookEvent } from '@clerk/nextjs/server';
 import { Webhook } from 'svix';
 
 import { setBaseCredits } from '@/server/mutations';
