@@ -1,5 +1,14 @@
 # Embrave
 
+## Tasks
+
+- [ ] Improve file colocation
+- [ ] Use `tailwind-merge` for merging Tailwind CSS classes
+- [ ] Use React Aria Components' starter kit
+- [ ] Remove unnecessary `useEffect`s
+- [ ] Rename "Login" to "Sign In"
+- [ ] Implement `createRoom` mutation
+
 ## Setup
 
 Before being able to run the app for the first time, you need to follow the steps below:
