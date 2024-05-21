@@ -32,7 +32,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
   const isAdmin = await isRoomAdmin(currentUserID, roomID);
   const room = await getRoom(roomID);
-  console.log(room);
   if (!room || !room.challenge) {
     notFound();
   }
