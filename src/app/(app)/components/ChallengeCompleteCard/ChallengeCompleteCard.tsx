@@ -60,10 +60,7 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
       {isRoomCompleteAccordionOpen && (
         <DialogTrigger>
           <Button isDisabled={isChallengeCompleted}>
-            <ChallengeCompleteTracker
-              roomID={props.roomID}
-              isChallengeDone={isChallengeCompleted}
-            />
+            <ChallengeCompleteTracker isChallengeCompleted={isChallengeCompleted} />
           </Button>
           <Modal
             isDismissable
