@@ -35,25 +35,30 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
       >
         <Dialog className="flex flex-col outline-none">
           <form>
-            <Heading className="text-title1 mb-4 text-sand-12" slot="title">
+            <Heading
+              className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12"
+              slot="title"
+            >
               Do you want to join this challenge?
             </Heading>
-            <p className="text-body-l-book mb-2 text-sand-12">
+            <p className="mb-2 font-inter text-base leading-18 text-sand-12">
               You are about to join the challenge:
             </p>
-            <p className="text-body-l-heavy mb-4 text-sand-12">{props.challengeName}</p>
+            <p className="mb-4 font-inter text-base font-black leading-18 text-sand-12">
+              {props.challengeName}
+            </p>
 
-            <p className="text-body-l-heavy text-red-800">{error}</p>
+            <p className="font-inter text-base font-black leading-18 text-red-800">{error}</p>
             <div className="mt-6 flex justify-between gap-4">
               <Button
                 onPress={() => cancelJoinRoom()}
-                className="text-body-l-book h-fit w-full rounded-lg border border-solid border-sand-12 bg-white p-3 text-sand-12"
+                className="h-fit w-full rounded-lg border border-solid border-sand-12 bg-white p-3 font-inter text-base leading-18 text-sand-12"
               >
                 Cancel
               </Button>
               <Button
                 onPress={async () => joinRoomWithLink()}
-                className="text-body-l-book h-fit w-full rounded-lg border border-solid border-sand-12 bg-sand-12 p-3 text-sand-3"
+                className="h-fit w-full rounded-lg border border-solid border-sand-12 bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3"
               >
                 Join challenge
               </Button>

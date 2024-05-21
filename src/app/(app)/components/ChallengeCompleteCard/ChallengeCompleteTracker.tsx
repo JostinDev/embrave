@@ -14,7 +14,7 @@ export default function ChallengeCompleteTracker(props: ChallengeCompleteTracker
   return (
     <div className="flex cursor-pointer select-none flex-col items-center gap-2">
       <div
-        className={`text-title2 flex h-12 w-12 justify-center rounded-full border border-green-11 transition-all ${props.isChallengeCompleted ? 'border-solid bg-green-11 hover:bg-green-8' : 'border-dashed hover:bg-green-4'}`}
+        className={`flex h-12 w-12 justify-center rounded-full border border-green-11 font-nexa text-xl font-bold transition-all ${props.isChallengeCompleted ? 'border-solid bg-green-11 hover:bg-green-8' : 'border-dashed hover:bg-green-4'}`}
       >
         {props.isChallengeCompleted ? (
           <Image alt="" src={check}></Image>

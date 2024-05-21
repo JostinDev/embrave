@@ -12,7 +12,9 @@ export default async function JoinRoom({ params }: { params: { link: string } })
       {challengeName ? (
         <JoinRoomModal challengeName={challengeName} link={params.link} />
       ) : (
-        <p className="text-title1 text-sand-12">This room does not exist</p>
+        <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+          This room does not exist
+        </p>
       )}
     </div>
   );

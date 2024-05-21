@@ -12,9 +12,9 @@ export default async function Index() {
     return (
       <div className="relative">
         <div className="flex flex-col">
-          <p className="text-title2 mb-2 text-sand-12">You are not logged in</p>
+          <p className="mb-2 font-nexa text-xl font-bold text-sand-12">You are not logged in</p>
           <SignInButton mode="modal">
-            <button className="text-body-l-book h-fit max-w-fit rounded-lg bg-sand-12 p-3 text-sand-3">
+            <button className="h-fit max-w-fit rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">
               Login
             </button>
           </SignInButton>
@@ -27,7 +27,7 @@ export default async function Index() {
   return (
     <div className="relative">
       <div>
-        <p className="text-title2 mb-4 text-sand-12">Currently Active Challenges</p>
+        <p className="mb-4 font-nexa text-xl font-bold text-sand-12">Currently Active Challenges</p>
         <div className="flex flex-wrap gap-4">
           {incompletedRooms
             ? incompletedRooms.map(async (room) => {
@@ -56,7 +56,7 @@ export default async function Index() {
         </div>
       </div>
       <div>
-        <p className="text-title2 mb-4 mt-6 text-sand-12">Challenges completed</p>
+        <p className="mb-4 mt-6 font-nexa text-xl font-bold text-sand-12">Challenges completed</p>
         <div className="flex flex-wrap gap-4">
           {completedRooms
             ? completedRooms.map((room) => {

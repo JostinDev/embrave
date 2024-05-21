@@ -89,7 +89,15 @@ export default function Badge(props: LabelProps) {
       {!props.hideIcon && icon && (
         <Image className={props.style === 'big' ? 'h-4 w-4' : 'h-3 w-3'} alt="" src={icon} />
       )}
-      <p className={props.style === 'big' ? 'text-body-l-book' : 'text-body-s-book'}>{text}</p>
+      <p
+        className={
+          props.style === 'big'
+            ? 'font-inter text-base leading-18'
+            : 'font-inter text-xs leading-14'
+        }
+      >
+        {text}
+      </p>
     </div>
   );
 }

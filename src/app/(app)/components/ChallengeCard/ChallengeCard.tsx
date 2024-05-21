@@ -51,8 +51,14 @@ export default function ChallengeCard(props: ChallengeCardProps) {
       <span className="mb-4">
         <Tag />
       </span>
-      <p className="text-body-l-medium pb-2 text-start text-sand-12">{props.challenge}</p>
-      {props.date ? <p className="text-body-s-book text-sand-11">Created: {props.date}</p> : ''}
+      <p className="pb-2 text-start font-inter text-base font-medium leading-5 text-sand-12">
+        {props.challenge}
+      </p>
+      {props.date ? (
+        <p className="font-inter text-xs leading-14 text-sand-11">Created: {props.date}</p>
+      ) : (
+        ''
+      )}
       <Image className="h-7 w-7 self-end" src={chevronRight} alt="" width={20} height={20} />
     </div>
   );

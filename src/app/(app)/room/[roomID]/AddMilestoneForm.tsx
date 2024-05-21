@@ -14,18 +14,20 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
       <input type="hidden" name="roomID" value={roomID} />
       <div className="flex flex-col">
         <TextField className="mb-4 flex flex-col gap-2" name="title" isRequired>
-          <Label className="text-body-l-medium text-sand-12">Title</Label>
+          <Label className="font-inter text-base font-medium leading-5 text-sand-12">Title</Label>
           <Input className="h-10 rounded-md border border-sand-5 p-2" />
         </TextField>
 
         <TextField className="mb-4 flex flex-col gap-2" name="description" isRequired>
-          <Label className="text-body-l-medium text-sand-12">Description</Label>
+          <Label className="font-inter text-base font-medium leading-5 text-sand-12">
+            Description
+          </Label>
           <TextArea className="h-20 rounded-md border border-sand-5 p-2" />
           <FieldError />
         </TextField>
 
         <div className="mb-4 flex flex-col gap-2">
-          <Label className="text-body-l-medium text-sand-12">Images</Label>
+          <Label className="font-inter text-base font-medium leading-5 text-sand-12">Images</Label>
           <input
             multiple
             name="images[]"
@@ -42,7 +44,7 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
 
       <Button
         type="submit"
-        className="text-body-l-book h-fit rounded-lg bg-sand-12 p-3 text-sand-3"
+        className="h-fit rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3"
       >
         Add a Milestone
       </Button>

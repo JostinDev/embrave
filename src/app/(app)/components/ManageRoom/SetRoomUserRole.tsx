@@ -20,7 +20,7 @@ export default function SetRoomUserRole(props: SetRoomUserRoleProps) {
       className="flex items-center gap-2"
     >
       <Image className="h-6 w-6" src={userGroup} alt="" />
-      <p className={'text-body-l-medium text-sand-12'}>
+      <p className={'font-inter text-base font-medium leading-5 text-sand-12'}>
         {props.isAdmin ? 'Make participant' : 'Make Admin'}
       </p>
     </Button>

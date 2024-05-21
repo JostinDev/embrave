@@ -19,12 +19,14 @@ export default function Page() {
   const options = { fetchClientSecret };
   return (
     <div className="mt-10">
-      <p className="text-title1 mb-4 text-sand-12">Get Embrave Premium</p>
-      <p className="text-body-l-medium mb-4 text-sand-12">
+      <p className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12">
+        Get Embrave Premium
+      </p>
+      <p className="mb-4 font-inter text-base font-medium leading-5 text-sand-12">
         All users get 3 credits upon creating an account. Creating or joining a room costs 1 credit.
       </p>
 
-      <p className="text-body-l-medium mb-4 text-sand-12">
+      <p className="mb-4 font-inter text-base font-medium leading-5 text-sand-12">
         Get Embrave premium now for unlimited credits
       </p>
 

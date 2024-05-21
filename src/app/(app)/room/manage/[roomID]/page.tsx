@@ -19,7 +19,9 @@ export default async function ManageUserRoomPage({ params }: { params: { roomID:
   if (!(await isUserInRoom(currentUserID, roomID)))
     return (
       <div>
-        <p className="text-title1 text-sand-12">This room doesn&apos;t exist</p>
+        <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+          This room doesn&apos;t exist
+        </p>
       </div>
     );
 
@@ -42,14 +44,16 @@ export default async function ManageUserRoomPage({ params }: { params: { roomID:
     <div className="relative">
       <Link href={`/room/${roomID}`} className="mb-6 flex items-center gap-1">
         <Image src={chevronLeft} alt="" />
-        <p className="text-body-l-medium text-sand-12">Back to challenge</p>
+        <p className="font-inter text-base font-medium leading-5 text-sand-12">Back to challenge</p>
       </Link>
 
-      <h1 className="text-title1 mb-4 text-sand-12">User management</h1>
+      <h1 className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12">
+        User management
+      </h1>
 
       {currentUser[0] && (
         <div className="mb-6">
-          <p className="text-body-m-bold mb-2 text-sand-9">You</p>
+          <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-9">You</p>
           <div className="flex max-w-[600px] flex-wrap items-center justify-between gap-2 rounded-lg border border-solid border-sand-4 bg-sand-1 p-4">
             <div className="flex items-center gap-4">
               <Image
@@ -60,7 +64,9 @@ export default async function ManageUserRoomPage({ params }: { params: { roomID:
                 className="size-12 rounded-full border-2 border-solid border-sand-12"
               />
               <div className="flex flex-col gap-1">
-                <p className="text-body-l-medium text-sand-12">{currentUser[0].user.fullName}</p>
+                <p className="font-inter text-base font-medium leading-5 text-sand-12">
+                  {currentUser[0].user.fullName}
+                </p>
                 <Badge
                   key={currentUser[0].isAdmin ? 'admin' : 'participant'}
                   hideIcon={true}
@@ -76,7 +82,9 @@ export default async function ManageUserRoomPage({ params }: { params: { roomID:
 
       {otherUsers.length !== 0 && (
         <div>
-          <p className="text-body-m-bold mb-2 text-sand-9">Other Participants</p>
+          <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-9">
+            Other Participants
+          </p>
           {otherUsers.map((user) => {
             return (
               <div key={user.id} className="mb-6">
@@ -90,7 +98,9 @@ export default async function ManageUserRoomPage({ params }: { params: { roomID:
                       className="size-12 rounded-full border-2 border-solid border-sand-12"
                     />
                     <div className="flex flex-col gap-1">
-                      <p className="text-body-l-medium text-sand-12">{user.user.fullName}</p>
+                      <p className="font-inter text-base font-medium leading-5 text-sand-12">
+                        {user.user.fullName}
+                      </p>
                       <Badge
                         key={user.isAdmin ? 'admin' : 'participant'}
                         hideIcon={true}

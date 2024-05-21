@@ -26,7 +26,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
   if (!(await isUserInRoom(currentUserID, roomID)))
     return (
       <div>
-        <p className="text-title1 text-sand-12">This room doesn&apos;t exist</p>
+        <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+          This room doesn&apos;t exist
+        </p>
       </div>
     );
 
@@ -52,7 +54,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <div className="mb-6 flex justify-between">
         <Link href="/" className="flex items-center gap-1">
           <Image src={chevronLeft} alt="" />
-          <p className="text-body-l-medium text-sand-12">Back</p>
+          <p className="font-inter text-base font-medium leading-5 text-sand-12">Back</p>
         </Link>
         <div className="flex items-center gap-6">
           {isAdmin && !room.isChallengeCompleted && (
@@ -95,22 +97,26 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
           }
         >
-          <p slot="title" className="text-large-title mb-4 text-sand-12">
+          <p slot="title" className="mb-4 font-nexa text-32 font-bold leading-none text-sand-12">
             {room.challenge.title}
           </p>
           <div className="flex flex-wrap gap-6">
             <div>
-              <p className="text-body-m-bold mb-2 text-sand-12">Date started:</p>
-              <p className="text-body-l-book text-sand-12"></p>
+              <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
+                Date started:
+              </p>
+              <p className="font-inter text-base leading-18 text-sand-12"></p>
               <Badge style="big" text={room.created.toLocaleDateString()} type="date"></Badge>
             </div>
             <div>
-              <p className="text-body-m-bold mb-2 text-sand-12">Type:</p>
+              <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">Type:</p>
               <Badge style="big" type="dailyChallenge"></Badge>
             </div>
             {!room.isChallengeCompleted && (
               <div>
-                <p className="text-body-m-bold mb-2 text-sand-12">Current streak:</p>
+                <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
+                  Current streak:
+                </p>
                 <Badge style="big" streak={streak} type="streak"></Badge>
               </div>
             )}
@@ -121,7 +127,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <NoSSR
         fallback={
           <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
-            <p className="text-title1 text-sand-12">Loading...</p>
+            <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">Loading...</p>
           </div>
         }
       >
@@ -132,7 +138,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <NoSSR
           fallback={
             <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 py-8">
-              <p className="text-title1 pl-8 text-orange-10">Loading...</p>
+              <p className="pl-8 font-nexa text-26 font-bold leading-[115%] text-orange-10">
+                Loading...
+              </p>
             </div>
           }
         >
@@ -143,14 +151,16 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <NoSSR
         fallback={
           <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
-            <p className="text-title1 text-green-11">Loading...</p>
+            <p className="font-nexa text-26 font-bold leading-[115%] text-green-11">Loading...</p>
           </div>
         }
       >
         <ChallengeCompleteCard roomID={roomID} isChallengeCompleted={room.isChallengeCompleted} />
       </NoSSR>
       <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
-        <p className="text-title1 mb-2 text-sand-12">Your activity</p>
+        <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
+          Your activity
+        </p>
         <div className="relative">
           {!room.isChallengeCompleted && (
             <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]">

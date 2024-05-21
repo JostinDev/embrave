@@ -4,7 +4,12 @@ import { currentUser } from '@clerk/nextjs/server';
 export default async function Page() {
   const user = await currentUser();
 
-  if (!user) return <div className="text-title1 text-sand-12">The user is not authenticated</div>;
+  if (!user)
+    return (
+      <div className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+        The user is not authenticated
+      </div>
+    );
 
   let currentPoints = 0;
   if (user.publicMetadata.points && typeof user.publicMetadata.points === 'number') {
@@ -19,8 +24,12 @@ export default async function Page() {
   return (
     <div>
       <UserButton />
-      <p className="text-body-l-medium text-sand-12">You have {currentPoints} points</p>
-      <p className="text-body-l-medium text-sand-12">You have {currentCredits} credits left</p>
+      <p className="font-inter text-base font-medium leading-5 text-sand-12">
+        You have {currentPoints} points
+      </p>
+      <p className="font-inter text-base font-medium leading-5 text-sand-12">
+        You have {currentCredits} credits left
+      </p>
     </div>
   );
 }

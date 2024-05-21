@@ -23,7 +23,7 @@ export default function DescriptionCard(props: buttonProps) {
         onClick={() => setIsRoomDescriptionAccordionOpen(!isRoomDescriptionAccordionOpen)}
         className="flex w-fit cursor-pointer gap-2"
       >
-        <p className="text-title1 text-sand-12">{props.title}</p>
+        <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">{props.title}</p>
         <Image
           className={`h-fit w-6 select-none transition ${!isRoomDescriptionAccordionOpen && 'rotate-180'} `}
           src={chevronDown}
@@ -32,7 +32,7 @@ export default function DescriptionCard(props: buttonProps) {
       </div>
 
       {isRoomDescriptionAccordionOpen && (
-        <p className="text-body-l-book mt-2 text-sand-12">{props.description}</p>
+        <p className="mt-2 font-inter text-base leading-18 text-sand-12">{props.description}</p>
       )}
     </div>
   );

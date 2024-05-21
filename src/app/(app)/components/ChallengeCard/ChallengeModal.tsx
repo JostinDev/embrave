@@ -42,25 +42,34 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   <Image src={cross} alt="" />
                 </Button>
                 <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur">
-                  <Heading slot="title" className="text-large-title mb-4 text-sand-12">
+                  <Heading
+                    slot="title"
+                    className="mb-4 font-nexa text-32 font-bold leading-none text-sand-12"
+                  >
                     {challenge.title}
                   </Heading>
                   <div>
-                    <p className="text-body-m-bold mb-2 text-sand-12">Type:</p>
+                    <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
+                      Type:
+                    </p>
                     <Badge type={challenge.type} style="big"></Badge>
                   </div>
                 </div>
               </div>
               <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
-                <p className="text-title1 mb-2 text-sand-12">Challenge description</p>
-                <p className="text-body-l-book text-sand-12">{challenge.description}</p>
+                <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
+                  Challenge description
+                </p>
+                <p className="font-inter text-base leading-18 text-sand-12">
+                  {challenge.description}
+                </p>
               </div>
 
               <div className="w-100 mx-auto max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8">
-                <p className="text-title1 mb-2 text-green-11">
+                <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-green-11">
                   Want to challenge yourself? Start now!
                 </p>
-                <p className="text-body-l-book mb-6 text-green-11">
+                <p className="mb-6 font-inter text-base leading-18 text-green-11">
                   You can start a new challenge now and then invite friends to join you on your
                   challenge.
                 </p>
@@ -68,7 +77,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   onPress={async () => {
                     await createRoom(challenge.id);
                   }}
-                  className="text-body-l-book h-fit max-w-fit rounded-lg bg-green-11 p-3 text-green-1"
+                  className="h-fit max-w-fit rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1"
                 >
                   Let’s go!
                 </Button>

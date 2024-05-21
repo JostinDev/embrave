@@ -43,7 +43,7 @@ export default function MilestoneRow(props: MilestoneRowProps) {
           ></Badge>
         )}
 
-        <p className="text-body-s-book text-sand-11">
+        <p className="font-inter text-xs leading-14 text-sand-11">
           {props.milestone.timestamp.toLocaleDateString()}
         </p>
       </div>
@@ -63,9 +63,9 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             src={props.milestone.user.imageUrl}
           />
           {props.isLastMilestone ? (
-            <p className="text-title2">The challenge is complete!</p>
+            <p className="font-nexa text-xl font-bold">The challenge is complete!</p>
           ) : (
-            <p className="text-title2">
+            <p className="font-nexa text-xl font-bold">
               {props.milestone.ticked
                 ? props.milestone.user.fullName + ' has set the challenge as done'
                 : props.milestone.title}
@@ -74,9 +74,13 @@ export default function MilestoneRow(props: MilestoneRowProps) {
         </div>
 
         {props.isLastMilestone ? (
-          <p className="text-body-l-book pb-6 pl-16">Congratulations on finishing the challenge!</p>
+          <p className="pb-6 pl-16 font-inter text-base leading-18">
+            Congratulations on finishing the challenge!
+          </p>
         ) : (
-          <p className="text-body-l-book pb-6 pl-16">{props.milestone.description}</p>
+          <p className="pb-6 pl-16 font-inter text-base leading-18">
+            {props.milestone.description}
+          </p>
         )}
 
         <div className="flex flex-row gap-2 pl-16">

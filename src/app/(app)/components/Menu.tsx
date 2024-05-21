@@ -98,7 +98,7 @@ export default function Menu() {
             href="/"
           >
             <Image className="pointer-events-none" src={home} alt=""></Image>
-            <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
+            <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Home
             </span>
           </Link>
@@ -110,7 +110,7 @@ export default function Menu() {
             href="/explore"
           >
             <Image className="pointer-events-none" src={world} alt=""></Image>
-            <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
+            <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Explore
             </span>
           </Link>
@@ -122,7 +122,7 @@ export default function Menu() {
             href="/profile"
           >
             <Image className="pointer-events-none" src={profile} alt=""></Image>
-            <span className="text-body-l-book pointer-events-none hidden h-full items-center text-sand-12 lg:flex">
+            <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Profile
             </span>
           </Link>
@@ -132,7 +132,7 @@ export default function Menu() {
           <div className="flex justify-center lg:justify-start">
             <SignOutButton>
               <button
-                className="text-body-l-book flex h-full items-center gap-2 text-sand-12"
+                className="flex h-full items-center gap-2 font-inter text-base leading-18 text-sand-12"
                 type="submit"
               >
                 <Image src={logout} alt=""></Image>

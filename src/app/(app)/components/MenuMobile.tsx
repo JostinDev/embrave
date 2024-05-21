@@ -115,7 +115,7 @@ export default function MenuMobile() {
             <div className="z-30 justify-center px-5 py-2 lg:justify-start">
               <SignOutButton>
                 <button
-                  className="text-body-l-book flex h-full w-10 items-center rounded-[10px] p-2 text-sand-12 transition-all hover:bg-sand-3"
+                  className="flex h-full w-10 items-center rounded-[10px] p-2 font-inter text-base leading-18 text-sand-12 transition-all hover:bg-sand-3"
                   type="submit"
                 >
                   <Image src={logout} alt=""></Image>
