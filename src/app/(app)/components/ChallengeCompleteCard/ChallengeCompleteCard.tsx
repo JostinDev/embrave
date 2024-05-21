@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
+import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
 import { useLocalStorage } from 'usehooks-ts';
 
 import ChallengeCompleteTracker from '@/app/(app)/components/ChallengeCompleteCard/ChallengeCompleteTracker';
@@ -14,25 +13,14 @@ type ChallengeCompleteCardProps = {
   isChallengeDone: boolean;
 };
 
-export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps) {
-  const [isChallengeDone, setIsChallengeDone] = useState(props.isChallengeDone);
-  const [isOpen, setOpen] = React.useState(false);
+export default function ChallengeCompleteCard({
+  roomID,
+  isChallengeDone,
+}: ChallengeCompleteCardProps) {
   const [isRoomCompleteAccordionOpen, setIsRoomCompleteAccordionOpen] = useLocalStorage(
     'isRoomCompleteAccordionOpen',
     true,
   );
-
-  useEffect(() => {
-    setIsChallengeDone(props.isChallengeDone);
-  }, [props.isChallengeDone]);
-
-  async function setTrackerState() {
-    if (!isChallengeDone) {
-      setIsChallengeDone(true);
-      await setChallengeDone(props.roomID);
-    }
-    setOpen(false);
-  }
 
   return (
     <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
@@ -65,18 +53,16 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
       </div>
       {isRoomCompleteAccordionOpen && (
         <DialogTrigger>
-          <Button onPress={() => !isChallengeDone && setOpen(true)}>
-            <ChallengeCompleteTracker roomID={props.roomID} isChallengeDone={isChallengeDone} />
+          <Button isDisabled={isChallengeDone}>
+            <ChallengeCompleteTracker roomID={roomID} isChallengeDone={isChallengeDone} />
           </Button>
           <Modal
             isDismissable
             className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
-            isOpen={isOpen}
-            onOpenChange={setOpen}
           >
-            <Dialog className="outline-none">
+            <Dialog role="alertdialog" className="outline-none">
               {({ close }) => (
-                <form>
+                <Form action={setChallengeDone.bind(null, roomID)}>
                   <Heading className="text-title1 mb-4 text-sand-12" slot="title">
                     Do you want to complete this challenge?
                   </Heading>
@@ -95,13 +81,14 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
                       Cancel
                     </Button>
                     <Button
-                      onPress={() => setTrackerState()}
+                      type="submit"
+                      onPress={close}
                       className="text-body-l-book h-fit w-full rounded-lg border border-solid border-sand-12 bg-sand-12 p-3 text-sand-3"
                     >
                       Complete challenge
                     </Button>
                   </div>
-                </form>
+                </Form>
               )}
             </Dialog>
           </Modal>
