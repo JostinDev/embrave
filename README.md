@@ -8,6 +8,7 @@
 - [ ] Remove unnecessary `useEffect`s
 - [ ] Rename "Login" to "Sign In"
 - [ ] Implement `createRoom` mutation
+- [ ] Inline global custom styles
 
 ## Setup
 
