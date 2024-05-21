@@ -1,5 +1,6 @@
 'use client';
 
+import { useOptimistic } from 'react';
 import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
 import { useLocalStorage } from 'usehooks-ts';
@@ -10,21 +11,26 @@ import { setChallengeDone } from '@/server/mutations';
 
 type ChallengeCompleteCardProps = {
   roomID: number;
-  isChallengeDone: boolean;
+  isChallengeCompleted: boolean;
 };
 
-export default function ChallengeCompleteCard({
-  roomID,
-  isChallengeDone,
-}: ChallengeCompleteCardProps) {
+export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps) {
+  const [isChallengeCompleted, setOptimisticIsChallengeCompleted] = useOptimistic(
+    props.isChallengeCompleted,
+  );
   const [isRoomCompleteAccordionOpen, setIsRoomCompleteAccordionOpen] = useLocalStorage(
     'isRoomCompleteAccordionOpen',
     true,
   );
 
+  async function completeChallengeAction() {
+    setOptimisticIsChallengeCompleted(true);
+    await setChallengeDone(props.roomID);
+  }
+
   return (
     <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
-      {isChallengeDone && (
+      {isChallengeCompleted && (
         <div className="confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x" />
       )}
       <div>
@@ -33,7 +39,7 @@ export default function ChallengeCompleteCard({
           className="flex w-fit cursor-pointer gap-2"
         >
           <p className="text-title1 text-green-11">
-            {isChallengeDone
+            {isChallengeCompleted
               ? 'Congrats! You completed the challenge!'
               : 'Completed the Challenge?'}
           </p>
@@ -45,7 +51,7 @@ export default function ChallengeCompleteCard({
         </div>
         {isRoomCompleteAccordionOpen && (
           <p className="text-body-l-book mt-2 text-green-11">
-            {isChallengeDone
+            {isChallengeCompleted
               ? 'You were successful! Good on you for pushing yourself outside your such perfect feat!'
               : 'Mark the challenge as done, once you have completed it.'}
           </p>
@@ -53,8 +59,11 @@ export default function ChallengeCompleteCard({
       </div>
       {isRoomCompleteAccordionOpen && (
         <DialogTrigger>
-          <Button isDisabled={isChallengeDone}>
-            <ChallengeCompleteTracker roomID={roomID} isChallengeDone={isChallengeDone} />
+          <Button isDisabled={isChallengeCompleted}>
+            <ChallengeCompleteTracker
+              roomID={props.roomID}
+              isChallengeDone={isChallengeCompleted}
+            />
           </Button>
           <Modal
             isDismissable
@@ -62,7 +71,7 @@ export default function ChallengeCompleteCard({
           >
             <Dialog role="alertdialog" className="outline-none">
               {({ close }) => (
-                <Form action={setChallengeDone.bind(null, roomID)}>
+                <Form action={completeChallengeAction}>
                   <Heading className="text-title1 mb-4 text-sand-12" slot="title">
                     Do you want to complete this challenge?
                   </Heading>

@@ -148,7 +148,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           </div>
         }
       >
-        <ChallengeCompleteCard roomID={roomID} isChallengeDone={room.isChallengeCompleted} />
+        <ChallengeCompleteCard roomID={roomID} isChallengeCompleted={room.isChallengeCompleted} />
       </NoSSR>
       <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
         <p className="text-title1 mb-2 text-sand-12">Your activity</p>
