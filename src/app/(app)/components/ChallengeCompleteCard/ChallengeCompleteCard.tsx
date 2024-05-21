@@ -9,13 +9,13 @@ import ChallengeCompleteTracker from '@/app/(app)/components/ChallengeCompleteCa
 import chevronDownGreen from '@/app/(app)/images/chevronDownGreen.svg';
 import { setChallengeDone } from '@/server/mutations';
 
-type SharePopoverProps = {
+type ChallengeCompleteCardProps = {
   roomID: number;
   isChallengeDone: boolean;
 };
 
-export default function ChallengeCompleteCard(props: SharePopoverProps) {
-  const [isChallengeDone, setIsMilestoneDone] = useState(props.isChallengeDone);
+export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps) {
+  const [isChallengeDone, setIsChallengeDone] = useState(props.isChallengeDone);
   const [isOpen, setOpen] = React.useState(false);
   const [isRoomCompleteAccordionOpen, setIsRoomCompleteAccordionOpen] = useLocalStorage(
     'isRoomCompleteAccordionOpen',
@@ -23,12 +23,12 @@ export default function ChallengeCompleteCard(props: SharePopoverProps) {
   );
 
   useEffect(() => {
-    setIsMilestoneDone(props.isChallengeDone);
+    setIsChallengeDone(props.isChallengeDone);
   }, [props.isChallengeDone]);
 
   async function setTrackerState() {
     if (!isChallengeDone) {
-      setIsMilestoneDone(true);
+      setIsChallengeDone(true);
       await setChallengeDone(props.roomID);
     }
     setOpen(false);
