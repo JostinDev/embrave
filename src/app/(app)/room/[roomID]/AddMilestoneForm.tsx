@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useActionState, useState } from 'react';
 import { Button, FieldError, Form, Input, Label, TextArea, TextField } from 'react-aria-components';
-import { useFormState } from 'react-dom';
 
 import { createMilestone } from '@/server/mutations';
 
 export default function AddMilestoneForm({ roomID }: { roomID: number }) {
-  const [state, formAction] = useFormState(createMilestone, { errors: {} });
+  const [state, formAction] = useActionState(createMilestone, { errors: {} });
   const [files, setFiles] = useState<File[]>();
   return (
     <Form className="w-full" action={formAction} validationErrors={state?.errors}>
