@@ -5,6 +5,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "target": "es2022",
     "module": "preserve",
     "verbatimModuleSyntax": true,
     "jsx": "preserve",

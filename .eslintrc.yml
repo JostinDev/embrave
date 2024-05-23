@@ -1,3 +1,7 @@
 root: true
+plugins:
+  - react-compiler
 extends:
   - next/core-web-vitals
+rules:
+    react-compiler/react-compiler: error
