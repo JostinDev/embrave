@@ -3,8 +3,8 @@
 import React, { useEffect, useState, type MouseEventHandler } from 'react';
 import Image from 'next/image';
 
-import check from '@/app/(app)/images/Check.svg';
-import plus from '@/app/(app)/images/green-11-plus.svg';
+import check from '@/app/(app)/images/check.svg';
+import plus from '@/app/(app)/images/green11Plus.svg';
 
 type ChallengeCompleteTrackerProps = {
   isChallengeCompleted: boolean;

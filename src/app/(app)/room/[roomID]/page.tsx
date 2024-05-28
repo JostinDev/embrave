@@ -13,7 +13,7 @@ import SharePopover from '@/app/(app)/components/SharePopover';
 import StreakTrackerCard from '@/app/(app)/components/StreakTrackerCard';
 import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
 import cog from '@/app/(app)/images/cog.svg';
-import stairs from '@/app/(app)/images/stairs_cover.jpg';
+import stairs from '@/app/(app)/images/stairsCover.jpg';
 import AddMilestoneForm from '@/app/(app)/room/[roomID]/AddMilestoneForm';
 import { type Milestone } from '@/server/db/schema';
 import { getRoom, getRoomStreak, isRoomAdmin, isUserInRoom } from '@/server/queries';

@@ -6,7 +6,7 @@ import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-compon
 import Badge from '@/app/(app)/components/Badge';
 import ChallengeCard from '@/app/(app)/components/ChallengeCard/ChallengeCard';
 import cross from '@/app/(app)/images/cross.svg';
-import stairs from '@/app/(app)/images/stairs_cover.jpg';
+import stairs from '@/app/(app)/images/stairsCover.jpg';
 import type { Challenge } from '@/server/db/schema';
 import { createRoom } from '@/server/mutations';
 

@@ -14,7 +14,7 @@ import {
   TextField,
 } from 'react-aria-components';
 
-import copy from '@/app/(app)/images/clipboard-copy.svg';
+import copy from '@/app/(app)/images/clipboardCopy.svg';
 import reload from '@/app/(app)/images/reload.svg';
 import { generateNewRoomLink, setIsLinkActive } from '@/server/mutations';
 

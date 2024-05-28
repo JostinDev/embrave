@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import Badge from '@/app/(app)/components/Badge';
 import placeholder from '@/app/(app)/images/challengePlaceholder.png';
-import chevronRight from '@/app/(app)/images/chevron-right.svg';
+import chevronRight from '@/app/(app)/images/chevronRight.svg';
 
 type ChallengeCardProps = {
   id?: number;

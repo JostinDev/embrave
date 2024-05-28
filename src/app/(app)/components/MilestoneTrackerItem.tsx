@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import fire from '@/app/(app)/images/fire.svg';
-import plus from '@/app/(app)/images/orange-10-plus.svg';
+import plus from '@/app/(app)/images/orange10Plus.svg';
 import { createTickedMilestone } from '@/server/mutations';
 
 type SharePopoverProps = {
