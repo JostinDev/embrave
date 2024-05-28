@@ -63,6 +63,9 @@ dependencies:
   svix:
     specifier: 1.24.0
     version: 1.24.0
+  tailwind-merge:
+    specifier: 2.3.0
+    version: 2.3.0
   usehooks-ts:
     specifier: 3.1.0
     version: 3.1.0(react@19.0.0-rc-4c2e457c7c-20240522)
@@ -7379,6 +7382,12 @@ packages:
     dependencies:
       react: 19.0.0-rc-4c2e457c7c-20240522
       use-sync-external-store: 1.2.0(react@19.0.0-rc-4c2e457c7c-20240522)
+    dev: false
+
+  /tailwind-merge@2.3.0:
+    resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
+    dependencies:
+      '@babel/runtime': 7.24.5
     dev: false
 
   /tailwindcss@3.4.3:
