@@ -2,10 +2,10 @@
 
 ## Tasks
 
-- [ ] Use React Aria Components' starter kit
 - [ ] Remove unnecessary `useEffect`s
-- [ ] Rename "Login" to "Sign In"
+- [ ] Use React Aria Components' starter kit
 - [ ] Implement `createRoom` mutation
+- [ ] Rename "Login" to "Sign In"
 - [ ] Inline global custom styles
 - [ ] Color icons with CSS over hardcoding color values
 
