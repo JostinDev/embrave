@@ -9,6 +9,7 @@
 - [ ] Rename "Login" to "Sign In"
 - [ ] Implement `createRoom` mutation
 - [ ] Inline global custom styles
+- [ ] Color icons with CSS over hardcoding color values
 
 ## Setup
 
