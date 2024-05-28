@@ -1,8 +1,8 @@
 import React from 'react';
 import { auth } from '@clerk/nextjs/server';
 
-import JoinRoomModal from '@/app/(app)/components/ManageRoom/JoinRoomModal';
 import { getRoomByLink } from '@/server/queries';
+import JoinRoomModal from './JoinRoomModal';
 
 export default async function JoinRoom({ params }: { params: { link: string } }) {
   auth().protect();

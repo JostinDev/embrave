@@ -5,18 +5,18 @@ import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
 import Badge from '@/app/(app)/components/Badge';
-import ChallengeCompleteCard from '@/app/(app)/components/ChallengeCompleteCard/ChallengeCompleteCard';
-import DescriptionCard from '@/app/(app)/components/DescriptionCard';
-import MilestoneRow from '@/app/(app)/components/MilestoneRow';
-import { NoSSR } from '@/app/(app)/components/NoSSR';
-import SharePopover from '@/app/(app)/components/SharePopover';
-import StreakTrackerCard from '@/app/(app)/components/StreakTrackerCard';
+import NoSSR from '@/app/(app)/components/NoSSR';
 import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
 import cog from '@/app/(app)/images/cog.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
-import AddMilestoneForm from '@/app/(app)/room/[roomID]/AddMilestoneForm';
-import { type Milestone } from '@/server/db/schema';
+import type { Milestone } from '@/server/db/schema';
 import { getRoom, getRoomStreak, isRoomAdmin, isUserInRoom } from '@/server/queries';
+import AddMilestoneForm from './AddMilestoneForm';
+import ChallengeCompleteCard from './ChallengeCompleteCard';
+import DescriptionCard from './DescriptionCard';
+import MilestoneRow from './MilestoneRow';
+import SharePopover from './SharePopover';
+import StreakTrackerCard from './StreakTrackerCard';
 
 export default async function RoomPage({ params }: { params: { roomID: string } }) {
   const { userId: currentUserID } = auth().protect();

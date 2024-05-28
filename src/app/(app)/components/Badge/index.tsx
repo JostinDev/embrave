@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 
-import calendarBlue from '@/app/(app)/images/calendarBlue.svg';
-import calendarPurple from '@/app/(app)/images/calendarPurple.svg';
-import checkCircleGreen from '@/app/(app)/images/checkCircleGreen.svg';
-import flagGreen from '@/app/(app)/images/flagGreen.svg';
-import flagOrange from '@/app/(app)/images/flagOrange.svg';
-import fire from '@/app/(app)/images/flame.svg';
-import globeCrimson from '@/app/(app)/images/globeCrimson.svg';
+import calendarBlue from './calendarBlue.svg';
+import calendarPurple from './calendarPurple.svg';
+import checkCircleGreen from './checkCircleGreen.svg';
+import flagGreen from './flagGreen.svg';
+import flagOrange from './flagOrange.svg';
+import flame from './flame.svg';
+import globeCrimson from './globeCrimson.svg';
 
 const labelTypes = [
   'dailyChallenge',
@@ -33,7 +33,7 @@ const icons: Record<LabelType, any> = {
   date: flagGreen,
   goal: globeCrimson,
   challengeCompleted: checkCircleGreen,
-  streak: fire,
+  streak: flame,
   admin: null,
   participant: null,
 };

@@ -2,7 +2,6 @@
 
 ## Tasks
 
-- [ ] Improve file colocation
 - [ ] Use `tailwind-merge` for merging Tailwind CSS classes
 - [ ] Use React Aria Components' starter kit
 - [ ] Remove unnecessary `useEffect`s

@@ -1,6 +1,6 @@
-import ChallengeModal from '@/app/(app)/components/ChallengeCard/ChallengeModal';
 import client from '@/client';
 import { getChallenges } from '@/server/queries';
+import ChallengeModal from './ChallengeModal';
 
 export default async function Challenge() {
   const challengeItems = await getChallenges();

@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
 import { useLocalStorage } from 'usehooks-ts';
 
-import ChallengeCompleteTracker from '@/app/(app)/components/ChallengeCompleteCard/ChallengeCompleteTracker';
 import chevronDownGreen from '@/app/(app)/images/chevronDownGreen.svg';
+import ChallengeCompleteTracker from '@/app/(app)/room/[roomID]/ChallengeCompleteCard/ChallengeCompleteTracker';
 import { setChallengeDone } from '@/server/mutations';
 
 type ChallengeCompleteCardProps = {

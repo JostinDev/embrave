@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 
 import Badge from '@/app/(app)/components/Badge';
-import KickUserFromRoom from '@/app/(app)/components/ManageRoom/KickUserFromRoom';
-import LeaveRoomModal from '@/app/(app)/components/ManageRoom/LeaveRoomModal';
-import SetRoomUserRole from '@/app/(app)/components/ManageRoom/SetRoomUserRole';
 import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
 import { getRoom, isRoomAdmin, isUserInRoom } from '@/server/queries';
+import KickUserFromRoom from './KickUserFromRoom';
+import LeaveRoomModal from './LeaveRoomModal';
+import SetRoomUserRole from './SetRoomUserRole';
 
 export default async function ManageUserRoomPage({ params }: { params: { roomID: string } }) {
   const { userId: currentUserID } = auth().protect();

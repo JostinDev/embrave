@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { auth } from '@clerk/nextjs/server';
 
-import LoginLandingPageButton from '@/app/(marketing)/components/LoginLandingPageButton';
-import hero from '@/app/(marketing)/images/hero-landing.png';
-import logo from '@/app/(marketing)/images/logoWhite.svg';
+import hero from './heroLanding.png';
+import LoginLandingPageButton from './LoginLandingPageButton';
+import logo from './logoWhite.svg';
 
 export default function LandingPage() {
   const isSignedIn = Boolean(auth().userId);

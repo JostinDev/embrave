@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
 
 import Badge from '@/app/(app)/components/Badge';
-import ChallengeCard from '@/app/(app)/components/ChallengeCard/ChallengeCard';
+import ChallengeCard from '@/app/(app)/components/ChallengeCard';
 import cross from '@/app/(app)/images/cross.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
 import type { Challenge } from '@/server/db/schema';

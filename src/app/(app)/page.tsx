@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SignInButton } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 
-import ChallengeCard from '@/app/(app)/components/ChallengeCard/ChallengeCard';
+import ChallengeCard from '@/app/(app)/components/ChallengeCard';
 import { getRoomStreak, getUserRoom } from '@/server/queries';
 
 export default async function Index() {

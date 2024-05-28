@@ -7,7 +7,8 @@ type NoSSRProps = {
   children: ReactNode;
   fallback: ReactNode;
 };
-export function NoSSR(props: NoSSRProps) {
+
+export default function NoSSR(props: NoSSRProps) {
   const isClient = useIsClient();
   return isClient ? props.children : props.fallback;
 }

@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { ClerkProvider } from '@clerk/nextjs';
 
-import hero from '@/app/(app)/images/hero.png';
 import logo from '@/app/(app)/images/logo.svg';
+import hero from './hero.png';
 
 import '@/app/globals.css';
 
 import { Toaster } from 'sonner';
 
-import Menu from '@/app/(app)/components/Menu';
-import MenuMobile from '@/app/(app)/components/MenuMobile';
+import Menu from './Menu';
+import MenuMobile from './MenuMobile';
 
 type RootLayoutProps = {
   children: React.ReactNode;
