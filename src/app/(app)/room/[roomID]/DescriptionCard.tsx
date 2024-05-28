@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { twJoin } from 'tailwind-merge';
 import { useLocalStorage } from 'usehooks-ts';
 
 import chevronDown from '@/app/(app)/images/chevronDown.svg';
@@ -25,7 +26,10 @@ export default function DescriptionCard(props: buttonProps) {
       >
         <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">{props.title}</p>
         <Image
-          className={`h-fit w-6 select-none transition ${!isRoomDescriptionAccordionOpen && 'rotate-180'} `}
+          className={twJoin(
+            'h-fit w-6 select-none transition',
+            !isRoomDescriptionAccordionOpen && 'rotate-180',
+          )}
           src={chevronDown}
           alt=""
         />

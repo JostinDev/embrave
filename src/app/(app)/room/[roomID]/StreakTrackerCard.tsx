@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { twJoin } from 'tailwind-merge';
 import { useLocalStorage } from 'usehooks-ts';
 
 import MilestoneTrackerItem from '@/app/(app)/components/MilestoneTrackerItem';
@@ -59,7 +60,10 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
       >
         <p className="font-nexa text-26 font-bold leading-[115%] text-orange-10">Streak Tracker</p>
         <Image
-          className={`mt-0.5 h-fit w-6 select-none transition ${!isRoomTrackerAccordionOpen && 'rotate-180'} `}
+          className={twJoin(
+            'mt-0.5 h-fit w-6 select-none transition',
+            !isRoomTrackerAccordionOpen && 'rotate-180',
+          )}
           src={chevronDownOrange}
           alt=""
         />

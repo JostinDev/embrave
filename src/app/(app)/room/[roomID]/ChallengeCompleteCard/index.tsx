@@ -3,6 +3,7 @@
 import { useOptimistic } from 'react';
 import Image from 'next/image';
 import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
+import { twJoin } from 'tailwind-merge';
 import { useLocalStorage } from 'usehooks-ts';
 
 import chevronDownGreen from '@/app/(app)/images/chevronDownGreen.svg';
@@ -44,7 +45,10 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
               : 'Completed the Challenge?'}
           </p>
           <Image
-            className={`mt-0.5 h-fit w-6 select-none transition ${!isRoomCompleteAccordionOpen && 'rotate-180'} `}
+            className={twJoin(
+              'mt-0.5 h-fit w-6 select-none transition',
+              !isRoomCompleteAccordionOpen && 'rotate-180',
+            )}
             src={chevronDownGreen}
             alt=""
           />

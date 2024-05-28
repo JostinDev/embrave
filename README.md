@@ -2,7 +2,6 @@
 
 ## Tasks
 
-- [ ] Use `tailwind-merge` for merging Tailwind CSS classes
 - [ ] Use React Aria Components' starter kit
 - [ ] Remove unnecessary `useEffect`s
 - [ ] Rename "Login" to "Sign In"

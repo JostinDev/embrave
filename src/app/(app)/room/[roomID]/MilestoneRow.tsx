@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { twJoin } from 'tailwind-merge';
 
 import Badge from '@/app/(app)/components/Badge';
 import type { MilestoneMedia } from '@/server/db/schema';
@@ -30,7 +31,10 @@ type MilestoneRowProps = {
 export default function MilestoneRow(props: MilestoneRowProps) {
   return (
     <div
-      className={`relative flex flex-col before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round] ${props.isLastRow ? 'mb-10 ' : 'pb-10'}`}
+      className={twJoin(
+        "relative flex flex-col before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]",
+        props.isLastRow ? 'mb-10 ' : 'pb-10',
+      )}
     >
       <div className="flex justify-between pl-16">
         {props.isLastMilestone ? (
