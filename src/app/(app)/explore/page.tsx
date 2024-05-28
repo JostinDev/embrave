@@ -1,16 +1,8 @@
-import client from '@/client';
 import { getChallenges } from '@/server/queries';
 import ChallengeModal from './ChallengeModal';
 
 export default async function Challenge() {
   const challengeItems = await getChallenges();
-
-  async function createRoom(id: number) {
-    const data = { challenge_id: id };
-    await client('api/room', {
-      body: JSON.stringify(data),
-    });
-  }
 
   return (
     <div className="relative">
