@@ -28,7 +28,7 @@ export default function MilestoneTrackerItem(props: MilestoneTrackerItemProps) {
   }
 
   return (
-    <div
+    <button
       onClick={() => setTrackerState()}
       className="flex cursor-pointer select-none flex-col items-center gap-2 text-orange-10"
     >
@@ -50,6 +50,6 @@ export default function MilestoneTrackerItem(props: MilestoneTrackerItemProps) {
           ? 'Today'
           : new Date(props.day).toLocaleDateString(undefined, { weekday: 'short' })}
       </p>
-    </div>
+    </button>
   );
 }
