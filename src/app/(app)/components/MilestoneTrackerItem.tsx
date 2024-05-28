@@ -8,13 +8,14 @@ import fire from '@/app/(app)/images/fire.svg';
 import plus from '@/app/(app)/images/orange10Plus.svg';
 import { createTickedMilestone } from '@/server/mutations';
 
-type SharePopoverProps = {
+type MilestoneTrackerItemProps = {
   day: string;
   roomID: number;
   isMilestoneDone: boolean;
   index: number;
 };
-export default function MilestoneTrackerItem(props: SharePopoverProps) {
+
+export default function MilestoneTrackerItem(props: MilestoneTrackerItemProps) {
   const [isMilestoneDone, setIsMilestoneDone] = useState(props.isMilestoneDone);
 
   useEffect(() => {
