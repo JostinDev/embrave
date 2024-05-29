@@ -95,7 +95,7 @@ export default function Menu() {
             id="linkHome"
             className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
-            href="/public"
+            href="/"
           >
             <Image className="pointer-events-none" src={home} alt="" />
             <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
