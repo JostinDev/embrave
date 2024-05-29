@@ -3,6 +3,7 @@
 import React, { useActionState, useState } from 'react';
 import Image from 'next/image';
 import { Button, FieldError, Form, Input, Label, TextArea, TextField } from 'react-aria-components';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 import spinner from '@/app/(app)/images/spinner.svg';
 import { createMilestone } from '@/server/mutations';
@@ -47,10 +48,19 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
       <Button
         isDisabled={isPending}
         type="submit"
-        className="flex h-fit items-center gap-2 rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3"
+        className="relative flex h-fit items-center gap-2 rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3 transition-all"
       >
-        Add a Milestone
-        {isPending && <Image className="h-4 w-4" src={spinner} alt="" />}
+        <p className={twMerge('opacity-100 transition-all duration-200', isPending && 'opacity-0')}>
+          Add a Milestone
+        </p>
+        <Image
+          className={twJoin(
+            'absolute left-1/2 h-4 w-4 -translate-x-1/2 opacity-0 transition-all duration-200',
+            isPending && 'opacity-100',
+          )}
+          src={spinner}
+          alt=""
+        />
       </Button>
     </Form>
   );
