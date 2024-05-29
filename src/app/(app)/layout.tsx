@@ -29,7 +29,7 @@ export default async function AppLayout({ children }: RootLayoutProps) {
       <div>
         <div className="fixed left-8 top-4 z-20 flex flex-col md:bottom-8">
           <div className="mb-8 flex items-center gap-4">
-            <Image src={logo} alt=""></Image>
+            <Image src={logo} alt="" />
             <h1 className="hidden font-nexa text-32 font-bold leading-none text-sand-12 lg:block">
               Embrave
             </h1>

@@ -15,7 +15,7 @@ export default function LandingPage() {
         placeholder="blur"
         src={hero}
         alt=""
-      ></Image>
+      />
       <div className="container mx-auto">
         <div className="absolute left-0 top-0 flex w-full items-center justify-between px-4 pt-8 md:px-8 lg:px-16">
           <div className="flex items-center gap-4">

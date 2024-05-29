@@ -36,7 +36,7 @@ export default function MilestoneTrackerItem(props: MilestoneTrackerItemProps) {
             isMilestoneDone ? 'border-solid bg-orange-9' : 'border-dashed',
           )}
         >
-          {isMilestoneDone ? <Image alt="" src={fire}></Image> : <Image alt="" src={plus}></Image>}
+          {isMilestoneDone ? <Image alt="" src={fire} /> : <Image alt="" src={plus} />}
         </div>
         <p
           className={twJoin(

@@ -47,7 +47,7 @@ export default async function Index() {
                         date={date}
                         type={room.challenge.type}
                         streak={streak}
-                      ></ChallengeCard>
+                      />
                     </Link>
                   );
                 }
@@ -75,7 +75,7 @@ export default async function Index() {
                         date={date}
                         type={room.challenge.type}
                         streak={0}
-                      ></ChallengeCard>
+                      />
                     </Link>
                   );
                 }

@@ -91,7 +91,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           placeholder="blur"
           src={stairs}
           alt=""
-        ></Image>
+        />
         <div
           className={
             'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
@@ -105,19 +105,19 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
               <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
                 Date started:
               </p>
-              <p className="font-inter text-base leading-18 text-sand-12"></p>
-              <Badge style="big" text={room.created.toLocaleDateString()} type="date"></Badge>
+              <p className="font-inter text-base leading-18 text-sand-12" />
+              <Badge style="big" text={room.created.toLocaleDateString()} type="date" />
             </div>
             <div>
               <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">Type:</p>
-              <Badge style="big" type="dailyChallenge"></Badge>
+              <Badge style="big" type="dailyChallenge" />
             </div>
             {!room.isChallengeCompleted && (
               <div>
                 <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
                   Current streak:
                 </p>
-                <Badge style="big" streak={streak} type="streak"></Badge>
+                <Badge style="big" streak={streak} type="streak" />
               </div>
             )}
           </div>
@@ -164,7 +164,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <div className="relative">
           {!room.isChallengeCompleted && (
             <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]">
-              <div className="z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3"></div>
+              <div className="z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3" />
               <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
             </div>
           )}

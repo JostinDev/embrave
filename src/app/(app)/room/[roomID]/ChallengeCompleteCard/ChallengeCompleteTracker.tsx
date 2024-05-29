@@ -22,11 +22,7 @@ export default function ChallengeCompleteTracker(props: ChallengeCompleteTracker
             : 'border-dashed hover:bg-green-4',
         )}
       >
-        {props.isChallengeCompleted ? (
-          <Image alt="" src={check}></Image>
-        ) : (
-          <Image alt="" src={plus}></Image>
-        )}
+        {props.isChallengeCompleted ? <Image alt="" src={check} /> : <Image alt="" src={plus} />}
       </div>
     </div>
   );

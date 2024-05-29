@@ -38,13 +38,13 @@ export default function MilestoneRow(props: MilestoneRowProps) {
     >
       <div className="flex justify-between pl-16">
         {props.isLastMilestone ? (
-          <Badge key="challengeCompleted" style="big" type="challengeCompleted"></Badge>
+          <Badge key="challengeCompleted" style="big" type="challengeCompleted" />
         ) : (
           <Badge
             key={props.milestone.ticked ? 'milestone' : 'update'}
             style="big"
             type={props.milestone.ticked ? 'milestone' : 'update'}
-          ></Badge>
+          />
         )}
 
         <p className="font-inter text-xs leading-14 text-sand-11">

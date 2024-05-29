@@ -89,7 +89,7 @@ export default function Menu() {
           <div
             id="backdrop"
             className="pointer-events-none absolute z-30 h-[44px] w-[48px] rounded-[10px] border border-sand-5 bg-sand-1 transition-all lg:w-[221px]"
-          ></div>
+          />
 
           <Link
             id="linkHome"
@@ -97,7 +97,7 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/public"
           >
-            <Image className="pointer-events-none" src={home} alt=""></Image>
+            <Image className="pointer-events-none" src={home} alt="" />
             <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Home
             </span>
@@ -109,7 +109,7 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/explore"
           >
-            <Image className="pointer-events-none" src={world} alt=""></Image>
+            <Image className="pointer-events-none" src={world} alt="" />
             <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Explore
             </span>
@@ -121,7 +121,7 @@ export default function Menu() {
             onClick={(e) => placeBackdrop(e.target as HTMLElement)}
             href="/profile"
           >
-            <Image className="pointer-events-none" src={profile} alt=""></Image>
+            <Image className="pointer-events-none" src={profile} alt="" />
             <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Profile
             </span>
@@ -135,7 +135,7 @@ export default function Menu() {
                 className="flex h-full items-center gap-2 font-inter text-base leading-18 text-sand-12"
                 type="submit"
               >
-                <Image src={logout} alt=""></Image>
+                <Image src={logout} alt="" />
                 <span className="hidden lg:block">Log out</span>
               </button>
             </SignOutButton>

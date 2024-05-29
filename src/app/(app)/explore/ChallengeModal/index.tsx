@@ -18,7 +18,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
   return (
     <DialogTrigger>
       <Button>
-        <ChallengeCard challenge={challenge.title} type={challenge.type}></ChallengeCard>
+        <ChallengeCard challenge={challenge.title} type={challenge.type} />
       </Button>
       <Modal
         isDismissable
@@ -34,7 +34,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   placeholder="blur"
                   src={stairs}
                   alt=""
-                ></Image>
+                />
                 <Button
                   onPress={close}
                   className="bg absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full border border-sand-5 bg-sand-1"
@@ -52,7 +52,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                     <p className="mb-2 font-inter text-sm font-bold leading-4 text-sand-12">
                       Type:
                     </p>
-                    <Badge type={challenge.type} style="big"></Badge>
+                    <Badge type={challenge.type} style="big" />
                   </div>
                 </div>
               </div>

@@ -60,10 +60,10 @@ export default function MenuMobile() {
           <div
             id="backdropMobile"
             className="absolute -top-2 h-[44px] w-[44px] rounded-[10px] border border-sand-5 bg-sand-1 transition-all"
-          ></div>
+          />
 
           <div id="currentPage" className="z-30 flex items-end gap-2 px-4 ">
-            <Image className="pointer-events-none" src={currentIcon} alt=""></Image>
+            <Image className="pointer-events-none" src={currentIcon} alt="" />
           </div>
 
           <div className={'z-30 flex-col ' + (isMenuOpen ? 'flex' : 'hidden')}>
@@ -79,7 +79,7 @@ export default function MenuMobile() {
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={home}
                 alt=""
-              ></Image>
+              />
             </Link>
 
             <Link
@@ -94,7 +94,7 @@ export default function MenuMobile() {
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={world}
                 alt=""
-              ></Image>
+              />
             </Link>
 
             <Link
@@ -109,7 +109,7 @@ export default function MenuMobile() {
                 className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
                 src={profile}
                 alt=""
-              ></Image>
+              />
             </Link>
 
             <div className="z-30 justify-center px-5 py-2 lg:justify-start">
@@ -118,7 +118,7 @@ export default function MenuMobile() {
                   className="flex h-full w-10 items-center rounded-[10px] p-2 font-inter text-base leading-18 text-sand-12 transition-all hover:bg-sand-3"
                   type="submit"
                 >
-                  <Image src={logout} alt=""></Image>
+                  <Image src={logout} alt="" />
                 </button>
               </SignOutButton>
             </div>
