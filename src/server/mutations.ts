@@ -16,8 +16,17 @@ import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './
 const MAX_FILE_SIZE = 4500000;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
-export async function createRoom(challengeID: number) {
+export async function createRoom(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
+
+  const schema = z.object({
+    challengeID: z.coerce.number(),
+  });
+
+  const result = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!result.success) {
+    return { errors: result.error.flatten().fieldErrors };
+  }
 
   await removeCredit();
   const date = new Date();
@@ -27,7 +36,7 @@ export async function createRoom(challengeID: number) {
   const newRoom = await db
     .insert(room)
     .values({
-      challengeID: challengeID,
+      challengeID: result.data.challengeID,
       link: randomLink,
       created: date,
       codeCreatedTimestamp: date,

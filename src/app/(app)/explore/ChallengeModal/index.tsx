@@ -1,20 +1,25 @@
 'use client';
 
+import React, { useActionState } from 'react';
 import Image from 'next/image';
-import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
+import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 import Badge from '@/app/(app)/components/Badge';
 import ChallengeCard from '@/app/(app)/components/ChallengeCard';
 import cross from '@/app/(app)/images/cross.svg';
+import spinner from '@/app/(app)/images/spinner.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
 import type { Challenge } from '@/server/db/schema';
-import { createRoom } from '@/server/mutations';
+import { createMilestone, createRoom } from '@/server/mutations';
 
 type ChallengeModalProps = {
   challenge: Challenge;
 };
 
 export default function ChallengeModal({ challenge }: ChallengeModalProps) {
+  const [state, formAction, isPending] = useActionState(createRoom, { errors: {} });
+
   return (
     <DialogTrigger>
       <Button>
@@ -26,7 +31,8 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
       >
         <Dialog className="flex flex-col outline-none">
           {({ close }) => (
-            <form>
+            <Form className="w-full" action={formAction}>
+              <input type="hidden" name="challengeID" value={challenge.id} />
               <div className="relative mb-4">
                 <Image
                   className="h-[400px] w-full rounded-[26px]"
@@ -74,15 +80,29 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   challenge.
                 </p>
                 <Button
-                  onPress={async () => {
-                    await createRoom(challenge.id);
-                  }}
-                  className="h-fit max-w-fit rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1"
+                  isDisabled={isPending}
+                  type="submit"
+                  className="relative flex h-fit items-center gap-2 rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1 transition-all"
                 >
-                  Let’s go!
+                  <p
+                    className={twMerge(
+                      'opacity-100 transition-all duration-200',
+                      isPending && 'opacity-0',
+                    )}
+                  >
+                    Let’s go!
+                  </p>
+                  <Image
+                    className={twJoin(
+                      'absolute left-1/2 h-4 w-4 -translate-x-1/2 opacity-0 transition-all duration-200',
+                      isPending && 'opacity-100',
+                    )}
+                    src={spinner}
+                    alt=""
+                  />
                 </Button>
               </div>
-            </form>
+            </Form>
           )}
         </Dialog>
       </Modal>
