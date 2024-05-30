@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation';
 import { ClerkProvider, SignInButton } from '@clerk/nextjs';
 
-type LoginLandingPageButtonProps = {
+type SignInLandingPageButtonProps = {
   isSignedIn: boolean;
 };
 
-export default function LoginLandingPageButton(props: LoginLandingPageButtonProps) {
+export default function SignInLandingPageButton(props: SignInLandingPageButtonProps) {
   const router = useRouter();
 
   return (

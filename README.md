@@ -4,7 +4,6 @@
 
 - [ ] Remove unnecessary `useEffect`s
 - [ ] Use React Aria Components' starter kit
-- [ ] Rename "Login" to "Sign In"
 - [ ] Inline global custom styles
 - [ ] Color icons with CSS over hardcoding color values
 

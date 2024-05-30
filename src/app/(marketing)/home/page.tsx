@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { auth } from '@clerk/nextjs/server';
 
 import hero from './heroLanding.png';
-import LoginLandingPageButton from './LoginLandingPageButton';
 import logo from './logoWhite.svg';
+import SignInLandingPageButton from './SignInLandingPageButton';
 
 export default function LandingPage() {
   const isSignedIn = Boolean(auth().userId);
@@ -24,7 +24,7 @@ export default function LandingPage() {
               Embrave
             </h1>
           </div>
-          <LoginLandingPageButton isSignedIn={isSignedIn} />
+          <SignInLandingPageButton isSignedIn={isSignedIn} />
         </div>
         <div className="relative z-10 mx-auto -mt-[150px] h-[423px] w-[90%] max-w-[950px] rounded-[48px] border border-solid border-sand-5 bg-sand-1 p-14 text-center">
           <h1 className="font-nexa text-90 font-extrabold leading-[120%] text-sand-12">

@@ -15,7 +15,7 @@ export default async function Index() {
           <p className="mb-2 font-nexa text-xl font-bold text-sand-12">You are not logged in</p>
           <SignInButton mode="modal">
             <button className="h-fit max-w-fit rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">
-              Login
+              Sign In
             </button>
           </SignInButton>
         </div>
