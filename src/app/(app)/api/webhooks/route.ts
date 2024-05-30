@@ -1,7 +1,10 @@
 import { headers } from 'next/headers';
-import { type WebhookEvent } from '@clerk/nextjs/server';
+import type { UserJSON } from '@clerk/backend';
+import { clerkClient, type WebhookEvent } from '@clerk/nextjs/server';
 import { Webhook } from 'svix';
+import { z } from 'zod';
 
+import stripe from '@/config/stripe';
 import { setBaseCredits } from '@/server/mutations';
 
 export async function POST(req: Request) {
@@ -32,11 +35,11 @@ export async function POST(req: Request) {
   // Create a new Svix instance with your secret.
   const wh = new Webhook(WEBHOOK_SECRET);
 
-  let evt: WebhookEvent;
+  let event: WebhookEvent;
 
   // Verify the payload with the headers
   try {
-    evt = wh.verify(body, {
+    event = wh.verify(body, {
       'svix-id': svix_id,
       'svix-timestamp': svix_timestamp,
       'svix-signature': svix_signature,
@@ -48,9 +51,81 @@ export async function POST(req: Request) {
     });
   }
 
-  if (evt.type === 'user.created') {
-    await setBaseCredits(evt.data.id);
+  if (event.type === 'user.created') {
+    const newUser = event.data;
+    await setBaseCredits(newUser.id);
+    await createStripeCustomer(newUser);
+  } else if (event.type === 'user.updated') {
+    const updatedUser = event.data;
+    await updateStripeCustomer(updatedUser);
+  } else if (event.type === 'user.deleted') {
+    const deletedUser = event.data;
+    if (!deletedUser.id) throw new Error('User ID is missing from the event data');
+    await deleteStripeCustomer(deletedUser.id);
   }
 
   return new Response('', { status: 200 });
+}
+
+async function createStripeCustomer(clerkUser: UserJSON) {
+  const primaryEmailAddress = clerkUser.email_addresses.find(
+    (email) => email.id === clerkUser.primary_email_address_id,
+  );
+
+  const fullName = `${clerkUser.first_name} ${clerkUser.last_name}`.trim();
+
+  const newStripeCustomer = await stripe.customers.create(
+    {
+      metadata: {
+        user_id: clerkUser.id,
+      },
+      email: primaryEmailAddress?.email_address,
+      name: fullName,
+    },
+    { idempotencyKey: clerkUser.id },
+  );
+
+  await clerkClient.users.updateUserMetadata(clerkUser.id, {
+    publicMetadata: {
+      stripeCustomerID: newStripeCustomer.id,
+    },
+  });
+}
+
+async function updateStripeCustomer(clerkUser: UserJSON) {
+  const customerID = clerkUser.public_metadata?.stripeCustomerID;
+  const parseResult = z.string().optional().safeParse(customerID);
+  if (!parseResult.success) {
+    throw new Error('User’s Stripe customer ID is malformed');
+  }
+  const safeCustomerID = parseResult.data;
+
+  if (!safeCustomerID) {
+    await createStripeCustomer(clerkUser);
+    return;
+  }
+
+  const primaryEmailAddress = clerkUser.email_addresses.find(
+    (email) => email.id === clerkUser.primary_email_address_id,
+  );
+  const fullName = `${clerkUser.first_name} ${clerkUser.last_name}`.trim();
+
+  await stripe.customers.update(safeCustomerID, {
+    email: primaryEmailAddress?.email_address,
+    name: fullName,
+  });
+}
+
+async function deleteStripeCustomer(clerkUserID: string) {
+  const clerkUser = await clerkClient.users.getUser(clerkUserID);
+  const customerID = clerkUser.publicMetadata.stripeCustomerID;
+  const parseResult = z.string().optional().safeParse(customerID);
+  if (!parseResult.success) {
+    throw new Error('User’s Stripe customer ID is malformed');
+  }
+  const safeCustomerID = parseResult.data;
+
+  if (!safeCustomerID) return;
+
+  await stripe.customers.del(safeCustomerID, undefined, { idempotencyKey: clerkUserID });
 }

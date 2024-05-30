@@ -466,6 +466,14 @@ async function createCheckoutSession() {
   const user = await currentUser();
   if (!user) throw new Error('User not authenticated');
 
+  const customerID: unknown = user.publicMetadata.stripeCustomerID;
+
+  const parseResult = z.string().optional().safeParse(customerID);
+  if (!parseResult.success) {
+    throw new Error('User’s Stripe customer ID is malformed');
+  }
+  const safeCustomerID = parseResult.data;
+
   const origin = headers().get('origin');
   if (!origin) throw new Error('Origin header is missing');
 
@@ -478,7 +486,7 @@ async function createCheckoutSession() {
         quantity: 1,
       },
     ],
-    customer_email: user.primaryEmailAddress?.emailAddress,
+    customer: safeCustomerID,
     return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
   });
 }
