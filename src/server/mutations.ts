@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { put } from '@vercel/blob';
@@ -9,6 +10,7 @@ import { z } from 'zod';
 
 import { Points } from '@/app/enum/pointsEnum';
 import RandomStringGenerator from '@/app/utils/randomStringGenerator';
+import stripe from '@/config/stripe';
 import { db } from '@/server/db';
 import { milestone, milestoneMedia, room, userRoom } from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
@@ -447,5 +449,36 @@ export async function setBaseCredits(userID: string) {
     publicMetadata: {
       credits: currentCredits,
     },
+  });
+}
+
+export async function getCheckoutSessionClientSecret() {
+  const checkoutSession = await createCheckoutSession();
+
+  if (!checkoutSession.client_secret) {
+    throw new Error('Stripe checkout session’s client secret is missing');
+  }
+
+  return checkoutSession.client_secret;
+}
+
+async function createCheckoutSession() {
+  const user = await currentUser();
+  if (!user) throw new Error('User not authenticated');
+
+  const origin = headers().get('origin');
+  if (!origin) throw new Error('Origin header is missing');
+
+  return await stripe.checkout.sessions.create({
+    mode: 'payment',
+    ui_mode: 'embedded',
+    line_items: [
+      {
+        price: 'price_1P405j05xPAER8V0FZ46vU4m',
+        quantity: 1,
+      },
+    ],
+    customer_email: user.primaryEmailAddress?.emailAddress,
+    return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
   });
 }

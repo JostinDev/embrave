@@ -1,22 +1,18 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+import { getCheckoutSessionClientSecret } from '@/server/mutations';
+
+if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+  throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set');
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function Page() {
-  // Define a function to fetch the client secret
-  const fetchClientSecret = useCallback(() => {
-    return fetch('/api/checkout_sessions', {
-      method: 'POST',
-    })
-      .then((res) => res.json())
-      .then((data) => data.clientSecret);
-  }, []);
-
-  const options = { fetchClientSecret };
   return (
     <div className="mt-10">
       <p className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12">
@@ -31,7 +27,10 @@ export default function Page() {
       </p>
 
       <div id="checkout">
-        <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+        <EmbeddedCheckoutProvider
+          stripe={stripePromise}
+          options={{ fetchClientSecret: getCheckoutSessionClientSecret }}
+        >
           <EmbeddedCheckout />
         </EmbeddedCheckoutProvider>
       </div>
