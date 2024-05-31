@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
-import type { UserJSON } from '@clerk/backend';
 import { clerkClient, type WebhookEvent } from '@clerk/nextjs/server';
+import type { UserJSON } from '@clerk/types';
 import { Webhook } from 'svix';
 import { z } from 'zod';
 
