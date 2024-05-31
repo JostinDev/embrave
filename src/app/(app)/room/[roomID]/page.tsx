@@ -7,8 +7,8 @@ import { auth } from '@clerk/nextjs/server';
 import Badge from '@/app/(app)/components/Badge';
 import NoSSR from '@/app/(app)/components/NoSSR';
 import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
-import cog from '@/app/(app)/images/cog.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
+import ManagePopover from '@/app/(app)/room/[roomID]/manage/ManagePopover';
 import type { Milestone } from '@/server/db/schema';
 import { getRoom, getRoomStreak, isRoomAdmin, isUserInRoom } from '@/server/queries';
 import AddMilestoneForm from './AddMilestoneForm';
@@ -58,9 +58,12 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </Link>
         <div className="flex items-center gap-6">
           {isAdmin && !room.isChallengeCompleted && (
-            <Link href={`/room/manage/${roomID}`}>
-              <Image src={cog} alt="" />
-            </Link>
+            <ManagePopover
+              userRooms={userRooms}
+              roomID={roomID}
+              isAdmin={isAdmin}
+              currentUserID={currentUserID}
+            />
           )}
           {isAdmin && !room.isChallengeCompleted && (
             <SharePopover isLinkActive={room.isLinkActive} link={room.link} roomID={room.id} />

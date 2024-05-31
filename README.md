@@ -2,6 +2,7 @@
 
 ## Tasks
 
+- [ ] Use `import 'server-only'` in server/query.js
 - [ ] Remove unnecessary `useEffect`s
 - [ ] Add confirmation dialog when deleting a milestone
 - [ ] Add admin page into a popover
@@ -9,6 +10,7 @@
 - [ ] Use React Aria Components' starter kit
 - [ ] Inline global custom styles
 - [ ] Color icons with CSS over hardcoding color values
+
 
 ## Setup
 
