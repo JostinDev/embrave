@@ -64,8 +64,6 @@ export async function createRoom(prevState: any, formData: FormData) {
 export async function joinRoom(link: string) {
   const { userId } = auth().protect();
 
-  await removeCredit();
-
   const result: { roomID: number }[] = await db
     .select({ roomID: room.id })
     .from(room)
@@ -96,6 +94,7 @@ export async function joinRoom(link: string) {
   });
 
   await addPoints(Points.JoinRoom);
+  await removeCredit();
 
   redirect(`/room/${result[0].roomID}`);
 }
