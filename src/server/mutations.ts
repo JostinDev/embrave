@@ -61,13 +61,22 @@ export async function createRoom(prevState: any, formData: FormData) {
   }
 }
 
-export async function joinRoom(link: string) {
+export async function joinRoom(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
+
+  const schema = z.object({
+    link: z.string(),
+  });
+
+  const form = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!form.success) {
+    return { errors: form.error.flatten().fieldErrors };
+  }
 
   const result: { roomID: number }[] = await db
     .select({ roomID: room.id })
     .from(room)
-    .where(eq(room.link, link));
+    .where(eq(room.link, form.data.link));
   const date = new Date();
 
   if (!result[0]) {
