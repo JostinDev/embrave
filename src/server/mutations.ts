@@ -190,6 +190,8 @@ export async function kickFromRoom(roomID: number, userIDToKick: string) {
 export async function setUserRoomRole(roomID: number, userID: string, isAdmin: boolean) {
   const { userId } = auth().protect();
 
+  console.log(roomID, userID, isAdmin);
+
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to set this property" };
 
