@@ -156,24 +156,34 @@ export async function leaveRoom(prevState: any, formData: FormData) {
   redirect('/');
 }
 
-export async function kickFromRoom(roomID: number, userIDToKick: string) {
+export async function kickFromRoom(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
 
-  if (!(await isUserInRoom(userId, roomID))) {
+  const schema = z.object({
+    roomID: z.coerce.number(),
+    userID: z.string(),
+  });
+
+  const result = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!result.success) {
+    return { errors: result.error.flatten().fieldErrors };
+  }
+
+  if (!(await isUserInRoom(userId, result.data.roomID))) {
     return { error: "You're not in the room" };
   }
 
-  if (await isChallengeComplete(roomID)) {
+  if (await isChallengeComplete(result.data.roomID)) {
     return { error: 'The challenge is already completed' };
   }
 
-  if (!(await isRoomAdmin(userId, roomID)))
+  if (!(await isRoomAdmin(userId, result.data.roomID)))
     return { error: "You're not allowed to set this property" };
 
   // Delete userRoom relation
   const { rowCount: deletedUserRoom } = await db
     .delete(userRoom)
-    .where(and(eq(userRoom.roomID, roomID), eq(userRoom.userID, userIDToKick)));
+    .where(and(eq(userRoom.roomID, result.data.roomID), eq(userRoom.userID, result.data.userID)));
 
   if (deletedUserRoom === 0) {
     return { error: 'Room not found' };
@@ -182,7 +192,7 @@ export async function kickFromRoom(roomID: number, userIDToKick: string) {
   // Delete user milestone from the room
   await db
     .delete(milestone)
-    .where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userIDToKick)));
+    .where(and(eq(milestone.roomID, result.data.roomID), eq(milestone.userID, result.data.userID)));
 
   revalidatePath('/room/');
 }
