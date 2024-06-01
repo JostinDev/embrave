@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useOptimistic } from 'react';
 import Image from 'next/image';
 import { Button } from 'react-aria-components';
 
@@ -14,14 +14,18 @@ type SetRoomUserRoleProps = {
 };
 
 export default function SetRoomUserRole(props: SetRoomUserRoleProps) {
+  const [isAdmin, setOptimisticIsAdmin] = useOptimistic(props.isAdmin);
+
+  async function setUserRole() {
+    setOptimisticIsAdmin(!isAdmin);
+    await setUserRoomRole(props.roomID, props.userID, !props.isAdmin);
+  }
+
   return (
-    <Button
-      onPress={() => setUserRoomRole(props.roomID, props.userID, !props.isAdmin)}
-      className="flex items-center gap-2"
-    >
+    <Button onPress={() => setUserRole()} className="flex items-center gap-2">
       <Image className="h-6 w-6" src={userGroup} alt="" />
       <p className={'font-inter text-base font-medium leading-5 text-sand-12'}>
-        {props.isAdmin ? 'Make participant' : 'Make Admin'}
+        {isAdmin ? 'Make participant' : 'Make Admin'}
       </p>
     </Button>
   );

@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { twJoin } from 'tailwind-merge';
 import { useLocalStorage } from 'usehooks-ts';
 
-import MilestoneTrackerItem from '@/app/(app)/components/MilestoneTrackerItem';
 import chevronDownOrange from '@/app/(app)/images/chevronDownOrange.svg';
 import type { Milestone } from '@/server/db/schema';
+import MilestoneTrackerItem from './MilestoneTrackerItem';
 
 type StreakTrackerCardProps = {
   roomID: number;
