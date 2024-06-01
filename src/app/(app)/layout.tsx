@@ -6,6 +6,7 @@ import hero from './hero.png';
 
 import '@/app/globals.css';
 
+import { currentUser } from '@clerk/nextjs/server';
 import { Toaster } from 'sonner';
 
 import Menu from './Menu';
@@ -15,15 +16,8 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-async function getUser() {
-  return {
-    name: 'Jostin',
-  };
-}
-
 export default async function AppLayout({ children }: RootLayoutProps) {
-  const user = await getUser();
-
+  const user = await currentUser();
   return (
     <ClerkProvider>
       <div>
@@ -43,7 +37,7 @@ export default async function AppLayout({ children }: RootLayoutProps) {
         >
           <div className="flex max-w-[1800px] flex-1 pl-36 lg:pl-80">
             <p className="-mb-4 hidden self-end font-nexa text-6xl font-black uppercase italic text-sand-12 md:block">
-              HEJ {user.name}
+              HEJ {user?.username}
             </p>
           </div>
         </div>
