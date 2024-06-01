@@ -108,35 +108,49 @@ export async function joinRoom(prevState: any, formData: FormData) {
   redirect(`/room/${result[0].roomID}`);
 }
 
-export async function leaveRoom(roomID: number) {
+export async function leaveRoom(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
 
-  if (!(await isUserInRoom(userId, roomID))) {
+  const schema = z.object({
+    roomID: z.coerce.number(),
+  });
+
+  const formResult = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!formResult.success) {
+    return { errors: formResult.error.flatten().fieldErrors };
+  }
+
+  if (!(await isUserInRoom(userId, formResult.data.roomID))) {
     return { error: "You're not in the room" };
   }
 
-  if (await isChallengeComplete(roomID)) {
+  if (await isChallengeComplete(formResult.data.roomID)) {
     return { error: 'The challenge is already completed' };
   }
 
   // Delete userRoom relation
   const { rowCount: deletedUserRoom } = await db
     .delete(userRoom)
-    .where(and(eq(userRoom.roomID, roomID), eq(userRoom.userID, userId)));
+    .where(and(eq(userRoom.roomID, formResult.data.roomID), eq(userRoom.userID, userId)));
 
   if (deletedUserRoom === 0) {
     return { error: 'Room not found' };
   }
 
   // Delete user milestone from the room
-  await db.delete(milestone).where(and(eq(milestone.roomID, roomID), eq(milestone.userID, userId)));
+  await db
+    .delete(milestone)
+    .where(and(eq(milestone.roomID, formResult.data.roomID), eq(milestone.userID, userId)));
 
   // Get number of users still in the room
-  const result = await db.select().from(userRoom).where(eq(userRoom.roomID, roomID));
+  const result = await db
+    .select()
+    .from(userRoom)
+    .where(eq(userRoom.roomID, formResult.data.roomID));
 
   // Delete room if no users are in it
   if (result.length === 0) {
-    await db.delete(room).where(and(eq(room.id, roomID)));
+    await db.delete(room).where(and(eq(room.id, formResult.data.roomID)));
   }
 
   redirect('/');

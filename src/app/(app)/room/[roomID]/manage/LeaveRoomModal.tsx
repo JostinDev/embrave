@@ -1,16 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useActionState } from 'react';
 import Image from 'next/image';
-import { Button, Dialog, DialogTrigger, Heading, Modal } from 'react-aria-components';
+import { Button, Dialog, DialogTrigger, Form, Heading, Modal } from 'react-aria-components';
+import { twJoin, twMerge } from 'tailwind-merge';
 
 import logoutRed from '@/app/(app)/images/logoutRed.svg';
-import { leaveRoom } from '@/server/mutations';
+import spinner from '@/app/(app)/images/spinner.svg';
+import { createMilestone, leaveRoom } from '@/server/mutations';
 
 type LeaveRoomModalProps = {
   roomID: number;
 };
 export default function LeaveRoomModal(props: LeaveRoomModalProps) {
+  const [state, formAction, isPending] = useActionState(leaveRoom, { errors: {} });
+
   return (
     <DialogTrigger>
       <Button className="flex items-center gap-2">
@@ -23,7 +27,8 @@ export default function LeaveRoomModal(props: LeaveRoomModalProps) {
       >
         <Dialog role="alertdialog" className="flex flex-col outline-none">
           {({ close }) => (
-            <div>
+            <Form className="w-full" action={formAction}>
+              <input type="hidden" name="roomID" value={props.roomID} />
               <Heading
                 className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12"
                 slot="title"
@@ -43,14 +48,31 @@ export default function LeaveRoomModal(props: LeaveRoomModalProps) {
                 >
                   Cancel
                 </Button>
+
                 <Button
-                  onPress={async () => await leaveRoom(props.roomID)}
-                  className="h-fit w-full rounded-lg border border-solid border-red-11 bg-red-11 p-3 font-inter text-base leading-18 text-sand-3"
+                  isDisabled={isPending}
+                  type="submit"
+                  className="relative flex h-fit w-full items-center justify-center gap-2 rounded-lg border border-solid border-red-11 bg-red-11 p-3 font-inter text-base leading-18 text-sand-3 transition-all"
                 >
-                  Leave
+                  <p
+                    className={twMerge(
+                      'opacity-100 transition-all duration-200',
+                      isPending && 'opacity-0',
+                    )}
+                  >
+                    Leave
+                  </p>
+                  <Image
+                    className={twJoin(
+                      'absolute left-1/2 h-4 w-4 -translate-x-1/2 opacity-0 transition-all duration-200',
+                      isPending && 'opacity-100',
+                    )}
+                    src={spinner}
+                    alt=""
+                  />
                 </Button>
               </div>
-            </div>
+            </Form>
           )}
         </Dialog>
       </Modal>
