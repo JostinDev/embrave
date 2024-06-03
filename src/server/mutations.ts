@@ -486,6 +486,14 @@ export async function setBaseCredits(userID: string) {
   });
 }
 
+export async function userHasWatchedTutorial(userID: string, hasWatchedTutorial: boolean) {
+  await clerkClient.users.updateUserMetadata(userID, {
+    publicMetadata: {
+      hasWatchedTutorial: hasWatchedTutorial,
+    },
+  });
+}
+
 export async function getCheckoutSessionClientSecret() {
   const checkoutSession = await createCheckoutSession();
 

@@ -4,7 +4,7 @@ import { Webhook } from 'svix';
 import { z } from 'zod';
 
 import stripe from '@/config/stripe';
-import { setBaseCredits } from '@/server/mutations';
+import { setBaseCredits, userHasWatchedTutorial } from '@/server/mutations';
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -53,6 +53,7 @@ export async function POST(req: Request) {
   if (event.type === 'user.created') {
     const newUser = event.data;
     await setBaseCredits(newUser.id);
+    await userHasWatchedTutorial(newUser.id, false);
     await createStripeCustomer(newUser);
   } else if (event.type === 'user.updated') {
     const updatedUser = event.data;

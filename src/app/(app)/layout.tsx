@@ -18,6 +18,24 @@ type RootLayoutProps = {
 
 export default async function AppLayout({ children }: RootLayoutProps) {
   const user = await currentUser();
+
+  if (!user)
+    return (
+      <div className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+        The user is not authenticated
+      </div>
+    );
+
+  let showTutorial = false;
+  if (
+    typeof user.publicMetadata.hasWatchedTutorial === 'boolean' &&
+    !user.publicMetadata.hasWatchedTutorial
+  ) {
+    if (!user.publicMetadata.hasWatchedTutorial) {
+      showTutorial = true;
+    }
+  }
+
   return (
     <ClerkProvider>
       <div>
