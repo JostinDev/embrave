@@ -57,6 +57,9 @@ dependencies:
   react-dom:
     specifier: 19.0.0-rc-4c2e457c7c-20240522
     version: 19.0.0-rc-4c2e457c7c-20240522(react@19.0.0-rc-4c2e457c7c-20240522)
+  react-use-wizard:
+    specifier: 2.3.0
+    version: 2.3.0(react-dom@19.0.0-rc-4c2e457c7c-20240522)(react@19.0.0-rc-4c2e457c7c-20240522)
   sonner:
     specifier: 1.4.41
     version: 1.4.41(react-dom@19.0.0-rc-4c2e457c7c-20240522)(react@19.0.0-rc-4c2e457c7c-20240522)
@@ -6757,6 +6760,17 @@ packages:
       '@react-stately/tree': 3.7.6(react@19.0.0-rc-4c2e457c7c-20240522)
       '@react-types/shared': 3.22.1(react@19.0.0-rc-4c2e457c7c-20240522)
       react: 19.0.0-rc-4c2e457c7c-20240522
+    dev: false
+
+  /react-use-wizard@2.3.0(react-dom@19.0.0-rc-4c2e457c7c-20240522)(react@19.0.0-rc-4c2e457c7c-20240522):
+    resolution: {integrity: sha512-z06pQNZ18FvoK+ZDW50hOf0uOySo0Hhd7H4y0MLyk/tBCwpUKGBeULosORBVhipUaWihNLpLJxwH5f+85Qt5XA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 19.0.0-rc-4c2e457c7c-20240522
+      react-dom: 19.0.0-rc-4c2e457c7c-20240522(react@19.0.0-rc-4c2e457c7c-20240522)
     dev: false
 
   /react@19.0.0-rc-4c2e457c7c-20240522:

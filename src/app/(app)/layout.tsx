@@ -9,6 +9,7 @@ import '@/app/globals.css';
 import { currentUser } from '@clerk/nextjs/server';
 import { Toaster } from 'sonner';
 
+import WizardModal from '@/app/(app)/components/WizardModal';
 import Menu from './Menu';
 import MenuMobile from './MenuMobile';
 
