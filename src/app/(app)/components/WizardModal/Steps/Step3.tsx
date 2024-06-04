@@ -2,6 +2,7 @@
 
 import React, { useActionState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button, Checkbox, FieldError, Form } from 'react-aria-components';
 import { useWizard } from 'react-use-wizard';
 import { twJoin, twMerge } from 'tailwind-merge';
@@ -19,7 +20,11 @@ export default function Step3() {
     <Form action={formAction} validationErrors={state?.errors}>
       <p className="mb-4 font-nexa text-xl font-bold text-sand-12">Step 3</p>
       <p className="mb-4 font-inter text-base leading-18 text-sand-12">
-        Please accept the terms of service before continuing
+        Please accept the{' '}
+        <Link className="text-blue-600" target="_blank" href={'/terms_and_conditions'}>
+          terms and conditions
+        </Link>{' '}
+        before continuing.
       </p>
       <Checkbox
         isSelected={selected}
