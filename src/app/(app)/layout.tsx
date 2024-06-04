@@ -28,18 +28,17 @@ export default async function AppLayout({ children }: RootLayoutProps) {
     );
 
   let showTutorial = false;
-  if (
-    typeof user.publicMetadata.hasWatchedTutorial === 'boolean' &&
-    !user.publicMetadata.hasWatchedTutorial
-  ) {
+  if (typeof user.publicMetadata.hasWatchedTutorial === 'boolean') {
     if (!user.publicMetadata.hasWatchedTutorial) {
       showTutorial = true;
     }
+  } else {
+    showTutorial = true;
   }
 
   return (
     <ClerkProvider>
-      <WizardModal />
+      {showTutorial && <WizardModal />}
       <div>
         <div className="fixed left-8 top-4 z-20 flex flex-col md:bottom-8">
           <div className="mb-8 flex items-center gap-4">

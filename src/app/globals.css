@@ -214,6 +214,8 @@
     --border-color: #21201c;
     --border-color-pressed: red;
     --focus-ring-color: red;
+    --invalid-color: red;
+    --invalid-color-pressed: #7c0000;
 
     display: flex;
     align-items: center;
@@ -274,6 +276,27 @@
         & svg {
             stroke: none;
             fill: var(--checkmark-color);
+        }
+    }
+
+    &[data-invalid] {
+        .checkbox {
+            border-color: var(--invalid-color);
+        }
+
+        &[data-pressed] .checkbox {
+            border-color: var(--invalid-color-pressed);
+        }
+
+        &[data-selected],
+        &[data-indeterminate] {
+            .checkbox {
+                background: var(--invalid-color);
+            }
+
+            &[data-pressed] .checkbox {
+                background: var(--invalid-color-pressed);
+            }
         }
     }
 }

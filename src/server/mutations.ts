@@ -494,6 +494,31 @@ export async function userHasWatchedTutorial(userID: string, hasWatchedTutorial:
   });
 }
 
+export async function setUserHasWatchedTutorial(prevState: any, formData: FormData) {
+  const { userId } = auth().protect();
+
+  const schema = z.object({
+    termsOfService: z.string().includes('on'),
+  });
+
+  console.log('termsOfService', formData.get('termsOfService'));
+
+  const result = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!result.success) {
+    console.log(result);
+    console.log(result.error.flatten().fieldErrors);
+    return { errors: result.error.flatten().fieldErrors };
+  }
+
+  await clerkClient.users.updateUserMetadata(userId, {
+    publicMetadata: {
+      hasWatchedTutorial: true,
+    },
+  });
+
+  revalidatePath('/');
+}
+
 export async function getCheckoutSessionClientSecret() {
   const checkoutSession = await createCheckoutSession();
 
