@@ -9,7 +9,7 @@ import '@/app/globals.css';
 import { currentUser } from '@clerk/nextjs/server';
 import { Toaster } from 'sonner';
 
-import WizardModal from '@/app/(app)/components/WizardModal';
+import WizardModal from '@/app/(app)/components/WizardModal/WizardModal';
 import Menu from './Menu';
 import MenuMobile from './MenuMobile';
 
@@ -39,6 +39,7 @@ export default async function AppLayout({ children }: RootLayoutProps) {
 
   return (
     <ClerkProvider>
+      <WizardModal />
       <div>
         <div className="fixed left-8 top-4 z-20 flex flex-col md:bottom-8">
           <div className="mb-8 flex items-center gap-4">
