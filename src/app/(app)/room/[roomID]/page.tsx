@@ -47,7 +47,6 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
   });
 
   return (
-    // TODO Mark a challenge as done
     // TODO show image to be uploaded
     // TODO prevent more than 4 images
     <div className="relative min-h-screen">

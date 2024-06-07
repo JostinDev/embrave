@@ -6,7 +6,6 @@ export default async function Challenge() {
 
   return (
     <div className="relative">
-      <h1 className="mb-8 font-nexa text-32 font-bold leading-none">Challenges</h1>
       {Object.entries(challengeItems).map(([category, challenges], i) => {
         if (!challenges || challenges.length === 0) return;
         return (
