@@ -128,6 +128,31 @@ export async function leaveRoom(prevState: any, formData: FormData) {
     return { error: 'The challenge is already completed' };
   }
 
+  const milestonesToDelete = await db
+    .select({ milestoneID: milestone.id })
+    .from(milestone)
+    .where(and(eq(milestone.roomID, formResult.data.roomID), eq(milestone.userID, userId)));
+
+  if (milestonesToDelete.length !== 0) {
+    for (const row of milestonesToDelete) {
+      const deletedMediaLink: { deletedLink: string }[] = await db
+        .delete(milestoneMedia)
+        .where(eq(milestoneMedia.milestoneID, row.milestoneID))
+        .returning({ deletedLink: milestoneMedia.link });
+
+      if (deletedMediaLink.length !== 0) {
+        for (const row of deletedMediaLink) {
+          await del(row.deletedLink);
+        }
+      }
+    }
+  }
+
+  // Delete user milestone from the room
+  await db
+    .delete(milestone)
+    .where(and(eq(milestone.roomID, formResult.data.roomID), eq(milestone.userID, userId)));
+
   // Delete userRoom relation
   const { rowCount: deletedUserRoom } = await db
     .delete(userRoom)
@@ -136,11 +161,6 @@ export async function leaveRoom(prevState: any, formData: FormData) {
   if (deletedUserRoom === 0) {
     return { error: 'Room not found' };
   }
-
-  // Delete user milestone from the room
-  await db
-    .delete(milestone)
-    .where(and(eq(milestone.roomID, formResult.data.roomID), eq(milestone.userID, userId)));
 
   // Get number of users still in the room
   const result = await db
