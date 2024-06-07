@@ -146,14 +146,19 @@ export async function getRoomStreak(roomID: number) {
   let streakCount = 0;
   let currentDate = new Date().setHours(0, 0, 0, 0); // Current date without time
 
+  let isMilestoneDoneToday = false;
+
   for (let i = 0; i < milestones.length; i++) {
     const milestone = milestones[i];
     if (!milestone) continue;
     const milestoneDate = new Date(milestone.timestamp).setHours(0, 0, 0, 0);
     const diffInDays = Math.floor((currentDate - milestoneDate) / (1000 * 60 * 60 * 24));
     if (diffInDays === 0) {
-      // If milestone date is today, increment streak count
-      streakCount++;
+      // If milestone date is today, increment streak count. Only increment if it's not already done today
+      if (!isMilestoneDoneToday) {
+        streakCount++;
+        isMilestoneDoneToday = true;
+      }
     } else if (diffInDays === 1) {
       // If milestone date is yesterday, update current date to yesterday
       currentDate = milestoneDate;
