@@ -4,7 +4,7 @@ import Image from 'next/image';
 import hero from '@/app/(app)/hero.png';
 import logo from '@/app/(app)/images/logo.svg';
 
-export default function LandingPage() {
+export default function TermsAndConditions() {
   return (
     <div>
       <div className="fixed left-8 top-4 z-20 flex flex-col md:bottom-8">
