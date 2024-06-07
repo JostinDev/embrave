@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { twJoin } from 'tailwind-merge';
 
 import Badge from '@/app/(app)/components/Badge';
+import DeleteMilestoneModal from '@/app/(app)/room/[roomID]/DeleteMilestoneModal';
 import type { MilestoneMedia } from '@/server/db/schema';
-import { deleteMilestone } from '@/server/mutations';
 
 type MilestoneRowProps = {
   milestone: {
@@ -46,10 +46,17 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             type={props.milestone.ticked ? 'milestone' : 'update'}
           />
         )}
-
-        <p className="font-inter text-xs leading-14 text-sand-11">
-          {props.milestone.timestamp.toLocaleDateString()}
-        </p>
+        <div className="flex items-center justify-between gap-2">
+          {props.currentUserID === props.milestone.userID && props.milestone.roomID !== null && (
+            <DeleteMilestoneModal
+              roomID={props.milestone.roomID}
+              milestoneID={props.milestone.id}
+            />
+          )}
+          <p className="font-inter text-xs leading-14 text-sand-11">
+            {props.milestone.timestamp.toLocaleDateString()}
+          </p>
+        </div>
       </div>
 
       <div>
@@ -101,14 +108,6 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             );
           })}
         </div>
-        {props.currentUserID === props.milestone.userID && (
-          <form
-            action={deleteMilestone.bind(null, props.milestone.id, props.milestone.roomID)}
-            className="ml-16 mt-2"
-          >
-            <button className="font-bold text-red-700">Delete the Milestone</button>
-          </form>
-        )}
       </div>
     </div>
   );

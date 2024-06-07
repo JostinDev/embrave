@@ -176,7 +176,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
             {room.milestones.map((milestone, i, row) => {
               return (
                 <MilestoneRow
-                  key={i}
+                  key={milestone.id}
                   milestone={milestone}
                   isLastRow={i + 1 === row.length}
                   isFirstRow={i === 0}

@@ -389,24 +389,32 @@ function sameDay(d1: Date, d2: Date) {
   );
 }
 
-export async function deleteMilestone(id: number, roomID: number | null) {
+export async function deleteMilestone(prevState: any, formData: FormData) {
   const { userId } = auth().protect();
 
-  if (!roomID) return { error: 'This challenge is already done' };
+  const schema = z.object({
+    roomID: z.coerce.number(),
+    milestoneID: z.coerce.number(),
+  });
 
-  if (await isChallengeComplete(roomID)) {
+  const formResult = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!formResult.success) {
+    return { errors: formResult.error.flatten().fieldErrors };
+  }
+
+  if (await isChallengeComplete(formResult.data.roomID)) {
     return { error: 'This challenge is already done' };
   }
 
   const { rowCount } = await db
     .delete(milestone)
-    .where(and(eq(milestone.id, id), eq(milestone.userID, userId)));
+    .where(and(eq(milestone.id, formResult.data.milestoneID), eq(milestone.userID, userId)));
 
   if (rowCount === 0) {
     return { error: 'Milestone not found' };
   }
 
-  revalidatePath('/room/');
+  revalidatePath('/');
 }
 
 export async function generateNewRoomLink(roomID: number) {
