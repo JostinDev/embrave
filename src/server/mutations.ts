@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
-import { put } from '@vercel/blob';
+import { del, put } from '@vercel/blob';
 import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -406,6 +406,17 @@ export async function deleteMilestone(prevState: any, formData: FormData) {
     return { error: 'This challenge is already done' };
   }
 
+  const deletedMediaLink: { deletedLink: string }[] = await db
+    .delete(milestoneMedia)
+    .where(eq(milestoneMedia.milestoneID, formResult.data.milestoneID))
+    .returning({ deletedLink: milestoneMedia.link });
+
+  if (deletedMediaLink.length !== 0) {
+    for (const row of deletedMediaLink) {
+      await del(row.deletedLink);
+    }
+  }
+
   const { rowCount } = await db
     .delete(milestone)
     .where(and(eq(milestone.id, formResult.data.milestoneID), eq(milestone.userID, userId)));
@@ -500,6 +511,39 @@ export async function userHasWatchedTutorial(userID: string, hasWatchedTutorial:
       hasWatchedTutorial: hasWatchedTutorial,
     },
   });
+}
+
+export async function removeAllUserData(userId: string) {
+  const deletedMediaLink: { deletedLink: string }[] = await db
+    .delete(milestoneMedia)
+    .where(eq(milestone.userID, userId))
+    .returning({ deletedLink: milestoneMedia.link });
+
+  if (deletedMediaLink.length !== 0) {
+    for (const row of deletedMediaLink) {
+      await del(row.deletedLink);
+    }
+  }
+  // Delete user milestone from the room
+  await db.delete(milestone).where(eq(milestone.userID, userId));
+
+  const deletedRoomID: { deletedId: number }[] = await db
+    .delete(userRoom)
+    .where(eq(userRoom.userID, userId))
+    .returning({ deletedId: userRoom.roomID });
+
+  if (deletedRoomID.length === 0) {
+    return { error: 'Room not found' };
+  }
+
+  for (const row of deletedRoomID) {
+    const result = await db.select().from(userRoom).where(eq(userRoom.roomID, row.deletedId));
+
+    // Delete room if no users are in it
+    if (result.length === 0) {
+      await db.delete(room).where(and(eq(room.id, row.deletedId)));
+    }
+  }
 }
 
 export async function setUserHasWatchedTutorial(prevState: any, formData: FormData) {

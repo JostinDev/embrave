@@ -4,7 +4,7 @@ import { Webhook } from 'svix';
 import { z } from 'zod';
 
 import stripe from '@/config/stripe';
-import { setBaseCredits, userHasWatchedTutorial } from '@/server/mutations';
+import { removeAllUserData, setBaseCredits, userHasWatchedTutorial } from '@/server/mutations';
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
@@ -61,6 +61,7 @@ export async function POST(req: Request) {
   } else if (event.type === 'user.deleted') {
     const deletedUser = event.data;
     if (!deletedUser.id) throw new Error('User ID is missing from the event data');
+    await removeAllUserData(deletedUser.id);
     await deleteStripeCustomer(deletedUser.id);
   }
 
