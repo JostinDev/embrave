@@ -118,15 +118,23 @@ async function updateStripeCustomer(clerkUser: UserJSON) {
 }
 
 async function deleteStripeCustomer(clerkUserID: string) {
-  const clerkUser = await clerkClient.users.getUser(clerkUserID);
-  const customerID = clerkUser.publicMetadata.stripeCustomerID;
-  const parseResult = z.string().optional().safeParse(customerID);
-  if (!parseResult.success) {
-    throw new Error('User’s Stripe customer ID is malformed');
+  const { data: foundCustomers } = await stripe.customers.search({
+    query: `metadata['user_id']:'${clerkUserID}'`,
+  });
+
+  if (foundCustomers.length === 0) {
+    console.info('No Stripe customer found for deleted user with ID:', clerkUserID);
+    return;
   }
-  const safeCustomerID = parseResult.data;
 
-  if (!safeCustomerID) return;
+  if (foundCustomers.length > 1) {
+    console.warn('More than one Stripe customer found for deleted user with ID:', clerkUserID);
+  }
 
-  await stripe.customers.del(safeCustomerID, undefined, { idempotencyKey: clerkUserID });
+  // Delete all found customers. Normally, there should be only one, but if there are more, we still want to delete them all.
+  await Promise.all(
+    foundCustomers.map((customer) =>
+      stripe.customers.del(customer.id, undefined, { idempotencyKey: clerkUserID }),
+    ),
+  );
 }
