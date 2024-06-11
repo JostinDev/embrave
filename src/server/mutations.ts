@@ -220,8 +220,6 @@ export async function kickFromRoom(prevState: any, formData: FormData) {
 export async function setUserRoomRole(roomID: number, userID: string, isAdmin: boolean) {
   const { userId } = auth().protect();
 
-  console.log(roomID, userID, isAdmin);
-
   if (!(await isRoomAdmin(userId, roomID)))
     return { error: "You're not allowed to set this property" };
 
@@ -534,18 +532,27 @@ export async function userHasWatchedTutorial(userID: string, hasWatchedTutorial:
 }
 
 export async function removeAllUserData(userId: string) {
-  const deletedMediaLink: { deletedLink: string }[] = await db
-    .delete(milestoneMedia)
-    .where(eq(milestone.userID, userId))
-    .returning({ deletedLink: milestoneMedia.link });
+  const milestonesToDelete = await db
+    .select({ milestoneID: milestone.id })
+    .from(milestone)
+    .where(eq(milestone.userID, userId));
 
-  if (deletedMediaLink.length !== 0) {
-    for (const row of deletedMediaLink) {
-      await del(row.deletedLink);
+  if (milestonesToDelete.length !== 0) {
+    for (const row of milestonesToDelete) {
+      const deletedMediaLink: { deletedLink: string }[] = await db
+        .delete(milestoneMedia)
+        .where(eq(milestoneMedia.milestoneID, row.milestoneID))
+        .returning({ deletedLink: milestoneMedia.link });
+
+      if (deletedMediaLink.length !== 0) {
+        for (const row of deletedMediaLink) {
+          await del(row.deletedLink);
+        }
+      }
     }
+    // Delete user milestone from the room
+    await db.delete(milestone).where(eq(milestone.userID, userId));
   }
-  // Delete user milestone from the room
-  await db.delete(milestone).where(eq(milestone.userID, userId));
 
   const deletedRoomID: { deletedId: number }[] = await db
     .delete(userRoom)
@@ -561,7 +568,7 @@ export async function removeAllUserData(userId: string) {
 
     // Delete room if no users are in it
     if (result.length === 0) {
-      await db.delete(room).where(and(eq(room.id, row.deletedId)));
+      await db.delete(room).where(eq(room.id, row.deletedId));
     }
   }
 }
@@ -573,12 +580,8 @@ export async function setUserHasWatchedTutorial(prevState: any, formData: FormDa
     termsOfService: z.string().includes('on'),
   });
 
-  console.log('termsOfService', formData.get('termsOfService'));
-
   const result = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!result.success) {
-    console.log(result);
-    console.log(result.error.flatten().fieldErrors);
     return { errors: result.error.flatten().fieldErrors };
   }
 
