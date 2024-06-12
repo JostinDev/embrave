@@ -1,11 +1,11 @@
 import 'server-only';
 
-import { auth, clerkClient } from '@clerk/nextjs/server';
-import { and, eq } from 'drizzle-orm';
+import { auth, clerkClient, type User } from '@clerk/nextjs/server';
+import { and, eq, inArray } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
-import { userRoom, type Challenge, type Room } from '@/server/db/schema';
+import { userRoom, type Challenge } from '@/server/db/schema';
 
 type SortedChallenges = {
   [category: string]: Challenge[];
@@ -33,7 +33,7 @@ export async function getChallenges() {
 export async function getUserRoom() {
   const { userId } = auth().protect();
 
-  const userRooms = await db.query.userRoom.findMany({
+  const currentUserRoomMembership = await db.query.userRoom.findMany({
     where: eq(schema.userRoom.userID, userId),
     with: {
       room: {
@@ -44,26 +44,56 @@ export async function getUserRoom() {
     },
   });
 
-  type RoomWithChallenge = Room & {
-    challenge: Challenge;
-  };
-
-  const incompleteRooms: RoomWithChallenge[] = [];
-  const completedRooms: RoomWithChallenge[] = [];
-
-  const rooms = userRooms.map((userRoom) => userRoom.room);
-
-  rooms.map((room) => {
-    if (room) {
-      if (room.isChallengeCompleted) {
-        completedRooms.push(room);
-      } else {
-        incompleteRooms.push(room);
-      }
-    }
+  const allCurrentUserRoomIDs = currentUserRoomMembership.map((userRoom) => userRoom.roomID);
+  // Get all userRooms for all roomIDs
+  const allMemberships = await db.query.userRoom.findMany({
+    where: inArray(schema.userRoom.roomID, allCurrentUserRoomIDs),
   });
 
-  return [completedRooms, incompleteRooms];
+  const allUserIDs = allMemberships.map((userRoom) => userRoom.userID);
+  const allUserResponse = await clerkClient.users.getUserList({ userId: allUserIDs });
+
+  const usersInRoom = allUserResponse.data.map((clerkUser) => {
+    return {
+      id: clerkUser.id,
+      fullName: clerkUser.fullName,
+      imageUrl: clerkUser.imageUrl,
+    };
+  });
+
+  const usersGroupedByRoom = allMemberships.reduce(
+    (acc, membership) => {
+      const user = usersInRoom.find((user) => user.id === membership.userID);
+      if (!user) throw new Error('User not found');
+      return {
+        ...acc,
+        [membership.roomID]: [...(acc[membership.roomID] || []), user],
+      };
+    },
+    {} as { [roomID: number]: Pick<User, 'id' | 'fullName' | 'imageUrl'>[] },
+  );
+
+  const currentUserRoomMembershipWithAllUsers = currentUserRoomMembership.map((membership) => {
+    return {
+      ...membership,
+      user: usersInRoom.find((user) => user.id === membership.userID),
+      room: {
+        ...membership.room,
+        users: usersGroupedByRoom[membership.roomID],
+      },
+    };
+  });
+
+  const rooms = currentUserRoomMembershipWithAllUsers.map((userRoom) => userRoom.room);
+
+  return [
+    rooms.map((room) => {
+      if (room && room.isChallengeCompleted) return room;
+    }),
+    rooms.map((room) => {
+      if (room && !room.isChallengeCompleted) return room;
+    }),
+  ];
 }
 
 // Get the room and its challenge embedded like { id, code, link, created, codeCreatedTimestamp, challenge: { id, title, description, banner, typeID, categoryID, type: { id, type }, category: { id, category } } }

@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import type { User } from '@clerk/nextjs/server';
 
 import Badge from '@/app/(app)/components/Badge';
 import placeholder from '@/app/(app)/explore/ChallengeModal/challengePlaceholder.png';
@@ -12,6 +13,7 @@ type ChallengeCardProps = {
   type: string;
   challenge: string;
   date?: string;
+  users: Pick<User, 'id' | 'fullName' | 'imageUrl'>[] | undefined;
 };
 
 export default function ChallengeCard(props: ChallengeCardProps) {
@@ -59,6 +61,25 @@ export default function ChallengeCard(props: ChallengeCardProps) {
       ) : (
         ''
       )}
+      {props.users && (
+        <div className="flex">
+          {props.users.map((user, i) => {
+            return (
+              <Image
+                key={user.id}
+                alt={user.fullName ? `Profile picture of ${user.fullName}` : 'Profile picture'}
+                title={user.fullName ?? undefined}
+                width={48}
+                height={48}
+                className="mt-3 size-8 rounded-full border border-sand-12"
+                style={i !== 0 ? { marginLeft: -16 } : { marginLeft: 0 }}
+                src={user.imageUrl}
+              />
+            );
+          })}
+        </div>
+      )}
+
       <Image className="h-7 w-7 self-end" src={chevronRight} alt="" width={20} height={20} />
     </div>
   );

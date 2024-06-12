@@ -5,6 +5,7 @@ import { getRoomStreak, getUserRoom } from '@/server/queries';
 
 export default async function Index() {
   const [completedRooms, incompletedRooms] = await getUserRoom();
+  console.log(JSON.stringify(incompletedRooms, null, 2));
   return (
     <div className="relative">
       <div>
@@ -28,6 +29,7 @@ export default async function Index() {
                         date={date}
                         type={room.challenge.type}
                         streak={streak}
+                        users={room.users}
                       />
                     </Link>
                   );
@@ -56,6 +58,7 @@ export default async function Index() {
                         date={date}
                         type={room.challenge.type}
                         streak={0}
+                        users={room.users}
                       />
                     </Link>
                   );
