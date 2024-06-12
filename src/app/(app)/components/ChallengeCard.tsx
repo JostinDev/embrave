@@ -13,7 +13,7 @@ type ChallengeCardProps = {
   type: string;
   challenge: string;
   date?: string;
-  users: Pick<User, 'id' | 'fullName' | 'imageUrl'>[] | undefined;
+  users?: Pick<User, 'id' | 'fullName' | 'imageUrl'>[] | undefined;
 };
 
 export default function ChallengeCard(props: ChallengeCardProps) {
