@@ -4,7 +4,7 @@ import { clerkMiddleware } from '@clerk/nextjs/server';
 export default clerkMiddleware((auth, request) => {
   const isSignedIn = Boolean(auth().userId);
 
-  if (request.nextUrl.pathname === '/' && !isSignedIn) {
+  if (!isSignedIn) {
     return NextResponse.rewrite(new URL('/home', request.url));
   }
 });
