@@ -3,8 +3,9 @@ import Image from 'next/image';
 import { twJoin } from 'tailwind-merge';
 
 import Badge from '@/app/(app)/components/Badge';
-import DeleteMilestoneModal from '@/app/(app)/room/[roomID]/DeleteMilestoneModal';
 import type { MilestoneMedia } from '@/server/db/schema';
+import DeleteMilestoneModal from './DeleteMilestoneModal';
+import MilestoneRowLightbox from './MilestoneRowLightbox';
 
 type MilestoneRowProps = {
   milestone: {
@@ -93,22 +94,8 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             {props.milestone.description}
           </p>
         )}
-
-        <div className="flex flex-row gap-2 pl-16">
-          {props.milestone.medias.map((media) => {
-            return (
-              <Image
-                width={400}
-                height={400}
-                key={media.id}
-                alt=""
-                className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
-                src={media.link}
-              />
-            );
-          })}
-        </div>
       </div>
+      <MilestoneRowLightbox medias={props.milestone.medias} />
     </div>
   );
 }
