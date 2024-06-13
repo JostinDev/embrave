@@ -166,7 +166,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         <div className="relative">
           {!room.isChallengeCompleted && (
             <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]">
-              <div className="z-0 h-[48px] w-[48px] flex-shrink-0 rounded-full border border-sand-5 bg-sand-3" />
+              <div className="absolute z-0 h-12 w-12 rounded-full border border-sand-5 bg-sand-3" />
               <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
             </div>
           )}
