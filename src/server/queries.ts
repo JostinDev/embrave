@@ -45,6 +45,8 @@ export async function getUserRoom() {
   });
 
   const allCurrentUserRoomIDs = currentUserRoomMembership.map((userRoom) => userRoom.roomID);
+  if (!allCurrentUserRoomIDs) throw new Error('No current user room IDs');
+
   // Get all userRooms for all roomIDs
   const allMemberships = await db.query.userRoom.findMany({
     where: inArray(schema.userRoom.roomID, allCurrentUserRoomIDs),
