@@ -52,6 +52,7 @@ export async function POST(req: Request) {
 
   if (event.type === 'user.created') {
     const newUser = event.data;
+    console.log('new user', newUser);
     await setBaseCredits(newUser.id);
     await userHasWatchedTutorial(newUser.id, false);
     await createStripeCustomer(newUser);
