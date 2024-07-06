@@ -22,7 +22,7 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
     <DialogTrigger>
       <Modal
         defaultOpen
-        className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
+        className="mx-auto w-full max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
         isOpen={true}
       >
         <Dialog className="flex flex-col outline-none">

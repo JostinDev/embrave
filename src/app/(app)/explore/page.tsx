@@ -1,8 +1,24 @@
+import { currentUser } from '@clerk/nextjs/server';
+
 import { getChallenges } from '@/server/queries';
 import ChallengeModal from './ChallengeModal';
 
 export default async function Challenge() {
   const challengeItems = await getChallenges();
+
+  const user = await currentUser();
+
+  if (!user)
+    return (
+      <div className="font-nexa text-26 font-bold leading-[115%] text-sand-12">
+        The user is not authenticated
+      </div>
+    );
+
+  let currentCredits = 0;
+  if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
+    currentCredits = user.publicMetadata.credits;
+  }
 
   return (
     <div className="relative">
@@ -17,7 +33,7 @@ export default async function Challenge() {
               {challenges.map((challenge, j) => {
                 return (
                   <div key={j}>
-                    <ChallengeModal challenge={challenge} />
+                    <ChallengeModal credits={currentCredits} challenge={challenge} />
                   </div>
                 );
               })}

@@ -7,17 +7,19 @@ import { twJoin, twMerge } from 'tailwind-merge';
 
 import Badge from '@/app/(app)/components/Badge';
 import ChallengeCard from '@/app/(app)/components/ChallengeCard';
+import RemainingCredits from '@/app/(app)/components/RemainingCredits';
 import cross from '@/app/(app)/images/cross.svg';
 import spinner from '@/app/(app)/images/spinner.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
 import type { Challenge } from '@/server/db/schema';
-import { createMilestone, createRoom } from '@/server/mutations';
+import { createRoom } from '@/server/mutations';
 
 type ChallengeModalProps = {
   challenge: Challenge;
+  credits: number;
 };
 
-export default function ChallengeModal({ challenge }: ChallengeModalProps) {
+export default function ChallengeModal({ challenge, credits }: ChallengeModalProps) {
   const [state, formAction, isPending] = useActionState(createRoom, { errors: {} });
 
   return (
@@ -27,7 +29,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
       </Button>
       <Modal
         isDismissable
-        className="absolute top-4 w-[90%] max-w-[1100px] rounded-[44px] border border-sand-5 bg-sand-1 px-4 pb-6 pt-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
+        className="mx-auto w-full max-w-[1100px] rounded-[44px] border border-sand-5 bg-sand-1 px-4 pb-6 pt-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
       >
         <Dialog className="flex flex-col outline-none">
           {({ close }) => (
@@ -79,10 +81,13 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                   You can start a new challenge now and then invite friends to join you on your
                   challenge.
                 </p>
+
+                <RemainingCredits credits={credits} cost={1} />
+
                 <Button
                   isDisabled={isPending}
                   type="submit"
-                  className="relative flex h-fit items-center gap-2 rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1 transition-all"
+                  className="relative mt-6 flex h-fit items-center gap-2 rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1 transition-all"
                 >
                   <p
                     className={twMerge(
@@ -90,7 +95,7 @@ export default function ChallengeModal({ challenge }: ChallengeModalProps) {
                       isPending && 'opacity-0',
                     )}
                   >
-                    Let’s go!
+                    Start challenge
                   </p>
                   <Image
                     className={twJoin(

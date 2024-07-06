@@ -23,7 +23,7 @@ export default function LeaveRoomModal(props: LeaveRoomModalProps) {
       </Button>
       <Modal
         isDismissable
-        className="w-[90%] max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
+        className="mx-auto w-full max-w-[480px] rounded-2xl border border-sand-5 bg-sand-1 p-6 shadow-[0px_8px_20px_rgba(0,0,0/0.1)]"
       >
         <Dialog role="alertdialog" className="flex flex-col outline-none">
           {({ close }) => (
