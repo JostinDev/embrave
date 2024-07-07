@@ -596,8 +596,8 @@ export async function setUserHasWatchedTutorial(prevState: any, formData: FormDa
   revalidatePath('/');
 }
 
-export async function getCheckoutSessionClientSecret() {
-  const checkoutSession = await createCheckoutSession();
+export async function getCheckoutSessionClientSecretLifetime() {
+  const checkoutSession = await createCheckoutSession(true);
 
   if (!checkoutSession.client_secret) {
     throw new Error('Stripe checkout session’s client secret is missing');
@@ -606,7 +606,17 @@ export async function getCheckoutSessionClientSecret() {
   return checkoutSession.client_secret;
 }
 
-async function createCheckoutSession() {
+export async function getCheckoutSessionClientSecretCredits() {
+  const checkoutSession = await createCheckoutSession(false);
+
+  if (!checkoutSession.client_secret) {
+    throw new Error('Stripe checkout session’s client secret is missing');
+  }
+
+  return checkoutSession.client_secret;
+}
+
+async function createCheckoutSession(isLifetime: boolean) {
   const user = await currentUser();
   if (!user) throw new Error('User not authenticated');
 
@@ -621,16 +631,31 @@ async function createCheckoutSession() {
   const origin = headers().get('origin');
   if (!origin) throw new Error('Origin header is missing');
 
-  return await stripe.checkout.sessions.create({
-    mode: 'payment',
-    ui_mode: 'embedded',
-    line_items: [
-      {
-        price: 'price_1P405j05xPAER8V0FZ46vU4m',
-        quantity: 1,
-      },
-    ],
-    customer: safeCustomerID,
-    return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
-  });
+  if (isLifetime) {
+    return await stripe.checkout.sessions.create({
+      mode: 'payment',
+      ui_mode: 'embedded',
+      line_items: [
+        {
+          price: 'price_1P405j05xPAER8V0FZ46vU4m',
+          quantity: 1,
+        },
+      ],
+      customer: safeCustomerID,
+      return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
+    });
+  } else {
+    return await stripe.checkout.sessions.create({
+      mode: 'payment',
+      ui_mode: 'embedded',
+      line_items: [
+        {
+          price: 'price_1PZudd05xPAER8V0KQVkPqEZ',
+          quantity: 1,
+        },
+      ],
+      customer: safeCustomerID,
+      return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
+    });
+  }
 }

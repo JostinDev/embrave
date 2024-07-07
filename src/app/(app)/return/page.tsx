@@ -19,6 +19,17 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
 
   if (checkoutSession.status !== 'complete') redirect('/premium');
 
+  const lineItems = await stripe.checkout.sessions.listLineItems(checkoutSession.id);
+
+  if (lineItems.data[0] && lineItems.data[0].price) {
+    const priceID = lineItems.data[0].price.id;
+    if (priceID === 'price_1P405j05xPAER8V0FZ46vU4m') {
+      console.log('lifetime plan');
+    } else if (priceID === 'price_1PZudd05xPAER8V0KQVkPqEZ') {
+      console.log('credits plan');
+    }
+  }
+
   await clerkClient.users.updateUserMetadata(userId, {
     publicMetadata: {
       isPremium: true,
