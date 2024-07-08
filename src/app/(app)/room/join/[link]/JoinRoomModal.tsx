@@ -35,10 +35,10 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
             >
               Do you want to join this challenge?
             </Heading>
-            <p className="mb-2 font-inter text-base leading-18 text-sand-12">
+            <p className="mb-2 font-inter text-base leading-18 text-sand-11">
               You are about to join the challenge:
             </p>
-            <p className="mb-4 font-inter text-base font-black leading-18 text-sand-12">
+            <p className="mb-4 font-inter text-base font-black leading-18 text-sand-11">
               {props.challengeName}
             </p>
 

@@ -7,7 +7,7 @@ import { twJoin, twMerge } from 'tailwind-merge';
 
 import logoutRed from '@/app/(app)/images/logoutRed.svg';
 import spinner from '@/app/(app)/images/spinner.svg';
-import { createMilestone, leaveRoom } from '@/server/mutations';
+import { leaveRoom } from '@/server/mutations';
 
 type LeaveRoomModalProps = {
   roomID: number;
@@ -35,10 +35,10 @@ export default function LeaveRoomModal(props: LeaveRoomModalProps) {
               >
                 Do you want to leave this challenge?
               </Heading>
-              <p className="mb-4 font-inter text-base leading-18 text-sand-12">
+              <p className="mb-4 font-inter text-base leading-18 text-sand-11">
                 Leaving this challenge will remove all your data and cannot be undone.
               </p>
-              <p className="font-inter text-base leading-18 text-sand-12">
+              <p className="font-inter text-base leading-18 text-sand-11">
                 If you want to complete the challenge, this is not the correct way to do it.
               </p>
               <div className="mt-6 flex justify-between gap-4">

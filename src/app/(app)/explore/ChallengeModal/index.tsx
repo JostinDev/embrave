@@ -69,7 +69,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                 <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
                   Challenge description
                 </p>
-                <p className="font-inter text-base leading-18 text-sand-12">
+                <p className="font-inter text-base leading-18 text-sand-11">
                   {challenge.description}
                 </p>
               </div>

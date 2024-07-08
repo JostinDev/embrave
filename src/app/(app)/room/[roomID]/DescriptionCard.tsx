@@ -36,7 +36,7 @@ export default function DescriptionCard(props: buttonProps) {
       </div>
 
       {isRoomDescriptionAccordionOpen && (
-        <p className="mt-2 font-inter text-base leading-18 text-sand-12">{props.description}</p>
+        <p className="mt-2 font-inter text-base leading-18 text-sand-11">{props.description}</p>
       )}
     </div>
   );

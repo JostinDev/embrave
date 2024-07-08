@@ -75,9 +75,9 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             src={props.milestone.user.imageUrl}
           />
           {props.isLastMilestone ? (
-            <p className="font-nexa text-xl font-bold">The challenge is complete!</p>
+            <p className="font-nexa text-xl font-bold text-sand-12">The challenge is complete!</p>
           ) : (
-            <p className="font-nexa text-xl font-bold">
+            <p className="font-nexa text-xl font-bold text-sand-12">
               {props.milestone.ticked
                 ? props.milestone.user.fullName + ' has set the challenge as done'
                 : props.milestone.title}
@@ -86,11 +86,11 @@ export default function MilestoneRow(props: MilestoneRowProps) {
         </div>
 
         {props.isLastMilestone ? (
-          <p className="pb-6 pl-16 font-inter text-base leading-18">
+          <p className="pb-6 pl-16 font-inter text-base leading-18 text-sand-11">
             Congratulations on finishing the challenge!
           </p>
         ) : (
-          <p className="pb-6 pl-16 font-inter text-base leading-18">
+          <p className="pb-6 pl-16 font-inter text-base leading-18 text-sand-11">
             {props.milestone.description}
           </p>
         )}
