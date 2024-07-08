@@ -17,9 +17,10 @@ import { createRoom } from '@/server/mutations';
 type ChallengeModalProps = {
   challenge: Challenge;
   credits: number;
+  isPremium: boolean;
 };
 
-export default function ChallengeModal({ challenge, credits }: ChallengeModalProps) {
+export default function ChallengeModal({ challenge, credits, isPremium }: ChallengeModalProps) {
   const [state, formAction, isPending] = useActionState(createRoom, { errors: {} });
 
   return (
@@ -82,7 +83,7 @@ export default function ChallengeModal({ challenge, credits }: ChallengeModalPro
                   challenge.
                 </p>
 
-                <RemainingCredits credits={credits} cost={1} />
+                <RemainingCredits isPremium={isPremium} credits={credits} cost={1} />
 
                 <Button
                   isDisabled={isPending}

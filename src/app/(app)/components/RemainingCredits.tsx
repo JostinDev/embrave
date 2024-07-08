@@ -7,9 +7,14 @@ import cart from '@/app/(app)/images/cart.svg';
 type RemainingCreditsProps = {
   credits: number;
   cost: number;
+  isPremium: boolean;
 };
 
 export default function RemainingCredits(props: RemainingCreditsProps) {
+  if (props.isPremium) {
+    return <div></div>;
+  }
+
   return (
     <div className="flex w-full flex-wrap items-center gap-4 rounded-2xl border border-dashed border-sand-11 bg-white p-4 sm:flex-nowrap sm:gap-6">
       <div className="flex w-full flex-col rounded-lg border border-solid border-sand-7 bg-sand-2 p-3">

@@ -20,6 +20,11 @@ export default async function Challenge() {
     currentCredits = user.publicMetadata.credits;
   }
 
+  let isPremium = false;
+  if (user.publicMetadata.isPremium && typeof user.publicMetadata.isPremium === 'boolean') {
+    isPremium = user.publicMetadata.isPremium;
+  }
+
   return (
     <div className="relative">
       {Object.entries(challengeItems).map(([category, challenges], i) => {
@@ -33,7 +38,11 @@ export default async function Challenge() {
               {challenges.map((challenge, j) => {
                 return (
                   <div key={j}>
-                    <ChallengeModal credits={currentCredits} challenge={challenge} />
+                    <ChallengeModal
+                      isPremium={isPremium}
+                      credits={currentCredits}
+                      challenge={challenge}
+                    />
                   </div>
                 );
               })}
