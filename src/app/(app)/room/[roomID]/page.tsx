@@ -56,7 +56,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
           <p className="font-inter text-base font-medium leading-5 text-sand-12">Back</p>
         </Link>
         <div className="flex items-center gap-6">
-          {isAdmin && !room.isChallengeCompleted && (
+          {!room.isChallengeCompleted && (
             <ManagePopover
               userRooms={userRooms}
               roomID={roomID}
