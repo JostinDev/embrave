@@ -497,20 +497,27 @@ export async function removeCredit() {
   const user = await currentUser();
   if (!user) return { error: 'User not authenticated' };
 
+  let isPremium = false;
+  if (user.publicMetadata.isPremium && typeof user.publicMetadata.isPremium === 'boolean') {
+    isPremium = user.publicMetadata.isPremium;
+  }
+
   let currentCredits = 0;
   if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
     currentCredits = user.publicMetadata.credits;
   }
 
-  if (currentCredits <= 0) redirect(`/subscribe`);
+  if (!isPremium) {
+    if (currentCredits <= 0) redirect(`/premium`);
 
-  const updatedCredits = currentCredits - 1;
+    const updatedCredits = currentCredits - 1;
 
-  await clerkClient.users.updateUserMetadata(user?.id, {
-    publicMetadata: {
-      credits: updatedCredits,
-    },
-  });
+    await clerkClient.users.updateUserMetadata(user?.id, {
+      publicMetadata: {
+        credits: updatedCredits,
+      },
+    });
+  }
 }
 
 export async function setBaseCredits(userID: string) {

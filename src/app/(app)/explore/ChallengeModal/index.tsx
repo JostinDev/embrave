@@ -65,6 +65,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                   </div>
                 </div>
               </div>
+
               <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
                 <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
                   Challenge description
@@ -86,9 +87,12 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                 <RemainingCredits isPremium={isPremium} credits={credits} cost={1} />
 
                 <Button
-                  isDisabled={isPending}
+                  isDisabled={isPending || (credits <= 0 && !isPremium)}
                   type="submit"
-                  className="relative mt-6 flex h-fit items-center gap-2 rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1 transition-all"
+                  className={twMerge(
+                    'relative mt-6 flex h-fit items-center gap-2 rounded-lg bg-green-11 p-3 font-inter text-base leading-18 text-green-1 transition-all',
+                    credits <= 0 && !isPremium && 'bg-sand-10',
+                  )}
                 >
                   <p
                     className={twMerge(

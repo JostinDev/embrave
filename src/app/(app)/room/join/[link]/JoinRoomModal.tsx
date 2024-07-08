@@ -57,11 +57,11 @@ export default function JoinRoomModal(props: JoinRoomModalProps) {
               </Button>
 
               <Button
-                isDisabled={isPending || props.credits <= 0}
+                isDisabled={isPending || (props.credits <= 0 && !props.isPremium)}
                 type="submit"
                 className={twMerge(
                   'relative flex h-fit w-full items-center justify-center gap-2 rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3 transition-all',
-                  props.credits <= 0 && 'bg-sand-10',
+                  props.credits <= 0 && !props.isPremium && 'bg-sand-10',
                 )}
               >
                 <p
