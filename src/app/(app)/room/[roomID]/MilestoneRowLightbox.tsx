@@ -20,7 +20,7 @@ export default function MilestoneRowLightbox(props: MilestoneRowLightboxProps) {
   });
 
   return (
-    <div className="flex flex-row gap-2 pl-16">
+    <div className="flex flex-row flex-wrap gap-4 pl-16 sm:flex-nowrap">
       {props.medias.map((media) => {
         return (
           <button key={media.id} type="button" onClick={() => setOpen(true)}>
@@ -28,7 +28,7 @@ export default function MilestoneRowLightbox(props: MilestoneRowLightboxProps) {
               width={400}
               height={400}
               alt=""
-              className="flex h-24 w-36 rounded-2xl object-cover drop-shadow"
+              className="flex h-16 w-24 rounded-2xl object-cover drop-shadow sm:h-24 sm:w-36"
               src={media.link}
             />
           </button>

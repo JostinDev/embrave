@@ -88,7 +88,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
       <div className="relative mb-8">
         <Image
-          className="h-[400px] w-full rounded-[26px]"
+          className="h-[450px] w-full rounded-[26px] sm:h-[400px]"
           style={{ objectFit: 'cover' }}
           placeholder="blur"
           src={stairs}
