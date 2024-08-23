@@ -59,11 +59,17 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   const customerEmail = checkoutSession.customer_details?.email;
 
   return (
-    <section>
-      <p>
-        We appreciate your business! A confirmation email will be sent to {customerEmail}. If you
-        have any questions, please email <a href="mailto:orders@example.com">orders@example.com</a>.
-      </p>
-    </section>
+     
+<div className="mt-10">
+  <div className="bg-sand-1 border border-sand-5 rounded-[42px] px-4 pb-4 pt-12">
+    <h1 className="text-sand-12 font-nexa font-bold text-32 text-center">You are all set!</h1>
+    <h2 className="text-sand-11 font-inter font-regular text-base text-center mb-12">Thank you for supporting Embrave! We appreciate you!</h2>
+
+    <p className='font-inter font-regular text-xs text-sand-11 text-center'>
+        A confirmation email has been sent to your email. If you have questions feel free to reach out to <a className='underline' href="mailto:orders@embrave.com">orders@embrave.com</a>.
+    </p>
+
+  </div>
+</div>
   );
 }

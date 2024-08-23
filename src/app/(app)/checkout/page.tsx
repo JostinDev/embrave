@@ -1,7 +1,7 @@
 import React from 'react';
 import { currentUser } from '@clerk/nextjs/server';
 
-import CheckoutPlan from '@/app/(app)/premium/CheckoutPlan';
+import Checkout from '@/app/(app)/checkout/Checkout';
 
 export default async function Page() {
   const user = await currentUser();
@@ -28,7 +28,7 @@ export default async function Page() {
 
   return (
     <div className="mt-10">
-      <CheckoutPlan />
+      <Checkout />
     </div>
   );
 }

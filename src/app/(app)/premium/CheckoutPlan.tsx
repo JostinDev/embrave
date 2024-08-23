@@ -1,116 +1,94 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 
 import flag from '@/app/(app)/images/flagGreen.svg';
 import flameJade from '@/app/(app)/images/flameJade.svg';
 import world from '@/app/(app)/images/world.svg';
-import {
-  getCheckoutSessionClientSecretCredits,
-  getCheckoutSessionClientSecretLifetime,
-} from '@/server/mutations';
-
-if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
-  throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set');
-}
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+import { Button } from 'react-aria-components';
+import Link from 'next/link';
 
 export default function CheckoutPlan() {
-  const [isLifetime, setIsLifetime] = useState(true);
 
   return (
     <div className="mt-10">
-      <div className="flex gap-6">
-        <div
-          onClick={() => setIsLifetime(false)}
-          className="flex h-[320px] cursor-pointer flex-col rounded-[26px] border border-solid border-jade-5 bg-jade-1 p-8"
-        >
-          <div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-jade-3 px-3 py-2 font-inter text-base font-normal text-jade-11">
-            <Image className="h-4 w-4" src={flag} alt="" />
-            <p>To push yourself a bit</p>
-          </div>
-          <p className="mt-5 font-nexa text-26 font-bold leading-8 text-jade-11">
-            Need to get a few more credits?
-          </p>
-          <p className="mt-4 font-inter text-base font-normal leading-5 text-jade-11">
-            If you have used all your credits, you can buy 3 credits to join or start new
-            challenges.
-          </p>
-          <div className="mt-auto">
-            <p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
-            <p className="font-nexa text-xl font-light text-jade-12">
-              <span className="font-bold">9.00 CHF</span> for 3 credits
-            </p>
-          </div>
-        </div>
+      <div className="bg-sand-1 border border-sand-5 rounded-[42px] px-4 pb-4 pt-12">
+        <h1 className="text-sand-12 font-nexa font-bold text-32 text-center">Select the best option for you</h1>
+        <h2 className="text-sand-11 font-inter font-regular text-base text-center mb-12">Embrave can be enjoyed in many different ways, find the best option for you below.</h2>
+        
+        <div className="flex items-end gap-6">
 
-        <div
-          onClick={() => setIsLifetime(true)}
-          className="flex h-[320px] cursor-pointer flex-col rounded-[26px] border border-solid border-jade-5 bg-jade-1 p-8"
-        >
-          <div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-jade-11 px-3 py-2 font-inter text-base font-normal text-jade-1">
-            <Image className="h-5 w-5" src={flameJade} alt="" />
-            <p>Most popular</p>
-          </div>
-          <p className="mt-5 font-nexa text-26 font-bold leading-8 text-jade-11">
-            Push yourself even further with <span>Embrave Premium!</span>
-          </p>
-          <p className="mt-4 font-inter text-base font-normal leading-5 text-jade-11">
-            Find the perfect challenge to get outside your comfort zone. Embrave offers a wide range
-            of different challenges, to get you to challenge yourself.
-          </p>
-          <div className="mt-auto">
-            <p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
-            <p className="font-nexa text-xl font-light text-jade-12">
-              <span className="font-bold">40.00 CHF</span> for unlimited credits
-            </p>
-          </div>
-        </div>
+			<div className="flex flex-col rounded-[26px] border border-solid border-sand-5 bg-sand-1 p-8">
+				<div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-sand-3 px-3 py-2 font-inter text-base font-normal text-sand-11">
+				<Image className="h-6 w-6" src={world} alt="" />
+				<p>Free tier</p>
+				</div>
+				<p className="mt-5 mb-8 font-nexa text-xl font-bold text-sand-12">
+				Continue with your current challenges
+				</p>
+						
+				<ul className="list-disc mb-20">
+					<li className="text-sand-11 font-inter text-base font-light mb-2">Ability to create updates on already started or joined challenges</li>
+					<li className="text-sand-11 font-inter text-base font-light">Unlimited picture upload</li>
+				</ul>
 
-        <div className="flex h-[320px] flex-col rounded-[26px] border border-solid border-sand-5 bg-sand-1 p-8">
-          <div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-sand-3 px-3 py-2 font-inter text-base font-normal text-sand-11">
-            <Image className="h-6 w-6" src={world} alt="" />
-            <p>Free tier</p>
-          </div>
-          <p className="mt-5 font-nexa text-26 font-bold leading-8 text-sand-12">
-            Continue with your current challenges
-          </p>
-          <p className="mt-4 font-inter text-base font-normal leading-5 text-sand-11">
-            If you don’t want to join or start new challenges, you can still enjoy the cool features
-            of Embrave like posting updates or adding milestones to your existing challenges.
-          </p>
-          <div className="mt-auto">
-            <p className="font-nexa text-xl font-light text-jade-12">
-              <span className="font-bold">Free</span> nor need for credits
-            </p>
-          </div>
-        </div>
-      </div>
+				<p className="font-nexa text-xl font-light text-jade-12 mb-4">
+					<span className="font-bold">Free</span> nor need for credits
+				</p>
 
-      <div key={isLifetime.toString()}>
-        {isLifetime ? (
-          <div className="mt-10" id="checkout">
-            <EmbeddedCheckoutProvider
-              stripe={stripePromise}
-              options={{ fetchClientSecret: getCheckoutSessionClientSecretLifetime }}
-            >
-              <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>
-          </div>
-        ) : (
-          <div className="mt-10" id="checkout">
-            <EmbeddedCheckoutProvider
-              stripe={stripePromise}
-              options={{ fetchClientSecret: getCheckoutSessionClientSecretCredits }}
-            >
-              <EmbeddedCheckout />
-            </EmbeddedCheckoutProvider>
-          </div>
-        )}
+				<Link href={{pathname: '/'}}>
+					<Button className="h-fit w-full rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">Continue with free tier</Button>
+				</Link>
+
+			</div>
+
+			<div className="flex flex-col rounded-[26px] border border-solid border-jade-5 bg-jade-1 p-8">
+				<div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-jade-11 px-3 py-2 font-inter text-base font-normal text-jade-1">
+					<Image className="h-5 w-5" src={flameJade} alt="" />
+				<p>Most popular</p>
+				</div>
+				<p className="mt-5 mb-8 font-nexa text-xl font-bold leading-8 text-jade-11">
+				Push yourself even further with <span>Embrave Premium!</span>
+				</p>
+				<ul className="list-disc mb-24">
+					<li className="text-jade-11 font-inter text-base font-light mb-2">Ability to create updates on already started or joined challenges</li>
+					<li className="text-jade-11 font-inter text-base font-light mb-2">Unlimited picture upload</li>
+					<li className="text-jade-11 font-inter text-base font-medium">Ability to start or join unlimited new challenges</li>
+				</ul>
+				<p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
+				<p className="font-nexa text-xl font-light text-jade-12 mb-4">
+					<span className="font-bold">40.00 CHF</span> for unlimited credits
+				</p>
+
+				<Link href={{pathname: '/checkout', query: { plan: 'lifetime' }}}>
+					<Button className="h-fit w-full rounded-lg bg-jade-12 p-3 font-inter text-base leading-18 text-jade-3">Select Premium</Button>
+				</Link>
+			</div>
+
+			<div className="flex flex-col rounded-[26px] border border-solid border-jade-5 bg-jade-1 p-8">
+				<div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-jade-3 px-3 py-2 font-inter text-base font-normal text-jade-11">
+				<Image className="h-4 w-4" src={flag} alt="" />
+				<p>To push yourself a bit</p>
+				</div>
+				<p className="mt-5 font-nexa text-xl font-bold leading-8 text-jade-11">
+				Need to get a few more credits?
+				</p>
+				<ul className="list-disc mb-20">
+					<li className="text-jade-11 font-inter text-base font-light mb-2">Ability to create updates on already started or joined challenges</li>
+					<li className="text-jade-11 font-inter text-base font-light mb-2">Unlimited picture upload</li>
+					<li className="text-jade-11 font-inter text-base font-medium">Ability to join or start 3 new challenges</li>
+				</ul>
+				<p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
+				<p className="font-nexa text-xl font-light text-jade-12 mb-4">
+					<span className="font-bold">9.00 CHF</span> for 3 credits
+				</p>
+
+				<Link href={{pathname: '/checkout', query: { plan: 'credits' }}}>
+					<Button className="h-fit w-full rounded-lg bg-jade-12 p-3 font-inter text-base leading-18 text-jade-3">Select credits</Button>
+				</Link>
+			</div>
+        </div>
       </div>
     </div>
   );
