@@ -12,7 +12,13 @@ import { Points } from '@/app/enum/pointsEnum';
 import RandomStringGenerator from '@/app/utils/randomStringGenerator';
 import stripe from '@/config/stripe';
 import { db } from '@/server/db';
-import { milestone, milestoneMedia, room, userRoom } from '@/server/db/schema';
+import {
+  milestone,
+  milestoneMedia,
+  room,
+  stripeCheckoutSessionID,
+  userRoom,
+} from '@/server/db/schema';
 import { isChallengeComplete, isLinkActive, isRoomAdmin, isUserInRoom } from './queries';
 
 const MAX_FILE_SIZE = 4500000;
@@ -665,4 +671,15 @@ async function createCheckoutSession(isLifetime: boolean) {
       return_url: `${origin}/return?sessionID={CHECKOUT_SESSION_ID}`,
     });
   }
+}
+
+export async function setStripeCheckoutSessionID(sessionID: string) {
+  const { userId } = auth().protect();
+
+  await db.insert(stripeCheckoutSessionID).values({
+    userID: userId,
+    sessionID: sessionID,
+  });
+
+  revalidatePath('/');
 }

@@ -107,3 +107,9 @@ export const userRoomRelations = relations(userRoom, ({ one }) => ({
     references: [room.id],
   }),
 }));
+
+export const stripeCheckoutSessionID = pgTable('stripeCheckoutSessionID', {
+  id: serial('id').primaryKey(),
+  userID: varchar('user_id', { length: 256 }).notNull(),
+  sessionID: varchar('session_id', { length: 256 }).notNull(),
+});

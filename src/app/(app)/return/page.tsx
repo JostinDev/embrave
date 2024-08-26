@@ -6,6 +6,8 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import sparkles from '@/app/(app)/images/sparkles.svg';
 import CreditStatus from '@/app/(app)/return/CreditStatus';
 import stripe from '@/config/stripe';
+import { setStripeCheckoutSessionID } from '@/server/mutations';
+import { isStripeCheckoutSessionValid } from '@/server/queries';
 
 type CheckoutReturnPageProps = {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -27,6 +29,9 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   if (typeof searchParams?.sessionID !== 'string') {
     throw new Error('Missing or invalid sessionID in search params');
   }
+
+  const isValidSession = await isStripeCheckoutSessionValid(searchParams.sessionID);
+  if (!isValidSession) redirect('/');
 
   const checkoutSession = await stripe.checkout.sessions.retrieve(searchParams.sessionID);
 
@@ -68,6 +73,8 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
     currentCredits = user.publicMetadata.credits;
   }
+
+  await setStripeCheckoutSessionID(checkoutSession.id);
 
   return (
     <div className="mt-10 rounded-[42px] border border-sand-5 bg-sand-1 px-4 pb-4 pt-12">

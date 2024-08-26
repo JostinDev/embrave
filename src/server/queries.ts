@@ -267,3 +267,14 @@ export async function isChallengeComplete(roomID: number) {
   }
   return false;
 }
+
+export async function isStripeCheckoutSessionValid(sessionID: string) {
+  auth().protect();
+
+  const dbResult = await db
+    .select()
+    .from(schema.stripeCheckoutSessionID)
+    .where(eq(schema.stripeCheckoutSessionID.sessionID, sessionID));
+
+  return !(dbResult.length !== 0 && dbResult[0]);
+}

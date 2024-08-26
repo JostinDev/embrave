@@ -10,7 +10,7 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "db:push": "drizzle-kit push:pg",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "lint": "next lint --ignore-path ./.gitignore --fix",
     "format": "prettier . --write"
