@@ -1,7 +1,7 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
-
+import CreditStatus from '@/app/(app)/return/CreditStatus';
 import stripe from '@/config/stripe';
 
 type CheckoutReturnPageProps = {
@@ -10,6 +10,8 @@ type CheckoutReturnPageProps = {
 
 export default async function CheckoutReturnPage({ searchParams }: CheckoutReturnPageProps) {
   const { userId } = auth().protect();
+
+  let plan = ''
 
   if (typeof searchParams?.sessionID !== 'string') {
     throw new Error('Missing or invalid sessionID in search params');
@@ -40,6 +42,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           isPremium: true,
         },
       });
+      plan = 'lifetime'
     } else if (priceID === 'price_1PZudd05xPAER8V0KQVkPqEZ') {
       console.log('credits plan');
 
@@ -53,10 +56,9 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           credits: currentCredits + 3,
         },
       });
+      plan = 'credits'
     }
   }
-
-  const customerEmail = checkoutSession.customer_details?.email;
 
   return (
      
@@ -64,6 +66,11 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   <div className="bg-sand-1 border border-sand-5 rounded-[42px] px-4 pb-4 pt-12">
     <h1 className="text-sand-12 font-nexa font-bold text-32 text-center">You are all set!</h1>
     <h2 className="text-sand-11 font-inter font-regular text-base text-center mb-12">Thank you for supporting Embrave! We appreciate you!</h2>
+
+    <div className='w-[500px] mx-auto'>
+      <CreditStatus plan={plan} />
+    </div>
+
 
     <p className='font-inter font-regular text-xs text-sand-11 text-center'>
         A confirmation email has been sent to your email. If you have questions feel free to reach out to <a className='underline' href="mailto:orders@embrave.com">orders@embrave.com</a>.
