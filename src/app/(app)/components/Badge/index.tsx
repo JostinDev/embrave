@@ -2,8 +2,8 @@
 
 import Image from 'next/image';
 
+import calendarBlue from '@/app/(app)/images/calendarBlue.svg';
 import flagGreen from '@/app/(app)/images/flagGreen.svg';
-import calendarBlue from './calendarBlue.svg';
 import calendarPurple from './calendarPurple.svg';
 import checkCircleGreen from './checkCircleGreen.svg';
 import flagOrange from './flagOrange.svg';

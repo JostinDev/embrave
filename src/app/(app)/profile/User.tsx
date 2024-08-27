@@ -1,0 +1,38 @@
+import Image from 'next/image';
+
+import ProfileCard from '@/app/(app)/profile/ProfileCard';
+
+type UserProps = {
+  points: number;
+  username: string | null;
+  profilePicture: string;
+};
+
+export default async function User(props: UserProps) {
+  return (
+    <ProfileCard title="">
+      <div className="flex flex-row">
+        <div className="flex flex-row items-center gap-4">
+          <Image
+            width={64}
+            height={64}
+            className="h-16 w-16 rounded-full"
+            src={props.profilePicture}
+            alt=""
+          />
+          <p className="font-nexa text-xl font-bold text-sand-12">{props.username}</p>
+        </div>
+        <div className="ml-auto flex gap-8 text-center">
+          <div className="flex flex-col justify-center">
+            <p className="font-nexa text-xl font-bold text-sand-12">{props.points}</p>
+            <p className="font-inter text-base font-normal text-sand-9">Points</p>
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="font-nexa text-xl font-bold text-sand-12">{props.points}</p>
+            <p className="font-inter text-base font-normal text-sand-9">Challenges</p>
+          </div>
+        </div>
+      </div>
+    </ProfileCard>
+  );
+}

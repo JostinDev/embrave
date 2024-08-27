@@ -1,6 +1,11 @@
 import { UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 
+import Credits from '@/app/(app)/profile/Credits';
+import Settings from '@/app/(app)/profile/Settings';
+import Stats from '@/app/(app)/profile/Stats';
+import User from '@/app/(app)/profile/User';
+
 export default async function Page() {
   const user = await currentUser();
 
@@ -21,15 +26,21 @@ export default async function Page() {
     currentCredits = user.publicMetadata.credits;
   }
 
+  let isPremium = false;
+  if (user.publicMetadata.isPremium && typeof user.publicMetadata.isPremium === 'boolean') {
+    isPremium = user.publicMetadata.isPremium;
+  }
+
   return (
-    <div>
-      <UserButton />
-      <p className="font-inter text-base font-medium leading-5 text-sand-12">
-        You have {currentPoints} points
-      </p>
-      <p className="font-inter text-base font-medium leading-5 text-sand-12">
-        You have {currentCredits} credits left
-      </p>
+    <div className="flex w-full max-w-[1132px] gap-4">
+      <div className="flex w-full flex-col gap-6">
+        <User profilePicture={user.imageUrl} points={currentPoints} username={user.username} />
+        <Stats />
+        <Credits isPremium={isPremium} credits={currentCredits} />
+      </div>
+      <div className="flex w-full flex-col gap-6">
+        <Settings />
+      </div>
     </div>
   );
 }
