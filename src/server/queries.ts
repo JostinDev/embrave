@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { auth, clerkClient, type User } from '@clerk/nextjs/server';
-import { and, eq, inArray } from 'drizzle-orm';
+import { and, count, eq, inArray } from 'drizzle-orm';
 
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
@@ -277,4 +277,23 @@ export async function isStripeCheckoutSessionValid(sessionID: string) {
     .where(eq(schema.stripeCheckoutSessionID.sessionID, sessionID));
 
   return !(dbResult.length !== 0 && dbResult[0]);
+}
+
+export async function getChallengeNumber() {
+  const { userId } = auth().protect();
+
+  const milestoneCount = await db
+    .select({ count: count() })
+    .from(schema.milestone)
+    .where(and(eq(schema.milestone.userID, userId), eq(schema.milestone.ticked, true)));
+
+  const updateCount = await db
+    .select({ count: count() })
+    .from(schema.milestone)
+    .where(and(eq(schema.milestone.userID, userId), eq(schema.milestone.ticked, false)));
+
+  let milestoneNumber = milestoneCount[0]?.count ?? 0;
+  let updateNumber = updateCount[0]?.count ?? 0;
+
+  return { milestoneNumber, updateNumber };
 }

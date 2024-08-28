@@ -35,8 +35,6 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
 
   const checkoutSession = await stripe.checkout.sessions.retrieve(searchParams.sessionID);
 
-  console.log(checkoutSession);
-
   if (checkoutSession.status !== 'complete') redirect('/premium');
 
   const lineItems = await stripe.checkout.sessions.listLineItems(checkoutSession.id);

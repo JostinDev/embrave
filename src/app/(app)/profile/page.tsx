@@ -5,6 +5,7 @@ import Points from '@/app/(app)/profile/Points';
 import Settings from '@/app/(app)/profile/Settings';
 import Stats from '@/app/(app)/profile/Stats';
 import User from '@/app/(app)/profile/User';
+import { getChallengeNumber } from '@/server/queries';
 
 export default async function Page() {
   const user = await currentUser();
@@ -31,11 +32,13 @@ export default async function Page() {
     isPremium = user.publicMetadata.isPremium;
   }
 
+  const { milestoneNumber, updateNumber } = await getChallengeNumber();
+
   return (
     <div className="flex w-full max-w-[1132px] gap-4">
       <div className="flex w-full flex-col gap-6">
         <User profilePicture={user.imageUrl} points={currentPoints} username={user.username} />
-        <Stats />
+        <Stats milestoneCount={milestoneNumber} updateCount={updateNumber} />
         <Credits isPremium={isPremium} credits={currentCredits} />
       </div>
       <div className="flex w-full flex-col gap-6">
