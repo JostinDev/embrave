@@ -41,10 +41,17 @@ export default async function Page() {
 
   const { goalChallengeNumber, habitChallengeNumber } = await getActiveRooms();
 
+  const totalChallenges = goalChallengeNumber + habitChallengeNumber;
+
   return (
     <div className="my-5 flex w-full max-w-[1132px] flex-col gap-4 lg:flex-row">
       <div className="flex w-full flex-col gap-6">
-        <User profilePicture={user.imageUrl} points={currentPoints} username={user.username} />
+        <User
+          activeChallenges={totalChallenges}
+          profilePicture={user.imageUrl}
+          points={currentPoints}
+          username={user.username}
+        />
         <Stats
           goalChallengeNumber={goalChallengeNumber}
           habitChallengeNumber={habitChallengeNumber}
@@ -55,7 +62,7 @@ export default async function Page() {
         <Credits isPremium={isPremium} credits={currentCredits} />
       </div>
       <div className="flex w-full flex-col gap-6">
-        <Settings />
+        <Settings userId={user.id} />
         <Points points={currentPoints} />
       </div>
     </div>

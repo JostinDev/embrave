@@ -702,3 +702,20 @@ export async function saveHighestStreak(currentStreak: number) {
   }
   revalidatePath('/');
 }
+
+export async function deleteAccount(prevState: any, formData: FormData) {
+  const { userId } = auth().protect();
+
+  const schema = z.object({
+    userId: z.coerce.string(),
+  });
+
+  const result = schema.safeParse(Object.fromEntries(formData.entries()));
+  if (!result.success) {
+    return { errors: result.error.flatten().fieldErrors };
+  }
+
+  await clerkClient.users.deleteUser(userId);
+
+  revalidatePath('/');
+}

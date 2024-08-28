@@ -6,6 +6,7 @@ type UserProps = {
   points: number;
   username: string | null;
   profilePicture: string;
+  activeChallenges: number;
 };
 
 export default async function User(props: UserProps) {
@@ -28,7 +29,7 @@ export default async function User(props: UserProps) {
             <p className="font-inter text-base font-normal text-sand-9">Points</p>
           </div>
           <div className="flex flex-col justify-center">
-            <p className="font-nexa text-xl font-bold text-sand-12">{props.points}</p>
+            <p className="font-nexa text-xl font-bold text-sand-12">{props.activeChallenges}</p>
             <p className="font-inter text-base font-normal text-sand-9">Challenges</p>
           </div>
         </div>

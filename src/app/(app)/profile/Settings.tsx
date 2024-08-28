@@ -7,14 +7,18 @@ import { twJoin, twMerge } from 'tailwind-merge';
 
 import spinner from '@/app/(app)/images/spinner.svg';
 import ProfileCard from '@/app/(app)/profile/ProfileCard';
-import { createRoom } from '@/server/mutations';
+import { deleteAccount } from '@/server/mutations';
 
-export default function Settings() {
-  const [state, formAction, isPending] = useActionState(createRoom, { errors: {} });
+type SettingsProps = {
+  userId: string;
+};
+
+export default function Settings(settingsProps: SettingsProps) {
+  const [state, formAction, isPending] = useActionState(deleteAccount, { errors: {} });
 
   return (
     <ProfileCard title="Settings">
-      <div className="bg-tomato-2 rounded-2xl border border border-dashed border-red-11 p-4">
+      <div className="bg-tomato-2 rounded-2xl border border-dashed border-red-11 p-4">
         <p className="mb-3 text-center text-red-11">Delete your account and data</p>
         <DialogTrigger>
           <Button className="w-full rounded-lg bg-red-11 p-3 font-inter text-base leading-18 text-red-2">
@@ -29,6 +33,7 @@ export default function Settings() {
             <Dialog role="alertdialog" className="flex flex-col outline-none">
               {({ close }) => (
                 <Form action={formAction} method="post">
+                  <input type="hidden" name="userId" value={settingsProps.userId} />
                   <Heading
                     className="mb-4 font-nexa text-26 font-bold leading-[115%] text-sand-12"
                     slot="title"
