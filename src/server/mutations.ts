@@ -717,5 +717,5 @@ export async function deleteAccount(prevState: any, formData: FormData) {
 
   await clerkClient.users.deleteUser(userId);
 
-  revalidatePath('/');
+  redirect('/home');
 }
