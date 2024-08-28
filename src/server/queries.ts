@@ -6,6 +6,7 @@ import { and, count, eq, inArray } from 'drizzle-orm';
 import { db } from '@/server/db';
 import * as schema from '@/server/db/schema';
 import { userRoom, type Challenge } from '@/server/db/schema';
+import { saveHighestStreak } from '@/server/mutations';
 
 type SortedChallenges = {
   [category: string]: Challenge[];
@@ -200,6 +201,8 @@ export async function getRoomStreak(roomID: number) {
       break;
     }
   }
+
+  await saveHighestStreak(streakCount);
 
   return streakCount;
 }

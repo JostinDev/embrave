@@ -32,6 +32,11 @@ export default async function Page() {
     isPremium = user.publicMetadata.isPremium;
   }
 
+  let highestStreak = 0;
+  if (user.publicMetadata.highestStreak && typeof user.publicMetadata.highestStreak === 'number') {
+    highestStreak = user.publicMetadata.highestStreak;
+  }
+
   const { milestoneNumber, updateNumber } = await getChallengeNumber();
 
   const { goalChallengeNumber, habitChallengeNumber } = await getActiveRooms();
@@ -45,6 +50,7 @@ export default async function Page() {
           habitChallengeNumber={habitChallengeNumber}
           milestoneCount={milestoneNumber}
           updateCount={updateNumber}
+          highestStreak={highestStreak}
         />
         <Credits isPremium={isPremium} credits={currentCredits} />
       </div>

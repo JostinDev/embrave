@@ -683,3 +683,22 @@ export async function setStripeCheckoutSessionID(sessionID: string) {
 
   revalidatePath('/');
 }
+
+export async function saveHighestStreak(currentStreak: number) {
+  const user = await currentUser();
+  if (!user) return { error: 'User not authenticated' };
+
+  let highestStreak = 0;
+  if (user.publicMetadata.highestStreak && typeof user.publicMetadata.highestStreak === 'number') {
+    highestStreak = user.publicMetadata.highestStreak;
+  }
+
+  if (currentStreak > highestStreak) {
+    await clerkClient.users.updateUserMetadata(user?.id, {
+      publicMetadata: {
+        highestStreak: currentStreak,
+      },
+    });
+  }
+  revalidatePath('/');
+}

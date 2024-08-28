@@ -12,6 +12,7 @@ type StatsProps = {
   updateCount: number;
   goalChallengeNumber: number;
   habitChallengeNumber: number;
+  highestStreak: number;
 };
 
 export default async function Stats(statsProps: StatsProps) {
@@ -38,7 +39,9 @@ export default async function Stats(statsProps: StatsProps) {
         <div className="flex gap-4">
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-orange-5 bg-orange-1 px-5 py-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={fire} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-orange-11">21 days</p>
+            <p className="font-nexa text-[26px] font-bold leading-3 text-orange-11">
+              {statsProps.highestStreak} days
+            </p>
             <p className="font-inter text-sm font-normal leading-3 text-orange-11">
               Longest streak
             </p>
