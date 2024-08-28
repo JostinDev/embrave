@@ -5,7 +5,7 @@ import Points from '@/app/(app)/profile/Points';
 import Settings from '@/app/(app)/profile/Settings';
 import Stats from '@/app/(app)/profile/Stats';
 import User from '@/app/(app)/profile/User';
-import { getChallengeNumber } from '@/server/queries';
+import { getActiveRooms, getChallengeNumber } from '@/server/queries';
 
 export default async function Page() {
   const user = await currentUser();
@@ -34,11 +34,18 @@ export default async function Page() {
 
   const { milestoneNumber, updateNumber } = await getChallengeNumber();
 
+  const { goalChallengeNumber, habitChallengeNumber } = await getActiveRooms();
+
   return (
-    <div className="flex w-full max-w-[1132px] gap-4">
+    <div className="my-5 flex w-full max-w-[1132px] flex-col gap-4 lg:flex-row">
       <div className="flex w-full flex-col gap-6">
         <User profilePicture={user.imageUrl} points={currentPoints} username={user.username} />
-        <Stats milestoneCount={milestoneNumber} updateCount={updateNumber} />
+        <Stats
+          goalChallengeNumber={goalChallengeNumber}
+          habitChallengeNumber={habitChallengeNumber}
+          milestoneCount={milestoneNumber}
+          updateCount={updateNumber}
+        />
         <Credits isPremium={isPremium} credits={currentCredits} />
       </div>
       <div className="flex w-full flex-col gap-6">

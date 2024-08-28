@@ -297,3 +297,42 @@ export async function getChallengeNumber() {
 
   return { milestoneNumber, updateNumber };
 }
+
+export async function getActiveRooms() {
+  const { userId } = auth().protect();
+
+  const challenges = await db.query.userRoom.findMany({
+    columns: {},
+    where: and(eq(schema.userRoom.userID, userId)),
+    with: {
+      room: {
+        columns: {
+          isChallengeCompleted: true,
+        },
+        with: {
+          challenge: {
+            columns: {
+              type: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  let goalChallengeNumber = 0;
+  let habitChallengeNumber = 0;
+
+  challenges.forEach((room) => {
+    if (!room.room.isChallengeCompleted) {
+      if (room.room.challenge.type === 'goal') {
+        goalChallengeNumber++;
+      }
+      if (room.room.challenge.type === 'habit') {
+        habitChallengeNumber++;
+      }
+    }
+  });
+
+  return { goalChallengeNumber, habitChallengeNumber };
+}
