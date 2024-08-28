@@ -39,6 +39,11 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
 
   const lineItems = await stripe.checkout.sessions.listLineItems(checkoutSession.id);
 
+  let currentCredits = 0;
+  if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
+    currentCredits = user.publicMetadata.credits;
+  }
+
   if (lineItems.data[0] && lineItems.data[0].price) {
     const priceID = lineItems.data[0].price.id;
 
@@ -53,23 +58,14 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
     } else if (priceID === 'price_1PZudd05xPAER8V0KQVkPqEZ') {
       console.log('credits plan');
 
-      let currentCredits = 0;
-      if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
-        currentCredits = user.publicMetadata.credits;
-      }
-
       await clerkClient.users.updateUserMetadata(userId, {
         publicMetadata: {
           credits: currentCredits + 3,
         },
       });
+      currentCredits = currentCredits + 3;
       plan = 'credits';
     }
-  }
-
-  let currentCredits = 0;
-  if (user.publicMetadata.credits && typeof user.publicMetadata.credits === 'number') {
-    currentCredits = user.publicMetadata.credits;
   }
 
   await setStripeCheckoutSessionID(checkoutSession.id);

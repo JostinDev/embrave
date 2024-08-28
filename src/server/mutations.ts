@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import { del, put } from '@vercel/blob';
@@ -717,5 +717,10 @@ export async function deleteAccount(prevState: any, formData: FormData) {
 
   await clerkClient.users.deleteUser(userId);
 
+  cookies()
+    .getAll()
+    .forEach((cookie) => cookies().delete(cookie.name));
+
+  revalidatePath('/');
   redirect('/home');
 }
