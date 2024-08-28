@@ -1,7 +1,7 @@
-import { UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 
 import Credits from '@/app/(app)/profile/Credits';
+import Points from '@/app/(app)/profile/Points';
 import Settings from '@/app/(app)/profile/Settings';
 import Stats from '@/app/(app)/profile/Stats';
 import User from '@/app/(app)/profile/User';
@@ -40,6 +40,7 @@ export default async function Page() {
       </div>
       <div className="flex w-full flex-col gap-6">
         <Settings />
+        <Points points={currentPoints} />
       </div>
     </div>
   );
