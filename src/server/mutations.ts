@@ -271,23 +271,12 @@ export async function setChallengeDone(roomID: number) {
   revalidatePath('/room/');
 }
 
-export async function createMilestone(prevState: any, formData: FormData) {
+export async function createMilestone(prevState: any, formData: FormData, files: File[]) {
   const { userId } = auth().protect();
 
-  const formDataImages = Array.from(formData.getAll('images[]'));
-
-  const images = formDataImages
-    .map((entry: FormDataEntryValue) => {
-      if (entry instanceof File) {
-        return entry;
-      }
-      return null; // or throw an error
-    })
-    .filter((file: File | null) => file !== null) as File[];
-
   let isImageValid = true;
-  if (images[0]) {
-    isImageValid = images[0].size !== 0;
+  if (files[0]) {
+    isImageValid = files[0].size !== 0;
   }
 
   const schema = z.object({
@@ -301,13 +290,13 @@ export async function createMilestone(prevState: any, formData: FormData) {
     return { errors: result.error.flatten().fieldErrors };
   }
 
-  if (images.length > 4) {
+  if (files.length > 4) {
     return { error: 'Too many files' };
   }
 
   if (isImageValid) {
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
+    for (let i = 0; i < files.length; i++) {
+      const image = files[i];
       if (!image) return;
       if (image.size > MAX_FILE_SIZE) {
         return { error: 'The image is too heavy' };
@@ -343,7 +332,7 @@ export async function createMilestone(prevState: any, formData: FormData) {
 
   if (milestoneItem && isImageValid) {
     await Promise.all(
-      images.map(async (image) => {
+      files.map(async (image) => {
         const blob = await put(image.name, image, {
           access: 'public',
         });

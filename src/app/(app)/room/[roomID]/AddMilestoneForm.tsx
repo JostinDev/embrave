@@ -6,11 +6,15 @@ import { Button, FieldError, Form, Input, Label, TextArea, TextField } from 'rea
 import { twJoin, twMerge } from 'tailwind-merge';
 
 import spinner from '@/app/(app)/images/spinner.svg';
+import compressImages from '@/app/utils/compressImages';
 import { createMilestone } from '@/server/mutations';
 
 export default function AddMilestoneForm({ roomID }: { roomID: number }) {
-  const [state, formAction, isPending] = useActionState(createMilestone, { errors: {} });
-  const [files, setFiles] = useState<File[]>();
+  const [state, formAction, isPending] = useActionState(
+    (state: any, payload: FormData) => createMilestone(state, payload, files),
+    { errors: {} },
+  );
+  const [files, setFiles] = useState<File[]>([]);
   return (
     <Form className="w-full pl-16" action={formAction} validationErrors={state?.errors}>
       <input type="hidden" name="roomID" value={roomID} />
@@ -33,13 +37,18 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
           <input
             disabled={isPending}
             multiple
-            name="images[]"
             type="file"
             accept="image/png, image/gif, image/jpeg"
-            onChange={(e) => {
+            onChange={async (e) => {
               if (!e.target.files) return; // Check if files property exists
               if (e.target.files.length > 4) return; //handle here
-              setFiles(Array.from(e.target.files));
+              const compressedFiles = await compressImages(
+                Array.from(e.target.files),
+                1000,
+                800,
+                0.8,
+              );
+              setFiles(compressedFiles);
             }}
           />
         </div>
