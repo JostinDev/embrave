@@ -61,7 +61,7 @@ export default function Step2() {
         type="submit"
         className="relative mt-10 flex h-fit w-full justify-center rounded-lg border border-solid border-sand-12 bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3"
       >
-        <p className="opacity-100 transition-all duration-200">Continue</p>
+        <p className="opacity-100 transition-all duration-200">Start your Embrave journey</p>
         <Image
           className="absolute left-1/2 h-4 w-4 -translate-x-1/2 opacity-0 transition-all duration-200"
           src={spinner}
