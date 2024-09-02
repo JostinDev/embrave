@@ -206,7 +206,6 @@
 /*CHECKBOX*/
 
 .react-aria-Checkbox {
-    --selected-color: #6f46edff;
     --selected-color-pressed: #522acdff;
     --checkmark-color: #fff;
     --text-color: #21201c;
@@ -226,12 +225,12 @@
     .checkbox {
         width: 1.143rem;
         height: 1.143rem;
-        border: 2px solid var(--border-color);
-        border-radius: 4px;
+        border-radius: 2px;
         transition: all 200ms;
         display: flex;
         align-items: center;
         justify-content: center;
+        @apply bg-sand-2 border-sand-10 border-solid border;
     }
 
     svg {
@@ -245,25 +244,20 @@
         transition: all 200ms;
     }
 
-    &[data-pressed] .checkbox {
-        border-color: var(--border-color-pressed);
-    }
 
     &[data-focus-visible] .checkbox {
-        outline: 2px solid var(--focus-ring-color);
         outline-offset: 2px;
+        @apply outline outline-2 outline-sand-12;
     }
 
     &[data-selected],
     &[data-indeterminate] {
         .checkbox {
-            border-color: var(--selected-color);
-            background: var(--selected-color);
+            @apply bg-sand-12 border-sand-12;
         }
 
         &[data-pressed] .checkbox {
-            border-color: var(--selected-color-pressed);
-            background: var(--selected-color-pressed);
+            @apply bg-sand-12 border-sand-12;
         }
 
         svg {

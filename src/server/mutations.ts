@@ -588,8 +588,8 @@ export async function removeAllUserData(userId: string) {
   }
 }
 
-export async function setUserHasWatchedTutorial(prevState: any, formData: FormData) {
-  const { userId } = auth().protect();
+export async function setUserHasAcceptedTerms(prevState: any, formData: FormData) {
+  auth().protect();
 
   const schema = z.object({
     termsOfService: z.string().includes('on'),
@@ -598,7 +598,13 @@ export async function setUserHasWatchedTutorial(prevState: any, formData: FormDa
   const result = schema.safeParse(Object.fromEntries(formData.entries()));
   if (!result.success) {
     return { errors: result.error.flatten().fieldErrors };
+  } else {
+    return { success: true };
   }
+}
+
+export async function setUserHasWatchedWizard() {
+  const { userId } = auth().protect();
 
   await clerkClient.users.updateUserMetadata(userId, {
     publicMetadata: {
