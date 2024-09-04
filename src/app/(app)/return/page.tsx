@@ -6,6 +6,7 @@ import { auth, clerkClient, currentUser } from '@clerk/nextjs/server';
 import sparkles from '@/app/(app)/images/sparkles.svg';
 import CreditStatus from '@/app/(app)/return/CreditStatus';
 import stripe from '@/config/stripe';
+import { sendBuyConfirmationCredits, sendBuyConfirmationPremium } from '@/server/mail';
 import { setStripeCheckoutSessionID } from '@/server/mutations';
 import { isStripeCheckoutSessionValid } from '@/server/queries';
 
@@ -37,6 +38,9 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
 
   if (checkoutSession.status !== 'complete') redirect('/premium');
 
+  const customerEmail = checkoutSession.customer_details?.email;
+  if (!customerEmail) redirect('/premium');
+
   const lineItems = await stripe.checkout.sessions.listLineItems(checkoutSession.id);
 
   let currentCredits = 0;
@@ -54,6 +58,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           isPremium: true,
         },
       });
+      await sendBuyConfirmationPremium(customerEmail);
       plan = 'lifetime';
     } else if (priceID === 'price_1PZudd05xPAER8V0KQVkPqEZ') {
       console.log('credits plan');
@@ -63,6 +68,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           credits: currentCredits + 3,
         },
       });
+      await sendBuyConfirmationCredits(customerEmail);
       currentCredits = currentCredits + 3;
       plan = 'credits';
     }
