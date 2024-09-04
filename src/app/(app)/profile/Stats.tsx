@@ -19,46 +19,46 @@ export default async function Stats(statsProps: StatsProps) {
   return (
     <ProfileCard title="Stats">
       <div className="flex flex-col gap-4">
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4 sm:flex-nowrap">
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-sky-5 bg-sky-1 p-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={calendarBlue} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-sky-11">
+            <p className="font-nexa text-[26px] font-bold leading-5 text-sky-11">
               {statsProps.habitChallengeNumber}
             </p>
-            <p className="font-inter text-sm font-normal leading-3 text-sky-11">Daily challenges</p>
+            <p className="font-inter text-sm font-normal leading-4 text-sky-11">Daily challenges</p>
           </div>
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-red-5 bg-red-1 p-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={globe} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-red-11">
+            <p className="font-nexa text-[26px] font-bold leading-5 text-red-11">
               {statsProps.goalChallengeNumber}
             </p>
-            <p className="font-inter text-sm font-normal leading-3 text-red-11">Goal challenges</p>
+            <p className="font-inter text-sm font-normal leading-4 text-red-11">Goal challenges</p>
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4 sm:flex-nowrap">
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-orange-5 bg-orange-1 px-5 py-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={fire} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-orange-11">
+            <p className="font-nexa text-[26px] font-bold leading-5 text-orange-11">
               {statsProps.highestStreak} days
             </p>
-            <p className="font-inter text-sm font-normal leading-3 text-orange-11">
+            <p className="font-inter text-sm font-normal leading-4 text-orange-11">
               Longest streak
             </p>
           </div>
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-purple-5 bg-purple-1 px-5 py-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={calendarPurple} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-purple-11">
+            <p className="font-nexa text-[26px] font-bold leading-5 text-purple-11">
               {statsProps.updateCount}
             </p>
-            <p className="font-inter text-sm font-normal leading-3 text-purple-11">Updates</p>
+            <p className="font-inter text-sm font-normal leading-4 text-purple-11">Updates</p>
           </div>
           <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-jade-5 bg-jade-1 px-5 py-8 text-center">
             <Image className="mx-auto mb-2 h-8 w-8" src={flag} alt="" />
-            <p className="font-nexa text-[26px] font-bold leading-3 text-jade-11">
+            <p className="font-nexa text-[26px] font-bold leading-5 text-jade-11">
               {statsProps.milestoneCount}
             </p>
-            <p className="font-inter text-sm font-normal leading-3 text-jade-11">Milestones</p>
+            <p className="font-inter text-sm font-normal leading-4 text-jade-11">Milestones</p>
           </div>
         </div>
       </div>

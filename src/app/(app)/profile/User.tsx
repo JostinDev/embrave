@@ -12,7 +12,7 @@ type UserProps = {
 export default async function User(props: UserProps) {
   return (
     <ProfileCard title="">
-      <div className="flex flex-row">
+      <div className="flex flex-col items-center gap-4 sm:flex-row">
         <div className="flex flex-row items-center gap-4">
           <Image
             width={64}
@@ -23,7 +23,7 @@ export default async function User(props: UserProps) {
           />
           <p className="font-nexa text-xl font-bold text-sand-12">{props.username}</p>
         </div>
-        <div className="ml-auto flex gap-8 text-center">
+        <div className="flex gap-8 text-center sm:ml-auto">
           <div className="flex flex-col justify-center">
             <p className="font-nexa text-xl font-bold text-sand-12">{props.points}</p>
             <p className="font-inter text-base font-normal text-sand-9">Points</p>
