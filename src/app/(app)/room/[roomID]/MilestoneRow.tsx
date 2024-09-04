@@ -48,12 +48,14 @@ export default function MilestoneRow(props: MilestoneRowProps) {
           />
         )}
         <div className="flex items-center justify-between gap-2">
-          {props.currentUserID === props.milestone.userID && props.milestone.roomID !== null && (
-            <DeleteMilestoneModal
-              roomID={props.milestone.roomID}
-              milestoneID={props.milestone.id}
-            />
-          )}
+          {props.currentUserID === props.milestone.userID &&
+            props.milestone.roomID !== null &&
+            !props.isChallengeDone && (
+              <DeleteMilestoneModal
+                roomID={props.milestone.roomID}
+                milestoneID={props.milestone.id}
+              />
+            )}
           <p className="font-inter text-xs leading-14 text-sand-11">
             {props.milestone.timestamp.toLocaleDateString()}
           </p>
