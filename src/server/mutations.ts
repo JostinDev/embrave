@@ -370,6 +370,7 @@ export async function createTickedMilestone(day: Date, roomID: number) {
       if (sameDay(day, element.timestamp)) {
         if (element.ticked) {
           await db.delete(milestone).where(and(eq(milestone.id, element.id)));
+          await addPoints(-Points.TickedMilestone);
           revalidatePath('/room/');
           return;
         }
@@ -430,12 +431,19 @@ export async function deleteMilestone(prevState: any, formData: FormData) {
     }
   }
 
-  const { rowCount } = await db
+  const milestoneToDelete: { isTicked: boolean | null }[] = await db
     .delete(milestone)
-    .where(and(eq(milestone.id, formResult.data.milestoneID), eq(milestone.userID, userId)));
+    .where(and(eq(milestone.id, formResult.data.milestoneID), eq(milestone.userID, userId)))
+    .returning({ isTicked: milestone.ticked });
 
-  if (rowCount === 0) {
+  if (!milestoneToDelete[0]) {
     return { error: 'Milestone not found' };
+  }
+
+  if (milestoneToDelete[0].isTicked) {
+    await addPoints(-Points.TickedMilestone);
+  } else {
+    await addPoints(-Points.UpdateMilestone);
   }
 
   revalidatePath('/');
