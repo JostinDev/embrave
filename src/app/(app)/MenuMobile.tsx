@@ -28,6 +28,9 @@ export default function MenuMobile() {
         case '/profile':
           setCurrentIcon(profile);
           break;
+        case '/premium':
+          setCurrentIcon(profile);
+          break;
       }
     }
     const handleResize = () => {
@@ -103,6 +106,21 @@ export default function MenuMobile() {
                 'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
               }
               href="/profile"
+              onClick={() => setCurrentIcon(profile)}
+            >
+              <Image
+                className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
+                src={profile}
+                alt=""
+              />
+            </Link>
+
+            <Link
+              id="linkPremium"
+              className={
+                'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
+              }
+              href="/premium"
               onClick={() => setCurrentIcon(profile)}
             >
               <Image

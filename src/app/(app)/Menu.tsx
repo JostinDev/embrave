@@ -30,6 +30,9 @@ export default function Menu() {
       case '/profile':
         await waitForElm('#linkProfile').then((el) => placeBackdrop(el));
         break;
+      case '/premium':
+        await waitForElm('#linkPremium').then((el) => placeBackdrop(el));
+        break;
     }
   }
 
@@ -51,7 +54,7 @@ export default function Menu() {
         return resolve(document.querySelector(selector) as HTMLElement);
       }
 
-      const observer = new MutationObserver((mutations) => {
+      const observer = new MutationObserver(() => {
         if (document.querySelector(selector)) {
           observer.disconnect();
           resolve(document.querySelector(selector) as HTMLElement);
@@ -124,6 +127,17 @@ export default function Menu() {
             <Image className="pointer-events-none" src={profile} alt="" />
             <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
               Profile
+            </span>
+          </Link>
+          <Link
+            id="linkPremium"
+            className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
+            onClick={(e) => placeBackdrop(e.target as HTMLElement)}
+            href="/premium"
+          >
+            <Image className="pointer-events-none" src={profile} alt="" />
+            <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
+              Premium
             </span>
           </Link>
         </div>
