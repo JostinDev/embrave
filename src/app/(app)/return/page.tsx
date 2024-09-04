@@ -78,7 +78,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           Thank you for supporting Embrave! We appreciate you!
         </h2>
 
-        <div className="mx-auto mb-4 w-[500px]">
+        <div className="mx-auto mb-4">
           <CreditStatus credits={currentCredits} plan={plan} />
         </div>
 
@@ -89,7 +89,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
           </div>
           <p className="mb-6 mt-5 font-nexa text-xl font-bold leading-8 text-jade-11">
             {plan === 'lifetime'
-              ? 'Push yourself even further with <span>Embrave Premium!</span>'
+              ? 'Push yourself even further with Embrave Premium!'
               : 'To push yourself a bit'}
           </p>
           <ul className="list-disc pl-6">

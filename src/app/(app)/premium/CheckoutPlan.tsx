@@ -20,7 +20,7 @@ export default function CheckoutPlan() {
           Embrave can be enjoyed in many different ways, find the best option for you below.
         </h2>
 
-        <div className="flex items-end gap-6">
+        <div className="flex flex-col items-center gap-6 lg:flex-row lg:items-end">
           <div className="flex flex-col rounded-[26px] border border-solid border-sand-5 bg-sand-1 p-8">
             <div className="flex w-fit items-center justify-center gap-1 rounded-lg bg-sand-3 px-3 py-2 font-inter text-base font-normal text-sand-11">
               <Image className="h-6 w-6" src={world} alt="" />

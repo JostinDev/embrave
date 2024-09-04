@@ -36,6 +36,11 @@ export default async function AppLayout({ children }: RootLayoutProps) {
     showTutorial = true;
   }
 
+  let isPremium = false;
+  if (user.publicMetadata.isPremium && typeof user.publicMetadata.isPremium === 'boolean') {
+    isPremium = user.publicMetadata.isPremium;
+  }
+
   return (
     <ClerkProvider>
       {showTutorial && <WizardModal />}
@@ -48,8 +53,8 @@ export default async function AppLayout({ children }: RootLayoutProps) {
             </h1>
           </div>
         </div>
-        <Menu />
-        <MenuMobile />
+        <Menu isPremium={isPremium} />
+        <MenuMobile isPremium={isPremium} />
         <div
           className="fixed z-10 flex min-h-[105px] w-full flex-col bg-cover md:min-h-[191px]"
           style={{ backgroundImage: `url(${hero.src})` }}

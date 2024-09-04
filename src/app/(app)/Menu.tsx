@@ -11,7 +11,7 @@ import logout from '@/app/(app)/images/logout.svg';
 import profile from '@/app/(app)/images/profile.svg';
 import world from '@/app/(app)/images/world.svg';
 
-export default function Menu() {
+export default function Menu(props: { isPremium: boolean }) {
   const [previousActive, setPreviousActive] = useState<string>('');
   const pathname = usePathname();
 
@@ -129,17 +129,20 @@ export default function Menu() {
               Profile
             </span>
           </Link>
-          <Link
-            id="linkPremium"
-            className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
-            onClick={(e) => placeBackdrop(e.target as HTMLElement)}
-            href="/premium"
-          >
-            <Image className="pointer-events-none" src={profile} alt="" />
-            <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
-              Premium
-            </span>
-          </Link>
+
+          {!props.isPremium && (
+            <Link
+              id="linkPremium"
+              className="z-30 flex w-full items-end justify-center gap-2 rounded-[10px] py-2 transition-all hover:bg-sand-3 lg:justify-start lg:pl-2"
+              onClick={(e) => placeBackdrop(e.target as HTMLElement)}
+              href="/premium"
+            >
+              <Image className="pointer-events-none" src={profile} alt="" />
+              <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
+                Premium
+              </span>
+            </Link>
+          )}
         </div>
 
         <div className="z-30 mb-8 mt-auto lg:pl-2">

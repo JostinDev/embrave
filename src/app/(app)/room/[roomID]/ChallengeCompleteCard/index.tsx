@@ -30,7 +30,7 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
   }
 
   return (
-    <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
+    <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between gap-2 overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
       {isChallengeCompleted && (
         <div className="confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x" />
       )}

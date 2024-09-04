@@ -11,7 +11,7 @@ import logout from '@/app/(app)/images/logout.svg';
 import profile from '@/app/(app)/images/profile.svg';
 import world from '@/app/(app)/images/world.svg';
 
-export default function MenuMobile() {
+export default function MenuMobile(props: { isPremium: boolean }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentIcon, setCurrentIcon] = useState(home);
   const pathname = usePathname();
@@ -115,20 +115,22 @@ export default function MenuMobile() {
               />
             </Link>
 
-            <Link
-              id="linkPremium"
-              className={
-                'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
-              }
-              href="/premium"
-              onClick={() => setCurrentIcon(profile)}
-            >
-              <Image
-                className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
-                src={profile}
-                alt=""
-              />
-            </Link>
+            {!props.isPremium && (
+              <Link
+                id="linkPremium"
+                className={
+                  'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
+                }
+                href="/premium"
+                onClick={() => setCurrentIcon(profile)}
+              >
+                <Image
+                  className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
+                  src={profile}
+                  alt=""
+                />
+              </Link>
+            )}
 
             <div className="z-30 justify-center px-5 py-2 lg:justify-start">
               <SignOutButton>
