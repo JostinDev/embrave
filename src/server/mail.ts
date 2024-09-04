@@ -8,12 +8,12 @@ const mg = mailgun.client({ username: 'api', key: process.env.MAILGUN_SECRET || 
 export async function sendBuyConfirmationPremium(to: string) {
   auth().protect();
   mg.messages
-    .create('sandboxcce43920336a408fbc6f3d575054fdb0.mailgun.org', {
-      from: 'Excited User <mailgun@sandboxcce43920336a408fbc6f3d575054fdb0.mailgun.org>',
+    .create('mg.embrave.app', {
+      from: 'Embrave <mailgun@mg.embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
       text: 'Testing some Mailgun awesomeness!',
-      html: '<h1>Thanks for buying premium!</h1>',
+      html: '<h1 class="text-green-9">Thanks for buying premium!</h1>',
     })
     .then((msg) => console.log(msg))
     .catch((err) => console.log(err));
@@ -22,12 +22,12 @@ export async function sendBuyConfirmationPremium(to: string) {
 export async function sendBuyConfirmationCredits(to: string) {
   auth().protect();
   mg.messages
-    .create('sandboxcce43920336a408fbc6f3d575054fdb0.mailgun.org', {
-      from: 'Excited User <mailgun@sandboxcce43920336a408fbc6f3d575054fdb0.mailgun.org>',
+    .create('mg.embrave.app', {
+      from: 'Embrave <mailgun@mg.embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
       text: 'Testing some Mailgun awesomeness!',
-      html: '<h1>Thanks for buying more credits!</h1>',
+      html: '<h1 class="text-green-9">Thanks for buying more credits!</h1>',
     })
     .then((msg) => console.log(msg))
     .catch((err) => console.log(err));
