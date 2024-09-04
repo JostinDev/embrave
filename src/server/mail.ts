@@ -13,7 +13,7 @@ export async function sendBuyConfirmationPremium(to: string) {
   auth().protect();
   mg.messages
     .create('mg.embrave.app', {
-      from: 'Embrave <mailgun@mg.embrave.app>',
+      from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
       text: 'Testing some Mailgun awesomeness!',
@@ -27,7 +27,7 @@ export async function sendBuyConfirmationCredits(to: string) {
   auth().protect();
   mg.messages
     .create('mg.embrave.app', {
-      from: 'Embrave <mailgun@mg.embrave.app>',
+      from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
       text: 'Testing some Mailgun awesomeness!',
