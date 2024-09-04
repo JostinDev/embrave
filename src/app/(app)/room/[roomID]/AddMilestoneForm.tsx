@@ -33,21 +33,21 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
         </TextField>
 
         <div className="mb-4 flex flex-col gap-2">
-          <Label className="font-inter text-base font-medium leading-5 text-sand-12">Images</Label>
+          <Label className="font-inter text-base font-medium leading-5 text-sand-12">
+            Images (4 max)
+          </Label>
           <input
             disabled={isPending}
             multiple
             type="file"
             accept="image/png, image/gif, image/jpeg"
             onChange={async (e) => {
-              if (!e.target.files) return; // Check if files property exists
-              if (e.target.files.length > 4) return; //handle here
-              const compressedFiles = await compressImages(
-                Array.from(e.target.files),
-                1000,
-                800,
-                0.8,
-              );
+              if (!e.target.files) return;
+              let files = Array.from(e.target.files);
+              if (e.target.files.length > 4) {
+                files = files.slice(0, 4);
+              }
+              const compressedFiles = await compressImages(files, 1000, 800, 0.8);
               setFiles(compressedFiles);
             }}
           />
