@@ -1,39 +1,49 @@
-import Image from 'next/image';
-import { auth } from '@clerk/nextjs/server';
-
-import hero from './heroLanding.png';
-import logo from './logoWhite.svg';
-import SignInLandingPageButton from './SignInLandingPageButton';
+import Header from '@/app/(marketing)/home/Header';
+import LandingCard from '@/app/(marketing)/home/LandingCard';
+import Separator from '@/app/(marketing)/home/Separator';
 
 export default function LandingPage() {
-  const isSignedIn = Boolean(auth().userId);
   return (
     <div>
-      <Image
-        className="h-[400px] w-full"
-        style={{ objectFit: 'cover' }}
-        placeholder="blur"
-        src={hero}
-        alt=""
-      />
-      <div className="container mx-auto">
-        <div className="absolute left-0 top-0 flex w-full items-center justify-between px-4 pt-8 md:px-8 lg:px-16">
-          <div className="flex items-center gap-4">
-            <Image src={logo} alt="" />
-            <h1 className="hidden font-nexa text-32 font-bold leading-none text-sand-1 sm:block">
-              Embrave
-            </h1>
-          </div>
-          <SignInLandingPageButton isSignedIn={isSignedIn} />
-        </div>
-        <div className="relative z-10 mx-auto -mt-[150px] h-[423px] w-[90%] max-w-[950px] rounded-[48px] border border-solid border-sand-5 bg-sand-1 p-14 text-center">
-          <h1 className="font-nexa text-90 font-extrabold leading-[120%] text-sand-12">
-            Start today to challenge{' '}
-            <span className="font-sourceSerif4 text-90 font-light italic leading-[120%]">
-              yourself.
-            </span>
-          </h1>
-        </div>
+      <div className="container mx-auto px-4 pb-20 pt-60">
+        <Header />
+
+        <p className="mx-auto mb-12 max-w-[1000px] text-center font-nexa text-7xl font-extrabold text-sand-12">
+          Staying in your <span className="font-sourceSerif4 font-light italic">comfort zone?</span>
+          Not today.
+        </p>
+
+        <LandingCard
+          title="Built for change"
+          content="We value self development. That is why we created Embrave, so that you can start challenges to push yourself outside your comfort zone."
+        />
+
+        <Separator />
+
+        <p className="mx-auto mb-12 max-w-[1000px] text-center font-nexa text-7xl font-extrabold text-sand-12">
+          <p>
+            In it with your <span className="font-sourceSerif4 font-light italic">friends.</span>
+          </p>
+          <p>
+            Or just <span className="font-sourceSerif4 font-light italic">on your own.</span>
+          </p>
+        </p>
+
+        <LandingCard
+          title="Sharing experiences"
+          content="Sometimes is nice to have friends to hold you accountable. Other times you just want to be on your own. With Embrave you can do both."
+        />
+
+        <Separator />
+
+        <p className="mx-auto mb-12 max-w-[1000px] text-center font-nexa text-7xl font-extrabold text-sand-12">
+          You are on <span className="font-sourceSerif4 font-light italic">fire!</span>
+        </p>
+
+        <LandingCard
+          title="Habit building"
+          content="With Embrave you can track your progress easily, so that you really follow through with your challenge."
+        />
       </div>
     </div>
   );
