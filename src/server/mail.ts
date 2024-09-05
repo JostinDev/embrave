@@ -6,13 +6,13 @@ const mailgun = new Mailgun(formdata);
 const mg = mailgun.client({
   username: 'api',
   key: process.env.MAILGUN_SECRET || '',
-  url: 'https://api.eu.mailgun.net',
+  url: process.env.MAILGUN_URL || 'https://api.eu.mailgun.net',
 });
 
 export async function sendBuyConfirmationPremium(to: string) {
   auth().protect();
   mg.messages
-    .create('mg.embrave.app', {
+    .create(process.env.MAILGUN_DOMAIN || 'mg.embrave.app', {
       from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
@@ -26,7 +26,7 @@ export async function sendBuyConfirmationPremium(to: string) {
 export async function sendBuyConfirmationCredits(to: string) {
   auth().protect();
   mg.messages
-    .create('mg.embrave.app', {
+    .create(process.env.MAILGUN_DOMAIN || 'mg.embrave.app', {
       from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',

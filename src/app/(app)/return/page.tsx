@@ -117,7 +117,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
         A confirmation email has been sent to your email. If you have questions feel free to reach
         out to{' '}
         <a className="underline" href="mailto:hello@embrave.app">
-          orders@embrave.com
+          hello@embrave.app
         </a>
         .
       </p>
