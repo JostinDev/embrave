@@ -9,6 +9,7 @@ import { SignOutButton } from '@clerk/nextjs';
 import home from '@/app/(app)/images/home.svg';
 import logout from '@/app/(app)/images/logout.svg';
 import profile from '@/app/(app)/images/profile.svg';
+import premium from '@/app/(app)/images/sparklesPremium.svg';
 import world from '@/app/(app)/images/world.svg';
 
 export default function Menu(props: { isPremium: boolean }) {
@@ -137,7 +138,7 @@ export default function Menu(props: { isPremium: boolean }) {
               onClick={(e) => placeBackdrop(e.target as HTMLElement)}
               href="/premium"
             >
-              <Image className="pointer-events-none" src={profile} alt="" />
+              <Image className="pointer-events-none" src={premium} alt="" />
               <span className="pointer-events-none hidden h-full items-center font-inter text-base leading-18 text-sand-12 lg:flex">
                 Premium
               </span>

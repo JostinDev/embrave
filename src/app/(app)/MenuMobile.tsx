@@ -9,6 +9,7 @@ import { SignOutButton } from '@clerk/nextjs';
 import home from '@/app/(app)/images/home.svg';
 import logout from '@/app/(app)/images/logout.svg';
 import profile from '@/app/(app)/images/profile.svg';
+import premium from '@/app/(app)/images/sparklesPremium.svg';
 import world from '@/app/(app)/images/world.svg';
 
 export default function MenuMobile(props: { isPremium: boolean }) {
@@ -29,7 +30,7 @@ export default function MenuMobile(props: { isPremium: boolean }) {
           setCurrentIcon(profile);
           break;
         case '/premium':
-          setCurrentIcon(profile);
+          setCurrentIcon(premium);
           break;
       }
     }
@@ -119,14 +120,14 @@ export default function MenuMobile(props: { isPremium: boolean }) {
               <Link
                 id="linkPremium"
                 className={
-                  'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
+                  'z-30 justify-center px-5 py-2 ' + (currentIcon === premium ? 'hidden' : 'flex')
                 }
                 href="/premium"
-                onClick={() => setCurrentIcon(profile)}
+                onClick={() => setCurrentIcon(premium)}
               >
                 <Image
                   className="w-12 rounded-[10px] p-2 transition-all hover:bg-sand-3"
-                  src={profile}
+                  src={premium}
                   alt=""
                 />
               </Link>
