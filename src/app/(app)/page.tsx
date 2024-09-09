@@ -19,7 +19,7 @@ export default async function Index() {
             and pick one!
           </p>
         )}
-        <div className="flex flex-wrap gap-4">
+        <div className="flex gap-4 overflow-x-scroll">
           {incompletedRooms &&
             incompletedRooms.map(async (room) => {
               if (room && room.challenge) {
@@ -47,13 +47,13 @@ export default async function Index() {
         </div>
       </div>
       <div>
-        <p className="mb-4 mt-6 font-nexa text-xl font-bold text-sand-12">Challenges completed</p>
+        <p className="mb-4 mt-6 font-nexa text-xl font-bold text-sand-12">Completed challenges</p>
         {!completedRooms && (
           <p className="mb-4 font-inter text-base font-normal text-sand-12">
             Once you complete a challenge, it will show up here!
           </p>
         )}
-        <div className="flex flex-wrap gap-4">
+        <div className="flex gap-4 overflow-x-scroll">
           {completedRooms
             ? completedRooms.map((room) => {
                 if (room && room.challenge) {

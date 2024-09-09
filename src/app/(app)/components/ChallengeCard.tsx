@@ -48,7 +48,7 @@ export default function ChallengeCard(props: ChallengeCardProps) {
   }
 
   return (
-    <div className="flex max-w-[220px] cursor-pointer flex-col rounded-[26px] border border-sand-5 bg-sand-2 p-4">
+    <div className="flex h-full w-[220px] cursor-pointer flex-col rounded-[26px] border border-sand-5 bg-sand-2 p-4">
       <Streak />
       <span className="mb-4">
         <Tag />
@@ -80,7 +80,13 @@ export default function ChallengeCard(props: ChallengeCardProps) {
         </div>
       )}
 
-      <Image className="h-7 w-7 self-end" src={chevronRight} alt="" width={20} height={20} />
+      <Image
+        className="mt-auto h-7 w-7 self-end"
+        src={chevronRight}
+        alt=""
+        width={20}
+        height={20}
+      />
     </div>
   );
 }

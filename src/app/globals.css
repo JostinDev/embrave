@@ -74,7 +74,7 @@
 /*POPOVER*/
 
 .react-aria-Popover {
-    @apply border border-sand-5 p-4 rounded-lg bg-sand-1 max-w-[700px] outline-none box-border shadow-[0px_8px_20px_rgba(0,0,0/0.1)];
+    @apply border border-sand-5 p-4 rounded-lg bg-sand-1 max-w-[700px] outline-none box-border shadow-lg;
     section {
         outline: none;
     }

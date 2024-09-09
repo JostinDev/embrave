@@ -74,7 +74,7 @@ export default function MenuMobile(props: { isPremium: boolean }) {
             <Link
               id="linkHome"
               className={
-                'z-30 justify-center px-5 py-2 ' + (currentIcon === home ? 'hidden' : 'flex')
+                'z-30 justify-center px-4 py-2 ' + (currentIcon === home ? 'hidden' : 'flex')
               }
               href="/"
               onClick={() => setCurrentIcon(home)}
@@ -89,7 +89,7 @@ export default function MenuMobile(props: { isPremium: boolean }) {
             <Link
               id="linkExplore"
               className={
-                'z-30 justify-center px-5 py-2 ' + (currentIcon === world ? 'hidden' : 'flex')
+                'z-30 justify-center px-4 py-2 ' + (currentIcon === world ? 'hidden' : 'flex')
               }
               href="/explore"
               onClick={() => setCurrentIcon(world)}
@@ -104,7 +104,7 @@ export default function MenuMobile(props: { isPremium: boolean }) {
             <Link
               id="linkProfile"
               className={
-                'z-30 justify-center px-5 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
+                'z-30 justify-center px-4 py-2 ' + (currentIcon === profile ? 'hidden' : 'flex')
               }
               href="/profile"
               onClick={() => setCurrentIcon(profile)}
@@ -120,7 +120,7 @@ export default function MenuMobile(props: { isPremium: boolean }) {
               <Link
                 id="linkPremium"
                 className={
-                  'z-30 justify-center px-5 py-2 ' + (currentIcon === premium ? 'hidden' : 'flex')
+                  'z-30 justify-center px-4 py-2 ' + (currentIcon === premium ? 'hidden' : 'flex')
                 }
                 href="/premium"
                 onClick={() => setCurrentIcon(premium)}
@@ -133,10 +133,10 @@ export default function MenuMobile(props: { isPremium: boolean }) {
               </Link>
             )}
 
-            <div className="z-30 justify-center px-5 py-2 lg:justify-start">
+            <div className="z-30 justify-center px-4 py-2 lg:justify-start">
               <SignOutButton>
                 <button
-                  className="flex h-full w-10 items-center rounded-[10px] p-2 font-inter text-base leading-18 text-sand-12 transition-all hover:bg-sand-3"
+                  className="ml-4 mt-4 flex h-full w-10 items-center rounded-[10px] pb-2 font-inter text-base leading-18 text-sand-12 transition-all hover:bg-sand-3"
                   type="submit"
                 >
                   <Image src={logout} alt="" />
