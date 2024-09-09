@@ -6,7 +6,7 @@ import { auth } from '@clerk/nextjs/server';
 
 import Badge from '@/app/(app)/components/Badge';
 import NoSSR from '@/app/(app)/components/NoSSR';
-import chevronLeft from '@/app/(app)/images/chevronLeft.svg';
+import chevronLeft from '@/app/(app)/images/backChevron.svg';
 import stairs from '@/app/(app)/images/stairsCover.jpg';
 import ManagePopover from '@/app/(app)/room/[roomID]/manage/ManagePopover';
 import type { Milestone } from '@/server/db/schema';
@@ -50,12 +50,11 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     // TODO show image to be uploaded
     // TODO prevent more than 4 images
     <div className="relative min-h-screen">
-      <div className="mb-6 flex justify-between">
-        <Link href="/" className="flex items-center gap-1">
+      <div className="mb-6 flex justify-between rounded-[28px] border border-sand-5 bg-sand-2 p-2 md:p-4">
+        <Link href="/" className="flex items-center gap-1 p-4">
           <Image src={chevronLeft} alt="" />
-          <p className="font-inter text-base font-medium leading-5 text-sand-12">Back</p>
         </Link>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 md:gap-8">
           {!room.isChallengeCompleted && (
             <ManagePopover
               userRooms={userRooms}
@@ -88,7 +87,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
       <div className="relative mb-8">
         <Image
-          className="h-[450px] w-full rounded-[26px] sm:h-[400px]"
+          className="h-[450px] w-full rounded-[28px] sm:h-[400px]"
           style={{ objectFit: 'cover' }}
           placeholder="blur"
           src={stairs}
@@ -128,7 +127,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
       <NoSSR
         fallback={
-          <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
+          <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[28px] border border-sand-5 bg-sand-1 p-8">
             <p className="font-nexa text-26 font-bold leading-[115%] text-sand-12">Loading...</p>
           </div>
         }
@@ -139,7 +138,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       {!room.isChallengeCompleted && (
         <NoSSR
           fallback={
-            <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 py-8">
+            <div className="w-100 mx-auto mb-6 max-w-[700px] rounded-[28px] border border-orange-4 bg-orange-2 py-8">
               <p className="pl-8 font-nexa text-26 font-bold leading-[115%] text-orange-10">
                 Loading...
               </p>
@@ -152,14 +151,14 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
 
       <NoSSR
         fallback={
-          <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
+          <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between overflow-hidden rounded-[28px] border border-green-4 bg-green-2 p-8">
             <p className="font-nexa text-26 font-bold leading-[115%] text-green-11">Loading...</p>
           </div>
         }
       >
         <ChallengeCompleteCard roomID={roomID} isChallengeCompleted={room.isChallengeCompleted} />
       </NoSSR>
-      <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
+      <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[28px] border border-sand-5 bg-sand-1 p-8">
         <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
           Your activity
         </p>

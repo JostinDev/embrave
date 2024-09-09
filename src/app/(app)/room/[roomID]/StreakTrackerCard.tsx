@@ -58,7 +58,9 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
         onClick={() => setIsRoomTrackerAccordionOpen(!isRoomTrackerAccordionOpen)}
         className="flex w-fit cursor-pointer gap-2 pl-8 "
       >
-        <p className="font-nexa text-26 font-bold leading-[115%] text-orange-10">Streak Tracker</p>
+        <p className="font-nexa text-26 font-bold leading-[115%] text-orange-10">
+          Milestone Tracker
+        </p>
         <Image
           className={twJoin(
             'mt-0.5 h-fit w-6 select-none transition',
@@ -71,8 +73,8 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
       {isRoomTrackerAccordionOpen && (
         <div>
           <p className="mb-4 mt-2 px-8 font-inter text-base leading-18 text-orange-10">
-            Check each day that you reached your goal to uphold your streak! You can fill out the
-            last 7 days.
+            Reaching your goal for the day is a huge Milestone. So achieve your goals daily, track
+            them here and don’t loose your streak!
           </p>
           <div className="no-scrollbar overflow-x-scroll px-2">
             <div className="flex min-w-[600px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 px-4 sm:overflow-hidden sm:bg-transparent md:px-8">

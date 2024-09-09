@@ -44,7 +44,7 @@ export default function SharePopover(props: SharePopoverProps) {
 
   return (
     <DialogTrigger>
-      <Button className="h-fit rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">
+      <Button className="h-fit rounded-lg bg-sand-12 px-8 py-4 font-inter text-base leading-18 text-sand-3">
         Share
       </Button>
       <Popover>
