@@ -1,3 +1,4 @@
+import Footer from '@/app/(marketing)/home/Footer';
 import Header from '@/app/(marketing)/home/Header';
 import LandingCard from '@/app/(marketing)/home/LandingCard';
 import Separator from '@/app/(marketing)/home/Separator';
@@ -6,7 +7,7 @@ import Slider from '@/app/(marketing)/home/Slider';
 export default function LandingPage() {
   return (
     <div>
-      <div className="container mx-auto px-4 pb-20">
+      <div className="container mx-auto px-4">
         <Header />
         <Slider />
         <p className="mx-auto mb-12 max-w-[1000px] pt-10 text-center font-nexa text-7xl font-extrabold text-sand-12">
@@ -39,6 +40,7 @@ export default function LandingPage() {
           content="With Embrave you can track your progress easily, so that you really follow through with your challenge."
         />
       </div>
+      <Footer />
     </div>
   );
 }

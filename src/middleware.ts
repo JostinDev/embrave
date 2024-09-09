@@ -4,7 +4,11 @@ import { clerkMiddleware } from '@clerk/nextjs/server';
 export default clerkMiddleware((auth, request) => {
   const isSignedIn = Boolean(auth().userId);
 
-  if (request.nextUrl.pathname !== '/api/webhooks' && !isSignedIn) {
+  if (
+    request.nextUrl.pathname !== '/api/webhooks' &&
+    !isSignedIn &&
+    request.nextUrl.pathname !== '/terms_and_conditions'
+  ) {
     return NextResponse.rewrite(new URL('/home', request.url));
   }
 });
