@@ -56,7 +56,7 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
     >
       <div
         onClick={() => setIsRoomTrackerAccordionOpen(!isRoomTrackerAccordionOpen)}
-        className="flex w-fit cursor-pointer gap-2 pl-8 "
+        className="flex w-fit cursor-pointer gap-2 pl-8"
       >
         <p className="font-nexa text-26 font-bold leading-[115%] text-orange-10">
           Milestone Tracker
@@ -76,21 +76,24 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
             Reaching your goal for the day is a huge Milestone. So achieve your goals daily, track
             them here and don’t loose your streak!
           </p>
-          <div className="no-scrollbar overflow-x-scroll px-2">
-            <div className="flex min-w-[600px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 px-4 sm:overflow-hidden sm:bg-transparent md:px-8">
-              {weekdays.map((day: string, i: number) => {
-                const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
-                return (
-                  <div key={i}>
-                    <MilestoneTrackerItem
-                      roomID={props.roomID}
-                      day={day}
-                      index={i}
-                      isMilestoneDone={isMilestoneDone}
-                    />
-                  </div>
-                );
-              })}
+
+          <div className="no-scrollbar relative overflow-x-scroll">
+            <div className="relative h-[120px] min-w-[600px]">
+              <div className="absolute left-2 flex w-[584px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 sm:overflow-hidden sm:bg-transparent md:px-8">
+                {weekdays.map((day: string, i: number) => {
+                  const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
+                  return (
+                    <div key={i}>
+                      <MilestoneTrackerItem
+                        roomID={props.roomID}
+                        day={day}
+                        index={i}
+                        isMilestoneDone={isMilestoneDone}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
