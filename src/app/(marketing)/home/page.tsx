@@ -9,7 +9,7 @@ export default function LandingPage() {
       <div className="container mx-auto px-4 pb-20">
         <Header />
         <Slider />
-        <p className="mx-auto mb-12 max-w-[1000px] pt-[400px] text-center font-nexa text-7xl font-extrabold text-sand-12">
+        <p className="mx-auto mb-12 max-w-[1000px] pt-10 text-center font-nexa text-7xl font-extrabold text-sand-12">
           Staying in your <span className="font-sourceSerif4 font-light italic">comfort zone?</span>
           Not today.
         </p>

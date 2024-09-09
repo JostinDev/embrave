@@ -26,36 +26,36 @@ export default function Slider() {
   }, []);
 
   return (
-    <div className="relative mx-auto flex max-w-[820px] justify-center pt-64">
-      <div className="slide1 absolute mx-auto flex items-center justify-center">
+    <div className="relative mx-auto flex h-screen max-w-[820px] justify-center">
+      <div className="slide1 absolute top-1/2 mx-auto flex w-full items-center justify-center">
         <Image src={ellipseOrange} alt="ellipse" className="absolute z-10 " />
         <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold text-orange-9">
           <span className="font-sourceSerif4 font-light italic">Climb </span>a mountain?
         </p>
       </div>
 
-      <div className="slide2 absolute mx-auto flex max-w-[820px] items-center justify-center opacity-0 ">
+      <div className="slide2 absolute top-1/2 mx-auto flex w-full max-w-[820px] items-center justify-center opacity-0 ">
         <Image src={ellipsePurple} alt="ellipse" className="absolute z-10" />
         <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold text-purple-9">
           Find new <span className="font-sourceSerif4 font-light italic">friends</span>?
         </p>
       </div>
 
-      <div className="slide3 absolute mx-auto flex max-w-[820px] items-center justify-center opacity-0 ">
+      <div className="slide3 absolute top-1/2 mx-auto flex w-full max-w-[820px] items-center justify-center opacity-0 ">
         <Image src={ellipseGreen} alt="ellipse" className="absolute z-10" />
         <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold text-jade-9">
           Cold plunges <span className="font-sourceSerif4 font-light italic">every day</span>?
         </p>
       </div>
 
-      <div className="slide4 absolute mx-auto flex max-w-[820px] items-center justify-center opacity-0 ">
+      <div className="slide4 absolute top-1/2 mx-auto flex w-full max-w-[820px] items-center justify-center opacity-0 ">
         <Image src={ellipseBlue} alt="ellipse" className="absolute z-10" />
         <p className="text-blue-9 right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold">
           <span className="font-sourceSerif4 font-light italic">No social media </span>for a week?
         </p>
       </div>
 
-      <div className="slide5 absolute mx-auto flex max-w-[820px] items-center justify-center opacity-0 ">
+      <div className="slide5 absolute top-1/2 mx-auto flex w-full max-w-[820px] items-center justify-center opacity-0 ">
         <Image src={ellipseEnd} alt="ellipse" className="absolute z-10 " />
         <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold text-sand-12">
           Challenge yourself and change{' '}
