@@ -74,21 +74,22 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
             Check each day that you reached your goal to uphold your streak! You can fill out the
             last 7 days.
           </p>
-          <div className="no-scrollbar flex flex-row-reverse justify-between gap-6 overflow-x-scroll rounded-[10px] bg-orange-3 p-6 px-4 sm:overflow-hidden sm:bg-transparent md:px-8">
-            {weekdays.map((day: string, i: number) => {
-              //TODO a streak is not shared between users. It's personal
-              const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
-              return (
-                <div key={i}>
-                  <MilestoneTrackerItem
-                    roomID={props.roomID}
-                    day={day}
-                    index={i}
-                    isMilestoneDone={isMilestoneDone}
-                  />
-                </div>
-              );
-            })}
+          <div className="no-scrollbar overflow-x-scroll px-2">
+            <div className="flex min-w-[600px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 px-4 sm:overflow-hidden sm:bg-transparent md:px-8">
+              {weekdays.map((day: string, i: number) => {
+                const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
+                return (
+                  <div key={i}>
+                    <MilestoneTrackerItem
+                      roomID={props.roomID}
+                      day={day}
+                      index={i}
+                      isMilestoneDone={isMilestoneDone}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
