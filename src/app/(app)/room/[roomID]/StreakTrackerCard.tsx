@@ -77,9 +77,9 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
             them here and don’t loose your streak!
           </p>
 
-          <div className="no-scrollbar relative flex flex-row-reverse overflow-x-scroll md:flex-row">
-            <div className="relative h-[120px] min-w-[600px] md:w-full">
-              <div className="absolute left-2 flex w-[584px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 sm:overflow-hidden sm:bg-transparent md:left-0 md:w-full md:px-8">
+          <div className="no-scrollbar relative flex flex-row-reverse overflow-x-scroll sm:flex-row">
+            <div className="relative h-[120px] min-w-[600px] sm:w-full">
+              <div className="absolute left-2 flex w-[584px] flex-row-reverse justify-between gap-6 rounded-[10px] bg-orange-3 p-6 sm:left-0 sm:w-full sm:overflow-hidden sm:bg-transparent sm:px-8">
                 {weekdays.map((day: string, i: number) => {
                   const isMilestoneDone = (milestoneDoneAt as string[]).includes(day);
                   return (
