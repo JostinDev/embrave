@@ -8,7 +8,9 @@ export default async function Index() {
   return (
     <div className="relative">
       <div>
-        <p className="mb-4 font-nexa text-xl font-bold text-sand-12">Currently Active Challenges</p>
+        <h2 className="mb-4 font-nexa text-26 font-bold capitalize leading-[115%] text-sand-12">
+          Currently Active Challenges
+        </h2>
 
         {!incompletedRooms && (
           <p className="mb-4 font-inter text-base font-normal text-sand-12">
@@ -48,7 +50,9 @@ export default async function Index() {
         </div>
       </div>
       <div>
-        <p className="mb-4 mt-6 font-nexa text-xl font-bold text-sand-12">Completed challenges</p>
+        <h2 className="mb-4 mt-6 font-nexa text-26 font-bold capitalize leading-[115%] text-sand-12">
+          Completed challenges
+        </h2>
         {!completedRooms && (
           <p className="mb-4 font-inter text-base font-normal text-sand-12">
             Once you complete a challenge, it will show up here!
