@@ -2,11 +2,21 @@ import { relations } from 'drizzle-orm';
 import { boolean, integer, pgEnum, pgTable, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const challengeTypeEnum = pgEnum('challenge_type', ['goal', 'habit']);
-export const challengeCategoryEnum = pgEnum('challenge_category', ['sport', 'social', 'lifestyle']);
+export const challengeCategoryEnum = pgEnum('challenge_category', [
+  'sport',
+  'social',
+  'lifestyle',
+  'intellectual',
+  'creative',
+  'professional',
+  'personal growth',
+  'adventure',
+  'mental wellness',
+]);
 
 export const challenge = pgTable('challenge', {
   id: serial('id').primaryKey(),
-  title: varchar('title', { length: 256 }).notNull(),
+  title: varchar('title', { length: 256 }).notNull().unique(),
   description: varchar('description', { length: 256 }).notNull(),
   banner: varchar('banner', { length: 256 }).notNull(),
   type: challengeTypeEnum('type').notNull(),
