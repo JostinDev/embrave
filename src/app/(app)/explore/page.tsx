@@ -34,7 +34,7 @@ export default async function Challenge() {
             <h2 className="mb-4 font-nexa text-26 font-bold capitalize leading-[115%]">
               {category}
             </h2>
-            <div key={0} className="mb-8 flex flex-wrap gap-4">
+            <div key={0} className="mb-8 flex flex-nowrap gap-4 overflow-x-scroll md:flex-wrap">
               {challenges.map((challenge, j) => {
                 return (
                   <div key={j}>

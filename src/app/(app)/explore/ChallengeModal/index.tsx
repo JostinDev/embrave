@@ -25,7 +25,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
 
   return (
     <DialogTrigger>
-      <Button>
+      <Button className="h-full">
         <ChallengeCard challenge={challenge.title} type={challenge.type} />
       </Button>
       <Modal
