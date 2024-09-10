@@ -39,6 +39,7 @@ export default async function Index() {
                       type={room.challenge.type}
                       streak={streak}
                       users={room.users}
+                      banner={room.challenge.banner}
                     />
                   </Link>
                 );
@@ -72,6 +73,7 @@ export default async function Index() {
                         type={room.challenge.type}
                         streak={0}
                         users={room.users}
+                        banner={room.challenge.banner}
                       />
                     </Link>
                   );

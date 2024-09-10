@@ -6,8 +6,6 @@ import ChallengeModal from './ChallengeModal';
 export default async function Challenge() {
   const challengeItems = await getChallenges();
 
-  console.log(challengeItems);
-
   const user = await currentUser();
 
   if (!user)
