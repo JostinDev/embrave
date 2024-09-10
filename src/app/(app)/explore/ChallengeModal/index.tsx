@@ -26,7 +26,11 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
   return (
     <DialogTrigger>
       <Button className="h-full">
-        <ChallengeCard challenge={challenge.title} type={challenge.type} />
+        <ChallengeCard
+          banner={challenge.banner}
+          challenge={challenge.title}
+          type={challenge.type}
+        />
       </Button>
       <Modal
         isDismissable
@@ -39,9 +43,12 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
               <div className="relative mb-4">
                 <Image
                   className="h-[400px] w-full rounded-[26px]"
+                  height={540}
+                  width={960}
                   style={{ objectFit: 'cover' }}
                   placeholder="blur"
-                  src={stairs}
+                  blurDataURL={`/images/challenge/${challenge.banner}` + '.png'}
+                  src={challenge.banner ? `/images/challenge/${challenge.banner}` + '.png' : stairs}
                   alt=""
                 />
                 <Button

@@ -88,9 +88,14 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       <div className="relative mb-8">
         <Image
           className="h-[450px] w-full rounded-[28px] sm:h-[400px]"
+          height={540}
+          width={960}
           style={{ objectFit: 'cover' }}
           placeholder="blur"
-          src={stairs}
+          blurDataURL={`/images/challenge/${room.challenge.banner}` + '.png'}
+          src={
+            room.challenge.banner ? `/images/challenge/${room.challenge.banner}` + '.png' : stairs
+          }
           alt=""
         />
         <div

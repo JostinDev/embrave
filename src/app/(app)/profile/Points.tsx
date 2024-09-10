@@ -12,10 +12,10 @@ export default async function Points(props: PointsProps) {
   return (
     <ProfileCard title="Points">
       <div className="flex flex-col gap-4">
-        <div className="border-solide border-plum-5 bg-plum-1 flex w-full flex-col gap-4 rounded-[26px] border p-5 text-center">
+        <div className="border-solide flex w-full flex-col gap-4 rounded-[26px] border border-plum-5 bg-plum-1 p-5 text-center">
           <Image className="mx-auto mb-4 h-8 w-8" src={star} alt="" />
-          <p className="text-plum-11 font-nexa text-[26px] font-bold leading-3">{props.points}</p>
-          <p className="text-plum-11 font-inter text-sm font-normal leading-3">Points collected</p>
+          <p className="font-nexa text-[26px] font-bold leading-3 text-plum-11">{props.points}</p>
+          <p className="font-inter text-sm font-normal leading-3 text-plum-11">Points collected</p>
         </div>
 
         <div className="rounded-[26px] border border-solid border-sand-5 bg-sand-1 p-6">

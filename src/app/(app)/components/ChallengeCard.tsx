@@ -13,6 +13,7 @@ type ChallengeCardProps = {
   type: string;
   challenge: string;
   date?: string;
+  banner: string;
   users?: Pick<User, 'id' | 'fullName' | 'imageUrl'>[] | undefined;
 };
 
@@ -29,7 +30,15 @@ export default function ChallengeCard(props: ChallengeCardProps) {
         ) : (
           ''
         )}
-        <Image className="rounded-[10px] pb-3" src={placeholder} alt="" width={200} height={200} />
+        <Image
+          className="mb-3 h-[94px] rounded-[10px]"
+          style={{ objectFit: 'cover' }}
+          src={props.banner ? `/images/challenge/${props.banner}` + '.png' : placeholder}
+          blurDataURL={`/images/challenge/${props.banner}` + '.png'}
+          alt=""
+          width={200}
+          height={200}
+        />
       </div>
     );
   }
