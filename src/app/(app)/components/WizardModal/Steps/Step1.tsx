@@ -52,7 +52,7 @@ export default function Step1() {
           <label
             htmlFor="termsOfService"
             aria-label="I accept the terms and conditions"
-            className="cursor-pointer font-inter text-base leading-18 text-sand-11"
+            className="cursor-pointer font-inter text-base leading-5 text-sand-11"
           >
             I agree to the{' '}
             <Link
@@ -70,8 +70,10 @@ export default function Step1() {
               href={'/terms_and_conditions'}
               className="text-sky-11 underline"
             >
-              Privacy Statement
-            </Link>
+              Privacy Statement.
+            </Link>{' '}
+            By checking this box, you affirm that you are at least 18 years of age or the age of
+            majority in the jurisdiction you are accessing Embrave from.
           </label>
         </div>
         <FieldError />
