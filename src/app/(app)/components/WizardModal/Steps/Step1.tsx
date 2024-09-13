@@ -62,17 +62,44 @@ export default function Step1() {
               className="text-sky-11 underline"
             >
               Terms and Conditions
+            </Link>
+            ,{' '}
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={'/privacy_policy'}
+              className="text-sky-11 underline"
+            >
+              Privacy Policy
+            </Link>
+            ,{' '}
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={'/disclaimer'}
+              className="text-sky-11 underline"
+            >
+              Disclaimer
+            </Link>
+            ,{' '}
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={'/acceptable_use_policy'}
+              className="text-sky-11 underline"
+            >
+              Acceptable Use Policy
             </Link>{' '}
             and the{' '}
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href={'/terms_and_conditions'}
+              href={'/cookie_policy'}
               className="text-sky-11 underline"
             >
-              Privacy Statement.
-            </Link>{' '}
-            By checking this box, you affirm that you are at least 18 years of age or the age of
+              Cookie Policy
+            </Link>
+            . By checking this box, you affirm that you are at least 18 years of age or the age of
             majority in the jurisdiction you are accessing Embrave from.
           </label>
         </div>
