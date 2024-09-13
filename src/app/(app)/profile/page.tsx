@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 
 import Credits from '@/app/(app)/profile/Credits';
 import Points from '@/app/(app)/profile/Points';
+import ProfileFooter from '@/app/(app)/profile/ProfileFooter';
 import Settings from '@/app/(app)/profile/Settings';
 import Stats from '@/app/(app)/profile/Stats';
 import User from '@/app/(app)/profile/User';
@@ -44,27 +45,30 @@ export default async function Page() {
   const totalChallenges = goalChallengeNumber + habitChallengeNumber;
 
   return (
-    <div className="my-5 flex w-full max-w-[1132px] flex-col gap-4 lg:flex-row">
-      <div className="flex w-full flex-col gap-6">
-        <User
-          activeChallenges={totalChallenges}
-          profilePicture={user.imageUrl}
-          points={currentPoints}
-          username={user.username}
-        />
-        <Stats
-          goalChallengeNumber={goalChallengeNumber}
-          habitChallengeNumber={habitChallengeNumber}
-          milestoneCount={milestoneNumber}
-          updateCount={updateNumber}
-          highestStreak={highestStreak}
-        />
-        <Credits isPremium={isPremium} credits={currentCredits} />
+    <div>
+      <div className="my-5 flex w-full max-w-[1132px] flex-col gap-4 lg:flex-row">
+        <div className="flex w-full flex-col gap-6">
+          <User
+            activeChallenges={totalChallenges}
+            profilePicture={user.imageUrl}
+            points={currentPoints}
+            username={user.username}
+          />
+          <Stats
+            goalChallengeNumber={goalChallengeNumber}
+            habitChallengeNumber={habitChallengeNumber}
+            milestoneCount={milestoneNumber}
+            updateCount={updateNumber}
+            highestStreak={highestStreak}
+          />
+          <Credits isPremium={isPremium} credits={currentCredits} />
+        </div>
+        <div className="flex w-full flex-col gap-6">
+          <Settings userId={user.id} />
+          <Points points={currentPoints} />
+        </div>
       </div>
-      <div className="flex w-full flex-col gap-6">
-        <Settings userId={user.id} />
-        <Points points={currentPoints} />
-      </div>
+      <ProfileFooter />
     </div>
   );
 }
