@@ -56,16 +56,10 @@ export default async function AppLayout({ children }: RootLayoutProps) {
         <Menu isPremium={isPremium} />
         <MenuMobile isPremium={isPremium} />
         <div
-          className="fixed z-10 flex min-h-[105px] w-full flex-col bg-cover md:min-h-[191px]"
+          className="fixed z-10 flex min-h-[105px] w-full flex-col bg-cover md:min-h-[150px]"
           style={{ backgroundImage: `url(${hero.src})` }}
-        >
-          <div className="flex max-w-[1800px] flex-1 pl-36 lg:pl-80">
-            <p className="-mb-4 hidden self-end font-nexa text-6xl font-black uppercase italic text-sand-12 md:block">
-              HEJ {user?.username}
-            </p>
-          </div>
-        </div>
-        <div className="relative max-w-[1800px] px-4 pt-[120px] md:pl-36 md:pt-[220px] lg:pl-80">
+        ></div>
+        <div className="relative max-w-[1800px] px-4 pt-[120px] md:pl-36 md:pt-[180px] lg:pl-80">
           {children}
         </div>
       </div>

@@ -84,7 +84,7 @@ export default function Menu(props: { isPremium: boolean }) {
   }
 
   return (
-    <div className="fixed left-8 top-32 z-40 hidden flex-col md:bottom-8 md:flex">
+    <div className="fixed left-8 top-28 z-40 hidden flex-col md:bottom-8 md:flex">
       <div className="flex w-[83px] flex-1 flex-col gap-8 rounded-[26px] border border-sand-5 bg-white/40 px-4 pt-6 backdrop-blur-lg transition-[width] lg:w-[255px]">
         <div
           id="backdropContainer"
