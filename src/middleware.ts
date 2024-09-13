@@ -7,7 +7,11 @@ export default clerkMiddleware((auth, request) => {
   if (
     request.nextUrl.pathname !== '/api/webhooks' &&
     !isSignedIn &&
-    request.nextUrl.pathname !== '/terms_and_conditions'
+    request.nextUrl.pathname !== '/terms_and_conditions' &&
+    request.nextUrl.pathname !== '/privacy_policy' &&
+    request.nextUrl.pathname !== '/cookie_policy' &&
+    request.nextUrl.pathname !== '/disclaimer' &&
+    request.nextUrl.pathname !== '/acceptable_use_policy'
   ) {
     return NextResponse.rewrite(new URL('/home', request.url));
   }
