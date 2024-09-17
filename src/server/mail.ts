@@ -16,8 +16,7 @@ export async function sendBuyConfirmationPremium(to: string) {
       from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
-      text: 'Testing some Mailgun awesomeness!',
-      html: '<h1 class="text-green-9">Thanks for buying premium!</h1>',
+      template: 'subscription',
     })
     .then((msg) => console.log(msg))
     .catch((err) => console.log(err));
@@ -30,8 +29,7 @@ export async function sendBuyConfirmationCredits(to: string) {
       from: 'Embrave <hello@embrave.app>',
       to: [to],
       subject: 'Thank you for your purchase!',
-      text: 'Testing some Mailgun awesomeness!',
-      html: '<h1 class="text-green-9">Thanks for buying more credits!</h1>',
+      template: 'credits',
     })
     .then((msg) => console.log(msg))
     .catch((err) => console.log(err));
