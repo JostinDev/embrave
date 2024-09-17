@@ -23,15 +23,6 @@ type ChallengeModalProps = {
 export default function ChallengeModal({ challenge, credits, isPremium }: ChallengeModalProps) {
   const [state, formAction, isPending] = useActionState(createRoom, { errors: {} });
 
-  function scrollToTop(event: Event) {
-    console.log('scroll');
-    const myDiv = document.querySelector('.react-aria-ModalOverlay');
-    console.log(myDiv);
-    if (myDiv) {
-      myDiv.scrollTop = 0;
-    }
-  }
-
   return (
     <DialogTrigger>
       <Button className="h-full">
@@ -43,7 +34,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
       </Button>
       <Modal
         isDismissable
-        className="mx-auto flex w-full max-w-[1100px] overscroll-contain rounded-[44px] border border-sand-5 bg-sand-1 p-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
+        className="mx-auto w-full max-w-[1100px] overscroll-contain rounded-[44px] border border-sand-5 bg-sand-1 p-4 shadow-[0px_8px_20px_rgba(0,0,0/0.1)] sm:top-auto"
       >
         <Dialog className="flex flex-col outline-none">
           {({ close }) => (
