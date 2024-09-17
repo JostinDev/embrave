@@ -57,7 +57,7 @@ export default function ChallengeCard(props: ChallengeCardProps) {
   }
 
   return (
-    <div className="flex h-full w-[220px] cursor-pointer flex-col rounded-[26px] border border-sand-5 bg-sand-2 p-4">
+    <div className="flex h-full w-[220px] cursor-pointer flex-col rounded-[26px] border border-sand-5 bg-sand-1 p-4">
       <Streak />
       <span className="mb-4">
         <Tag />
