@@ -25,15 +25,6 @@ export default async function Index() {
           Currently Active Challenges
         </h2>
 
-        {!incompletedRooms && (
-          <p className="mb-4 font-inter text-base font-normal text-sand-12">
-            No active challenges,{' '}
-            <Link className="text-blue-600" href={'/explore'}>
-              explore our challenges{' '}
-            </Link>
-            and pick one!
-          </p>
-        )}
         <div className="flex gap-4 overflow-x-scroll">
           {incompletedRooms &&
             incompletedRooms.map(async (room) => {
@@ -62,7 +53,7 @@ export default async function Index() {
             })}
           <Link
             href="/explore"
-            className="flex min-w-[220px] flex-col rounded-[26px] border border-sand-5 bg-sand-1 p-4 font-inter text-base font-medium text-sand-10"
+            className="flex min-h-[260px] min-w-[220px] flex-col rounded-[26px] border border-sand-5 bg-sand-1 p-4 font-inter text-base font-medium text-sand-10"
           >
             <p className="pl-2 pt-2">Add challenge</p>
             <Image className="ml-auto mt-auto" src={plusCircleOutline} alt="" />
