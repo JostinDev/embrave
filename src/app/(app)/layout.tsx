@@ -59,7 +59,7 @@ export default async function AppLayout({ children }: RootLayoutProps) {
           className="fixed z-10 flex min-h-[105px] w-full flex-col bg-cover md:min-h-[150px]"
           style={{ backgroundImage: `url(${hero.src})` }}
         ></div>
-        <div className="relative max-w-[1800px] px-4 pt-[120px] md:pl-36 md:pt-[180px] lg:pl-80">
+        <div className="relative max-w-[1800px] px-4 pt-[140px] md:pl-36 md:pt-[180px] lg:pl-80">
           {children}
         </div>
       </div>

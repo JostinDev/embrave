@@ -526,8 +526,6 @@ export async function removeCredit() {
 export async function setBaseCredits(userID: string) {
   let currentCredits = 3;
 
-  console.log('setBaseCredits', userID);
-
   await clerkClient.users.updateUserMetadata(userID, {
     publicMetadata: {
       credits: currentCredits,

@@ -16,8 +16,6 @@ export default async function Index() {
     });
   }
 
-  console.log('COMPLETED ROOMS', completedRoomsFiltered);
-
   return (
     <div className="relative">
       <div>
@@ -61,7 +59,7 @@ export default async function Index() {
         </div>
       </div>
       <div>
-        <h2 className="mb-4 mt-6 font-nexa text-26 font-bold capitalize leading-[115%] text-sand-12">
+        <h2 className="mb-4 mt-10 font-nexa text-26 font-bold capitalize leading-[115%] text-sand-12">
           Completed challenges
         </h2>
         <div className="flex gap-4 overflow-x-scroll">
