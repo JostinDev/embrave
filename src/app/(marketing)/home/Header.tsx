@@ -11,7 +11,7 @@ export default function Header() {
       <div className="flex items-center gap-2">
         <Image src={logo} alt="" />
         <h1 className="hidden font-nexa text-32 font-bold leading-none text-sand-12 sm:block">
-          Embrave
+          Embrave Test
         </h1>
       </div>
       <SignInLandingPageButton isSignedIn={isSignedIn} />
