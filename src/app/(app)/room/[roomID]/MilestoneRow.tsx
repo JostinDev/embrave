@@ -34,7 +34,7 @@ export default function MilestoneRow(props: MilestoneRowProps) {
     <div
       className={twJoin(
         "relative flex flex-col before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]",
-        props.isLastRow ? 'mb-10 ' : 'pb-10',
+        !props.isLastRow && 'pb-10',
       )}
     >
       <div className="flex justify-between pl-16">

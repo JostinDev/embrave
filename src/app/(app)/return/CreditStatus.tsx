@@ -21,7 +21,7 @@ export default async function CreditStatus(creditStatusPageProps: CreditStatusPa
 
       <div className="flex w-full flex-col p-3">
         <p className="pb-1 text-center font-inter text-base font-black leading-5 text-sand-12">
-          Your credit balance had been updated.
+          Your credit balance has been updated.
         </p>
       </div>
     </div>

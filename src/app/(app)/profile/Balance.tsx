@@ -19,17 +19,23 @@ export default function Balance(props: BalanceProps) {
           Current Balance:
         </p>
         <p className="text-center font-inter text-base font-medium leading-5 text-sand-9">
-          {props.credits} credits
+          {props.isPremium ? 'Unlimited credits' : props.credits + ' credits'}
         </p>
       </div>
-      <Link className="w-full" href="/premium">
-        <Button className="w-full rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">
-          <span className="flex items-center justify-center gap-2">
-            <Image src={cart} alt="" />
-            <p>Buy more credits</p>
-          </span>
-        </Button>
-      </Link>
+      {props.isPremium ? (
+        <p className="text-center font-inter text-base font-medium text-sand-12">
+          Thank you for buying Embrave Premium!
+        </p>
+      ) : (
+        <Link className="w-full" href="/premium">
+          <Button className="w-full rounded-lg bg-sand-12 p-3 font-inter text-base leading-18 text-sand-3">
+            <span className="flex items-center justify-center gap-2">
+              <Image src={cart} alt="" />
+              <p>Buy more credits</p>
+            </span>
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

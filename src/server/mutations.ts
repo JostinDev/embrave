@@ -215,10 +215,27 @@ export async function kickFromRoom(prevState: any, formData: FormData) {
     return { error: 'Room not found' };
   }
 
-  // Delete user milestone from the room
-  await db
-    .delete(milestone)
-    .where(and(eq(milestone.roomID, result.data.roomID), eq(milestone.userID, result.data.userID)));
+  const milestonesToDelete = await db
+    .select({ milestoneID: milestone.id })
+    .from(milestone)
+    .where(eq(milestone.userID, result.data.userID));
+
+  if (milestonesToDelete.length !== 0) {
+    for (const row of milestonesToDelete) {
+      const deletedMediaLink: { deletedLink: string }[] = await db
+        .delete(milestoneMedia)
+        .where(eq(milestoneMedia.milestoneID, row.milestoneID))
+        .returning({ deletedLink: milestoneMedia.link });
+
+      if (deletedMediaLink.length !== 0) {
+        for (const row of deletedMediaLink) {
+          await del(row.deletedLink);
+        }
+      }
+    }
+    // Delete user milestone from the room
+    await db.delete(milestone).where(eq(milestone.userID, result.data.userID));
+  }
 
   revalidatePath('/room/');
 }
@@ -525,8 +542,6 @@ export async function removeCredit() {
 
 export async function setBaseCredits(userID: string) {
   let currentCredits = 3;
-
-  console.log('setBaseCredits', userID);
 
   await clerkClient.users.updateUserMetadata(userID, {
     publicMetadata: {

@@ -21,16 +21,18 @@
 /*MODAL*/
 
 .react-aria-ModalOverlay {
+    flex-direction: column;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100dvh;
+    bottom: 0;
+    right: 0;
     background: rgba(0 0 0 / .5);
     align-content: center;
     z-index: 100001;
     overflow-y: scroll;
     padding: 16px;
+    @apply flex sm:block sm:justify-center;
 
     &[data-entering] {
         animation: modal-fade 200ms;
