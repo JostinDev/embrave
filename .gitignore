@@ -20,4 +20,8 @@ next-env.d.ts
 .vercel/
 .vercel
 
+# Additional folders
+app-backend/
+app-gateway/
+
 .vscode/settings.json
