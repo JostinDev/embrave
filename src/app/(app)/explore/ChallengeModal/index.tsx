@@ -90,7 +90,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                     Not enough credits
                   </p>
                   <p className="mb-6 font-inter text-base leading-5 text-sand-11">
-                    Your current balance is not sufficient to join this challenge. Please by more
+                    Your current balance is not sufficient to join this challenge. Please buy more
                     credits in order to start this challenge.
                   </p>
                   <RemainingCredits isPremium={isPremium} credits={credits} cost={1} />
