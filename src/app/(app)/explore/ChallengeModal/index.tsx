@@ -73,7 +73,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                 </div>
               </div>
 
-              {credits > 0 && (
+              {(credits > 0 || isPremium) && (
                 <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-1 p-8">
                   <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
                     Challenge description
@@ -84,7 +84,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                 </div>
               )}
 
-              {credits <= 0 && (
+              {credits <= 0 && !isPremium && (
                 <div className="w-100 mx-auto max-w-[700px] rounded-[26px] border border-sand-5 bg-sand-2 p-8">
                   <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
                     Not enough credits
@@ -97,7 +97,7 @@ export default function ChallengeModal({ challenge, credits, isPremium }: Challe
                 </div>
               )}
 
-              {credits > 0 && (
+              {(credits > 0 || isPremium) && (
                 <div className="w-100 mx-auto max-w-[700px] rounded-[26px] border border-jade-5 bg-jade-2 p-8">
                   <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-green-11">
                     Want to challenge yourself? Start now!
