@@ -47,64 +47,64 @@ export default function AcceptableUsePolicy() {
           </h3>
           <ol className="ml-8 list-disc">
             <li>
-              <Link className="underline" href="#prohibited-activities-and-uses">
+              <a className="underline" href="#prohibited-activities-and-uses">
                 Prohibited activities and uses
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#system-abuse">
+              <a className="underline" href="#system-abuse">
                 System abuse
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#service-resources">
+              <a className="underline" href="#service-resources">
                 Service resources
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#no-spam-policy">
+              <a className="underline" href="#no-spam-policy">
                 No spam policy
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#defamation-and-objectionable-content">
+              <a className="underline" href="#defamation-and-objectionable-content">
                 Defamation and objectionable content
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#copyrighted-content">
+              <a className="underline" href="#copyrighted-content">
                 Copyrighted content
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#security">
+              <a className="underline" href="#security">
                 Security
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#enforcement">
+              <a className="underline" href="#enforcement">
                 Enforcement
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#reporting-violations">
+              <a className="underline" href="#reporting-violations">
                 Reporting violations
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#changes-and-amendments">
+              <a className="underline" href="#changes-and-amendments">
                 Changes and amendments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#acceptance-of-this-policy">
+              <a className="underline" href="#acceptance-of-this-policy">
                 Acceptance of this policy
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#contacting-us">
+              <a className="underline" href="#contacting-us">
                 Contacting us
-              </Link>
+              </a>
             </li>
           </ol>
         </div>

@@ -46,34 +46,34 @@ export default function CookiePolicy() {
           </h3>
           <ol className="ml-8 list-disc">
             <li>
-              <Link className="underline" href="#what-are-cookies">
+              <a className="underline" href="#what-are-cookies">
                 What are cookies?
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#what-type-of-cookies-do-we-use">
+              <a className="underline" href="#what-type-of-cookies-do-we-use">
                 What type of cookies do we use?
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#what-are-your-cookie-options">
+              <a className="underline" href="#what-are-your-cookie-options">
                 What are your cookie options?
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#changes-and-amendments">
+              <a className="underline" href="#changes-and-amendments">
                 Changes and amendments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#acceptance-of-this-policy">
+              <a className="underline" href="#acceptance-of-this-policy">
                 Acceptance of this policy
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#contacting-us">
+              <a className="underline" href="#contacting-us">
                 Contacting us
-              </Link>
+              </a>
             </li>
           </ol>
         </div>

@@ -51,7 +51,10 @@ type RootLayoutProps = {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${nexa.variable} ${sourceSerif4.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${nexa.variable} ${sourceSerif4.variable} scroll-smooth`}
+    >
       <body>{children}</body>
     </html>
   );

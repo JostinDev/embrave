@@ -46,89 +46,89 @@ export default function TermsAndConditions() {
           </h3>
           <ol className="ml-8 list-disc">
             <li>
-              <Link className="underline" href="#accounts-and-membership">
+              <a className="underline" href="#accounts-and-membership">
                 Accounts and membership
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#user-content">
+              <a className="underline" href="#user-content">
                 User content
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#billing-and-payments">
+              <a className="underline" href="#billing-and-payments">
                 Billing and payments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#accuracy-of-information">
+              <a className="underline" href="#accuracy-of-information">
                 Accuracy of information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#backups">
+              <a className="underline" href="#backups">
                 Backups
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#links-to-other-resources">
+              <a className="underline" href="#links-to-other-resources">
                 Links to other resources
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#prohibited-uses">
+              <a className="underline" href="#prohibited-uses">
                 Prohibited uses
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#intellectual-property-rights">
+              <a className="underline" href="#intellectual-property-rights">
                 Intellectual property rights
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#disclaimer-of-warranty">
+              <a className="underline" href="#disclaimer-of-warranty">
                 Disclaimer of warranty
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#limitation-of-liability">
+              <a className="underline" href="#limitation-of-liability">
                 Limitation of liability
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#indemnification">
+              <a className="underline" href="#indemnification">
                 Indemnification
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#severability">
+              <a className="underline" href="#severability">
                 Severability
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#dispute-resolution">
+              <a className="underline" href="#dispute-resolution">
                 Dispute resolution
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#assignment">
+              <a className="underline" href="#assignment">
                 Assignment
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#changes-and-amendments">
+              <a className="underline" href="#changes-and-amendments">
                 Changes and amendments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#acceptance-of-these-terms">
+              <a className="underline" href="#acceptance-of-these-terms">
                 Acceptance of these terms
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="mailto:hello@embrave.app">
+              <a className="underline" href="mailto:hello@embrave.app">
                 Contacting us
-              </Link>
+              </a>
             </li>
           </ol>
         </div>

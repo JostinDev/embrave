@@ -44,44 +44,44 @@ export default function Disclaimer() {
           </h3>
           <ol className="ml-8 list-disc">
             <li>
-              <Link className="underline" href="#representation">
+              <a className="underline" href="#representation">
                 Representation
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#content-and-postings">
+              <a className="underline" href="#content-and-postings">
                 Content and postings
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#fitness-and-medical-disclaimer">
+              <a className="underline" href="#fitness-and-medical-disclaimer">
                 Fitness and medical disclaimer
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#fair-use-notice">
+              <a className="underline" href="#fair-use-notice">
                 Fair use notice
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#indemnification-and-warranties">
+              <a className="underline" href="#indemnification-and-warranties">
                 Indemnification and warranties
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#changes-and-amendments">
+              <a className="underline" href="#changes-and-amendments">
                 Changes and amendments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#acceptance-of-this-disclaimer">
+              <a className="underline" href="#acceptance-of-this-disclaimer">
                 Acceptance of this disclaimer
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#contacting-us">
+              <a className="underline" href="#contacting-us">
                 Contacting us
-              </Link>
+              </a>
             </li>
           </ol>
         </div>

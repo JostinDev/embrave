@@ -122,13 +122,13 @@ export default function Slider(props: { isSignedIn: boolean }) {
         </div>
       </div>
 
-      <Link
+      <a
         id="scrollToFirstSection"
         href="#firstSection"
         className="mb-10 mt-auto hidden animate-bounce opacity-0 md:mb-20"
       >
         <Image src={arrowDownOutline} alt="" />
-      </Link>
+      </a>
     </div>
   );
 }

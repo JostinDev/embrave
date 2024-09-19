@@ -52,94 +52,94 @@ export default function PrivacyPolicy() {
           </h3>
           <ol className="ml-8 list-disc">
             <li>
-              <Link className="underline" href="#collection-of-personal-information">
+              <a className="underline" href="#collection-of-personal-information">
                 Collection of personal information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#use-and-processing-of-collected-information">
+              <a className="underline" href="#use-and-processing-of-collected-information">
                 Use and processing of collected information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#payment-processing">
+              <a className="underline" href="#payment-processing">
                 Payment processing
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#managing-information">
+              <a className="underline" href="#managing-information">
                 Managing information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#disclosure-of-information">
+              <a className="underline" href="#disclosure-of-information">
                 Disclosure of information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#retention-of-information">
+              <a className="underline" href="#retention-of-information">
                 Retention of information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#transfer-of-information">
+              <a className="underline" href="#transfer-of-information">
                 Transfer of information
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#region-specific-notices">
+              <a className="underline" href="#region-specific-notices">
                 Region specific notices
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#how-to-exercise-your-rights">
+              <a className="underline" href="#how-to-exercise-your-rights">
                 How to exercise your rights
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#cookies">
+              <a className="underline" href="#cookies">
                 Cookies
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#privacy-of-children">
+              <a className="underline" href="#privacy-of-children">
                 Privacy of children
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#do-not-track-signals">
+              <a className="underline" href="#do-not-track-signals">
                 Do Not Track signals
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#links-to-other-resources">
+              <a className="underline" href="#links-to-other-resources">
                 Links to other resources
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#information-security">
+              <a className="underline" href="#information-security">
                 Information security
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#data-breach">
+              <a className="underline" href="#data-breach">
                 Data breach
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#changes-and-amendments">
+              <a className="underline" href="#changes-and-amendments">
                 Changes and amendments
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="#acceptance-of-this-policy">
+              <a className="underline" href="#acceptance-of-this-policy">
                 Acceptance of this policy
-              </Link>
+              </a>
             </li>
             <li>
-              <Link className="underline" href="mailto:hello@embrave.app">
+              <a className="underline" href="mailto:hello@embrave.app">
                 Contacting us
-              </Link>
+              </a>
             </li>
           </ol>
         </div>
