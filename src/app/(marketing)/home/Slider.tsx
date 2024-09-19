@@ -31,14 +31,24 @@ export default function Slider(props: { isSignedIn: boolean }) {
     gsap.to('.slide4', { duration: 0.7, opacity: 0, delay: 8 });
 
     gsap.to('.callToAction', { duration: 0, delay: 8 }).then(() => {
-      const element = document.getElementById('callToAction');
-      if (element) {
-        element.classList.add('block');
-        element.classList.remove('hidden');
+      const callToAction = document.getElementById('callToAction');
+      const scrollArrow = document.getElementById('scrollToFirstSection');
+      if (callToAction) {
+        callToAction.classList.add('block');
+        callToAction.classList.remove('hidden');
+      }
+      if (scrollArrow) {
+        scrollArrow.classList.add('block');
+        scrollArrow.classList.remove('hidden');
       }
     });
 
     gsap.fromTo('.slide5', { opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, delay: 8 });
+    gsap.fromTo(
+      '#scrollToFirstSection',
+      { opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, delay: 8 },
+    );
 
     const tl = gsap.timeline({ repeat: -1 });
     tl.fromTo('.ellipse1', { opacity: 1 }, { y: 0, opacity: 0, duration: 2 });
@@ -112,7 +122,11 @@ export default function Slider(props: { isSignedIn: boolean }) {
         </div>
       </div>
 
-      <Link href="#firstSection" className="mb-10 mt-auto animate-bounce md:mb-20">
+      <Link
+        id="scrollToFirstSection"
+        href="#firstSection"
+        className="mb-10 mt-auto hidden animate-bounce opacity-0 md:mb-20"
+      >
         <Image src={arrowDownOutline} alt="" />
       </Link>
     </div>
