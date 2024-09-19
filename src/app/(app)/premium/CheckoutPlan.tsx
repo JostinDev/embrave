@@ -71,7 +71,7 @@ export default function CheckoutPlan() {
             </ul>
             <p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
             <p className="mb-4 font-nexa text-xl font-light text-jade-12">
-              <span className="font-bold">40.00 CHF</span> for unlimited credits
+              <span className="font-bold">39.00 USD</span> for unlimited credits
             </p>
 
             <Link href={{ pathname: '/checkout', query: { plan: 'lifetime' } }}>
@@ -102,7 +102,7 @@ export default function CheckoutPlan() {
             </ul>
             <p className="font-inter text-xs font-normal text-sand-11">One-time purchase</p>
             <p className="mb-4 font-nexa text-xl font-light text-jade-12">
-              <span className="font-bold">9.00 CHF</span> for 3 credits
+              <span className="font-bold">9.00 USD</span> for 3 credits
             </p>
 
             <Link href={{ pathname: '/checkout', query: { plan: 'credits' } }}>

@@ -668,7 +668,7 @@ async function createCheckoutSession(isLifetime: boolean) {
       ui_mode: 'embedded',
       line_items: [
         {
-          price: 'price_1P405j05xPAER8V0FZ46vU4m',
+          price: 'price_1Q0geQ05xPAER8V0AOamnYbA',
           quantity: 1,
         },
       ],
@@ -681,7 +681,7 @@ async function createCheckoutSession(isLifetime: boolean) {
       ui_mode: 'embedded',
       line_items: [
         {
-          price: 'price_1PZudd05xPAER8V0KQVkPqEZ',
+          price: 'price_1Q0gdt05xPAER8V0cSHImGj7',
           quantity: 1,
         },
       ],
