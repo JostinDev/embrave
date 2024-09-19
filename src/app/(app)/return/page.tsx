@@ -51,7 +51,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   if (lineItems.data[0] && lineItems.data[0].price) {
     const priceID = lineItems.data[0].price.id;
 
-    if (priceID === 'price_1P405j05xPAER8V0FZ46vU4m') {
+    if (priceID === process.env.STRIPE_PRICE_LIFETIME) {
       console.log('lifetime plan');
       await clerkClient.users.updateUserMetadata(userId, {
         publicMetadata: {
@@ -60,7 +60,7 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
       });
       await sendBuyConfirmationPremium(customerEmail);
       plan = 'lifetime';
-    } else if (priceID === 'price_1PZudd05xPAER8V0KQVkPqEZ') {
+    } else if (priceID === process.env.STRIPE_PRICE_CREDITS) {
       console.log('credits plan');
 
       await clerkClient.users.updateUserMetadata(userId, {
