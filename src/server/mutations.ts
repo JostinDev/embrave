@@ -668,7 +668,7 @@ async function createCheckoutSession(isLifetime: boolean) {
       ui_mode: 'embedded',
       line_items: [
         {
-          price: 'price_1Q0geQ05xPAER8V0AOamnYbA',
+          price: process.env.STRIPE_PRICE_LIFETIME,
           quantity: 1,
         },
       ],
@@ -681,7 +681,7 @@ async function createCheckoutSession(isLifetime: boolean) {
       ui_mode: 'embedded',
       line_items: [
         {
-          price: 'price_1Q0gdt05xPAER8V0cSHImGj7',
+          price: process.env.STRIPE_PRICE_CREDITS,
           quantity: 1,
         },
       ],
