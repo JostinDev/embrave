@@ -1,3 +1,6 @@
+import { ClerkProvider } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+
 import Flame from '@/app/(marketing)/home/Flame';
 import Footer from '@/app/(marketing)/home/Footer';
 import Header from '@/app/(marketing)/home/Header';
@@ -7,12 +10,19 @@ import Separator from '@/app/(marketing)/home/Separator';
 import Slider from '@/app/(marketing)/home/Slider';
 
 export default function LandingPage() {
+  const isSignedIn = Boolean(auth().userId);
+
   return (
     <div>
       <div className="container mx-auto px-4">
-        <Header />
-        <Slider />
-        <p className="mx-auto mb-12 max-w-[1000px] pt-10 text-center font-nexa text-4xl font-extrabold text-sand-12 sm:text-7xl">
+        <ClerkProvider>
+          <Header />
+          <Slider isSignedIn={isSignedIn} />
+        </ClerkProvider>
+        <p
+          id="firstSection"
+          className="mx-auto mb-12 max-w-[1000px] scroll-mt-28 pt-10 text-center font-nexa text-4xl font-extrabold text-sand-12 sm:text-7xl"
+        >
           Staying in your <span className="font-sourceSerif4 font-light italic">comfort zone?</span>{' '}
           Not today.
         </p>

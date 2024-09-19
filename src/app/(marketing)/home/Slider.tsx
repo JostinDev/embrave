@@ -2,8 +2,12 @@
 
 import { useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { SignInButton } from '@clerk/nextjs';
 import gsap from 'gsap';
+import { Button } from 'react-aria-components';
 
+import arrowDownOutline from '@/app/(marketing)/home/images/arrowDownOutline.svg';
 import ellipseBlue from '@/app/(marketing)/home/images/ellipseBlue.svg';
 import ellipseEndBlue from '@/app/(marketing)/home/images/ellipseEndBlue.svg';
 import ellipseEndGreen from '@/app/(marketing)/home/images/ellipseEndGreen.svg';
@@ -13,7 +17,7 @@ import ellipseGreen from '@/app/(marketing)/home/images/ellipseGreen.svg';
 import ellipseOrange from '@/app/(marketing)/home/images/ellipseOrange.svg';
 import ellipsePurple from '@/app/(marketing)/home/images/ellipsePurple.svg';
 
-export default function Slider() {
+export default function Slider(props: { isSignedIn: boolean }) {
   useEffect(() => {
     gsap.to('.slide1', { duration: 0.7, opacity: 0, delay: 2 });
     gsap.fromTo('.slide2', { opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, delay: 2 });
@@ -23,7 +27,16 @@ export default function Slider() {
     gsap.to('.slide3', { duration: 0.7, opacity: 0, delay: 6 });
 
     gsap.fromTo('.slide4', { opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, delay: 6 });
+
     gsap.to('.slide4', { duration: 0.7, opacity: 0, delay: 8 });
+
+    gsap.to('.callToAction', { duration: 0, delay: 8 }).then(() => {
+      const element = document.getElementById('callToAction');
+      if (element) {
+        element.classList.add('block');
+        element.classList.remove('hidden');
+      }
+    });
 
     gsap.fromTo('.slide5', { opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, delay: 8 });
 
@@ -43,7 +56,7 @@ export default function Slider() {
   }, []);
 
   return (
-    <div className="relative mx-auto flex h-screen max-w-[820px] justify-center">
+    <div className="relative mx-auto flex h-dvh max-w-[820px] justify-center">
       <div className="slide1 absolute top-[45%] mx-auto flex w-full items-center justify-center">
         <Image src={ellipseOrange} alt="ellipse" className="absolute z-10 " />
         <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-4xl font-bold text-orange-9 sm:text-5xl">
@@ -72,17 +85,36 @@ export default function Slider() {
         </p>
       </div>
 
-      <div className="slide5 absolute top-[40%] mx-auto flex w-full max-w-[820px] items-center justify-center opacity-0 ">
+      <div className="slide5 absolute top-[35%] mx-auto flex w-full max-w-[820px] flex-col items-center justify-center opacity-0 ">
         <Image src={ellipseEndOrange} alt="ellipse" className="ellipse1 absolute z-10" />
         <Image src={ellipseEndPurple} alt="ellipse" className="ellipse2 absolute z-10" />
         <Image src={ellipseEndGreen} alt="ellipse" className="ellipse3 absolute z-10" />
         <Image src={ellipseEndBlue} alt="ellipse" className="ellipse4 absolute z-10" />
 
-        <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-5xl font-bold text-sand-12">
+        <p className="right-1/2 top-1/2 z-20 mx-auto text-center font-nexa text-4xl font-bold text-sand-12 sm:text-5xl">
           Challenge yourself and change{' '}
           <span className="font-sourceSerif4 font-light italic">your life!</span>
         </p>
+        <div id="callToAction" className="z-30 hidden">
+          {props.isSignedIn ? (
+            <Link href="/">
+              <Button className="mt-10 rounded-2xl bg-sand-12 px-6 py-4 font-nexa text-2xl font-bold leading-[135%] text-sand-1 md:mt-16 md:text-[32px]">
+                Get started
+              </Button>
+            </Link>
+          ) : (
+            <SignInButton mode="modal">
+              <Button className="mt-10 rounded-2xl bg-sand-12 px-6 py-4 font-nexa text-2xl font-bold leading-[135%] text-sand-1 md:mt-16 md:text-[32px]">
+                Get started
+              </Button>
+            </SignInButton>
+          )}
+        </div>
       </div>
+
+      <Link href="#firstSection" className="mb-10 mt-auto animate-bounce md:mb-20">
+        <Image src={arrowDownOutline} alt="" />
+      </Link>
     </div>
   );
 }
