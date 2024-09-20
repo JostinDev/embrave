@@ -132,6 +132,7 @@ export async function getRoom(id: number) {
     ...room,
     userRooms: room.userRooms.map((userRoom) => {
       const user = allUserResponse.data.find((user) => user.id === userRoom.userID);
+      console.log(user);
       if (!user) throw new Error('User not found');
 
       return {
@@ -152,6 +153,7 @@ export async function getRoom(id: number) {
         user: {
           id: user.id,
           fullName: user.fullName,
+          username: user.username,
           imageUrl: user.imageUrl,
         },
       };

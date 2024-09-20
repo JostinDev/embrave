@@ -11,6 +11,7 @@ type MilestoneRowProps = {
   milestone: {
     user: {
       fullName: string | null;
+      username: string | null;
       imageUrl: string;
     };
     id: number;
@@ -65,10 +66,10 @@ export default function MilestoneRow(props: MilestoneRowProps) {
       <div>
         <div className="flex items-center gap-4">
           <Image
-            title={props.milestone.user.fullName ?? undefined}
+            title={props.milestone.user.username ?? undefined}
             alt={
-              props.milestone.user.fullName
-                ? `Profile picture of ${props.milestone.user.fullName}`
+              props.milestone.user.username
+                ? `Profile picture of ${props.milestone.user.username}`
                 : 'Profile picture'
             }
             width={48}
@@ -83,7 +84,7 @@ export default function MilestoneRow(props: MilestoneRowProps) {
           ) : (
             <p className="font-nexa text-lg font-bold text-sand-12 sm:text-xl">
               {props.milestone.ticked
-                ? props.milestone.user.fullName + ' has set the challenge as done'
+                ? props.milestone.user.username + ' has set the challenge as done'
                 : props.milestone.title}
             </p>
           )}
