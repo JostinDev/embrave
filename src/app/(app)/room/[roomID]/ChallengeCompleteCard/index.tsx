@@ -30,7 +30,7 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
   }
 
   return (
-    <div className="w-100 relative mx-auto mb-6 flex max-w-[700px] items-center justify-between gap-2 overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-8">
+    <div className="w-100 relative mx-auto mb-4 flex max-w-[700px] items-center justify-between gap-2 overflow-hidden rounded-[26px] border border-green-4 bg-green-2 p-6 sm:mb-6 sm:p-8">
       {isChallengeCompleted && (
         <div className="confetti absolute left-0 top-0 h-16 w-full animate-confetti bg-repeat-x" />
       )}
@@ -39,14 +39,14 @@ export default function ChallengeCompleteCard(props: ChallengeCompleteCardProps)
           onClick={() => setIsRoomCompleteAccordionOpen(!isRoomCompleteAccordionOpen)}
           className="flex w-fit cursor-pointer gap-2"
         >
-          <p className="font-nexa text-26 font-bold leading-[115%] text-green-11">
+          <p className="font-nexa text-xl font-bold leading-[115%] text-green-11 sm:text-26">
             {isChallengeCompleted
               ? 'Congrats! You completed the challenge!'
               : 'Completed the Challenge?'}
           </p>
           <Image
             className={twJoin(
-              'mt-0.5 h-fit w-6 select-none transition',
+              'mt-0.5 h-fit w-5 select-none transition sm:w-6',
               !isRoomCompleteAccordionOpen && 'rotate-180',
             )}
             src={chevronDownGreen}

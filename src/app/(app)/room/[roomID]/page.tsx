@@ -50,7 +50,7 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
     // TODO show image to be uploaded
     // TODO prevent more than 4 images
     <div className="relative min-h-screen">
-      <div className="mb-6 flex justify-between rounded-[28px] border border-sand-5 bg-sand-2 p-2 md:p-4">
+      <div className="mb-4 flex justify-between rounded-[28px] border border-sand-5 bg-sand-2 p-2 sm:mb-6 md:p-4">
         <Link href="/" className="flex items-center gap-1 p-4">
           <Image src={chevronLeft} alt="" />
         </Link>
@@ -85,9 +85,9 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         </div>
       </div>
 
-      <div className="relative mb-8">
+      <div className="relative mb-4 sm:mb-8">
         <Image
-          className="h-[450px] w-full rounded-[28px] sm:h-[400px]"
+          className="h-[450px] w-full rounded-[24px] sm:h-[400px] sm:rounded-[28px]"
           height={540}
           width={960}
           style={{ objectFit: 'cover' }}
@@ -100,10 +100,13 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
         />
         <div
           className={
-            'absolute bottom-4 left-4 right-4 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-8 backdrop-blur'
+            'absolute bottom-2 left-2 right-2 rounded-2xl border border-sand-5 bg-white bg-opacity-90 p-6 backdrop-blur sm:bottom-4 sm:left-4 sm:right-4 sm:p-8'
           }
         >
-          <p slot="title" className="mb-4 font-nexa text-32 font-bold leading-none text-sand-12">
+          <p
+            slot="title"
+            className="mb-4 font-nexa text-26 font-bold leading-none text-sand-12 sm:text-32"
+          >
             {room.challenge.title}
           </p>
           <div className="flex flex-wrap gap-6">
@@ -163,14 +166,14 @@ export default async function RoomPage({ params }: { params: { roomID: string } 
       >
         <ChallengeCompleteCard roomID={roomID} isChallengeCompleted={room.isChallengeCompleted} />
       </NoSSR>
-      <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[28px] border border-sand-5 bg-sand-1 p-8">
-        <p className="mb-2 font-nexa text-26 font-bold leading-[115%] text-sand-12">
+      <div className="w-100 mx-auto mb-4 max-w-[700px] rounded-[28px] border border-sand-5 bg-sand-1 p-6 sm:p-8">
+        <p className="mb-4 font-nexa text-xl font-bold leading-[115%] text-sand-12 sm:text-26">
           Your activity
         </p>
         <div className="relative">
           {!room.isChallengeCompleted && (
-            <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]">
-              <div className="absolute z-0 h-12 w-12 rounded-full border border-sand-5 bg-sand-3" />
+            <div className="relative flex gap-4 pb-10 before:absolute before:bottom-0 before:left-5 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round] sm:before:left-6">
+              <div className="absolute z-0 h-10 w-10 rounded-full border border-sand-5 bg-sand-3 sm:h-12 sm:w-12" />
               <AddMilestoneForm key={room.milestones.length} roomID={roomID} />
             </div>
           )}

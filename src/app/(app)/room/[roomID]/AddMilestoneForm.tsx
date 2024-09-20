@@ -16,7 +16,7 @@ export default function AddMilestoneForm({ roomID }: { roomID: number }) {
   );
   const [files, setFiles] = useState<File[]>([]);
   return (
-    <Form className="w-full pl-16" action={formAction} validationErrors={state?.errors}>
+    <Form className="w-full pl-14 sm:pl-16" action={formAction} validationErrors={state?.errors}>
       <input type="hidden" name="roomID" value={roomID} />
       <div className="flex flex-col">
         <TextField className="mb-4 flex flex-col gap-2" name="title" isRequired>

@@ -33,11 +33,11 @@ export default function MilestoneRow(props: MilestoneRowProps) {
   return (
     <div
       className={twJoin(
-        "relative flex flex-col before:absolute before:bottom-0 before:left-6 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round]",
+        "relative flex flex-col before:absolute before:bottom-0 before:left-5 before:h-full before:border-l-2 before:border-dashed before:border-sand-5 before:[border-image:url('/images/customBorder.svg')_30_round] sm:before:left-6",
         !props.isLastRow && 'pb-10',
       )}
     >
-      <div className="flex justify-between pl-16">
+      <div className="flex justify-between pl-14 sm:pl-16">
         {props.isLastMilestone ? (
           <Badge key="challengeCompleted" style="big" type="challengeCompleted" />
         ) : (
@@ -73,13 +73,15 @@ export default function MilestoneRow(props: MilestoneRowProps) {
             }
             width={48}
             height={48}
-            className="profilePicture z-0 h-12 w-12 rounded-full border-2 border-sand-12"
+            className="profilePicture z-0 h-10 w-10 rounded-full border-2 border-sand-12 sm:h-12 sm:w-12"
             src={props.milestone.user.imageUrl}
           />
           {props.isLastMilestone ? (
-            <p className="font-nexa text-xl font-bold text-sand-12">The challenge is complete!</p>
+            <p className="font-nexa text-lg font-bold text-sand-12 sm:text-xl">
+              The challenge is complete!
+            </p>
           ) : (
-            <p className="font-nexa text-xl font-bold text-sand-12">
+            <p className="font-nexa text-lg font-bold text-sand-12 sm:text-xl">
               {props.milestone.ticked
                 ? props.milestone.user.fullName + ' has set the challenge as done'
                 : props.milestone.title}
@@ -88,11 +90,11 @@ export default function MilestoneRow(props: MilestoneRowProps) {
         </div>
 
         {props.isLastMilestone ? (
-          <p className="pb-6 pl-16 font-inter text-base leading-18 text-sand-11">
+          <p className="pb-6 pl-14 font-inter text-base leading-18 text-sand-11 sm:pl-16">
             Congratulations on finishing the challenge!
           </p>
         ) : (
-          <p className="pb-6 pl-16 font-inter text-base leading-18 text-sand-11">
+          <p className="pb-6 pl-14 font-inter text-base leading-18 text-sand-11 sm:pl-16">
             {props.milestone.description}
           </p>
         )}

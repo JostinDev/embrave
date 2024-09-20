@@ -51,19 +51,19 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
   return (
     <div
       className={
-        'w-100 mx-auto mb-6 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 py-8'
+        'w-100 mx-auto mb-4 max-w-[700px] rounded-[26px] border border-orange-4 bg-orange-2 py-8 sm:mb-6'
       }
     >
       <div
         onClick={() => setIsRoomTrackerAccordionOpen(!isRoomTrackerAccordionOpen)}
-        className="flex w-fit cursor-pointer gap-2 pl-8"
+        className="flex w-fit cursor-pointer gap-2 pl-6 sm:pl-8"
       >
-        <p className="font-nexa text-26 font-bold leading-[115%] text-orange-10">
+        <p className="font-nexa text-xl font-bold leading-[115%] text-orange-10 sm:text-26">
           Milestone Tracker
         </p>
         <Image
           className={twJoin(
-            'mr-8 mt-0.5 h-fit w-6 select-none transition',
+            'mr-8 mt-0.5 h-fit w-5 select-none transition sm:w-6',
             !isRoomTrackerAccordionOpen && 'rotate-180',
           )}
           src={chevronDownOrange}
@@ -72,7 +72,7 @@ export default function StreakTrackerCard(props: StreakTrackerCardProps) {
       </div>
       {isRoomTrackerAccordionOpen && (
         <div>
-          <p className="mb-4 mt-2 px-8 font-inter text-base leading-18 text-orange-10">
+          <p className="mb-4 mt-2 px-6 font-inter text-base leading-18 text-orange-10 sm:px-8">
             Reaching your goal for the day is a huge Milestone. So achieve your goals daily, track
             them here and don’t loose your streak!
           </p>
