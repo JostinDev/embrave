@@ -21,7 +21,9 @@ export default async function User(props: UserProps) {
             src={props.profilePicture}
             alt=""
           />
-          <p className="font-nexa text-xl font-bold text-sand-12">{props.username}</p>
+          <p className="max-w-[180px] truncate font-nexa text-xl font-bold text-sand-12 sm:max-w-[250px] md:max-w-[180px]">
+            {props.username}
+          </p>
         </div>
         <div className="flex gap-8 text-center sm:ml-auto">
           <div className="flex flex-col justify-center">
